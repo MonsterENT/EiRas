@@ -1,0 +1,792 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C23CACA22379A37F00AA5737 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C23CACA12379A37F00AA5737 /* AppDelegate.m */; };
+		C23CACA52379A37F00AA5737 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = C23CACA42379A37F00AA5737 /* ViewController.mm */; };
+		C23CACA72379A38200AA5737 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C23CACA62379A38200AA5737 /* Assets.xcassets */; };
+		C23CACAA2379A38200AA5737 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C23CACA82379A38200AA5737 /* Main.storyboard */; };
+		C23CACAD2379A38200AA5737 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C23CACAC2379A38200AA5737 /* main.m */; };
+		C23CACB82379A38200AA5737 /* EiRasMetalBuildTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C23CACB72379A38200AA5737 /* EiRasMetalBuildTests.m */; };
+		C23CACC32379A38200AA5737 /* EiRasMetalBuildUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = C23CACC22379A38200AA5737 /* EiRasMetalBuildUITests.m */; };
+		C23CACE32379A92800AA5737 /* EiRas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C23CACDE2379A92800AA5737 /* EiRas.cpp */; };
+		C23CACF72379B8F600AA5737 /* GraphicsRenderState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C23CACF52379B8F600AA5737 /* GraphicsRenderState.cpp */; };
+		C23CACFB2379BFF500AA5737 /* Material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C23CACF92379BFF500AA5737 /* Material.cpp */; };
+		C23CACFF2379C0A700AA5737 /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C23CACFD2379C0A700AA5737 /* Shader.cpp */; };
+		C23CAD042379C33B00AA5737 /* ShaderMetalBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C23CAD022379C33B00AA5737 /* ShaderMetalBridge.cpp */; };
+		C23CAD072379C5F600AA5737 /* ShaderMetalAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = C23CAD052379C5F600AA5737 /* ShaderMetalAdapter.mm */; };
+		C23CAD0A2379C69300AA5737 /* ShaderMetal.mm in Sources */ = {isa = PBXBuildFile; fileRef = C23CAD092379C69300AA5737 /* ShaderMetal.mm */; };
+		C23CAD0E2379C6FC00AA5737 /* EiRasGlobalManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C23CAD0C2379C6FC00AA5737 /* EiRasGlobalManager.cpp */; };
+		C23CAD152379CDFE00AA5737 /* BaseMetalObject.m in Sources */ = {isa = PBXBuildFile; fileRef = C23CAD142379CDFE00AA5737 /* BaseMetalObject.m */; };
+		C23CAD2B237AE06800AA5737 /* EiRasMetalAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = C23CAD28237AE06800AA5737 /* EiRasMetalAdapter.mm */; };
+		C23CAD2C237AE06800AA5737 /* EiRasMetalBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C23CAD29237AE06800AA5737 /* EiRasMetalBridge.cpp */; };
+		C23CAD2D237AE06800AA5737 /* EiRasMetal.mm in Sources */ = {isa = PBXBuildFile; fileRef = C23CAD2A237AE06800AA5737 /* EiRasMetal.mm */; };
+		C23CAD31237AF2E600AA5737 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C23CAD30237AF2E600AA5737 /* MetalKit.framework */; };
+		C23CAD34237AFAB800AA5737 /* CommandBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C23CAD32237AFAB800AA5737 /* CommandBuffer.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C23CACB42379A38200AA5737 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C23CAC952379A37F00AA5737 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C23CAC9C2379A37F00AA5737;
+			remoteInfo = EiRasMetalBuild;
+		};
+		C23CACBF2379A38200AA5737 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C23CAC952379A37F00AA5737 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C23CAC9C2379A37F00AA5737;
+			remoteInfo = EiRasMetalBuild;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		C23CAC9D2379A37F00AA5737 /* EiRasMetalBuild.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EiRasMetalBuild.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C23CACA02379A37F00AA5737 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		C23CACA12379A37F00AA5737 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		C23CACA32379A37F00AA5737 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		C23CACA42379A37F00AA5737 /* ViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
+		C23CACA62379A38200AA5737 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C23CACA92379A38200AA5737 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		C23CACAB2379A38200AA5737 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C23CACAC2379A38200AA5737 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		C23CACAE2379A38200AA5737 /* EiRasMetalBuild.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EiRasMetalBuild.entitlements; sourceTree = "<group>"; };
+		C23CACB32379A38200AA5737 /* EiRasMetalBuildTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EiRasMetalBuildTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C23CACB72379A38200AA5737 /* EiRasMetalBuildTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EiRasMetalBuildTests.m; sourceTree = "<group>"; };
+		C23CACB92379A38200AA5737 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C23CACBE2379A38200AA5737 /* EiRasMetalBuildUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EiRasMetalBuildUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C23CACC22379A38200AA5737 /* EiRasMetalBuildUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EiRasMetalBuildUITests.m; sourceTree = "<group>"; };
+		C23CACC42379A38200AA5737 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C23CACDE2379A92800AA5737 /* EiRas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EiRas.cpp; sourceTree = "<group>"; };
+		C23CACE22379A92800AA5737 /* EiRas.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EiRas.hpp; sourceTree = "<group>"; };
+		C23CACE52379AAA000AA5737 /* EiRasProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EiRasProtocol.h; sourceTree = "<group>"; };
+		C23CACF52379B8F600AA5737 /* GraphicsRenderState.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GraphicsRenderState.cpp; sourceTree = "<group>"; };
+		C23CACF62379B8F600AA5737 /* GraphicsRenderState.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GraphicsRenderState.hpp; sourceTree = "<group>"; };
+		C23CACF92379BFF500AA5737 /* Material.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Material.cpp; sourceTree = "<group>"; };
+		C23CACFA2379BFF500AA5737 /* Material.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Material.hpp; sourceTree = "<group>"; };
+		C23CACFD2379C0A700AA5737 /* Shader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Shader.cpp; sourceTree = "<group>"; };
+		C23CACFE2379C0A700AA5737 /* Shader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Shader.hpp; sourceTree = "<group>"; };
+		C23CAD022379C33B00AA5737 /* ShaderMetalBridge.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderMetalBridge.cpp; sourceTree = "<group>"; };
+		C23CAD032379C33B00AA5737 /* ShaderMetalBridge.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ShaderMetalBridge.hpp; sourceTree = "<group>"; };
+		C23CAD052379C5F600AA5737 /* ShaderMetalAdapter.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ShaderMetalAdapter.mm; sourceTree = "<group>"; };
+		C23CAD062379C5F600AA5737 /* ShaderMetalAdapter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ShaderMetalAdapter.hpp; sourceTree = "<group>"; };
+		C23CAD082379C69300AA5737 /* ShaderMetal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderMetal.h; sourceTree = "<group>"; };
+		C23CAD092379C69300AA5737 /* ShaderMetal.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ShaderMetal.mm; sourceTree = "<group>"; };
+		C23CAD0C2379C6FC00AA5737 /* EiRasGlobalManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EiRasGlobalManager.cpp; sourceTree = "<group>"; };
+		C23CAD0D2379C6FC00AA5737 /* EiRasGlobalManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EiRasGlobalManager.hpp; sourceTree = "<group>"; };
+		C23CAD122379CC7E00AA5737 /* MetalMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MetalMacro.h; sourceTree = "<group>"; };
+		C23CAD132379CDFE00AA5737 /* BaseMetalObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseMetalObject.h; sourceTree = "<group>"; };
+		C23CAD142379CDFE00AA5737 /* BaseMetalObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaseMetalObject.m; sourceTree = "<group>"; };
+		C23CAD23237AE05C00AA5737 /* EiRasPlatformBridgeProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EiRasPlatformBridgeProtocol.h; sourceTree = "<group>"; };
+		C23CAD25237AE06800AA5737 /* EiRasMetalBridge.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EiRasMetalBridge.hpp; sourceTree = "<group>"; };
+		C23CAD26237AE06800AA5737 /* EiRasMetalAdapter.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EiRasMetalAdapter.hpp; sourceTree = "<group>"; };
+		C23CAD27237AE06800AA5737 /* EiRasMetal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EiRasMetal.h; sourceTree = "<group>"; };
+		C23CAD28237AE06800AA5737 /* EiRasMetalAdapter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EiRasMetalAdapter.mm; sourceTree = "<group>"; };
+		C23CAD29237AE06800AA5737 /* EiRasMetalBridge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EiRasMetalBridge.cpp; sourceTree = "<group>"; };
+		C23CAD2A237AE06800AA5737 /* EiRasMetal.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EiRasMetal.mm; sourceTree = "<group>"; };
+		C23CAD30237AF2E600AA5737 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
+		C23CAD32237AFAB800AA5737 /* CommandBuffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CommandBuffer.cpp; sourceTree = "<group>"; };
+		C23CAD33237AFAB800AA5737 /* CommandBuffer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CommandBuffer.hpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C23CAC9A2379A37F00AA5737 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C23CAD31237AF2E600AA5737 /* MetalKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C23CACB02379A38200AA5737 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C23CACBB2379A38200AA5737 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C23CAC942379A37F00AA5737 = {
+			isa = PBXGroup;
+			children = (
+				C23CAC9F2379A37F00AA5737 /* EiRasMetalBuild */,
+				C23CACB62379A38200AA5737 /* EiRasMetalBuildTests */,
+				C23CACC12379A38200AA5737 /* EiRasMetalBuildUITests */,
+				C23CAC9E2379A37F00AA5737 /* Products */,
+				C23CAD2F237AF2E600AA5737 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		C23CAC9E2379A37F00AA5737 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C23CAC9D2379A37F00AA5737 /* EiRasMetalBuild.app */,
+				C23CACB32379A38200AA5737 /* EiRasMetalBuildTests.xctest */,
+				C23CACBE2379A38200AA5737 /* EiRasMetalBuildUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C23CAC9F2379A37F00AA5737 /* EiRasMetalBuild */ = {
+			isa = PBXGroup;
+			children = (
+				C23CACDC2379A92800AA5737 /* Framework */,
+				C23CACA02379A37F00AA5737 /* AppDelegate.h */,
+				C23CACA12379A37F00AA5737 /* AppDelegate.m */,
+				C23CACA32379A37F00AA5737 /* ViewController.h */,
+				C23CACA42379A37F00AA5737 /* ViewController.mm */,
+				C23CACA62379A38200AA5737 /* Assets.xcassets */,
+				C23CACA82379A38200AA5737 /* Main.storyboard */,
+				C23CACAB2379A38200AA5737 /* Info.plist */,
+				C23CACAC2379A38200AA5737 /* main.m */,
+				C23CACAE2379A38200AA5737 /* EiRasMetalBuild.entitlements */,
+			);
+			path = EiRasMetalBuild;
+			sourceTree = "<group>";
+		};
+		C23CACB62379A38200AA5737 /* EiRasMetalBuildTests */ = {
+			isa = PBXGroup;
+			children = (
+				C23CACB72379A38200AA5737 /* EiRasMetalBuildTests.m */,
+				C23CACB92379A38200AA5737 /* Info.plist */,
+			);
+			path = EiRasMetalBuildTests;
+			sourceTree = "<group>";
+		};
+		C23CACC12379A38200AA5737 /* EiRasMetalBuildUITests */ = {
+			isa = PBXGroup;
+			children = (
+				C23CACC22379A38200AA5737 /* EiRasMetalBuildUITests.m */,
+				C23CACC42379A38200AA5737 /* Info.plist */,
+			);
+			path = EiRasMetalBuildUITests;
+			sourceTree = "<group>";
+		};
+		C23CACDC2379A92800AA5737 /* Framework */ = {
+			isa = PBXGroup;
+			children = (
+				C23CACDD2379A92800AA5737 /* EiRas */,
+			);
+			name = Framework;
+			path = ../../../../Framework;
+			sourceTree = "<group>";
+		};
+		C23CACDD2379A92800AA5737 /* EiRas */ = {
+			isa = PBXGroup;
+			children = (
+				C23CAD112379CC1800AA5737 /* OnMetal */,
+				C23CAD0B2379C6C700AA5737 /* Global */,
+				C23CACFC2379C01C00AA5737 /* GraphicsAPI */,
+				C23CACF82379BFDD00AA5737 /* Material */,
+				C23CACF42379B8C200AA5737 /* Graphics */,
+				C23CACEC2379AF9900AA5737 /* BuiltinProtocols */,
+				C23CACE42379AA5000AA5737 /* Protocols */,
+			);
+			path = EiRas;
+			sourceTree = "<group>";
+		};
+		C23CACE42379AA5000AA5737 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				C23CACE52379AAA000AA5737 /* EiRasProtocol.h */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		C23CACEC2379AF9900AA5737 /* BuiltinProtocols */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = BuiltinProtocols;
+			sourceTree = "<group>";
+		};
+		C23CACF42379B8C200AA5737 /* Graphics */ = {
+			isa = PBXGroup;
+			children = (
+				C23CACF52379B8F600AA5737 /* GraphicsRenderState.cpp */,
+				C23CACF62379B8F600AA5737 /* GraphicsRenderState.hpp */,
+				C23CAD32237AFAB800AA5737 /* CommandBuffer.cpp */,
+				C23CAD33237AFAB800AA5737 /* CommandBuffer.hpp */,
+			);
+			path = Graphics;
+			sourceTree = "<group>";
+		};
+		C23CACF82379BFDD00AA5737 /* Material */ = {
+			isa = PBXGroup;
+			children = (
+				C23CAD002379C2F100AA5737 /* PlatformDependency */,
+				C23CACF92379BFF500AA5737 /* Material.cpp */,
+				C23CACFA2379BFF500AA5737 /* Material.hpp */,
+				C23CACFD2379C0A700AA5737 /* Shader.cpp */,
+				C23CACFE2379C0A700AA5737 /* Shader.hpp */,
+			);
+			path = Material;
+			sourceTree = "<group>";
+		};
+		C23CACFC2379C01C00AA5737 /* GraphicsAPI */ = {
+			isa = PBXGroup;
+			children = (
+				C23CAD2E237AEBE000AA5737 /* PlatformDependency */,
+				C23CACDE2379A92800AA5737 /* EiRas.cpp */,
+				C23CACE22379A92800AA5737 /* EiRas.hpp */,
+			);
+			path = GraphicsAPI;
+			sourceTree = "<group>";
+		};
+		C23CAD002379C2F100AA5737 /* PlatformDependency */ = {
+			isa = PBXGroup;
+			children = (
+				C23CAD012379C30A00AA5737 /* Metal */,
+			);
+			path = PlatformDependency;
+			sourceTree = "<group>";
+		};
+		C23CAD012379C30A00AA5737 /* Metal */ = {
+			isa = PBXGroup;
+			children = (
+				C23CAD022379C33B00AA5737 /* ShaderMetalBridge.cpp */,
+				C23CAD032379C33B00AA5737 /* ShaderMetalBridge.hpp */,
+				C23CAD052379C5F600AA5737 /* ShaderMetalAdapter.mm */,
+				C23CAD062379C5F600AA5737 /* ShaderMetalAdapter.hpp */,
+				C23CAD082379C69300AA5737 /* ShaderMetal.h */,
+				C23CAD092379C69300AA5737 /* ShaderMetal.mm */,
+			);
+			path = Metal;
+			sourceTree = "<group>";
+		};
+		C23CAD0B2379C6C700AA5737 /* Global */ = {
+			isa = PBXGroup;
+			children = (
+				C23CAD0C2379C6FC00AA5737 /* EiRasGlobalManager.cpp */,
+				C23CAD0D2379C6FC00AA5737 /* EiRasGlobalManager.hpp */,
+				C23CAD22237AE05C00AA5737 /* PlatformDependency */,
+			);
+			path = Global;
+			sourceTree = "<group>";
+		};
+		C23CAD112379CC1800AA5737 /* OnMetal */ = {
+			isa = PBXGroup;
+			children = (
+				C23CAD122379CC7E00AA5737 /* MetalMacro.h */,
+				C23CAD132379CDFE00AA5737 /* BaseMetalObject.h */,
+				C23CAD142379CDFE00AA5737 /* BaseMetalObject.m */,
+			);
+			path = OnMetal;
+			sourceTree = "<group>";
+		};
+		C23CAD22237AE05C00AA5737 /* PlatformDependency */ = {
+			isa = PBXGroup;
+			children = (
+				C23CAD23237AE05C00AA5737 /* EiRasPlatformBridgeProtocol.h */,
+			);
+			path = PlatformDependency;
+			sourceTree = "<group>";
+		};
+		C23CAD24237AE06800AA5737 /* Metal */ = {
+			isa = PBXGroup;
+			children = (
+				C23CAD25237AE06800AA5737 /* EiRasMetalBridge.hpp */,
+				C23CAD29237AE06800AA5737 /* EiRasMetalBridge.cpp */,
+				C23CAD26237AE06800AA5737 /* EiRasMetalAdapter.hpp */,
+				C23CAD28237AE06800AA5737 /* EiRasMetalAdapter.mm */,
+				C23CAD27237AE06800AA5737 /* EiRasMetal.h */,
+				C23CAD2A237AE06800AA5737 /* EiRasMetal.mm */,
+			);
+			path = Metal;
+			sourceTree = "<group>";
+		};
+		C23CAD2E237AEBE000AA5737 /* PlatformDependency */ = {
+			isa = PBXGroup;
+			children = (
+				C23CAD24237AE06800AA5737 /* Metal */,
+			);
+			path = PlatformDependency;
+			sourceTree = "<group>";
+		};
+		C23CAD2F237AF2E600AA5737 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C23CAD30237AF2E600AA5737 /* MetalKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C23CAC9C2379A37F00AA5737 /* EiRasMetalBuild */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C23CACC72379A38200AA5737 /* Build configuration list for PBXNativeTarget "EiRasMetalBuild" */;
+			buildPhases = (
+				C23CAC992379A37F00AA5737 /* Sources */,
+				C23CAC9A2379A37F00AA5737 /* Frameworks */,
+				C23CAC9B2379A37F00AA5737 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EiRasMetalBuild;
+			productName = EiRasMetalBuild;
+			productReference = C23CAC9D2379A37F00AA5737 /* EiRasMetalBuild.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C23CACB22379A38200AA5737 /* EiRasMetalBuildTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C23CACCA2379A38200AA5737 /* Build configuration list for PBXNativeTarget "EiRasMetalBuildTests" */;
+			buildPhases = (
+				C23CACAF2379A38200AA5737 /* Sources */,
+				C23CACB02379A38200AA5737 /* Frameworks */,
+				C23CACB12379A38200AA5737 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C23CACB52379A38200AA5737 /* PBXTargetDependency */,
+			);
+			name = EiRasMetalBuildTests;
+			productName = EiRasMetalBuildTests;
+			productReference = C23CACB32379A38200AA5737 /* EiRasMetalBuildTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		C23CACBD2379A38200AA5737 /* EiRasMetalBuildUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C23CACCD2379A38200AA5737 /* Build configuration list for PBXNativeTarget "EiRasMetalBuildUITests" */;
+			buildPhases = (
+				C23CACBA2379A38200AA5737 /* Sources */,
+				C23CACBB2379A38200AA5737 /* Frameworks */,
+				C23CACBC2379A38200AA5737 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C23CACC02379A38200AA5737 /* PBXTargetDependency */,
+			);
+			name = EiRasMetalBuildUITests;
+			productName = EiRasMetalBuildUITests;
+			productReference = C23CACBE2379A38200AA5737 /* EiRasMetalBuildUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C23CAC952379A37F00AA5737 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1120;
+				ORGANIZATIONNAME = MonsterENT;
+				TargetAttributes = {
+					C23CAC9C2379A37F00AA5737 = {
+						CreatedOnToolsVersion = 11.2;
+					};
+					C23CACB22379A38200AA5737 = {
+						CreatedOnToolsVersion = 11.2;
+						TestTargetID = C23CAC9C2379A37F00AA5737;
+					};
+					C23CACBD2379A38200AA5737 = {
+						CreatedOnToolsVersion = 11.2;
+						TestTargetID = C23CAC9C2379A37F00AA5737;
+					};
+				};
+			};
+			buildConfigurationList = C23CAC982379A37F00AA5737 /* Build configuration list for PBXProject "EiRasMetalBuild" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C23CAC942379A37F00AA5737;
+			productRefGroup = C23CAC9E2379A37F00AA5737 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C23CAC9C2379A37F00AA5737 /* EiRasMetalBuild */,
+				C23CACB22379A38200AA5737 /* EiRasMetalBuildTests */,
+				C23CACBD2379A38200AA5737 /* EiRasMetalBuildUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C23CAC9B2379A37F00AA5737 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C23CACA72379A38200AA5737 /* Assets.xcassets in Resources */,
+				C23CACAA2379A38200AA5737 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C23CACB12379A38200AA5737 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C23CACBC2379A38200AA5737 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C23CAC992379A37F00AA5737 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C23CACA52379A37F00AA5737 /* ViewController.mm in Sources */,
+				C23CAD042379C33B00AA5737 /* ShaderMetalBridge.cpp in Sources */,
+				C23CAD152379CDFE00AA5737 /* BaseMetalObject.m in Sources */,
+				C23CACF72379B8F600AA5737 /* GraphicsRenderState.cpp in Sources */,
+				C23CACAD2379A38200AA5737 /* main.m in Sources */,
+				C23CACFF2379C0A700AA5737 /* Shader.cpp in Sources */,
+				C23CACE32379A92800AA5737 /* EiRas.cpp in Sources */,
+				C23CACA22379A37F00AA5737 /* AppDelegate.m in Sources */,
+				C23CAD2D237AE06800AA5737 /* EiRasMetal.mm in Sources */,
+				C23CAD072379C5F600AA5737 /* ShaderMetalAdapter.mm in Sources */,
+				C23CAD2C237AE06800AA5737 /* EiRasMetalBridge.cpp in Sources */,
+				C23CAD34237AFAB800AA5737 /* CommandBuffer.cpp in Sources */,
+				C23CAD0E2379C6FC00AA5737 /* EiRasGlobalManager.cpp in Sources */,
+				C23CAD0A2379C69300AA5737 /* ShaderMetal.mm in Sources */,
+				C23CAD2B237AE06800AA5737 /* EiRasMetalAdapter.mm in Sources */,
+				C23CACFB2379BFF500AA5737 /* Material.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C23CACAF2379A38200AA5737 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C23CACB82379A38200AA5737 /* EiRasMetalBuildTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C23CACBA2379A38200AA5737 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C23CACC32379A38200AA5737 /* EiRasMetalBuildUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C23CACB52379A38200AA5737 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C23CAC9C2379A37F00AA5737 /* EiRasMetalBuild */;
+			targetProxy = C23CACB42379A38200AA5737 /* PBXContainerItemProxy */;
+		};
+		C23CACC02379A38200AA5737 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C23CAC9C2379A37F00AA5737 /* EiRasMetalBuild */;
+			targetProxy = C23CACBF2379A38200AA5737 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		C23CACA82379A38200AA5737 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C23CACA92379A38200AA5737 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C23CACC52379A38200AA5737 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = "";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /Users/user/Desktop/EiRas/EiRas/Framework/EiRas;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				REZ_SEARCH_PATHS = "";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		C23CACC62379A38200AA5737 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = "";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /Users/user/Desktop/EiRas/EiRas/Framework/EiRas;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				REZ_SEARCH_PATHS = "";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		C23CACC82379A38200AA5737 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = EiRasMetalBuild/EiRasMetalBuild.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = MUMVBPQN64;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = EiRasMetalBuild/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.monsterent.EiRasMetalBuild;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		C23CACC92379A38200AA5737 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = EiRasMetalBuild/EiRasMetalBuild.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = MUMVBPQN64;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = EiRasMetalBuild/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.monsterent.EiRasMetalBuild;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		C23CACCB2379A38200AA5737 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = MUMVBPQN64;
+				INFOPLIST_FILE = EiRasMetalBuildTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_BUNDLE_IDENTIFIER = com.monsterent.EiRasMetalBuildTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EiRasMetalBuild.app/Contents/MacOS/EiRasMetalBuild";
+			};
+			name = Debug;
+		};
+		C23CACCC2379A38200AA5737 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = MUMVBPQN64;
+				INFOPLIST_FILE = EiRasMetalBuildTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_BUNDLE_IDENTIFIER = com.monsterent.EiRasMetalBuildTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EiRasMetalBuild.app/Contents/MacOS/EiRasMetalBuild";
+			};
+			name = Release;
+		};
+		C23CACCE2379A38200AA5737 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = MUMVBPQN64;
+				INFOPLIST_FILE = EiRasMetalBuildUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.monsterent.EiRasMetalBuildUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = EiRasMetalBuild;
+			};
+			name = Debug;
+		};
+		C23CACCF2379A38200AA5737 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = MUMVBPQN64;
+				INFOPLIST_FILE = EiRasMetalBuildUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.monsterent.EiRasMetalBuildUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = EiRasMetalBuild;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C23CAC982379A37F00AA5737 /* Build configuration list for PBXProject "EiRasMetalBuild" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C23CACC52379A38200AA5737 /* Debug */,
+				C23CACC62379A38200AA5737 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C23CACC72379A38200AA5737 /* Build configuration list for PBXNativeTarget "EiRasMetalBuild" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C23CACC82379A38200AA5737 /* Debug */,
+				C23CACC92379A38200AA5737 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C23CACCA2379A38200AA5737 /* Build configuration list for PBXNativeTarget "EiRasMetalBuildTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C23CACCB2379A38200AA5737 /* Debug */,
+				C23CACCC2379A38200AA5737 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C23CACCD2379A38200AA5737 /* Build configuration list for PBXNativeTarget "EiRasMetalBuildUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C23CACCE2379A38200AA5737 /* Debug */,
+				C23CACCF2379A38200AA5737 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C23CAC952379A37F00AA5737 /* Project object */;
+}
