@@ -9,6 +9,9 @@
 #ifndef CommandBuffer_hpp
 #define CommandBuffer_hpp
 
+#include <Global/PlatformDependency/EiRasPlatformBridgeProtocol.h>
+#include <string>
+
 namespace Graphics {
 
 class GraphicsRenderSate;
@@ -18,15 +21,15 @@ class Mesh;
 class CommandBuffer
 {
 public:
-    CommandBuffer()
-    {
-        
-    }
+    CommandBuffer(std::string name);
     
     void SetGraphicsRenderState(GraphicsRenderSate* renderState);//render pass & pipleline state
     void SetMaterial(Material* material);//resources
     
     void DrawMesh(Mesh* mesh);
+    
+private:
+    EiRasPlatformBridgeProtocol* PlatformBridge;
 };
 
 }

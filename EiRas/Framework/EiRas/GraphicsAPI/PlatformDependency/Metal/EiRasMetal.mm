@@ -35,9 +35,14 @@ static MTKView* g_mtkView = 0;
     }
 }
 
--(id<MTLDevice>)getMetalDevice
+-(nullable id<MTLDevice>)getMetalDevice
 {
     return _metalDevice;
+}
+
+-(nullable id<MTLCommandQueue>)getMetalCommandQueue
+{
+    return _cmdQueue;
 }
 
 -(void)OnUpdate

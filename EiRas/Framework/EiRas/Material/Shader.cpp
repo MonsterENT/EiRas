@@ -8,12 +8,17 @@
 
 #include "Shader.hpp"
 
-#include "PlatformDependency/Metal/ShaderMetalBridge.hpp"
+#include "PlatformDependency/Shader/Metal/ShaderMetalBridge.hpp"
 
 using MaterialSys::Shader;
 
 
 Shader::Shader(std::string fileName, std::string vertexFuncName, std::string pixelFuncName)
 {
-    pd_ShaderObj = new ShaderMetalBridge(fileName, vertexFuncName, pixelFuncName);
+    PlatformBridge = new ShaderMetalBridge(fileName, vertexFuncName, pixelFuncName);
+}
+
+void* Shader::GetRawObj()
+{
+    return PlatformBridge->raw_obj;
 }

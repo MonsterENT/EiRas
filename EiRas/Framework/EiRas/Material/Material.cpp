@@ -7,9 +7,21 @@
 //
 
 #include "Material.hpp"
+#include <Graphics/GraphicsRenderState.hpp>
+#include "PlatformDependency/Material/Metal/MaterialMetalBridge.hpp"
+
+using Graphics::GraphicsRenderState;
+
 using MaterialSys::Material;
 
-Material::Material(Shader* shader)
+Material::Material(std::string name, Shader* shader)
 {
+    this->RenderState = new GraphicsRenderState();
+    this->PlatformBridge = new MaterialMetalBridge(name);
     this->shader = shader;
+}
+
+void Material::FinishStateChange()
+{
+    ((MaterialMetalBridge*)this->PlatformBridge)->UpdateRenderState(RenderState, shader);
 }

@@ -24,16 +24,27 @@ enum BlendOp
     BlendOpAdd = 0,
 };
 
-enum BlendRGBFactor
+enum BlendFactor
 {
-    BlendRGBFactorOne = 0,
-    BlendRGBFactorZero = 1,
-};
-
-enum BlendAlphaFactor
-{
-    BlendAlphaFactorOne = 0,
-    BlendAlphaFactorZero = 1,
+    BlendRGBFactorZero = 0,
+    BlendRGBFactorOne = 1,
+    BlendRGBFactorSourceColor = 2,
+    BlendRGBFactorOneMinusSourceColor = 3,
+    BlendRGBFactorSourceAlpha = 4,
+    BlendRGBFactorOneMinusSourceAlpha = 5,
+    BlendRGBFactorDestinationColor = 6,
+    BlendRGBFactorOneMinusDestinationColor = 7,
+    BlendRGBFactorDestinationAlpha = 8,
+    BlendRGBFactorOneMinusDestinationAlpha = 9,
+    BlendRGBFactorSourceAlphaSaturated = 10,
+    BlendRGBFactorBlendColor = 11,
+    BlendRGBFactorOneMinusBlendColor = 12,
+    BlendRGBFactorBlendAlpha = 13,
+    BlendRGBFactorOneMinusBlendAlpha = 14,
+//    BlendRGBFactorSource1Color              API_AVAILABLE(macos(10.12), ios(10.11)) = 15,
+//    BlendRGBFactorOneMinusSource1Color      API_AVAILABLE(macos(10.12), ios(10.11)) = 16,
+//    BlendRGBFactorSource1Alpha              API_AVAILABLE(macos(10.12), ios(10.11)) = 17,
+//    BlendRGBFactorOneMinusSource1Alpha      API_AVAILABLE(macos(10.12), ios(10.11)) = 18,
 };
 
 class GraphicsRenderState
@@ -42,10 +53,10 @@ public:
     CullMode _CullMode;
     
     BlendOp _BlendOp;
-    BlendRGBFactor _BlendSrcRGBFactor;
-    BlendRGBFactor _BlendDstRGBFactor;
-    BlendAlphaFactor _BlendSrcAlphaFactor;
-    BlendAlphaFactor _BlendDstAlphaFactor;
+    BlendFactor _BlendSrcRGBFactor;
+    BlendFactor _BlendDstRGBFactor;
+    BlendFactor _BlendSrcAlphaFactor;
+    BlendFactor _BlendDstAlphaFactor;
     
     int _StencilRefValue;
     

@@ -14,10 +14,10 @@ GraphicsRenderState::GraphicsRenderState()
     _CullMode = CullMode::CullModeBack;
     
     _BlendOp = BlendOp::BlendOpAdd;
-    _BlendSrcRGBFactor = BlendRGBFactor::BlendRGBFactorOne;
-    _BlendDstRGBFactor = BlendRGBFactor::BlendRGBFactorOne;
-    _BlendSrcAlphaFactor = BlendAlphaFactor::BlendAlphaFactorOne;
-    _BlendDstAlphaFactor = BlendAlphaFactor::BlendAlphaFactorZero;
+    _BlendSrcRGBFactor = BlendFactor::BlendRGBFactorOne;
+    _BlendDstRGBFactor = BlendFactor::BlendRGBFactorZero;
+    _BlendSrcAlphaFactor = BlendFactor::BlendRGBFactorOne;
+    _BlendDstAlphaFactor = BlendFactor::BlendRGBFactorZero;
     
     _StencilRefValue = 0;
 }

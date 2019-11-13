@@ -10,6 +10,7 @@
 #define Shader_hpp
 
 #include <string>
+#include <Global/PlatformDependency/EiRasPlatformBridgeProtocol.h>
 
 namespace MaterialSys {
 
@@ -18,8 +19,10 @@ class Shader
 public:
     Shader(std::string fileName, std::string vertexFuncName, std::string pixelFuncName);
     
+    void* GetRawObj();
+    
 private:
-    void* pd_ShaderObj;
+    EiRasPlatformBridgeProtocol* PlatformBridge;
 };
 
 };//namespace Material

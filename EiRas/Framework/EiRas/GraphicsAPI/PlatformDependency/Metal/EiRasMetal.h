@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <MetalKit/MetalKit.h>
 #import <OnMetal/BaseMetalObject.h>
 
 @interface EiRasMetal : BaseMetalObject
@@ -19,5 +18,6 @@
 -(void)OnUpdate;
 
 -(nullable id<MTLDevice>)getMetalDevice;
+-(nullable id<MTLCommandQueue>)getMetalCommandQueue;
 
 @end

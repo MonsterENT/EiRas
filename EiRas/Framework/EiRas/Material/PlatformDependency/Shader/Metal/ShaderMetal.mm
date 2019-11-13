@@ -13,14 +13,6 @@
 #import <GraphicsAPI/PlatformDependency/Metal/EiRasMetal.h>
 
 @interface ShaderMetal()
-
-@property(copy, nonatomic)NSString* fileName;
-@property(copy, nonatomic)NSString* vertexFuncName;
-@property(copy, nonatomic)NSString* pixelFuncName;
-
-@property(strong, nonatomic)id<MTLFunction> vertexFunc;
-@property(strong, nonatomic)id<MTLFunction> pixelFunc;
-
 @end
 
 @implementation ShaderMetal

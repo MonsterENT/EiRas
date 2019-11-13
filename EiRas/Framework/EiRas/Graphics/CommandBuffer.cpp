@@ -10,8 +10,14 @@
 
 #include <Material/Material.hpp>
 #include <Graphics/GraphicsRenderState.hpp>
+#include "CommandBufferMetalBridge.hpp"
 
 using Graphics::CommandBuffer;
+
+CommandBuffer::CommandBuffer(std::string name)
+{
+    PlatformBridge = new CommandBufferMetalBridge(name);
+}
 
 void CommandBuffer::SetGraphicsRenderState(GraphicsRenderSate* renderState)
 {

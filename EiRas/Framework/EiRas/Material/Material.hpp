@@ -10,16 +10,25 @@
 #define Material_hpp
 
 #include "Shader.hpp"
+#include <Global/PlatformDependency/EiRasPlatformBridgeProtocol.h>
+#include <string>
+
+namespace Graphics {
+class GraphicsRenderState;
+}
 
 namespace MaterialSys {
 
 class Material
 {
 public:
-    Material(Shader* shader);
+    Material(std::string name, Shader* shader);
+    Graphics::GraphicsRenderState* RenderState;
     
+    void FinishStateChange();
 private:
     Shader* shader;
+    EiRasPlatformBridgeProtocol* PlatformBridge;
 };
 
 };//namespace Material
