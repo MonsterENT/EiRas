@@ -15,23 +15,52 @@
 #include <GraphicsAPI/EiRas.hpp>
 #include <GraphicsAPI/PlatformDependency/Metal/EiRasMetal.h>
 
+#include <Material/Material.hpp>
+#include <Material/Shader.hpp>
+#include <Graphics/CommandBuffer.hpp>
+#include <Mesh/Mesh.hpp>
+
+#include <string>
+using std::string;
+using GraphicsAPI::EiRas;
+using MaterialSys::Material;
+using MaterialSys::Shader;
+using Graphics::CommandBuffer;
+using MeshSys::Mesh;
+
 @interface ViewController()<MTKViewDelegate>
 @property(strong, nonatomic)MTKView* mtkView;
 @end
 
 @implementation ViewController
 
-GraphicsAPI::EiRas* device = NULL;
+GraphicsAPI::EiRas* device = 0;
+
+MaterialSys::Material* mat = 0;
+
+Graphics::CommandBuffer* cmdBuffer = 0;
+
+Mesh* m_mesh = 0;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    _mtkView = [[MTKView alloc]initWithFrame:self.view.frame device:MTLCreateSystemDefaultDevice()];
-    _mtkView.delegate = self;
-    [EiRasMetal SetMetalKitView:_mtkView];
-    
-    device = GraphicsAPI::EiRas::Create();
-    // Do any additional setup after loading the view.
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+            _mtkView = [[MTKView alloc]initWithFrame:self.view.frame device:MTLCreateSystemDefaultDevice()];
+        _mtkView.delegate = self;
+        [EiRasMetal SetMetalKitView:_mtkView];
+        
+        device = GraphicsAPI::EiRas::Create();
+        // Do any additional setup after loading the view.
+        
+        cmdBuffer = new Graphics::CommandBuffer("m_cmdBuffer");
+        
+        mat = new Material("m_mat", new Shader("m_shader", "vertexShader", "fragmentShader"));
+        
+        m_mesh = new Mesh("m_mesh");
+        
+        [self.view addSubview:_mtkView];
+    });
 }
 
 
@@ -44,6 +73,18 @@ GraphicsAPI::EiRas* device = NULL;
 - (void)drawInMTKView:(nonnull MTKView *)view
 {
     device->OnUpdate();
+    
+    static dispatch_once_t onceToken;
+//    dispatch_once(&onceToken, ^{
+        cmdBuffer->BeginFrame();
+        cmdBuffer->SetMaterial(mat);
+
+        cmdBuffer->DrawMesh(m_mesh);
+        cmdBuffer->Present();
+        cmdBuffer->Commit();
+//    });
+    
+    
 }
 
 

@@ -26,9 +26,10 @@ public:
     Graphics::GraphicsRenderState* RenderState;
     
     void FinishStateChange();
+    EiRasPlatformBridgeProtocol* PlatformBridge;
 private:
     Shader* shader;
-    EiRasPlatformBridgeProtocol* PlatformBridge;
+  
 };
 
 };//namespace Material

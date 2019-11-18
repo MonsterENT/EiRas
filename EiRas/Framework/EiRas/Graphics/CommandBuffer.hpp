@@ -12,21 +12,33 @@
 #include <Global/PlatformDependency/EiRasPlatformBridgeProtocol.h>
 #include <string>
 
+
+namespace MaterialSys {
+class Material;
+}
+
+namespace MeshSys {
+class Mesh;
+}
+
 namespace Graphics {
 
 class GraphicsRenderSate;
-class Material;
-class Mesh;
 
 class CommandBuffer
 {
 public:
     CommandBuffer(std::string name);
     
-    void SetGraphicsRenderState(GraphicsRenderSate* renderState);//render pass & pipleline state
-    void SetMaterial(Material* material);//resources
+    void SetMaterial(MaterialSys::Material* material);
     
-    void DrawMesh(Mesh* mesh);
+    void DrawMesh(MeshSys::Mesh* mesh);
+    
+    void BeginFrame();
+    
+    void Present();
+    
+    void Commit();
     
 private:
     EiRasPlatformBridgeProtocol* PlatformBridge;

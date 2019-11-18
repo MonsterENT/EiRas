@@ -19,6 +19,8 @@ Material::Material(std::string name, Shader* shader)
     this->RenderState = new GraphicsRenderState();
     this->PlatformBridge = new MaterialMetalBridge(name);
     this->shader = shader;
+    //init platform pso
+    FinishStateChange();
 }
 
 void Material::FinishStateChange()

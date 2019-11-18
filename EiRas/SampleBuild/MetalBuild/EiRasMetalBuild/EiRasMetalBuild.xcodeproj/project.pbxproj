@@ -34,6 +34,8 @@
 		C23CAD45237C4D8800AA5737 /* MaterialMetalBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C23CAD43237C4D8800AA5737 /* MaterialMetalBridge.cpp */; };
 		C23CAD48237C4EF100AA5737 /* MaterialMetal.mm in Sources */ = {isa = PBXBuildFile; fileRef = C23CAD47237C4EF100AA5737 /* MaterialMetal.mm */; };
 		C23CAD4B237C569D00AA5737 /* MaterialMetalAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = C23CAD49237C569D00AA5737 /* MaterialMetalAdapter.mm */; };
+		C246DB0F2382D083007DF0D7 /* Mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C246DB0D2382D083007DF0D7 /* Mesh.cpp */; };
+		C246DB172382D613007DF0D7 /* AAPLShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = C246DB162382D613007DF0D7 /* AAPLShaders.metal */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,6 +114,10 @@
 		C23CAD47237C4EF100AA5737 /* MaterialMetal.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MaterialMetal.mm; sourceTree = "<group>"; };
 		C23CAD49237C569D00AA5737 /* MaterialMetalAdapter.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MaterialMetalAdapter.mm; sourceTree = "<group>"; };
 		C23CAD4A237C569D00AA5737 /* MaterialMetalAdapter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MaterialMetalAdapter.hpp; sourceTree = "<group>"; };
+		C246DB0D2382D083007DF0D7 /* Mesh.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Mesh.cpp; sourceTree = "<group>"; };
+		C246DB0E2382D083007DF0D7 /* Mesh.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Mesh.hpp; sourceTree = "<group>"; };
+		C246DB132382D1EA007DF0D7 /* MetalGraphicsPipelineInput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MetalGraphicsPipelineInput.h; sourceTree = "<group>"; };
+		C246DB162382D613007DF0D7 /* AAPLShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = AAPLShaders.metal; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,6 +214,8 @@
 		C23CACDD2379A92800AA5737 /* EiRas */ = {
 			isa = PBXGroup;
 			children = (
+				C246DB142382D47B007DF0D7 /* ShaderFile */,
+				C246DB0C2382D069007DF0D7 /* Mesh */,
 				C23CAD112379CC1800AA5737 /* OnMetal */,
 				C23CAD0B2379C6C700AA5737 /* Global */,
 				C23CACFC2379C01C00AA5737 /* GraphicsAPI */,
@@ -397,6 +405,56 @@
 			path = Metal;
 			sourceTree = "<group>";
 		};
+		C246DB0C2382D069007DF0D7 /* Mesh */ = {
+			isa = PBXGroup;
+			children = (
+				C246DB102382D115007DF0D7 /* PlatformDependency */,
+				C246DB0D2382D083007DF0D7 /* Mesh.cpp */,
+				C246DB0E2382D083007DF0D7 /* Mesh.hpp */,
+			);
+			path = Mesh;
+			sourceTree = "<group>";
+		};
+		C246DB102382D115007DF0D7 /* PlatformDependency */ = {
+			isa = PBXGroup;
+			children = (
+				C246DB112382D11E007DF0D7 /* Mesh */,
+			);
+			path = PlatformDependency;
+			sourceTree = "<group>";
+		};
+		C246DB112382D11E007DF0D7 /* Mesh */ = {
+			isa = PBXGroup;
+			children = (
+				C246DB122382D12A007DF0D7 /* Metal */,
+			);
+			path = Mesh;
+			sourceTree = "<group>";
+		};
+		C246DB122382D12A007DF0D7 /* Metal */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Metal;
+			sourceTree = "<group>";
+		};
+		C246DB142382D47B007DF0D7 /* ShaderFile */ = {
+			isa = PBXGroup;
+			children = (
+				C246DB152382D488007DF0D7 /* Metal */,
+			);
+			path = ShaderFile;
+			sourceTree = "<group>";
+		};
+		C246DB152382D488007DF0D7 /* Metal */ = {
+			isa = PBXGroup;
+			children = (
+				C246DB132382D1EA007DF0D7 /* MetalGraphicsPipelineInput.h */,
+				C246DB162382D613007DF0D7 /* AAPLShaders.metal */,
+			);
+			path = Metal;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -543,6 +601,8 @@
 				C23CAD072379C5F600AA5737 /* ShaderMetalAdapter.mm in Sources */,
 				C23CAD38237AFF9800AA5737 /* CommandBufferMetalBridge.cpp in Sources */,
 				C23CAD2C237AE06800AA5737 /* EiRasMetalBridge.cpp in Sources */,
+				C246DB0F2382D083007DF0D7 /* Mesh.cpp in Sources */,
+				C246DB172382D613007DF0D7 /* AAPLShaders.metal in Sources */,
 				C23CAD34237AFAB800AA5737 /* CommandBuffer.cpp in Sources */,
 				C23CAD0E2379C6FC00AA5737 /* EiRasGlobalManager.cpp in Sources */,
 				C23CAD0A2379C69300AA5737 /* ShaderMetal.mm in Sources */,

@@ -11,13 +11,25 @@
 
 #import <Metal/Metal.h>
 
+#import <Material/PlatformDependency/Material/Metal/MaterialMetal.h>
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CommandBufferMetal : BaseMetalObject
 
-@property(strong, nonatomic)id<MTLCommandBuffer> commandBuffer;
+@property(strong, nonatomic)id<MTLRenderCommandEncoder> renderCommandEncoder;
 
 -(void)setLabel:(NSString*)name;
+
+-(void)setMaterial:(MaterialMetal*)material;
+
+-(void)drawMesh:(void*)meshData dataSize:(int)dataSize index:(int)index;
+
+-(void)beginFrame;
+
+-(void)present;
+
+-(void)commit;
 
 @end
 

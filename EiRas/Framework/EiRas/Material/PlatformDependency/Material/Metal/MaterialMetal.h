@@ -23,6 +23,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(strong, nonatomic)id<MTLRenderPipelineState> pipelineState;
 
+@property(strong, nonatomic)MTLRenderPassDescriptor* renderPassDescriptor;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -19,6 +19,17 @@ class CommandBufferMetalBridge : public EiRasPlatformBridgeProtocol
 {
 public:
     CommandBufferMetalBridge(std::string name);
+    
+    void SetMaterial(EiRasPlatformBridgeProtocol* materialBridge);
+    
+    void DrawMesh(void* meshData, int dataSize, int index);
+    
+    void BeginFrame();
+    
+    void Present();
+
+    void Commit();
+
 };
 
 }

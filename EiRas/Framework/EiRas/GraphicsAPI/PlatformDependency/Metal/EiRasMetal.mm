@@ -45,6 +45,11 @@ static MTKView* g_mtkView = 0;
     return _cmdQueue;
 }
 
+-(nullable MTKView*)getMTKView
+{
+    return g_mtkView;
+}
+
 -(void)OnUpdate
 {
     

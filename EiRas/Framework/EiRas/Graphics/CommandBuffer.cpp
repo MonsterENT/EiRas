@@ -11,7 +11,9 @@
 #include <Material/Material.hpp>
 #include <Graphics/GraphicsRenderState.hpp>
 #include "CommandBufferMetalBridge.hpp"
+#include <Mesh/Mesh.hpp>
 
+using MeshSys::Mesh;
 using Graphics::CommandBuffer;
 
 CommandBuffer::CommandBuffer(std::string name)
@@ -19,17 +21,27 @@ CommandBuffer::CommandBuffer(std::string name)
     PlatformBridge = new CommandBufferMetalBridge(name);
 }
 
-void CommandBuffer::SetGraphicsRenderState(GraphicsRenderSate* renderState)
+void CommandBuffer::SetMaterial(MaterialSys::Material* material)
 {
-    
-}
-
-void CommandBuffer::SetMaterial(Material* material)
-{
-    
+    ((CommandBufferMetalBridge*)PlatformBridge)->SetMaterial(material->PlatformBridge);
 }
 
 void CommandBuffer::DrawMesh(Mesh* mesh)
 {
-    
+    ((CommandBufferMetalBridge*)PlatformBridge)->DrawMesh(mesh->GetVertices(), mesh->GetMeshDataSize(), 0);
+}
+
+void CommandBuffer::BeginFrame()
+{
+    ((CommandBufferMetalBridge*)PlatformBridge)->BeginFrame();
+}
+
+void CommandBuffer::Commit()
+{
+    ((CommandBufferMetalBridge*)PlatformBridge)->Commit();
+}
+
+void CommandBuffer::Present()
+{
+    ((CommandBufferMetalBridge*)PlatformBridge)->Present();
 }

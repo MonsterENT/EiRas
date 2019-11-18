@@ -20,4 +20,6 @@
 -(nullable id<MTLDevice>)getMetalDevice;
 -(nullable id<MTLCommandQueue>)getMetalCommandQueue;
 
+-(nullable MTKView*)getMTKView;
+
 @end
