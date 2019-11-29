@@ -8,7 +8,13 @@
 
 #include "Shader.hpp"
 
+#if GRAPHICS_DX
+#include "PlatformDependency/Shader/DX12/ShaderDX12Bridge.h"
+#endif
+
+#if GRAPHICS_METAL
 #include "PlatformDependency/Shader/Metal/ShaderMetalBridge.hpp"
+#endif
 
 using MaterialSys::Shader;
 

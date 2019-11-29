@@ -12,6 +12,7 @@
 class EiRasPlatformBridgeProtocol {
 public:
     void* raw_obj;
+    virtual ~EiRasPlatformBridgeProtocol() = 0;
 private:
     
 };
