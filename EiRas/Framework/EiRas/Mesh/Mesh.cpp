@@ -11,6 +11,7 @@
 
 using MeshSys::Mesh;
 
+#if GRAPHICS_METAL
 static AAPLVertex triangleVertices[] =
 {
     // 2D positions,    RGBA colors
@@ -18,18 +19,23 @@ static AAPLVertex triangleVertices[] =
     { { -250,  -250 }, { 0, 1, 0, 1 } },
     { {    0,   250 }, { 0, 0, 1, 1 } },
 };
+#endif
 
 Mesh::Mesh(std::string name)
 {
     
 }
 
+#if GRAPHICS_METAL
 AAPLVertex* Mesh::GetVertices()
 {
     return triangleVertices;
 }
-
+#endif
 int Mesh::GetMeshDataSize()
 {
+#if GRAPHICS_METAL
     return sizeof(triangleVertices);
+#endif
+    return 0;
 }

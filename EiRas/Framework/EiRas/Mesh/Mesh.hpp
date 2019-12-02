@@ -10,7 +10,9 @@
 #define Mesh_hpp
 
 #include <string>
+#if GRAPHICS_METAL
 #include <ShaderFile/Metal/MetalGraphicsPipelineInput.h>
+#endif
 
 namespace MeshSys {
 
@@ -18,9 +20,10 @@ class Mesh
 {
 public:
     Mesh(std::string name);
-    
+#if GRAPHICS_METAL
     AAPLVertex* GetVertices();
-    
+#endif
+
     int GetMeshDataSize();
 };
 

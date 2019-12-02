@@ -13,19 +13,29 @@
 #include <Global/PlatformDependency/EiRasPlatformBridgeProtocol.h>
 #include <Global/PlatformDefine.h>
 
+#if GRAPHICS_DX
+#include <Windows.h>
+#endif
+
 namespace MaterialSys {
 
-class Shader
-{
-public:
-    Shader(std::string fileName, std::string vertexFuncName, std::string pixelFuncName);
-    
-    void* GetRawObj();
-    
-private:
-    EiRasPlatformBridgeProtocol* PlatformBridge;
-};
+    class ShaderLayout;
 
+    class Shader
+    {
+    public:
+        Shader(std::string fileName, std::string vertexFuncName, std::string pixelFuncName);
+        Shader()
+        {
+            this->PlatformBridge = 0;
+        }
+        void* GetRawObj();
+
+        void InitLayout(ShaderLayout* layout);
+
+    private:
+        EiRasPlatformBridgeProtocol* PlatformBridge;
+    };
 };//namespace Material
 
 

@@ -1,45 +1,43 @@
 #pragma once
 #include <string>
-#include <GraphicsAPI/PlatformDependency/DX12/EiRasDX12.h>
+#include <PlatformDependency/OnDX/GraphicsAPI/EiRasDX12.h>
 #pragma comment (lib, "D3DCompiler.lib")
 
 namespace DX12Utils
 {
 
-    static inline void g_getAssetsPath(_Out_writes_(pathSize) WCHAR* path, UINT pathSize)
+    static inline void g_getAssetsPath(_Out_writes_(pathSize) CHAR* path, UINT pathSize)
     {
         if (path == nullptr)
         {
             return;
         }
 
-        DWORD size = GetModuleFileName(nullptr, path, pathSize);
+        DWORD size = GetModuleFileNameA(nullptr, path, pathSize);
         if (size == 0 || size == pathSize)
         {
             return;
         }
 
-        WCHAR* lastSlash = wcsrchr(path, L'\\');
+        char* lastSlash = strrchr(path, L'\\');
         if (lastSlash)
         {
             *(lastSlash + 1) = L'\0';
         }
     }
 
-    static bool g_compileShader(LPCWSTR fileName, LPCSTR fnName, LPCSTR target, ID3DBlob*& shader)
+    static bool g_compileShader(LPCSTR fileName, LPCSTR fnName, LPCSTR target, ID3DBlob*& shader)
     {
-#pragma warning TOFIX
-        WCHAR assetsPath[512];
+#pragma message("TOFIX")
+        CHAR assetsPath[512];
         g_getAssetsPath(assetsPath, _countof(assetsPath));
-        std::wstring m_assetsPath;
+        std::string m_assetsPath;
         m_assetsPath = assetsPath;
         m_assetsPath += fileName;
-        //LPCSTR target = "ps_5_1";
-        //if (VS)
-        //{
-            //target = "vs_5_1";
-        //}
-        return SUCCEEDED(D3DCompileFromFile(m_assetsPath.c_str(), 0, 0, fnName, target, 0, 0, &shader, 0));
+
+        wchar_t tmp_ws[512];
+        swprintf(tmp_ws, 512, L"%hs", m_assetsPath.c_str());
+        return SUCCEEDED(D3DCompileFromFile(tmp_ws, 0, 0, fnName, target, 0, 0, &shader, 0));
     }
 
     //static bool g_createPSO(ID3DBlob* VS, ID3DBlob* PS, ID3D12PipelineState*& pso, ID3D12RootSignature* rootSignature)

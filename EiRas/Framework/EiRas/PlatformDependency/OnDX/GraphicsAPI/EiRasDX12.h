@@ -5,7 +5,7 @@
 #include <D3Dcompiler.h>
 #include <DirectXMath.h>
 
-#include <OnDX/d3dx12.h>
+#include <PlatformDependency/OnDX/d3dx12.h>
 
 namespace GraphicsAPI
 {
@@ -15,8 +15,8 @@ namespace GraphicsAPI
         EiRasDX12(HWND hwnd, int frameWidth, int frameHeight);
         void InitDevice();
 
-    private:
         ID3D12Device* device;
+    private:
         HWND hwnd;
         int frameWidth, frameHeight;
         CD3DX12_VIEWPORT viewPort;

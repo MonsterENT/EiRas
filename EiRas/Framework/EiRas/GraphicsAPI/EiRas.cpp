@@ -11,7 +11,7 @@
 
 //Platform Dependency
 #if GRAPHICS_DX
-#include <GraphicsAPI/PlatformDependency/DX12/EiRasDX12Bridge.h>
+#include <PlatformDependency/OnDX/GraphicsAPI/EiRasDX12Bridge.h>
 #endif
 
 #if GRAPHICS_METAL
