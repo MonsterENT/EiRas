@@ -1,7 +1,9 @@
 #include "ShaderResourceDX12.h"
+#include <Material/GraphicsResource.hpp>
 #include <PlatformDependency/OnDX/DXMacro.h>
 #include <PlatformDependency/OnDX/GraphicsAPI/EiRasDX12.h>
 
+using MaterialSys::GraphicsResourceType;
 using MaterialSys::ShaderResourceDX12;
 using GraphicsAPI::EiRasDX12;
 
@@ -12,7 +14,7 @@ ShaderResourceDX12::ShaderResourceDX12(DXGI_FORMAT format, UINT width, UINT heig
     this->texData = texData;
         //new UINT8[width * height];
     //memcpy(this->texData, texData, width * height);
-    ResType = ResourceTypeDX12::TypeSRV;
+    ResType = GraphicsResourceType::SRV;
     textureFormat = format;
     this->width = width;
     this->height = height;

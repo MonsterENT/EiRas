@@ -1,6 +1,6 @@
 #include "ShaderDX12Bridge.h"
 #include "ShaderDX12.h"
-#include <PlatformDependency/OnDX/Shader/ShaderLayout.h>
+#include <Material/ShaderLayout.h>
 
 using MaterialSys::ShaderLayout;
 using MaterialSys::ShaderDX12Bridge;

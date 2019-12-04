@@ -8,9 +8,7 @@
 
 #include "Shader.hpp"
 
-#if GRAPHICS_DX
-#include <PlatformDependency/OnDX/Shader/ShaderLayout.h>
-#endif
+#include <Material/ShaderLayout.h>
 
 #if GRAPHICS_DX
 #include <PlatformDependency/OnDX/Shader/ShaderDX12Bridge.h>

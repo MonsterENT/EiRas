@@ -19,38 +19,7 @@ namespace Graphics {
 namespace MaterialSys {
 
     class Shader;
-    enum class MaterialSlotType
-    {
-        Prop = 0,
-        Table = 1
-    };
-
-    enum class MaterialPropType
-    {
-        CBV = 0,
-        SRV = 1
-    };
-
-    class MaterialSlot
-    {
-    public:
-        int SlotID;
-        MaterialSlotType SlotType;
-    };
-
-    class MaterialProp : public MaterialSlot
-    {
-    public:
-        MaterialPropType PropType;
-    };
-
-    class MaterialTable : public MaterialSlot
-    {
-    public:
-        int PropNum;
-        MaterialProp** Props;
-    };
-
+    
     class Material
     {
     public:

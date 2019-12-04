@@ -1,6 +1,6 @@
 #include "ShaderDX12.h"
 #include <PlatformDependency/OnDX/DX12Utils.h>
-#include <PlatformDependency/OnDX/Shader/ShaderLayout.h>
+#include <Material/ShaderLayout.h>
 #include <PlatformDependency/OnDX/GraphicsAPI/EiRasDX12.h>
 #include <PlatformDependency/OnDX/DXMacro.h>
 
@@ -38,18 +38,18 @@ ID3D12RootSignature* createRootSig(ShaderLayout* RefShaderLayout)
     {
         UINT _BASE_SPACE = 0;
         ShaderSlot* slot = RefShaderLayout->Slots[i];
-        if (slot->SlotType == MaterialSys::ShaderSlotType::Prop)
+        if (slot->SlotType == MaterialSys::ShaderSlotType::ShaderSlotType_Prop)
         {
             ShaderProp* prop = (ShaderProp*)slot;
             rootParameters[i].InitAsConstantBufferView(_BASE_CB_REGISTER++, _BASE_SPACE);
         }
-        else if (slot->SlotType == MaterialSys::ShaderSlotType::Table)
+        else if (slot->SlotType == MaterialSys::ShaderSlotType::ShaderSlotType_Table)
         {
             ShaderTable* table = (ShaderTable*)slot;
             CD3DX12_DESCRIPTOR_RANGE1* ranges = new CD3DX12_DESCRIPTOR_RANGE1[table->PropNum];
             for (int j = 0; j < table->PropNum; j++)
             {
-                ranges[j].Init(table->Props[j]->PropType, 1, _BASE_CB_REGISTER++, _BASE_SPACE);
+                ranges[j].Init((D3D12_DESCRIPTOR_RANGE_TYPE)table->Props[j]->PropType, 1, _BASE_CB_REGISTER++, _BASE_SPACE);
             }
             rootParameters[i].InitAsDescriptorTable(table->PropNum, ranges);
             delete[] ranges;

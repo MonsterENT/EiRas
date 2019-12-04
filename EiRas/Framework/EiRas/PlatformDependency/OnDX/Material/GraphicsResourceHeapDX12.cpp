@@ -1,17 +1,20 @@
-#include "ShaderResourceHeapDX12.h"
-#include <PlatformDependency/OnDX/Shader/ShaderResource/ConstantBufferDX12.h>
-#include <PlatformDependency/OnDX/Shader/ShaderResource/ShaderResourceDX12.h>
-#include <PlatformDependency/OnDX/Resource/ResourceDX12.h>
+#include "GraphicsResourceHeapDX12.h"
+#include <Material/GraphicsResource.hpp>
+#include <PlatformDependency/OnDX/Material/ConstantBufferDX12.h>
+#include <PlatformDependency/OnDX/Material/ShaderResourceDX12.h>
+#include <PlatformDependency/OnDX/Material/GraphicsResourceDX12.h>
 #include <PlatformDependency/OnDX/GraphicsAPI/EiRasDX12.h>
-
 #include <PlatformDependency/OnDX/DXMacro.h>
+#include <Material/MaterialLayout.hpp>
 
 using GraphicsAPI::EiRasDX12;
-using MaterialSys::ResourceDX12;
+using MaterialSys::GraphicsResourceType;
+using MaterialSys::GraphicsResourceDX12;
 using MaterialSys::ConstantBufferDX12;
 using MaterialSys::ShaderResourceDX12;
+using MaterialSys::GraphicsResourceHeapDX12;
 
-ShaderResourceHeapDX12::ShaderResourceHeapDX12(UINT resCount, ResourceDX12** resArray, UINT initCount)
+GraphicsResourceHeapDX12::GraphicsResourceHeapDX12(UINT resCount, GraphicsResourceDX12** resArray, UINT initCount)
 {
     if (initCount == -1)
     {
@@ -33,9 +36,9 @@ ShaderResourceHeapDX12::ShaderResourceHeapDX12(UINT resCount, ResourceDX12** res
 
     for (UINT i = 0; i < initCount; i++)
     {
-        ResourceDX12* resObj = resArray[i];
+        GraphicsResourceDX12* resObj = resArray[i];
         
-        if (resObj->ResType == ResourceDX12::ResourceTypeDX12::TypeCB)
+        if (resObj->ResType == GraphicsResourceType::CBV)
         {
             ConstantBufferDX12* resCb = (ConstantBufferDX12*)resObj;
             D3D12_CONSTANT_BUFFER_VIEW_DESC viewDesc = {};
@@ -43,7 +46,7 @@ ShaderResourceHeapDX12::ShaderResourceHeapDX12(UINT resCount, ResourceDX12** res
             viewDesc.SizeInBytes = (resCb->GetBufferSize() + 255) & ~255;
             deviceObj->device->CreateConstantBufferView(&viewDesc, cpuHandle);
         }
-        else if (resObj->ResType == ResourceDX12::ResourceTypeDX12::TypeSRV)
+        else if (resObj->ResType == GraphicsResourceType::CBV)
         {
             ShaderResourceDX12* resSrv = dynamic_cast<ShaderResourceDX12*>(resObj);
             D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
@@ -63,6 +66,6 @@ ShaderResourceHeapDX12::ShaderResourceHeapDX12(UINT resCount, ResourceDX12** res
 }
 
 
-ShaderResourceHeapDX12::~ShaderResourceHeapDX12()
+GraphicsResourceHeapDX12::~GraphicsResourceHeapDX12()
 {
 }

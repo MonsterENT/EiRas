@@ -2,6 +2,7 @@
 
 #include <Windows.h>
 #include <string>
+#include <vector>
 
 namespace Graphics
 {
@@ -12,6 +13,10 @@ namespace MaterialSys
 {
     class Shader;
     class ShaderDX12;
+    class MaterialLayout;
+    class MaterialProp;
+    class MaterialTable;
+
     class MaterialDX12
     {
     public:
@@ -23,5 +28,9 @@ namespace MaterialSys
         void UpdateRenderState(Graphics::GraphicsRenderState* renderState, Shader* shaderObj);
 
         ShaderDX12* RawShaderObj;
+
+        std::vector<MaterialProp*> Props;
+        std::vector<MaterialProp*> LayoutProps;
+        std::vector<MaterialTable*> LayoutTables;
     };
 }

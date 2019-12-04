@@ -78,21 +78,6 @@
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Shader\ShaderDX12Bridge.h">
       <Filter>framework</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Shader\ShaderLayout.h">
-      <Filter>framework</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Shader\ShaderResource\ConstantBufferDX12.h">
-      <Filter>framework</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Shader\ShaderResource\ShaderResourceDX12.h">
-      <Filter>framework</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Shader\ShaderResource\ShaderResourceHeapDX12.h">
-      <Filter>framework</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Resource\ResourceDX12.h">
-      <Filter>framework</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\DXMacro.h">
       <Filter>framework</Filter>
     </ClInclude>
@@ -100,6 +85,36 @@
       <Filter>framework</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\MaterialDX12.h">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Framework\EiRas\Material\MaterialLayout.hpp">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Framework\EiRas\Material\ShaderLayout.h">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Framework\EiRas\Material\GraphicsResource.hpp">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\GraphicsResourceDX12Bridge.h">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\GraphicsResourceDX12.h">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\ConstantBufferDX12.h">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\ShaderResourceDX12.h">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Framework\EiRas\Material\GraphicsResourceHeap.hpp">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\GraphicsResourceHeapDX12.h">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\GraphicsResourceHeapDX12Bridge.h">
       <Filter>framework</Filter>
     </ClInclude>
   </ItemGroup>
@@ -143,25 +158,40 @@
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Shader\ShaderDX12Bridge.cpp">
       <Filter>framework</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Shader\ShaderLayout.cpp">
-      <Filter>framework</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Shader\ShaderResource\ConstantBufferDX12.cpp">
-      <Filter>framework</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Shader\ShaderResource\ShaderResourceDX12.cpp">
-      <Filter>framework</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Shader\ShaderResource\ShaderResourceHeapDX12.cpp">
-      <Filter>framework</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Resource\ResourceDX12.cpp">
-      <Filter>framework</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\MaterialDX12Bridge.cpp">
       <Filter>framework</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\MaterialDX12.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Framework\EiRas\Material\MaterialLayout.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Framework\EiRas\Material\ShaderLayout.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Framework\EiRas\Material\GraphicsResource.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\GraphicsResourceDX12Bridge.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\GraphicsResourceDX12.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\ConstantBufferDX12.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\ShaderResourceDX12.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Framework\EiRas\Material\GraphicsResourceHeap.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\GraphicsResourceHeapDX12.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\GraphicsResourceHeapDX12Bridge.cpp">
       <Filter>framework</Filter>
     </ClCompile>
   </ItemGroup>

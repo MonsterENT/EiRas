@@ -1,11 +1,11 @@
 #pragma once
-#include <PlatformDependency/OnDX/Resource/ResourceDX12.h>
+#include <PlatformDependency/OnDX/Material/GraphicsResourceDX12.h>
 #include <d3d12.h>
 #include <PlatformDependency/OnDX/d3dx12.h>
 
 namespace MaterialSys
 {
-    class ShaderResourceDX12 : public virtual ResourceDX12
+    class ShaderResourceDX12 : public virtual GraphicsResourceDX12
     {
     public:
         ShaderResourceDX12(DXGI_FORMAT format, UINT width, UINT height, UINT8* texData);

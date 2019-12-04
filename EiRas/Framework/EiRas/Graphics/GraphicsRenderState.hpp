@@ -12,19 +12,19 @@
 namespace Graphics
 {
 
-enum CullMode
+typedef enum CullMode
 {
     CullModeBack = 0,
     CullModeFront = 1,
     CullModeNone = 3
-};
+} CullMode;
 
-enum BlendOp
+typedef enum BlendOp
 {
     BlendOpAdd = 0,
-};
+} BlendOp;
 
-enum BlendFactor
+typedef enum BlendFactor
 {
     BlendRGBFactorZero = 0,
     BlendRGBFactorOne = 1,
@@ -45,7 +45,7 @@ enum BlendFactor
 //    BlendRGBFactorOneMinusSource1Color      API_AVAILABLE(macos(10.12), ios(10.11)) = 16,
 //    BlendRGBFactorSource1Alpha              API_AVAILABLE(macos(10.12), ios(10.11)) = 17,
 //    BlendRGBFactorOneMinusSource1Alpha      API_AVAILABLE(macos(10.12), ios(10.11)) = 18,
-};
+} BlendFactor;
 
 class GraphicsRenderState
 {
