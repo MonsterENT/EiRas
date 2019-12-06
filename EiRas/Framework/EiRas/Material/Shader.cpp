@@ -33,10 +33,12 @@ Shader::Shader(std::string fileName, std::string vertexFuncName, std::string pix
 #if GRAPHICS_DX
     PlatformBridge = new ShaderDX12Bridge(fileName.c_str(), vertexFuncName.c_str(), pixelFuncName.c_str());
 #endif
+    Layout = 0;
 }
 
 void Shader::InitLayout(ShaderLayout* layout)
 {
+    Layout = layout;
 #if GRAPHICS_DX
     ((ShaderDX12Bridge*)PlatformBridge)->InitRootSignature(layout);
 #endif

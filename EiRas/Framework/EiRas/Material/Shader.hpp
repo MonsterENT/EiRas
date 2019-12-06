@@ -28,11 +28,13 @@ namespace MaterialSys {
         Shader()
         {
             this->PlatformBridge = 0;
+            this->Layout = 0;
         }
         void* GetRawObj();
 
         void InitLayout(ShaderLayout* layout);
 
+        ShaderLayout* Layout;
     private:
         EiRasPlatformBridgeProtocol* PlatformBridge;
     };

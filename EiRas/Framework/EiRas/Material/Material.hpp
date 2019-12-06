@@ -11,6 +11,7 @@
 
 #include <Global/PlatformDependency/EiRasPlatformBridgeProtocol.h>
 #include <string>
+#include <vector>
 
 namespace Graphics {
     class GraphicsRenderState;
@@ -19,7 +20,10 @@ namespace Graphics {
 namespace MaterialSys {
 
     class Shader;
-    
+    class MaterialLayout;
+    class MaterialProp;
+    class MaterialTable;
+
     class Material
     {
     public:
@@ -33,7 +37,10 @@ namespace MaterialSys {
 
     private:
         Shader* shader;
-
+        MaterialLayout* materialLayout;
+        std::vector<MaterialProp*> Props;
+        std::vector<MaterialProp*> LayoutProps;
+        std::vector<MaterialTable*> LayoutTables;
     };
 
 };//namespace Material

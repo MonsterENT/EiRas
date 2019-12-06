@@ -11,7 +11,7 @@ using MaterialSys::ShaderProp;
 using MaterialSys::ShaderTable;
 using GraphicsAPI::EiRasDX12;
 
-ID3D12RootSignature* createRootSig(ShaderLayout* RefShaderLayout);
+ID3D12RootSignature* createRootSig(ShaderLayout* shaderLayout);
 
 ShaderDX12::ShaderDX12(LPCSTR fileName, LPCSTR vertexFuncName, LPCSTR pixelFuncName)
 {
@@ -20,24 +20,22 @@ ShaderDX12::ShaderDX12(LPCSTR fileName, LPCSTR vertexFuncName, LPCSTR pixelFuncN
     DX12Utils::g_compileShader(fileName, vertexFuncName, "vs_5_1", this->VertexFunc);
     DX12Utils::g_compileShader(fileName, vertexFuncName, "ps_5_1", this->PixelFunc);
     RootSignature = 0;
-    RefShaderLayout = 0;
 }       
 
 void ShaderDX12::InitRootSignature(ShaderLayout* shaderLayout)
 {
-    this->RefShaderLayout = shaderLayout;
-    this->RootSignature = createRootSig(this->RefShaderLayout);
+    this->RootSignature = createRootSig(shaderLayout);
 }
 
-ID3D12RootSignature* createRootSig(ShaderLayout* RefShaderLayout)
+ID3D12RootSignature* createRootSig(ShaderLayout* shaderLayout)
 {
     UINT _BASE_CB_REGISTER = 0;
     ID3D12RootSignature* rootSig = nullptr;
-    CD3DX12_ROOT_PARAMETER1* rootParameters = new CD3DX12_ROOT_PARAMETER1[RefShaderLayout->SlotNum];
-    for (int i = 0; i < RefShaderLayout->SlotNum; i++)
+    CD3DX12_ROOT_PARAMETER1* rootParameters = new CD3DX12_ROOT_PARAMETER1[shaderLayout->SlotNum];
+    for (int i = 0; i < shaderLayout->SlotNum; i++)
     {
         UINT _BASE_SPACE = 0;
-        ShaderSlot* slot = RefShaderLayout->Slots[i];
+        ShaderSlot* slot = shaderLayout->Slots[i];
         if (slot->SlotType == MaterialSys::ShaderSlotType::ShaderSlotType_Prop)
         {
             ShaderProp* prop = (ShaderProp*)slot;
@@ -57,7 +55,7 @@ ID3D12RootSignature* createRootSig(ShaderLayout* RefShaderLayout)
     }
 
     CD3DX12_VERSIONED_ROOT_SIGNATURE_DESC rootSignatureDesc;
-    rootSignatureDesc.Init_1_1(RefShaderLayout->SlotNum, rootParameters, 0, nullptr, D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
+    rootSignatureDesc.Init_1_1(shaderLayout->SlotNum, rootParameters, 0, nullptr, D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
 
     ID3DBlob* signature;
     ID3DBlob* error;

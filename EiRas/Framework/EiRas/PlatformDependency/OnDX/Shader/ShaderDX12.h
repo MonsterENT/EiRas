@@ -16,7 +16,5 @@ namespace MaterialSys
         void InitRootSignature(ShaderLayout* RefShaderLayout);
 
         ID3D12RootSignature* RootSignature;
-
-        ShaderLayout* RefShaderLayout;
     };
 }
