@@ -10,5 +10,7 @@ using namespace MaterialSys;
 
 GraphicsResourceHeap::GraphicsResourceHeap(int resCount, GraphicsResource** resArray)
 {
+#if GRAPHICS_DX
     PlatformBridge = new GraphicsResourceHeapDX12Bridge(resCount, resArray);
+#endif
 }

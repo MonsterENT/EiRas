@@ -7,8 +7,8 @@
 //
 
 #import "CommandBufferMetal.h"
-#import <GraphicsAPI/PlatformDependency/Metal/EiRasMetal.h>
-#include <OnMetal/MetalMacro.h>
+#import <PlatformDependency/OnMetal/GraphicsAPI/EiRasMetal.h>
+#include <PlatformDependency/OnMetal/MetalMacro.h>
 #include <Global/EiRasGlobalManager.hpp>
 
 @interface CommandBufferMetal()

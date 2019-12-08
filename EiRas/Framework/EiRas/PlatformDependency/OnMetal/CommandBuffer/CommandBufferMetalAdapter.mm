@@ -8,7 +8,7 @@
 
 #include "CommandBufferMetalAdapter.hpp"
 #import "CommandBufferMetal.h"
-#include <OnMetal/MetalMacro.h>
+#include <PlatformDependency/OnMetal/MetalMacro.h>
 
 void* Graphics::createCommandBufferMetal(std::string name)
 {

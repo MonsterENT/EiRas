@@ -13,7 +13,7 @@
 #import <MetalKit/MTKView.h>
 
 #include <GraphicsAPI/EiRas.hpp>
-#include <GraphicsAPI/PlatformDependency/Metal/EiRasMetal.h>
+#include <PlatformDependency/OnMetal/GraphicsAPI/EiRasMetal.h>
 
 #include <Material/Material.hpp>
 #include <Material/Shader.hpp>
@@ -46,7 +46,7 @@ Mesh* m_mesh = 0;
     [super viewDidLoad];
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-            _mtkView = [[MTKView alloc]initWithFrame:self.view.frame device:MTLCreateSystemDefaultDevice()];
+        _mtkView = [[MTKView alloc]initWithFrame:self.view.frame device:MTLCreateSystemDefaultDevice()];
         _mtkView.delegate = self;
         [EiRasMetal SetMetalKitView:_mtkView];
         
@@ -74,17 +74,12 @@ Mesh* m_mesh = 0;
 {
     device->OnUpdate();
     
-    static dispatch_once_t onceToken;
-//    dispatch_once(&onceToken, ^{
-        cmdBuffer->BeginFrame();
-        cmdBuffer->SetMaterial(mat);
-
-        cmdBuffer->DrawMesh(m_mesh);
-        cmdBuffer->Present();
-        cmdBuffer->Commit();
-//    });
+    cmdBuffer->BeginFrame();
+    cmdBuffer->SetMaterial(mat);
     
-    
+    cmdBuffer->DrawMesh(m_mesh);
+    cmdBuffer->Present();
+    cmdBuffer->Commit();
 }
 
 

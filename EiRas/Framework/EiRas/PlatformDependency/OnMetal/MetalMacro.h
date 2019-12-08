@@ -9,7 +9,7 @@
 #ifndef MetalMacro_h
 #define MetalMacro_h
 #import <Global/EiRasGlobalManager.hpp>
-#import <GraphicsAPI/PlatformDependency/Metal/EiRasMetal.h>
+#import <PlatformDependency/OnMetal/GraphicsAPI/EiRasMetal.h>
 
 #define PROCESS_OC_OBJ(oc_obj, bridge_ptr) \
 oc_obj.self_retain = oc_obj;\

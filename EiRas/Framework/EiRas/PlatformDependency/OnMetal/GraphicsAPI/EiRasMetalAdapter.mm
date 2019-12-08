@@ -8,7 +8,7 @@
 
 #include "EiRasMetalAdapter.hpp"
 #import "EiRasMetal.h"
-#include <OnMetal/MetalMacro.h>
+#include <PlatformDependency/OnMetal/MetalMacro.h>
 
 void* GraphicsAPI::createMetal()
 {

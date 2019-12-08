@@ -8,7 +8,7 @@
 
 #import "MaterialMetal.h"
 #include <Global/EiRasGlobalManager.hpp>
-#include <OnMetal/MetalMacro.h>
+#include <PlatformDependency/OnMetal/MetalMacro.h>
 
 @implementation MaterialMetal
 

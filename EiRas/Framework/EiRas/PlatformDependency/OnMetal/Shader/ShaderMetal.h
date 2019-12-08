@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <OnMetal/BaseMetalObject.h>
+#import <PlatformDependency/OnMetal/BaseMetalObject.h>
 
 @interface ShaderMetal : BaseMetalObject
 

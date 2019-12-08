@@ -13,10 +13,6 @@
 #include <Global/PlatformDependency/EiRasPlatformBridgeProtocol.h>
 #include <Global/PlatformDefine.h>
 
-#if GRAPHICS_DX
-#include <Windows.h>
-#endif
-
 namespace MaterialSys {
 
     class ShaderLayout;

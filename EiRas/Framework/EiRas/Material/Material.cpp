@@ -39,36 +39,43 @@ Material::Material(std::string name, Shader* shader)
 
     this->shader = shader;
 
-    for (int i = 0; i < shader->Layout->SlotNum; i++)
+    if(shader->Layout != 0)
     {
-        ShaderSlot* shaderSlot = shader->Layout->Slots[i];
-        MaterialProp* tmpMatProp = 0;
-        if (shaderSlot->SlotType == ShaderSlotType::ShaderSlotType_Prop)
-        {
-            ShaderProp* tmpProp = (ShaderProp*)shaderSlot;
-            tmpMatProp = new MaterialProp(tmpProp->PropType, tmpProp->BufferSize);
-            tmpMatProp->SlotID = tmpProp->PropID;
-            Props.push_back(tmpMatProp);
-            LayoutProps.push_back(tmpMatProp);
-        }
-        else if (shaderSlot->SlotType == ShaderSlotType::ShaderSlotType_Table)
-        {
-            ShaderTable* shaderTable = (ShaderTable*)shaderSlot;
+        for (int i = 0; i < shader->Layout->SlotNum; i++)
+         {
+             ShaderSlot* shaderSlot = shader->Layout->Slots[i];
+             MaterialProp* tmpMatProp = 0;
+             if (shaderSlot->SlotType == ShaderSlotType::ShaderSlotType_Prop)
+             {
+                 ShaderProp* tmpProp = (ShaderProp*)shaderSlot;
+                 tmpMatProp = new MaterialProp(tmpProp->PropType, tmpProp->BufferSize);
+                 tmpMatProp->SlotID = tmpProp->PropID;
+                 Props.push_back(tmpMatProp);
+                 LayoutProps.push_back(tmpMatProp);
+             }
+             else if (shaderSlot->SlotType == ShaderSlotType::ShaderSlotType_Table)
+             {
+                 ShaderTable* shaderTable = (ShaderTable*)shaderSlot;
 
-            GraphicsResource** tmpResArray = new GraphicsResource * [shaderTable->PropNum];
-            for (int propIndex = 0; propIndex < shaderTable->PropNum; propIndex++)
-            {
-                ShaderProp* tmpProp = shaderTable->Props[propIndex];
-                tmpMatProp = new MaterialProp(tmpProp->PropType, tmpProp->BufferSize);
-                tmpMatProp->SlotID = tmpProp->PropID;
-                Props.push_back(tmpMatProp);
-                tmpResArray[propIndex] = tmpMatProp->Resource;
-            }
-            MaterialTable* matTable = new MaterialTable(shaderTable->PropNum, tmpResArray);
-            LayoutTables.push_back(matTable);
-        }
+                 GraphicsResource** tmpResArray = new GraphicsResource * [shaderTable->PropNum];
+                 MaterialProp** tmpMatProps = new MaterialProp*[shaderTable->PropNum];
+                 for (int propIndex = 0; propIndex < shaderTable->PropNum; propIndex++)
+                 {
+                     ShaderProp* tmpProp = shaderTable->Props[propIndex];
+                     tmpMatProp = new MaterialProp(tmpProp->PropType, tmpProp->BufferSize);
+                     tmpMatProp->SlotID = tmpProp->PropID;
+                     Props.push_back(tmpMatProp);
+                     tmpMatProps[propIndex] = tmpMatProp;
+                     tmpResArray[propIndex] = tmpMatProp->Resource;
+                 }
+                 MaterialTable* matTable = new MaterialTable(shaderTable->PropNum, tmpMatProps, tmpResArray);
+                 LayoutTables.push_back(matTable);
+                 delete [] tmpResArray;
+                 delete [] tmpMatProps;
+             }
+         }
     }
-
+    
     //init platform pso
     FinishStateChange();
 }

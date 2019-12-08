@@ -8,9 +8,8 @@
 
 #include "MaterialMetalAdapter.hpp"
 #include "MaterialMetal.h"
-#include <OnMetal/MetalMacro.h>
+#include <PlatformDependency/OnMetal/MetalMacro.h>
 #include <Material/Shader.hpp>
-//#include <Material/PlatformDependency/Shader/Metal/ShaderMetal.h>
 
 void* MaterialSys::createMaterialMetal(std::string name)
 {

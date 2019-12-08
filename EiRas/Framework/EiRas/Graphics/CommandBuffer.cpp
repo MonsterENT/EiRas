@@ -10,12 +10,11 @@
 
 #include <Material/Material.hpp>
 #include <Graphics/GraphicsRenderState.hpp>
+
+#include <Global/PlatformDefine.h>
+
 #if GRAPHICS_METAL
 #include "CommandBufferMetalBridge.hpp"
-#endif
-
-#if GRAPHICS_DX
-
 #endif
 
 #include <Mesh/Mesh.hpp>

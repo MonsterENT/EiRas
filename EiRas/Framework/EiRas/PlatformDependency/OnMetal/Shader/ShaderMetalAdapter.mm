@@ -7,7 +7,7 @@
 //
 
 #include "ShaderMetalAdapter.hpp"
-#include <OnMetal/MetalMacro.h>
+#include <PlatformDependency/OnMetal/MetalMacro.h>
 
 #import "ShaderMetal.h"
 

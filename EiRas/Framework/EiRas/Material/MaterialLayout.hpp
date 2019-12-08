@@ -41,10 +41,10 @@ namespace MaterialSys
         MaterialProp** Props;
         GraphicsResourceHeap* ResourceHeap;
 
-        MaterialTable(int propNum, GraphicsResource** resArray)
+        MaterialTable(int propNum, MaterialProp** matProps, GraphicsResource** resArray)
         {
             PropNum = propNum;
-            this->Props = Props;
+            this->Props = matProps;
             ResourceHeap = new GraphicsResourceHeap(PropNum, resArray);
         }
     };

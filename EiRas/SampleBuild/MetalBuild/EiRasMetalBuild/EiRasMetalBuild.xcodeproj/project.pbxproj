@@ -14,28 +14,38 @@
 		C23CACAD2379A38200AA5737 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C23CACAC2379A38200AA5737 /* main.m */; };
 		C23CACB82379A38200AA5737 /* EiRasMetalBuildTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C23CACB72379A38200AA5737 /* EiRasMetalBuildTests.m */; };
 		C23CACC32379A38200AA5737 /* EiRasMetalBuildUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = C23CACC22379A38200AA5737 /* EiRasMetalBuildUITests.m */; };
-		C23CACE32379A92800AA5737 /* EiRas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C23CACDE2379A92800AA5737 /* EiRas.cpp */; };
-		C23CACF72379B8F600AA5737 /* GraphicsRenderState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C23CACF52379B8F600AA5737 /* GraphicsRenderState.cpp */; };
-		C23CACFB2379BFF500AA5737 /* Material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C23CACF92379BFF500AA5737 /* Material.cpp */; };
-		C23CACFF2379C0A700AA5737 /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C23CACFD2379C0A700AA5737 /* Shader.cpp */; };
-		C23CAD042379C33B00AA5737 /* ShaderMetalBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C23CAD022379C33B00AA5737 /* ShaderMetalBridge.cpp */; };
-		C23CAD072379C5F600AA5737 /* ShaderMetalAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = C23CAD052379C5F600AA5737 /* ShaderMetalAdapter.mm */; };
-		C23CAD0A2379C69300AA5737 /* ShaderMetal.mm in Sources */ = {isa = PBXBuildFile; fileRef = C23CAD092379C69300AA5737 /* ShaderMetal.mm */; };
-		C23CAD0E2379C6FC00AA5737 /* EiRasGlobalManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C23CAD0C2379C6FC00AA5737 /* EiRasGlobalManager.cpp */; };
-		C23CAD152379CDFE00AA5737 /* BaseMetalObject.m in Sources */ = {isa = PBXBuildFile; fileRef = C23CAD142379CDFE00AA5737 /* BaseMetalObject.m */; };
-		C23CAD2B237AE06800AA5737 /* EiRasMetalAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = C23CAD28237AE06800AA5737 /* EiRasMetalAdapter.mm */; };
-		C23CAD2C237AE06800AA5737 /* EiRasMetalBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C23CAD29237AE06800AA5737 /* EiRasMetalBridge.cpp */; };
-		C23CAD2D237AE06800AA5737 /* EiRasMetal.mm in Sources */ = {isa = PBXBuildFile; fileRef = C23CAD2A237AE06800AA5737 /* EiRasMetal.mm */; };
 		C23CAD31237AF2E600AA5737 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C23CAD30237AF2E600AA5737 /* MetalKit.framework */; };
-		C23CAD34237AFAB800AA5737 /* CommandBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C23CAD32237AFAB800AA5737 /* CommandBuffer.cpp */; };
-		C23CAD38237AFF9800AA5737 /* CommandBufferMetalBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C23CAD36237AFF9800AA5737 /* CommandBufferMetalBridge.cpp */; };
-		C23CAD3B237AFFAD00AA5737 /* CommandBufferMetalAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = C23CAD39237AFFAD00AA5737 /* CommandBufferMetalAdapter.mm */; };
-		C23CAD3E237AFFC800AA5737 /* CommandBufferMetal.mm in Sources */ = {isa = PBXBuildFile; fileRef = C23CAD3D237AFFC800AA5737 /* CommandBufferMetal.mm */; };
-		C23CAD45237C4D8800AA5737 /* MaterialMetalBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C23CAD43237C4D8800AA5737 /* MaterialMetalBridge.cpp */; };
-		C23CAD48237C4EF100AA5737 /* MaterialMetal.mm in Sources */ = {isa = PBXBuildFile; fileRef = C23CAD47237C4EF100AA5737 /* MaterialMetal.mm */; };
-		C23CAD4B237C569D00AA5737 /* MaterialMetalAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = C23CAD49237C569D00AA5737 /* MaterialMetalAdapter.mm */; };
-		C246DB0F2382D083007DF0D7 /* Mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C246DB0D2382D083007DF0D7 /* Mesh.cpp */; };
-		C246DB172382D613007DF0D7 /* AAPLShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = C246DB162382D613007DF0D7 /* AAPLShaders.metal */; };
+		C2E54D22239D2E8700A84E8C /* Mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2E54CB9239D2E8700A84E8C /* Mesh.cpp */; };
+		C2E54D23239D2E8700A84E8C /* AAPLShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = C2E54CC3239D2E8700A84E8C /* AAPLShaders.metal */; };
+		C2E54D24239D2E8700A84E8C /* GraphicsRenderState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2E54CC7239D2E8700A84E8C /* GraphicsRenderState.cpp */; };
+		C2E54D25239D2E8700A84E8C /* CommandBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2E54CC8239D2E8700A84E8C /* CommandBuffer.cpp */; };
+		C2E54D26239D2E8700A84E8C /* EiRas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2E54CCA239D2E8700A84E8C /* EiRas.cpp */; };
+		C2E54D27239D2E8700A84E8C /* EiRasGlobalManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2E54CD1239D2E8700A84E8C /* EiRasGlobalManager.cpp */; };
+		C2E54D28239D2E8700A84E8C /* MaterialLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2E54CD5239D2E8700A84E8C /* MaterialLayout.cpp */; };
+		C2E54D29239D2E8700A84E8C /* GraphicsResourceHeap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2E54CD7239D2E8700A84E8C /* GraphicsResourceHeap.cpp */; };
+		C2E54D2A239D2E8700A84E8C /* ShaderLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2E54CD9239D2E8700A84E8C /* ShaderLayout.cpp */; };
+		C2E54D2B239D2E8700A84E8C /* GraphicsResource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2E54CDA239D2E8700A84E8C /* GraphicsResource.cpp */; };
+		C2E54D2C239D2E8700A84E8C /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2E54CDB239D2E8700A84E8C /* Shader.cpp */; };
+		C2E54D2D239D2E8700A84E8C /* Material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2E54CDF239D2E8700A84E8C /* Material.cpp */; };
+		C2E54D3B239D2E8700A84E8C /* BaseMetalObject.m in Sources */ = {isa = PBXBuildFile; fileRef = C2E54D03239D2E8700A84E8C /* BaseMetalObject.m */; };
+		C2E54D3C239D2E8700A84E8C /* ShaderMetalAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2E54D08239D2E8700A84E8C /* ShaderMetalAdapter.mm */; };
+		C2E54D3D239D2E8700A84E8C /* ShaderMetal.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2E54D09239D2E8700A84E8C /* ShaderMetal.mm */; };
+		C2E54D3E239D2E8700A84E8C /* ShaderMetalBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2E54D0A239D2E8700A84E8C /* ShaderMetalBridge.cpp */; };
+		C2E54D3F239D2E8700A84E8C /* EiRasMetalAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2E54D0F239D2E8700A84E8C /* EiRasMetalAdapter.mm */; };
+		C2E54D40239D2E8700A84E8C /* EiRasMetalBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2E54D10239D2E8700A84E8C /* EiRasMetalBridge.cpp */; };
+		C2E54D41239D2E8700A84E8C /* EiRasMetal.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2E54D11239D2E8700A84E8C /* EiRasMetal.mm */; };
+		C2E54D42239D2E8700A84E8C /* MaterialMetalBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2E54D15239D2E8700A84E8C /* MaterialMetalBridge.cpp */; };
+		C2E54D43239D2E8700A84E8C /* MaterialMetalAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2E54D16239D2E8700A84E8C /* MaterialMetalAdapter.mm */; };
+		C2E54D44239D2E8700A84E8C /* MaterialMetal.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2E54D18239D2E8700A84E8C /* MaterialMetal.mm */; };
+		C2E54D45239D2E8700A84E8C /* CommandBufferMetalAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2E54D1D239D2E8700A84E8C /* CommandBufferMetalAdapter.mm */; };
+		C2E54D46239D2E8700A84E8C /* CommandBufferMetal.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2E54D1E239D2E8700A84E8C /* CommandBufferMetal.mm */; };
+		C2E54D47239D2E8700A84E8C /* CommandBufferMetalBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2E54D1F239D2E8700A84E8C /* CommandBufferMetalBridge.cpp */; };
+		C2E54D4A239D380800A84E8C /* GraphicsResourceMetalBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2E54D48239D380800A84E8C /* GraphicsResourceMetalBridge.cpp */; };
+		C2E54D4D239D3A1B00A84E8C /* GraphicsResourceMetalAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2E54D4B239D3A1B00A84E8C /* GraphicsResourceMetalAdapter.mm */; };
+		C2E54D50239D3B1800A84E8C /* ConstantBufferMetal.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2E54D4F239D3B1800A84E8C /* ConstantBufferMetal.mm */; };
+		C2E54D53239D401200A84E8C /* GraphicsResourceHeapMetalBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2E54D51239D401200A84E8C /* GraphicsResourceHeapMetalBridge.cpp */; };
+		C2E54D56239D40DC00A84E8C /* GraphicsResourceHeapMetal.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2E54D55239D40DB00A84E8C /* GraphicsResourceHeapMetal.mm */; };
+		C2E54D59239D46EB00A84E8C /* GraphicsResourceHeapMetalAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2E54D57239D46EB00A84E8C /* GraphicsResourceHeapMetalAdapter.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,52 +82,73 @@
 		C23CACBE2379A38200AA5737 /* EiRasMetalBuildUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EiRasMetalBuildUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C23CACC22379A38200AA5737 /* EiRasMetalBuildUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EiRasMetalBuildUITests.m; sourceTree = "<group>"; };
 		C23CACC42379A38200AA5737 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C23CACDE2379A92800AA5737 /* EiRas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EiRas.cpp; sourceTree = "<group>"; };
-		C23CACE22379A92800AA5737 /* EiRas.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EiRas.hpp; sourceTree = "<group>"; };
-		C23CACE52379AAA000AA5737 /* EiRasProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EiRasProtocol.h; sourceTree = "<group>"; };
-		C23CACF52379B8F600AA5737 /* GraphicsRenderState.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GraphicsRenderState.cpp; sourceTree = "<group>"; };
-		C23CACF62379B8F600AA5737 /* GraphicsRenderState.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GraphicsRenderState.hpp; sourceTree = "<group>"; };
-		C23CACF92379BFF500AA5737 /* Material.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Material.cpp; sourceTree = "<group>"; };
-		C23CACFA2379BFF500AA5737 /* Material.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Material.hpp; sourceTree = "<group>"; };
-		C23CACFD2379C0A700AA5737 /* Shader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Shader.cpp; sourceTree = "<group>"; };
-		C23CACFE2379C0A700AA5737 /* Shader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Shader.hpp; sourceTree = "<group>"; };
-		C23CAD022379C33B00AA5737 /* ShaderMetalBridge.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderMetalBridge.cpp; sourceTree = "<group>"; };
-		C23CAD032379C33B00AA5737 /* ShaderMetalBridge.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ShaderMetalBridge.hpp; sourceTree = "<group>"; };
-		C23CAD052379C5F600AA5737 /* ShaderMetalAdapter.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ShaderMetalAdapter.mm; sourceTree = "<group>"; };
-		C23CAD062379C5F600AA5737 /* ShaderMetalAdapter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ShaderMetalAdapter.hpp; sourceTree = "<group>"; };
-		C23CAD082379C69300AA5737 /* ShaderMetal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderMetal.h; sourceTree = "<group>"; };
-		C23CAD092379C69300AA5737 /* ShaderMetal.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ShaderMetal.mm; sourceTree = "<group>"; };
-		C23CAD0C2379C6FC00AA5737 /* EiRasGlobalManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EiRasGlobalManager.cpp; sourceTree = "<group>"; };
-		C23CAD0D2379C6FC00AA5737 /* EiRasGlobalManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EiRasGlobalManager.hpp; sourceTree = "<group>"; };
-		C23CAD122379CC7E00AA5737 /* MetalMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MetalMacro.h; sourceTree = "<group>"; };
-		C23CAD132379CDFE00AA5737 /* BaseMetalObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseMetalObject.h; sourceTree = "<group>"; };
-		C23CAD142379CDFE00AA5737 /* BaseMetalObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaseMetalObject.m; sourceTree = "<group>"; };
-		C23CAD23237AE05C00AA5737 /* EiRasPlatformBridgeProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EiRasPlatformBridgeProtocol.h; sourceTree = "<group>"; };
-		C23CAD25237AE06800AA5737 /* EiRasMetalBridge.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EiRasMetalBridge.hpp; sourceTree = "<group>"; };
-		C23CAD26237AE06800AA5737 /* EiRasMetalAdapter.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EiRasMetalAdapter.hpp; sourceTree = "<group>"; };
-		C23CAD27237AE06800AA5737 /* EiRasMetal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EiRasMetal.h; sourceTree = "<group>"; };
-		C23CAD28237AE06800AA5737 /* EiRasMetalAdapter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EiRasMetalAdapter.mm; sourceTree = "<group>"; };
-		C23CAD29237AE06800AA5737 /* EiRasMetalBridge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EiRasMetalBridge.cpp; sourceTree = "<group>"; };
-		C23CAD2A237AE06800AA5737 /* EiRasMetal.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EiRasMetal.mm; sourceTree = "<group>"; };
 		C23CAD30237AF2E600AA5737 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
-		C23CAD32237AFAB800AA5737 /* CommandBuffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CommandBuffer.cpp; sourceTree = "<group>"; };
-		C23CAD33237AFAB800AA5737 /* CommandBuffer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CommandBuffer.hpp; sourceTree = "<group>"; };
-		C23CAD36237AFF9800AA5737 /* CommandBufferMetalBridge.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CommandBufferMetalBridge.cpp; sourceTree = "<group>"; };
-		C23CAD37237AFF9800AA5737 /* CommandBufferMetalBridge.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CommandBufferMetalBridge.hpp; sourceTree = "<group>"; };
-		C23CAD39237AFFAD00AA5737 /* CommandBufferMetalAdapter.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CommandBufferMetalAdapter.mm; sourceTree = "<group>"; };
-		C23CAD3A237AFFAD00AA5737 /* CommandBufferMetalAdapter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CommandBufferMetalAdapter.hpp; sourceTree = "<group>"; };
-		C23CAD3C237AFFC800AA5737 /* CommandBufferMetal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommandBufferMetal.h; sourceTree = "<group>"; };
-		C23CAD3D237AFFC800AA5737 /* CommandBufferMetal.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CommandBufferMetal.mm; sourceTree = "<group>"; };
-		C23CAD43237C4D8800AA5737 /* MaterialMetalBridge.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MaterialMetalBridge.cpp; sourceTree = "<group>"; };
-		C23CAD44237C4D8800AA5737 /* MaterialMetalBridge.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MaterialMetalBridge.hpp; sourceTree = "<group>"; };
-		C23CAD46237C4EF100AA5737 /* MaterialMetal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MaterialMetal.h; sourceTree = "<group>"; };
-		C23CAD47237C4EF100AA5737 /* MaterialMetal.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MaterialMetal.mm; sourceTree = "<group>"; };
-		C23CAD49237C569D00AA5737 /* MaterialMetalAdapter.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MaterialMetalAdapter.mm; sourceTree = "<group>"; };
-		C23CAD4A237C569D00AA5737 /* MaterialMetalAdapter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MaterialMetalAdapter.hpp; sourceTree = "<group>"; };
-		C246DB0D2382D083007DF0D7 /* Mesh.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Mesh.cpp; sourceTree = "<group>"; };
-		C246DB0E2382D083007DF0D7 /* Mesh.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Mesh.hpp; sourceTree = "<group>"; };
-		C246DB132382D1EA007DF0D7 /* MetalGraphicsPipelineInput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MetalGraphicsPipelineInput.h; sourceTree = "<group>"; };
-		C246DB162382D613007DF0D7 /* AAPLShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = AAPLShaders.metal; sourceTree = "<group>"; };
+		C2E54CB9239D2E8700A84E8C /* Mesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mesh.cpp; sourceTree = "<group>"; };
+		C2E54CBA239D2E8700A84E8C /* Mesh.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Mesh.hpp; sourceTree = "<group>"; };
+		C2E54CC2239D2E8700A84E8C /* MetalGraphicsPipelineInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetalGraphicsPipelineInput.h; sourceTree = "<group>"; };
+		C2E54CC3239D2E8700A84E8C /* AAPLShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = AAPLShaders.metal; sourceTree = "<group>"; };
+		C2E54CC5239D2E8700A84E8C /* GraphicsRenderState.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GraphicsRenderState.hpp; sourceTree = "<group>"; };
+		C2E54CC6239D2E8700A84E8C /* CommandBuffer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CommandBuffer.hpp; sourceTree = "<group>"; };
+		C2E54CC7239D2E8700A84E8C /* GraphicsRenderState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GraphicsRenderState.cpp; sourceTree = "<group>"; };
+		C2E54CC8239D2E8700A84E8C /* CommandBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CommandBuffer.cpp; sourceTree = "<group>"; };
+		C2E54CCA239D2E8700A84E8C /* EiRas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EiRas.cpp; sourceTree = "<group>"; };
+		C2E54CCB239D2E8700A84E8C /* EiRas.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EiRas.hpp; sourceTree = "<group>"; };
+		C2E54CCD239D2E8700A84E8C /* EiRasProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EiRasProtocol.h; sourceTree = "<group>"; };
+		C2E54CCF239D2E8700A84E8C /* EiRasGlobalManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EiRasGlobalManager.hpp; sourceTree = "<group>"; };
+		C2E54CD0239D2E8700A84E8C /* PlatformDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlatformDefine.h; sourceTree = "<group>"; };
+		C2E54CD1239D2E8700A84E8C /* EiRasGlobalManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EiRasGlobalManager.cpp; sourceTree = "<group>"; };
+		C2E54CD3239D2E8700A84E8C /* EiRasPlatformBridgeProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EiRasPlatformBridgeProtocol.h; sourceTree = "<group>"; };
+		C2E54CD5239D2E8700A84E8C /* MaterialLayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MaterialLayout.cpp; sourceTree = "<group>"; };
+		C2E54CD6239D2E8700A84E8C /* Material.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Material.hpp; sourceTree = "<group>"; };
+		C2E54CD7239D2E8700A84E8C /* GraphicsResourceHeap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GraphicsResourceHeap.cpp; sourceTree = "<group>"; };
+		C2E54CD8239D2E8700A84E8C /* ShaderLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderLayout.h; sourceTree = "<group>"; };
+		C2E54CD9239D2E8700A84E8C /* ShaderLayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderLayout.cpp; sourceTree = "<group>"; };
+		C2E54CDA239D2E8700A84E8C /* GraphicsResource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GraphicsResource.cpp; sourceTree = "<group>"; };
+		C2E54CDB239D2E8700A84E8C /* Shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Shader.cpp; sourceTree = "<group>"; };
+		C2E54CDC239D2E8700A84E8C /* GraphicsResource.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GraphicsResource.hpp; sourceTree = "<group>"; };
+		C2E54CDD239D2E8700A84E8C /* Shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Shader.hpp; sourceTree = "<group>"; };
+		C2E54CDE239D2E8700A84E8C /* MaterialLayout.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MaterialLayout.hpp; sourceTree = "<group>"; };
+		C2E54CDF239D2E8700A84E8C /* Material.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Material.cpp; sourceTree = "<group>"; };
+		C2E54CE0239D2E8700A84E8C /* GraphicsResourceHeap.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GraphicsResourceHeap.hpp; sourceTree = "<group>"; };
+		C2E54D03239D2E8700A84E8C /* BaseMetalObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseMetalObject.m; sourceTree = "<group>"; };
+		C2E54D05239D2E8700A84E8C /* ShaderMetalBridge.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ShaderMetalBridge.hpp; sourceTree = "<group>"; };
+		C2E54D06239D2E8700A84E8C /* ShaderMetalAdapter.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ShaderMetalAdapter.hpp; sourceTree = "<group>"; };
+		C2E54D07239D2E8700A84E8C /* ShaderMetal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderMetal.h; sourceTree = "<group>"; };
+		C2E54D08239D2E8700A84E8C /* ShaderMetalAdapter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ShaderMetalAdapter.mm; sourceTree = "<group>"; };
+		C2E54D09239D2E8700A84E8C /* ShaderMetal.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ShaderMetal.mm; sourceTree = "<group>"; };
+		C2E54D0A239D2E8700A84E8C /* ShaderMetalBridge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderMetalBridge.cpp; sourceTree = "<group>"; };
+		C2E54D0C239D2E8700A84E8C /* EiRasMetalBridge.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EiRasMetalBridge.hpp; sourceTree = "<group>"; };
+		C2E54D0D239D2E8700A84E8C /* EiRasMetalAdapter.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EiRasMetalAdapter.hpp; sourceTree = "<group>"; };
+		C2E54D0E239D2E8700A84E8C /* EiRasMetal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EiRasMetal.h; sourceTree = "<group>"; };
+		C2E54D0F239D2E8700A84E8C /* EiRasMetalAdapter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EiRasMetalAdapter.mm; sourceTree = "<group>"; };
+		C2E54D10239D2E8700A84E8C /* EiRasMetalBridge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EiRasMetalBridge.cpp; sourceTree = "<group>"; };
+		C2E54D11239D2E8700A84E8C /* EiRasMetal.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EiRasMetal.mm; sourceTree = "<group>"; };
+		C2E54D12239D2E8700A84E8C /* BaseMetalObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseMetalObject.h; sourceTree = "<group>"; };
+		C2E54D14239D2E8700A84E8C /* MaterialMetalAdapter.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MaterialMetalAdapter.hpp; sourceTree = "<group>"; };
+		C2E54D15239D2E8700A84E8C /* MaterialMetalBridge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MaterialMetalBridge.cpp; sourceTree = "<group>"; };
+		C2E54D16239D2E8700A84E8C /* MaterialMetalAdapter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MaterialMetalAdapter.mm; sourceTree = "<group>"; };
+		C2E54D17239D2E8700A84E8C /* MaterialMetal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaterialMetal.h; sourceTree = "<group>"; };
+		C2E54D18239D2E8700A84E8C /* MaterialMetal.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MaterialMetal.mm; sourceTree = "<group>"; };
+		C2E54D19239D2E8700A84E8C /* MaterialMetalBridge.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MaterialMetalBridge.hpp; sourceTree = "<group>"; };
+		C2E54D1B239D2E8700A84E8C /* CommandBufferMetal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandBufferMetal.h; sourceTree = "<group>"; };
+		C2E54D1C239D2E8700A84E8C /* CommandBufferMetalAdapter.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CommandBufferMetalAdapter.hpp; sourceTree = "<group>"; };
+		C2E54D1D239D2E8700A84E8C /* CommandBufferMetalAdapter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CommandBufferMetalAdapter.mm; sourceTree = "<group>"; };
+		C2E54D1E239D2E8700A84E8C /* CommandBufferMetal.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CommandBufferMetal.mm; sourceTree = "<group>"; };
+		C2E54D1F239D2E8700A84E8C /* CommandBufferMetalBridge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CommandBufferMetalBridge.cpp; sourceTree = "<group>"; };
+		C2E54D20239D2E8700A84E8C /* CommandBufferMetalBridge.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CommandBufferMetalBridge.hpp; sourceTree = "<group>"; };
+		C2E54D21239D2E8700A84E8C /* MetalMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetalMacro.h; sourceTree = "<group>"; };
+		C2E54D48239D380800A84E8C /* GraphicsResourceMetalBridge.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GraphicsResourceMetalBridge.cpp; sourceTree = "<group>"; };
+		C2E54D49239D380800A84E8C /* GraphicsResourceMetalBridge.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GraphicsResourceMetalBridge.hpp; sourceTree = "<group>"; };
+		C2E54D4B239D3A1B00A84E8C /* GraphicsResourceMetalAdapter.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = GraphicsResourceMetalAdapter.mm; sourceTree = "<group>"; };
+		C2E54D4C239D3A1B00A84E8C /* GraphicsResourceMetalAdapter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GraphicsResourceMetalAdapter.hpp; sourceTree = "<group>"; };
+		C2E54D4E239D3B1800A84E8C /* ConstantBufferMetal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConstantBufferMetal.h; sourceTree = "<group>"; };
+		C2E54D4F239D3B1800A84E8C /* ConstantBufferMetal.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ConstantBufferMetal.mm; sourceTree = "<group>"; };
+		C2E54D51239D401200A84E8C /* GraphicsResourceHeapMetalBridge.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GraphicsResourceHeapMetalBridge.cpp; sourceTree = "<group>"; };
+		C2E54D52239D401200A84E8C /* GraphicsResourceHeapMetalBridge.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GraphicsResourceHeapMetalBridge.hpp; sourceTree = "<group>"; };
+		C2E54D54239D40DB00A84E8C /* GraphicsResourceHeapMetal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GraphicsResourceHeapMetal.h; sourceTree = "<group>"; };
+		C2E54D55239D40DB00A84E8C /* GraphicsResourceHeapMetal.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = GraphicsResourceHeapMetal.mm; sourceTree = "<group>"; };
+		C2E54D57239D46EB00A84E8C /* GraphicsResourceHeapMetalAdapter.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = GraphicsResourceHeapMetalAdapter.mm; sourceTree = "<group>"; };
+		C2E54D58239D46EB00A84E8C /* GraphicsResourceHeapMetalAdapter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GraphicsResourceHeapMetalAdapter.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,7 +201,7 @@
 		C23CAC9F2379A37F00AA5737 /* EiRasMetalBuild */ = {
 			isa = PBXGroup;
 			children = (
-				C23CACDC2379A92800AA5737 /* Framework */,
+				C2E54CB5239D2E8700A84E8C /* Framework */,
 				C23CACA02379A37F00AA5737 /* AppDelegate.h */,
 				C23CACA12379A37F00AA5737 /* AppDelegate.m */,
 				C23CACA32379A37F00AA5737 /* ViewController.h */,
@@ -202,151 +233,6 @@
 			path = EiRasMetalBuildUITests;
 			sourceTree = "<group>";
 		};
-		C23CACDC2379A92800AA5737 /* Framework */ = {
-			isa = PBXGroup;
-			children = (
-				C23CACDD2379A92800AA5737 /* EiRas */,
-			);
-			name = Framework;
-			path = ../../../../Framework;
-			sourceTree = "<group>";
-		};
-		C23CACDD2379A92800AA5737 /* EiRas */ = {
-			isa = PBXGroup;
-			children = (
-				C246DB142382D47B007DF0D7 /* ShaderFile */,
-				C246DB0C2382D069007DF0D7 /* Mesh */,
-				C23CAD112379CC1800AA5737 /* OnMetal */,
-				C23CAD0B2379C6C700AA5737 /* Global */,
-				C23CACFC2379C01C00AA5737 /* GraphicsAPI */,
-				C23CACF82379BFDD00AA5737 /* Material */,
-				C23CACF42379B8C200AA5737 /* Graphics */,
-				C23CACEC2379AF9900AA5737 /* BuiltinProtocols */,
-				C23CACE42379AA5000AA5737 /* Protocols */,
-			);
-			path = EiRas;
-			sourceTree = "<group>";
-		};
-		C23CACE42379AA5000AA5737 /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-				C23CACE52379AAA000AA5737 /* EiRasProtocol.h */,
-			);
-			path = Protocols;
-			sourceTree = "<group>";
-		};
-		C23CACEC2379AF9900AA5737 /* BuiltinProtocols */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = BuiltinProtocols;
-			sourceTree = "<group>";
-		};
-		C23CACF42379B8C200AA5737 /* Graphics */ = {
-			isa = PBXGroup;
-			children = (
-				C23CAD35237AFF5100AA5737 /* PlatformDependency */,
-				C23CACF52379B8F600AA5737 /* GraphicsRenderState.cpp */,
-				C23CACF62379B8F600AA5737 /* GraphicsRenderState.hpp */,
-				C23CAD32237AFAB800AA5737 /* CommandBuffer.cpp */,
-				C23CAD33237AFAB800AA5737 /* CommandBuffer.hpp */,
-			);
-			path = Graphics;
-			sourceTree = "<group>";
-		};
-		C23CACF82379BFDD00AA5737 /* Material */ = {
-			isa = PBXGroup;
-			children = (
-				C23CAD002379C2F100AA5737 /* PlatformDependency */,
-				C23CACF92379BFF500AA5737 /* Material.cpp */,
-				C23CACFA2379BFF500AA5737 /* Material.hpp */,
-				C23CACFD2379C0A700AA5737 /* Shader.cpp */,
-				C23CACFE2379C0A700AA5737 /* Shader.hpp */,
-			);
-			path = Material;
-			sourceTree = "<group>";
-		};
-		C23CACFC2379C01C00AA5737 /* GraphicsAPI */ = {
-			isa = PBXGroup;
-			children = (
-				C23CAD2E237AEBE000AA5737 /* PlatformDependency */,
-				C23CACDE2379A92800AA5737 /* EiRas.cpp */,
-				C23CACE22379A92800AA5737 /* EiRas.hpp */,
-			);
-			path = GraphicsAPI;
-			sourceTree = "<group>";
-		};
-		C23CAD002379C2F100AA5737 /* PlatformDependency */ = {
-			isa = PBXGroup;
-			children = (
-				C23CAD41237C4D5B00AA5737 /* Material */,
-				C23CAD40237C4D3B00AA5737 /* Shader */,
-			);
-			path = PlatformDependency;
-			sourceTree = "<group>";
-		};
-		C23CAD012379C30A00AA5737 /* Metal */ = {
-			isa = PBXGroup;
-			children = (
-				C23CAD022379C33B00AA5737 /* ShaderMetalBridge.cpp */,
-				C23CAD032379C33B00AA5737 /* ShaderMetalBridge.hpp */,
-				C23CAD052379C5F600AA5737 /* ShaderMetalAdapter.mm */,
-				C23CAD062379C5F600AA5737 /* ShaderMetalAdapter.hpp */,
-				C23CAD082379C69300AA5737 /* ShaderMetal.h */,
-				C23CAD092379C69300AA5737 /* ShaderMetal.mm */,
-			);
-			path = Metal;
-			sourceTree = "<group>";
-		};
-		C23CAD0B2379C6C700AA5737 /* Global */ = {
-			isa = PBXGroup;
-			children = (
-				C23CAD0C2379C6FC00AA5737 /* EiRasGlobalManager.cpp */,
-				C23CAD0D2379C6FC00AA5737 /* EiRasGlobalManager.hpp */,
-				C23CAD22237AE05C00AA5737 /* PlatformDependency */,
-			);
-			path = Global;
-			sourceTree = "<group>";
-		};
-		C23CAD112379CC1800AA5737 /* OnMetal */ = {
-			isa = PBXGroup;
-			children = (
-				C23CAD122379CC7E00AA5737 /* MetalMacro.h */,
-				C23CAD132379CDFE00AA5737 /* BaseMetalObject.h */,
-				C23CAD142379CDFE00AA5737 /* BaseMetalObject.m */,
-			);
-			path = OnMetal;
-			sourceTree = "<group>";
-		};
-		C23CAD22237AE05C00AA5737 /* PlatformDependency */ = {
-			isa = PBXGroup;
-			children = (
-				C23CAD23237AE05C00AA5737 /* EiRasPlatformBridgeProtocol.h */,
-			);
-			path = PlatformDependency;
-			sourceTree = "<group>";
-		};
-		C23CAD24237AE06800AA5737 /* Metal */ = {
-			isa = PBXGroup;
-			children = (
-				C23CAD25237AE06800AA5737 /* EiRasMetalBridge.hpp */,
-				C23CAD29237AE06800AA5737 /* EiRasMetalBridge.cpp */,
-				C23CAD26237AE06800AA5737 /* EiRasMetalAdapter.hpp */,
-				C23CAD28237AE06800AA5737 /* EiRasMetalAdapter.mm */,
-				C23CAD27237AE06800AA5737 /* EiRasMetal.h */,
-				C23CAD2A237AE06800AA5737 /* EiRasMetal.mm */,
-			);
-			path = Metal;
-			sourceTree = "<group>";
-		};
-		C23CAD2E237AEBE000AA5737 /* PlatformDependency */ = {
-			isa = PBXGroup;
-			children = (
-				C23CAD24237AE06800AA5737 /* Metal */,
-			);
-			path = PlatformDependency;
-			sourceTree = "<group>";
-		};
 		C23CAD2F237AF2E600AA5737 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -355,104 +241,230 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		C23CAD35237AFF5100AA5737 /* PlatformDependency */ = {
+		C2E54CB5239D2E8700A84E8C /* Framework */ = {
 			isa = PBXGroup;
 			children = (
-				C23CAD3F237AFFD500AA5737 /* CommandBuffer */,
+				C2E54CB6239D2E8700A84E8C /* EiRas */,
 			);
-			path = PlatformDependency;
+			name = Framework;
+			path = ../../../../Framework;
 			sourceTree = "<group>";
 		};
-		C23CAD3F237AFFD500AA5737 /* CommandBuffer */ = {
+		C2E54CB6239D2E8700A84E8C /* EiRas */ = {
 			isa = PBXGroup;
 			children = (
-				C23CAD36237AFF9800AA5737 /* CommandBufferMetalBridge.cpp */,
-				C23CAD37237AFF9800AA5737 /* CommandBufferMetalBridge.hpp */,
-				C23CAD39237AFFAD00AA5737 /* CommandBufferMetalAdapter.mm */,
-				C23CAD3A237AFFAD00AA5737 /* CommandBufferMetalAdapter.hpp */,
-				C23CAD3C237AFFC800AA5737 /* CommandBufferMetal.h */,
-				C23CAD3D237AFFC800AA5737 /* CommandBufferMetal.mm */,
+				C2E54CB7239D2E8700A84E8C /* BuiltinProtocols */,
+				C2E54CB8239D2E8700A84E8C /* Mesh */,
+				C2E54CBE239D2E8700A84E8C /* Utils */,
+				C2E54CC0239D2E8700A84E8C /* ShaderFile */,
+				C2E54CC4239D2E8700A84E8C /* Graphics */,
+				C2E54CC9239D2E8700A84E8C /* GraphicsAPI */,
+				C2E54CCC239D2E8700A84E8C /* Protocols */,
+				C2E54CCE239D2E8700A84E8C /* Global */,
+				C2E54CD4239D2E8700A84E8C /* Material */,
+				C2E54CE1239D2E8700A84E8C /* PlatformDependency */,
 			);
-			path = CommandBuffer;
+			path = EiRas;
 			sourceTree = "<group>";
 		};
-		C23CAD40237C4D3B00AA5737 /* Shader */ = {
+		C2E54CB7239D2E8700A84E8C /* BuiltinProtocols */ = {
 			isa = PBXGroup;
 			children = (
-				C23CAD012379C30A00AA5737 /* Metal */,
 			);
-			path = Shader;
+			path = BuiltinProtocols;
 			sourceTree = "<group>";
 		};
-		C23CAD41237C4D5B00AA5737 /* Material */ = {
+		C2E54CB8239D2E8700A84E8C /* Mesh */ = {
 			isa = PBXGroup;
 			children = (
-				C23CAD42237C4D6100AA5737 /* Metal */,
-			);
-			path = Material;
-			sourceTree = "<group>";
-		};
-		C23CAD42237C4D6100AA5737 /* Metal */ = {
-			isa = PBXGroup;
-			children = (
-				C23CAD43237C4D8800AA5737 /* MaterialMetalBridge.cpp */,
-				C23CAD44237C4D8800AA5737 /* MaterialMetalBridge.hpp */,
-				C23CAD46237C4EF100AA5737 /* MaterialMetal.h */,
-				C23CAD47237C4EF100AA5737 /* MaterialMetal.mm */,
-				C23CAD49237C569D00AA5737 /* MaterialMetalAdapter.mm */,
-				C23CAD4A237C569D00AA5737 /* MaterialMetalAdapter.hpp */,
-			);
-			path = Metal;
-			sourceTree = "<group>";
-		};
-		C246DB0C2382D069007DF0D7 /* Mesh */ = {
-			isa = PBXGroup;
-			children = (
-				C246DB102382D115007DF0D7 /* PlatformDependency */,
-				C246DB0D2382D083007DF0D7 /* Mesh.cpp */,
-				C246DB0E2382D083007DF0D7 /* Mesh.hpp */,
+				C2E54CB9239D2E8700A84E8C /* Mesh.cpp */,
+				C2E54CBA239D2E8700A84E8C /* Mesh.hpp */,
 			);
 			path = Mesh;
 			sourceTree = "<group>";
 		};
-		C246DB102382D115007DF0D7 /* PlatformDependency */ = {
+		C2E54CBE239D2E8700A84E8C /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				C246DB112382D11E007DF0D7 /* Mesh */,
+				C2E54CBF239D2E8700A84E8C /* MetalOnly */,
 			);
-			path = PlatformDependency;
+			path = Utils;
 			sourceTree = "<group>";
 		};
-		C246DB112382D11E007DF0D7 /* Mesh */ = {
-			isa = PBXGroup;
-			children = (
-				C246DB122382D12A007DF0D7 /* Metal */,
-			);
-			path = Mesh;
-			sourceTree = "<group>";
-		};
-		C246DB122382D12A007DF0D7 /* Metal */ = {
+		C2E54CBF239D2E8700A84E8C /* MetalOnly */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = Metal;
+			path = MetalOnly;
 			sourceTree = "<group>";
 		};
-		C246DB142382D47B007DF0D7 /* ShaderFile */ = {
+		C2E54CC0239D2E8700A84E8C /* ShaderFile */ = {
 			isa = PBXGroup;
 			children = (
-				C246DB152382D488007DF0D7 /* Metal */,
+				C2E54CC1239D2E8700A84E8C /* Metal */,
 			);
 			path = ShaderFile;
 			sourceTree = "<group>";
 		};
-		C246DB152382D488007DF0D7 /* Metal */ = {
+		C2E54CC1239D2E8700A84E8C /* Metal */ = {
 			isa = PBXGroup;
 			children = (
-				C246DB132382D1EA007DF0D7 /* MetalGraphicsPipelineInput.h */,
-				C246DB162382D613007DF0D7 /* AAPLShaders.metal */,
+				C2E54CC2239D2E8700A84E8C /* MetalGraphicsPipelineInput.h */,
+				C2E54CC3239D2E8700A84E8C /* AAPLShaders.metal */,
 			);
 			path = Metal;
+			sourceTree = "<group>";
+		};
+		C2E54CC4239D2E8700A84E8C /* Graphics */ = {
+			isa = PBXGroup;
+			children = (
+				C2E54CC5239D2E8700A84E8C /* GraphicsRenderState.hpp */,
+				C2E54CC6239D2E8700A84E8C /* CommandBuffer.hpp */,
+				C2E54CC7239D2E8700A84E8C /* GraphicsRenderState.cpp */,
+				C2E54CC8239D2E8700A84E8C /* CommandBuffer.cpp */,
+			);
+			path = Graphics;
+			sourceTree = "<group>";
+		};
+		C2E54CC9239D2E8700A84E8C /* GraphicsAPI */ = {
+			isa = PBXGroup;
+			children = (
+				C2E54CCA239D2E8700A84E8C /* EiRas.cpp */,
+				C2E54CCB239D2E8700A84E8C /* EiRas.hpp */,
+			);
+			path = GraphicsAPI;
+			sourceTree = "<group>";
+		};
+		C2E54CCC239D2E8700A84E8C /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				C2E54CCD239D2E8700A84E8C /* EiRasProtocol.h */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		C2E54CCE239D2E8700A84E8C /* Global */ = {
+			isa = PBXGroup;
+			children = (
+				C2E54CCF239D2E8700A84E8C /* EiRasGlobalManager.hpp */,
+				C2E54CD0239D2E8700A84E8C /* PlatformDefine.h */,
+				C2E54CD1239D2E8700A84E8C /* EiRasGlobalManager.cpp */,
+				C2E54CD2239D2E8700A84E8C /* PlatformDependency */,
+			);
+			path = Global;
+			sourceTree = "<group>";
+		};
+		C2E54CD2239D2E8700A84E8C /* PlatformDependency */ = {
+			isa = PBXGroup;
+			children = (
+				C2E54CD3239D2E8700A84E8C /* EiRasPlatformBridgeProtocol.h */,
+			);
+			path = PlatformDependency;
+			sourceTree = "<group>";
+		};
+		C2E54CD4239D2E8700A84E8C /* Material */ = {
+			isa = PBXGroup;
+			children = (
+				C2E54CDE239D2E8700A84E8C /* MaterialLayout.hpp */,
+				C2E54CD5239D2E8700A84E8C /* MaterialLayout.cpp */,
+				C2E54CD6239D2E8700A84E8C /* Material.hpp */,
+				C2E54CD7239D2E8700A84E8C /* GraphicsResourceHeap.cpp */,
+				C2E54CD8239D2E8700A84E8C /* ShaderLayout.h */,
+				C2E54CD9239D2E8700A84E8C /* ShaderLayout.cpp */,
+				C2E54CDA239D2E8700A84E8C /* GraphicsResource.cpp */,
+				C2E54CDB239D2E8700A84E8C /* Shader.cpp */,
+				C2E54CDC239D2E8700A84E8C /* GraphicsResource.hpp */,
+				C2E54CDD239D2E8700A84E8C /* Shader.hpp */,
+				C2E54CDF239D2E8700A84E8C /* Material.cpp */,
+				C2E54CE0239D2E8700A84E8C /* GraphicsResourceHeap.hpp */,
+			);
+			path = Material;
+			sourceTree = "<group>";
+		};
+		C2E54CE1239D2E8700A84E8C /* PlatformDependency */ = {
+			isa = PBXGroup;
+			children = (
+				C2E54D02239D2E8700A84E8C /* OnMetal */,
+			);
+			path = PlatformDependency;
+			sourceTree = "<group>";
+		};
+		C2E54D02239D2E8700A84E8C /* OnMetal */ = {
+			isa = PBXGroup;
+			children = (
+				C2E54D21239D2E8700A84E8C /* MetalMacro.h */,
+				C2E54D12239D2E8700A84E8C /* BaseMetalObject.h */,
+				C2E54D03239D2E8700A84E8C /* BaseMetalObject.m */,
+				C2E54D04239D2E8700A84E8C /* Shader */,
+				C2E54D0B239D2E8700A84E8C /* GraphicsAPI */,
+				C2E54D13239D2E8700A84E8C /* Material */,
+				C2E54D1A239D2E8700A84E8C /* CommandBuffer */,
+			);
+			path = OnMetal;
+			sourceTree = "<group>";
+		};
+		C2E54D04239D2E8700A84E8C /* Shader */ = {
+			isa = PBXGroup;
+			children = (
+				C2E54D05239D2E8700A84E8C /* ShaderMetalBridge.hpp */,
+				C2E54D06239D2E8700A84E8C /* ShaderMetalAdapter.hpp */,
+				C2E54D07239D2E8700A84E8C /* ShaderMetal.h */,
+				C2E54D08239D2E8700A84E8C /* ShaderMetalAdapter.mm */,
+				C2E54D09239D2E8700A84E8C /* ShaderMetal.mm */,
+				C2E54D0A239D2E8700A84E8C /* ShaderMetalBridge.cpp */,
+			);
+			path = Shader;
+			sourceTree = "<group>";
+		};
+		C2E54D0B239D2E8700A84E8C /* GraphicsAPI */ = {
+			isa = PBXGroup;
+			children = (
+				C2E54D0C239D2E8700A84E8C /* EiRasMetalBridge.hpp */,
+				C2E54D0D239D2E8700A84E8C /* EiRasMetalAdapter.hpp */,
+				C2E54D0E239D2E8700A84E8C /* EiRasMetal.h */,
+				C2E54D0F239D2E8700A84E8C /* EiRasMetalAdapter.mm */,
+				C2E54D10239D2E8700A84E8C /* EiRasMetalBridge.cpp */,
+				C2E54D11239D2E8700A84E8C /* EiRasMetal.mm */,
+			);
+			path = GraphicsAPI;
+			sourceTree = "<group>";
+		};
+		C2E54D13239D2E8700A84E8C /* Material */ = {
+			isa = PBXGroup;
+			children = (
+				C2E54D14239D2E8700A84E8C /* MaterialMetalAdapter.hpp */,
+				C2E54D15239D2E8700A84E8C /* MaterialMetalBridge.cpp */,
+				C2E54D16239D2E8700A84E8C /* MaterialMetalAdapter.mm */,
+				C2E54D17239D2E8700A84E8C /* MaterialMetal.h */,
+				C2E54D18239D2E8700A84E8C /* MaterialMetal.mm */,
+				C2E54D19239D2E8700A84E8C /* MaterialMetalBridge.hpp */,
+				C2E54D48239D380800A84E8C /* GraphicsResourceMetalBridge.cpp */,
+				C2E54D49239D380800A84E8C /* GraphicsResourceMetalBridge.hpp */,
+				C2E54D4B239D3A1B00A84E8C /* GraphicsResourceMetalAdapter.mm */,
+				C2E54D4C239D3A1B00A84E8C /* GraphicsResourceMetalAdapter.hpp */,
+				C2E54D4E239D3B1800A84E8C /* ConstantBufferMetal.h */,
+				C2E54D4F239D3B1800A84E8C /* ConstantBufferMetal.mm */,
+				C2E54D51239D401200A84E8C /* GraphicsResourceHeapMetalBridge.cpp */,
+				C2E54D52239D401200A84E8C /* GraphicsResourceHeapMetalBridge.hpp */,
+				C2E54D57239D46EB00A84E8C /* GraphicsResourceHeapMetalAdapter.mm */,
+				C2E54D58239D46EB00A84E8C /* GraphicsResourceHeapMetalAdapter.hpp */,
+				C2E54D54239D40DB00A84E8C /* GraphicsResourceHeapMetal.h */,
+				C2E54D55239D40DB00A84E8C /* GraphicsResourceHeapMetal.mm */,
+			);
+			path = Material;
+			sourceTree = "<group>";
+		};
+		C2E54D1A239D2E8700A84E8C /* CommandBuffer */ = {
+			isa = PBXGroup;
+			children = (
+				C2E54D1B239D2E8700A84E8C /* CommandBufferMetal.h */,
+				C2E54D1C239D2E8700A84E8C /* CommandBufferMetalAdapter.hpp */,
+				C2E54D1D239D2E8700A84E8C /* CommandBufferMetalAdapter.mm */,
+				C2E54D1E239D2E8700A84E8C /* CommandBufferMetal.mm */,
+				C2E54D1F239D2E8700A84E8C /* CommandBufferMetalBridge.cpp */,
+				C2E54D20239D2E8700A84E8C /* CommandBufferMetalBridge.hpp */,
+			);
+			path = CommandBuffer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -584,30 +596,40 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C23CAD3E237AFFC800AA5737 /* CommandBufferMetal.mm in Sources */,
 				C23CACA52379A37F00AA5737 /* ViewController.mm in Sources */,
-				C23CAD042379C33B00AA5737 /* ShaderMetalBridge.cpp in Sources */,
-				C23CAD152379CDFE00AA5737 /* BaseMetalObject.m in Sources */,
-				C23CACF72379B8F600AA5737 /* GraphicsRenderState.cpp in Sources */,
+				C2E54D46239D2E8700A84E8C /* CommandBufferMetal.mm in Sources */,
+				C2E54D59239D46EB00A84E8C /* GraphicsResourceHeapMetalAdapter.mm in Sources */,
+				C2E54D50239D3B1800A84E8C /* ConstantBufferMetal.mm in Sources */,
+				C2E54D53239D401200A84E8C /* GraphicsResourceHeapMetalBridge.cpp in Sources */,
 				C23CACAD2379A38200AA5737 /* main.m in Sources */,
-				C23CACFF2379C0A700AA5737 /* Shader.cpp in Sources */,
-				C23CACE32379A92800AA5737 /* EiRas.cpp in Sources */,
-				C23CAD3B237AFFAD00AA5737 /* CommandBufferMetalAdapter.mm in Sources */,
+				C2E54D27239D2E8700A84E8C /* EiRasGlobalManager.cpp in Sources */,
+				C2E54D24239D2E8700A84E8C /* GraphicsRenderState.cpp in Sources */,
+				C2E54D42239D2E8700A84E8C /* MaterialMetalBridge.cpp in Sources */,
+				C2E54D2C239D2E8700A84E8C /* Shader.cpp in Sources */,
+				C2E54D28239D2E8700A84E8C /* MaterialLayout.cpp in Sources */,
+				C2E54D44239D2E8700A84E8C /* MaterialMetal.mm in Sources */,
+				C2E54D3D239D2E8700A84E8C /* ShaderMetal.mm in Sources */,
+				C2E54D56239D40DC00A84E8C /* GraphicsResourceHeapMetal.mm in Sources */,
+				C2E54D29239D2E8700A84E8C /* GraphicsResourceHeap.cpp in Sources */,
+				C2E54D3B239D2E8700A84E8C /* BaseMetalObject.m in Sources */,
+				C2E54D3F239D2E8700A84E8C /* EiRasMetalAdapter.mm in Sources */,
+				C2E54D3C239D2E8700A84E8C /* ShaderMetalAdapter.mm in Sources */,
+				C2E54D4D239D3A1B00A84E8C /* GraphicsResourceMetalAdapter.mm in Sources */,
+				C2E54D4A239D380800A84E8C /* GraphicsResourceMetalBridge.cpp in Sources */,
+				C2E54D43239D2E8700A84E8C /* MaterialMetalAdapter.mm in Sources */,
+				C2E54D2A239D2E8700A84E8C /* ShaderLayout.cpp in Sources */,
+				C2E54D47239D2E8700A84E8C /* CommandBufferMetalBridge.cpp in Sources */,
+				C2E54D2D239D2E8700A84E8C /* Material.cpp in Sources */,
+				C2E54D22239D2E8700A84E8C /* Mesh.cpp in Sources */,
+				C2E54D45239D2E8700A84E8C /* CommandBufferMetalAdapter.mm in Sources */,
+				C2E54D23239D2E8700A84E8C /* AAPLShaders.metal in Sources */,
 				C23CACA22379A37F00AA5737 /* AppDelegate.m in Sources */,
-				C23CAD48237C4EF100AA5737 /* MaterialMetal.mm in Sources */,
-				C23CAD2D237AE06800AA5737 /* EiRasMetal.mm in Sources */,
-				C23CAD4B237C569D00AA5737 /* MaterialMetalAdapter.mm in Sources */,
-				C23CAD45237C4D8800AA5737 /* MaterialMetalBridge.cpp in Sources */,
-				C23CAD072379C5F600AA5737 /* ShaderMetalAdapter.mm in Sources */,
-				C23CAD38237AFF9800AA5737 /* CommandBufferMetalBridge.cpp in Sources */,
-				C23CAD2C237AE06800AA5737 /* EiRasMetalBridge.cpp in Sources */,
-				C246DB0F2382D083007DF0D7 /* Mesh.cpp in Sources */,
-				C246DB172382D613007DF0D7 /* AAPLShaders.metal in Sources */,
-				C23CAD34237AFAB800AA5737 /* CommandBuffer.cpp in Sources */,
-				C23CAD0E2379C6FC00AA5737 /* EiRasGlobalManager.cpp in Sources */,
-				C23CAD0A2379C69300AA5737 /* ShaderMetal.mm in Sources */,
-				C23CAD2B237AE06800AA5737 /* EiRasMetalAdapter.mm in Sources */,
-				C23CACFB2379BFF500AA5737 /* Material.cpp in Sources */,
+				C2E54D2B239D2E8700A84E8C /* GraphicsResource.cpp in Sources */,
+				C2E54D26239D2E8700A84E8C /* EiRas.cpp in Sources */,
+				C2E54D40239D2E8700A84E8C /* EiRasMetalBridge.cpp in Sources */,
+				C2E54D41239D2E8700A84E8C /* EiRasMetal.mm in Sources */,
+				C2E54D3E239D2E8700A84E8C /* ShaderMetalBridge.cpp in Sources */,
+				C2E54D25239D2E8700A84E8C /* CommandBuffer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

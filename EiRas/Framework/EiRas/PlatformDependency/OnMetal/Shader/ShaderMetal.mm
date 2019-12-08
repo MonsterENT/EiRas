@@ -10,7 +10,7 @@
 #import <Global/EiRasGlobalManager.hpp>
 #import <MetalKit/MetalKit.h>
 
-#import <GraphicsAPI/PlatformDependency/Metal/EiRasMetal.h>
+#import <PlatformDependency/OnMetal/GraphicsAPI/EiRasMetal.h>
 
 @interface ShaderMetal()
 @end

@@ -9,10 +9,14 @@
 #ifndef Mesh_hpp
 #define Mesh_hpp
 
+#include <Global/PlatformDefine.h>
 #include <string>
+
 #if GRAPHICS_METAL
 #include <ShaderFile/Metal/MetalGraphicsPipelineInput.h>
 #endif
+
+
 
 namespace MeshSys {
 

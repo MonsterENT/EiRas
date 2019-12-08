@@ -10,10 +10,12 @@ using namespace MaterialSys;
 GraphicsResource::GraphicsResource(std::string name, GraphicsResourceType type, int bufferSize)
 {
     ResourceType = type;
+#if GRAPHICS_DX
     PlatformBridge = new GraphicsResourceDX12Bridge();
     this->bufferSize = bufferSize;
     if (type == GraphicsResourceType::CBV)
     {
         ((GraphicsResourceDX12Bridge*)PlatformBridge)->InitAsConstantBuffer(bufferSize);
     }
+#endif
 }

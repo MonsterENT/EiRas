@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <OnMetal/BaseMetalObject.h>
+#import <PlatformDependency/OnMetal/BaseMetalObject.h>
 #include <Graphics/GraphicsRenderState.hpp>
-#include <Material/PlatformDependency/Shader/Metal/ShaderMetal.h>
+#include <PlatformDependency/OnMetal/Shader/ShaderMetal.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

@@ -15,7 +15,7 @@
 #endif
 
 #if GRAPHICS_METAL
-#include <GraphicsAPI/PlatformDependency/Metal/EiRasMetalBridge.hpp>
+#include <PlatformDependency/OnMetal/GraphicsAPI/EiRasMetalBridge.hpp>
 #endif
 
 #define PLATFORM_BRIDGE 

@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <OnMetal/BaseMetalObject.h>
+#import <PlatformDependency/OnMetal/BaseMetalObject.h>
 
 #import <Metal/Metal.h>
 
-#import <Material/PlatformDependency/Material/Metal/MaterialMetal.h>
+#import <PlatformDependency/OnMetal/Material/MaterialMetal.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
