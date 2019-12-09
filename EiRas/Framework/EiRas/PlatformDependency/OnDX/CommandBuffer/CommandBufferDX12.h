@@ -19,7 +19,7 @@ namespace Graphics {
         CommandBufferDX12(std::string name);
         ~CommandBufferDX12();
 
-        void SetPipelineState(MaterialSys::MaterialDX12* mat, std::vector<MaterialSys::MaterialProp*> props, std::vector<MaterialSys::MaterialTable*> tables);
+        void SetPipelineState(MaterialSys::MaterialDX12* mat, std::vector<MaterialSys::MaterialProp*>* props, std::vector<MaterialSys::MaterialTable*>* tables);
 
         ID3D12CommandAllocator* cmdAllocator = 0;
         ID3D12GraphicsCommandList* cmdList = 0;

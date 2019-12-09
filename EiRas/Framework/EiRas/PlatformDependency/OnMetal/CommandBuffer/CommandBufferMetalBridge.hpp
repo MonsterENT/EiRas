@@ -13,6 +13,10 @@
 
 #include <string>
 
+namespace MaterialSys {
+class Material;
+}
+
 namespace Graphics {
 
 class CommandBufferMetalBridge : public EiRasPlatformBridgeProtocol
@@ -20,7 +24,7 @@ class CommandBufferMetalBridge : public EiRasPlatformBridgeProtocol
 public:
     CommandBufferMetalBridge(std::string name);
     
-    void SetMaterial(EiRasPlatformBridgeProtocol* materialBridge);
+    void SetMaterial(MaterialSys::Material* material);
     
     void DrawMesh(void* meshData, int dataSize, int index);
     

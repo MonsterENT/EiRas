@@ -17,5 +17,5 @@ CommandBufferDX12Bridge::CommandBufferDX12Bridge(std::string name)
 void CommandBufferDX12Bridge::SetMaterial(Material* mat)
 {
     CommandBufferDX12* obj = (CommandBufferDX12*)raw_obj;
-    obj->SetPipelineState((MaterialDX12*)mat->PlatformBridge->raw_obj, mat->LayoutProps, mat->LayoutTables);
+    obj->SetPipelineState((MaterialDX12*)mat->PlatformBridge->raw_obj, &mat->LayoutProps, &mat->LayoutTables);
 }

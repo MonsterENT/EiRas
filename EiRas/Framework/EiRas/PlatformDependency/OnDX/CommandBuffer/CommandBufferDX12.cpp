@@ -30,22 +30,22 @@ CommandBufferDX12::~CommandBufferDX12()
     cmdAllocator->Release();
 }
 
-void CommandBufferDX12::SetPipelineState(MaterialSys::MaterialDX12* mat, std::vector<MaterialSys::MaterialProp*> props, std::vector<MaterialSys::MaterialTable*> tables)
+void CommandBufferDX12::SetPipelineState(MaterialSys::MaterialDX12* mat, std::vector<MaterialSys::MaterialProp*>* props, std::vector<MaterialSys::MaterialTable*>* tables)
 {
     cmdList->SetGraphicsRootSignature(mat->RawShaderObj->RootSignature);
     cmdList->SetPipelineState(mat->PipelineState);
 
-    for (int i = 0; i < tables.size(); i++)
+    for (int i = 0; i < tables->size(); i++)
     {
-        heapPool[i] = ((GraphicsResourceHeapDX12*)tables[i]->ResourceHeap->PlatformBridge->raw_obj)->heap;
-        cmdList->SetGraphicsRootDescriptorTable(tables[i]->SlotID, heapPool[i]->GetGPUDescriptorHandleForHeapStart());
+        heapPool[i] = ((GraphicsResourceHeapDX12*)(*tables)[i]->ResourceHeap->PlatformBridge->raw_obj)->heap;
+        cmdList->SetGraphicsRootDescriptorTable((*tables)[i]->SlotID, heapPool[i]->GetGPUDescriptorHandleForHeapStart());
     }
 
-    cmdList->SetDescriptorHeaps(tables.size(), heapPool);
+    cmdList->SetDescriptorHeaps(tables->size(), heapPool);
 
-    for (int i = 0; i < props.size(); i++)
+    for (int i = 0; i < props->size(); i++)
     {
-        MaterialProp* prop = props[i];
+        MaterialProp* prop = (*props)[i];
 
         D3D12_GPU_VIRTUAL_ADDRESS ADDR = ((GraphicsResourceDX12*)prop->Resource->PlatformBridge->raw_obj)->Resource->GetGPUVirtualAddress();
         int rootParamIndex = prop->SlotID;

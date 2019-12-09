@@ -19,10 +19,12 @@ class GraphicsRenderState;
 
 namespace MaterialSys {
 class Shader;
+class MaterialProp;
 class MaterialMetalBridge : public EiRasPlatformBridgeProtocol
 {
 public:
     MaterialMetalBridge(std::string name);
+    void SetProperty(MaterialProp* prop, void* res);
     void UpdateRenderState(Graphics::GraphicsRenderState* renderState, Shader* shaderObj);
 };
 

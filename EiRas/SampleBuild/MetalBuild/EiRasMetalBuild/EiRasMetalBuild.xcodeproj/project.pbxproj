@@ -433,11 +433,11 @@
 			isa = PBXGroup;
 			children = (
 				C2E54D14239D2E8700A84E8C /* MaterialMetalAdapter.hpp */,
-				C2E54D15239D2E8700A84E8C /* MaterialMetalBridge.cpp */,
 				C2E54D16239D2E8700A84E8C /* MaterialMetalAdapter.mm */,
+				C2E54D19239D2E8700A84E8C /* MaterialMetalBridge.hpp */,
+				C2E54D15239D2E8700A84E8C /* MaterialMetalBridge.cpp */,
 				C2E54D17239D2E8700A84E8C /* MaterialMetal.h */,
 				C2E54D18239D2E8700A84E8C /* MaterialMetal.mm */,
-				C2E54D19239D2E8700A84E8C /* MaterialMetalBridge.hpp */,
 				C2E54D48239D380800A84E8C /* GraphicsResourceMetalBridge.cpp */,
 				C2E54D49239D380800A84E8C /* GraphicsResourceMetalBridge.hpp */,
 				C2E54D4B239D3A1B00A84E8C /* GraphicsResourceMetalAdapter.mm */,

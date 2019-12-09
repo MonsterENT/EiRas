@@ -10,6 +10,10 @@
 #import <PlatformDependency/OnMetal/GraphicsAPI/EiRasMetal.h>
 #include <PlatformDependency/OnMetal/MetalMacro.h>
 #include <Global/EiRasGlobalManager.hpp>
+#include <Material/MaterialLayout.hpp>
+#include <PlatformDependency/OnMetal/Material/ConstantBufferMetal.h>
+
+using namespace MaterialSys;
 
 @interface CommandBufferMetal()
 @property(strong, nonatomic)id<MTLCommandBuffer> commandBuffer;
@@ -38,7 +42,7 @@
     return _commandBuffer;
 }
 
--(void)setMaterial:(MaterialMetal*)material
+-(void)setMaterial:(MaterialMetal*)material props:(std::vector<MaterialSys::MaterialProp*>*)props tables:(std::vector<MaterialSys::MaterialTable*>*)tables
 {
     if(_renderCommandEncoder)
     {
@@ -47,6 +51,16 @@
     GET_EIRAS_METAL(deviceObj)
     _renderCommandEncoder = [_commandBuffer renderCommandEncoderWithDescriptor:[deviceObj getMTKView].currentRenderPassDescriptor];
     [_renderCommandEncoder setRenderPipelineState:material.pipelineState];
+    
+    for(int i = 0; i < props->size(); i++)
+    {
+        if((*props)[i]->PropType == GraphicsResourceType::CBV)
+        {
+            ConstantBufferMetal* cbObj = (__bridge ConstantBufferMetal*)(*props)[i]->Resource->PlatformBridge->raw_obj;
+            [_renderCommandEncoder setVertexBuffer:cbObj.rawBuffer offset:0 atIndex:(*props)[i]->SlotID];
+            [_renderCommandEncoder setFragmentBuffer:cbObj.rawBuffer offset:0 atIndex:(*props)[i]->SlotID];
+        }
+    }
 }
 
 -(void)drawMesh:(void*)meshData dataSize:(int)dataSize index:(int)index

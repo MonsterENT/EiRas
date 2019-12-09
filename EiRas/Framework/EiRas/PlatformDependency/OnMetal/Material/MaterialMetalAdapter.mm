@@ -18,6 +18,12 @@ void* MaterialSys::createMaterialMetal(std::string name)
     return bridgePtr;
 }
 
+void MaterialSys::setProperty(void* ptr, MaterialProp* prop, void* res)
+{
+    MaterialMetal* _ptr = (__bridge MaterialMetal*)ptr;
+    [_ptr SetProperty:prop resPtr:res];
+}
+
 void MaterialSys::UpdateRenderStateMetal(void* ptr, Graphics::GraphicsRenderState* renderState, Shader* shaderObj)
 {
     MaterialMetal* _ptr = (__bridge MaterialMetal*)ptr;

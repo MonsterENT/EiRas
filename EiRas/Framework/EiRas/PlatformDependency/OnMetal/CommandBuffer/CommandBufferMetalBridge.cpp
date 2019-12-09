@@ -7,7 +7,7 @@
 //
 
 #include "CommandBufferMetalBridge.hpp"
-
+#include <Material/Material.hpp>
 #include "CommandBufferMetalAdapter.hpp"
 
 using Graphics::CommandBufferMetalBridge;
@@ -17,9 +17,9 @@ CommandBufferMetalBridge::CommandBufferMetalBridge(std::string name)
     raw_obj = createCommandBufferMetal(name);
 }
 
-void CommandBufferMetalBridge::SetMaterial(EiRasPlatformBridgeProtocol* materialBridge)
+void CommandBufferMetalBridge::SetMaterial(MaterialSys::Material* material)
 {
-    setMaterialMetal(raw_obj, materialBridge->raw_obj);
+    setMaterialMetal(raw_obj, material->PlatformBridge->raw_obj, &material->Props, &material->LayoutTables);
 }
 
 void CommandBufferMetalBridge::DrawMesh(void* meshData, int dataSize, int index)

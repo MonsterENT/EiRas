@@ -18,6 +18,11 @@ MaterialMetalBridge::MaterialMetalBridge(std::string name)
     raw_obj = createMaterialMetal(name);
 }
 
+void MaterialMetalBridge::SetProperty(MaterialProp* prop, void* res)
+{
+    
+}
+
 void MaterialMetalBridge::UpdateRenderState(Graphics::GraphicsRenderState* renderState, Shader* shaderObj)
 {
     UpdateRenderStateMetal(raw_obj, renderState, shaderObj);

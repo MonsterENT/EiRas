@@ -18,10 +18,10 @@ void* Graphics::createCommandBufferMetal(std::string name)
     return bridgePtr;
 }
 
-void Graphics::setMaterialMetal(void* ptr, void* material_raw_obj)
+void Graphics::setMaterialMetal(void* ptr, void* material_raw_obj, std::vector<MaterialSys::MaterialProp*>* props, std::vector<MaterialSys::MaterialTable*>* tables)
 {
     CommandBufferMetal* oc_obj = (__bridge CommandBufferMetal*)ptr;
-    [oc_obj setMaterial:(__bridge MaterialMetal*)material_raw_obj];
+    [oc_obj setMaterial:(__bridge MaterialMetal*)material_raw_obj props:props tables:tables];
 }
 
 void Graphics::drawMeshMetal(void* ptr, void* meshData, int dataSize, int index)

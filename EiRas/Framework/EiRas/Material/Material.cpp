@@ -90,6 +90,10 @@ void Material::SetProperty(int propertyId, void* res)
 #if GRAPHICS_DX
     ((MaterialDX12Bridge*)PlatformBridge)->SetProperty(Props[propertyId], res);
 #endif
+    
+#if GRAPHICS_METAL
+    ((MaterialMetalBridge*)PlatformBridge)->SetProperty(Props[propertyId], res);
+#endif
 }
 
 void Material::FinishStateChange()

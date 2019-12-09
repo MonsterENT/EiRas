@@ -41,7 +41,7 @@ CommandBuffer::CommandBuffer(std::string name)
 void CommandBuffer::SetMaterial(MaterialSys::Material* material)
 {
 #if GRAPHICS_METAL
-    ((CommandBufferMetalBridge*)PlatformBridge)->SetMaterial(material->PlatformBridge);
+    ((CommandBufferMetalBridge*)PlatformBridge)->SetMaterial(material);
 #endif
 }
 

@@ -17,7 +17,10 @@ class GraphicsRenderState;
 
 namespace MaterialSys {
 class Shader;
+class MaterialProp;
 void* createMaterialMetal(std::string name);
+
+void setProperty(void* ptr, MaterialProp* prop, void* res);
 
 void UpdateRenderStateMetal(void* ptr, Graphics::GraphicsRenderState* renderState, Shader* shaderObj);
 

@@ -13,6 +13,8 @@
 
 #import <PlatformDependency/OnMetal/Material/MaterialMetal.h>
 
+#include <vector>
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CommandBufferMetal : BaseMetalObject
@@ -21,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 -(void)setLabel:(NSString*)name;
 
--(void)setMaterial:(MaterialMetal*)material;
+-(void)setMaterial:(MaterialMetal*)material props:(std::vector<MaterialSys::MaterialProp*>*)props tables:(std::vector<MaterialSys::MaterialTable*>*)tables;
 
 -(void)drawMesh:(void*)meshData dataSize:(int)dataSize index:(int)index;
 

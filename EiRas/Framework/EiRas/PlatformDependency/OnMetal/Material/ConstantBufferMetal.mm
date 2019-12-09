@@ -21,9 +21,11 @@
         if(allocMemory)
         {
             GET_EIRAS_METAL(deviceObj)
-            _rawBuffer = [[deviceObj getMetalDevice] newBufferWithLength:bufferSize options:MTLResourceStorageModePrivate];
+            _rawBuffer = [[deviceObj getMetalDevice] newBufferWithLength:bufferSize options:MTLResourceStorageModeShared];
         }
         _bufferSize = bufferSize;
+        
+        
     }
     return self;
 }

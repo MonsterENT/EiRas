@@ -9,6 +9,7 @@
 #import "MaterialMetal.h"
 #include <Global/EiRasGlobalManager.hpp>
 #include <PlatformDependency/OnMetal/MetalMacro.h>
+#include <PlatformDependency/OnMetal/Material/ConstantBufferMetal.h>
 
 @implementation MaterialMetal
 
@@ -20,6 +21,18 @@
         _name = name;
     }
     return self;
+}
+
+-(void)SetProperty:(MaterialSys::MaterialProp*)prop resPtr:(void*)res
+{
+    if(prop->PropType == MaterialSys::GraphicsResourceType::CBV)
+    {
+        ConstantBufferMetal* obj =((__bridge ConstantBufferMetal*)prop->Resource->PlatformBridge->raw_obj);
+        void* content = obj.rawBuffer.contents;
+        memcpy(content, res, obj.bufferSize);
+#warning FIX MacOS
+//        [obj.rawBuffer didModifyRange:NSMakeRange(0, obj.bufferSize)];
+    }
 }
 
 -(void)UpdateRenderState:(Graphics::GraphicsRenderState*)renderState Shader:(ShaderMetal*)shaderObj

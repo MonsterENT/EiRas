@@ -10,12 +10,16 @@
 #import <PlatformDependency/OnMetal/BaseMetalObject.h>
 #include <Graphics/GraphicsRenderState.hpp>
 #include <PlatformDependency/OnMetal/Shader/ShaderMetal.h>
+#include <Material/MaterialLayout.hpp>
+#include <Material/GraphicsResource.hpp>
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MaterialMetal : BaseMetalObject
 
 -(instancetype)initWithName:(NSString*)name;
+
+-(void)SetProperty:(MaterialSys::MaterialProp*)prop resPtr:(void*)res;
 
 -(void)UpdateRenderState:(Graphics::GraphicsRenderState*)renderState Shader:(ShaderMetal*)shaderObj;
 
