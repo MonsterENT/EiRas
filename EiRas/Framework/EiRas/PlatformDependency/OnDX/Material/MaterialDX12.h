@@ -2,6 +2,7 @@
 
 #include <Windows.h>
 #include <string>
+#include <d3d12.h>
 
 namespace Graphics
 {
@@ -10,7 +11,6 @@ namespace Graphics
 
 namespace MaterialSys
 {
-    class Shader;
     class ShaderDX12;
     class MaterialLayout;
     class MaterialProp;
@@ -20,12 +20,14 @@ namespace MaterialSys
     {
     public:
         std::string Name;
-        MaterialDX12(std::string name, Shader* shaderObj);
+        MaterialDX12(std::string name, ShaderDX12* shaderObj);
 
-        void SetProperty(int propertyId, void* res);
+        void SetProperty(MaterialProp* prop, void* res);
 
-        void UpdateRenderState(Graphics::GraphicsRenderState* renderState, Shader* shaderObj);
+        void UpdateRenderState(Graphics::GraphicsRenderState* renderState, ShaderDX12* shaderObj);
 
         ShaderDX12* RawShaderObj;
+
+        ID3D12PipelineState* PipelineState;
     };
 }

@@ -28,6 +28,8 @@ class GraphicsRenderSate;
 class CommandBuffer
 {
 public:
+    std::string name;
+
     CommandBuffer(std::string name);
     
     void SetMaterial(MaterialSys::Material* material);

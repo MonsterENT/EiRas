@@ -112,7 +112,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    }
 
 #pragma region EiRas Init
-   //device = EiRas::Create();
+   device = EiRas::Create(hWnd, 1024, 1080);
 #pragma endregion
 
 

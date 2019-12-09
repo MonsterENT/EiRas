@@ -30,9 +30,9 @@ namespace MaterialSys {
 
         void InitLayout(ShaderLayout* layout);
 
-        ShaderLayout* Layout;
-    private:
         EiRasPlatformBridgeProtocol* PlatformBridge;
+
+        ShaderLayout* Layout;
     };
 };//namespace Material
 

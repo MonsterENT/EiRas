@@ -18,6 +18,8 @@ ConstantBufferDX12::ConstantBufferDX12(UINT bufferSize)
         D3D12_RESOURCE_STATE_GENERIC_READ,
         nullptr,
         IID_PPV_ARGS(&Resource));
+    CD3DX12_RANGE range(0, 0);
+    Resource->Map(0, &range, (void**)&ResMappingDestPtr);
 }
 
 

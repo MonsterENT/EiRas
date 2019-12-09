@@ -15,7 +15,7 @@ namespace MaterialSys
 
     public:
         ID3D12Resource* Resource;
-
+        UINT8* ResMappingDestPtr;
         GraphicsResourceType ResType;
         CD3DX12_CPU_DESCRIPTOR_HANDLE CpuHandle;
         CD3DX12_GPU_DESCRIPTOR_HANDLE GpuHandle;

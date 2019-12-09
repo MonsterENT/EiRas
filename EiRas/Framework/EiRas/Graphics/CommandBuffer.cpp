@@ -14,7 +14,11 @@
 #include <Global/PlatformDefine.h>
 
 #if GRAPHICS_METAL
-#include "CommandBufferMetalBridge.hpp"
+#include <PlatformDependency/OnMetal/CommandBuffer/CommandBufferMetalBridge.hpp>
+#endif
+
+#if GRAPHICS_DX
+#include <PlatformDependency/OnDX/CommandBuffer/CommandBufferDX12Bridge.h>
 #endif
 
 #include <Mesh/Mesh.hpp>
@@ -24,8 +28,13 @@ using Graphics::CommandBuffer;
 
 CommandBuffer::CommandBuffer(std::string name)
 {
+    this->name = name;
 #if GRAPHICS_METAL
     PlatformBridge = new CommandBufferMetalBridge(name);
+#endif
+
+#if GRAPHICS_DX
+    PlatformBridge = new CommandBufferDX12Bridge(name);
 #endif
 }
 

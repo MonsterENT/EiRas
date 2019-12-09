@@ -11,14 +11,15 @@ namespace Graphics
 
 namespace MaterialSys
 {
-    class Shader;
+    class MaterialProp;
+    class ShaderDX12Bridge;
     class MaterialDX12Bridge : public EiRasPlatformBridgeProtocol
     {
     public:
-        MaterialDX12Bridge(std::string name, Shader* shaderObj);
+        MaterialDX12Bridge(std::string name, EiRasPlatformBridgeProtocol* shaderObj);
 
-        void SetProperty(int propertyID, void* res);
+        void SetProperty(MaterialProp* prop, void* res);
 
-        void UpdateRenderState(Graphics::GraphicsRenderState* renderState, Shader* shaderObj);
+        void UpdateRenderState(Graphics::GraphicsRenderState* renderState, EiRasPlatformBridgeProtocol* shaderObj);
     };
 }

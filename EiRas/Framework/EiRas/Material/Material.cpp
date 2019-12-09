@@ -34,7 +34,7 @@ Material::Material(std::string name, Shader* shader)
 #endif
 
 #if GRAPHICS_DX
-    this->PlatformBridge = new MaterialDX12Bridge(name, shader);
+    this->PlatformBridge = new MaterialDX12Bridge(name, shader->PlatformBridge);
 #endif
 
     this->shader = shader;
@@ -49,7 +49,7 @@ Material::Material(std::string name, Shader* shader)
              {
                  ShaderProp* tmpProp = (ShaderProp*)shaderSlot;
                  tmpMatProp = new MaterialProp(tmpProp->PropType, tmpProp->BufferSize);
-                 tmpMatProp->SlotID = tmpProp->PropID;
+                 tmpMatProp->SlotID = i;
                  Props.push_back(tmpMatProp);
                  LayoutProps.push_back(tmpMatProp);
              }
@@ -63,12 +63,13 @@ Material::Material(std::string name, Shader* shader)
                  {
                      ShaderProp* tmpProp = shaderTable->Props[propIndex];
                      tmpMatProp = new MaterialProp(tmpProp->PropType, tmpProp->BufferSize);
-                     tmpMatProp->SlotID = tmpProp->PropID;
+                     tmpMatProp->SlotID = -1;
                      Props.push_back(tmpMatProp);
                      tmpMatProps[propIndex] = tmpMatProp;
                      tmpResArray[propIndex] = tmpMatProp->Resource;
                  }
                  MaterialTable* matTable = new MaterialTable(shaderTable->PropNum, tmpMatProps, tmpResArray);
+                 matTable->SlotID = i;
                  LayoutTables.push_back(matTable);
                  delete [] tmpResArray;
                  delete [] tmpMatProps;
@@ -82,8 +83,12 @@ Material::Material(std::string name, Shader* shader)
 
 void Material::SetProperty(int propertyId, void* res)
 {
+    if (propertyId >= Props.size())
+    {
+        return;
+    }
 #if GRAPHICS_DX
-    ((MaterialDX12Bridge*)PlatformBridge)->SetProperty(propertyId, res);
+    ((MaterialDX12Bridge*)PlatformBridge)->SetProperty(Props[propertyId], res);
 #endif
 }
 
@@ -91,6 +96,10 @@ void Material::FinishStateChange()
 {
 #if GRAPHICS_METAL
     ((MaterialMetalBridge*)this->PlatformBridge)->UpdateRenderState(RenderState, shader);
+#endif
+
+#if GRAPHICS_DX
+    ((MaterialDX12Bridge*)this->PlatformBridge)->UpdateRenderState(RenderState, shader->PlatformBridge);
 #endif
 
 }

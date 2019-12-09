@@ -35,12 +35,13 @@ namespace MaterialSys {
 
         void SetProperty(int propertyId, void* res);
 
-    private:
         Shader* shader;
         MaterialLayout* materialLayout;
         std::vector<MaterialProp*> Props;
         std::vector<MaterialProp*> LayoutProps;
         std::vector<MaterialTable*> LayoutTables;
+    private:
+
     };
 
 };//namespace Material

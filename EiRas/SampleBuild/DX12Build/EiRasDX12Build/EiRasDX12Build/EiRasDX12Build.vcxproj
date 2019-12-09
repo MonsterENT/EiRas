@@ -166,11 +166,14 @@
     <ClInclude Include="..\..\..\..\Framework\EiRas\Material\Shader.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Material\ShaderLayout.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Mesh\Mesh.hpp" />
+    <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\CommandBuffer\CommandBufferDX12.h" />
+    <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\CommandBuffer\CommandBufferDX12Bridge.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\d3dx12.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\DX12Utils.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\DXMacro.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\GraphicsAPI\EiRasDX12.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\GraphicsAPI\EiRasDX12Bridge.h" />
+    <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\GraphicsPipelineInput.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\ConstantBufferDX12.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\GraphicsResourceDX12.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\GraphicsResourceDX12Bridge.h" />
@@ -199,6 +202,8 @@
     <ClCompile Include="..\..\..\..\Framework\EiRas\Material\Shader.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\Material\ShaderLayout.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\Mesh\Mesh.cpp" />
+    <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\CommandBuffer\CommandBufferDX12.cpp" />
+    <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\CommandBuffer\CommandBufferDX12Bridge.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\DX12Utils.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\GraphicsAPI\EiRasDX12.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\GraphicsAPI\EiRasDX12Bridge.cpp" />

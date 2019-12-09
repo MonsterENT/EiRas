@@ -7,6 +7,7 @@ using MaterialSys::GraphicsResourceDX12;
 GraphicsResourceDX12::GraphicsResourceDX12()
 {
     Resource = NULL;
+    ResMappingDestPtr = NULL;
     ResType = GraphicsResourceType::CBV;
 }
 
