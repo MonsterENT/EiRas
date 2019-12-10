@@ -29,7 +29,7 @@ namespace MaterialSys {
     {
     public:
         std::string Name;
-        Material(std::string Name, Shader* shader, Graphics::CommandBuffer* commandBuffer = 0);
+        Material(std::string Name, Shader* shader, Graphics::CommandBuffer* commandBuffer);
         ~Material();
         Graphics::GraphicsRenderState* RenderState;
 
