@@ -55,7 +55,7 @@ Mesh* m_mesh = 0;
         
         cmdBuffer = new Graphics::CommandBuffer("m_cmdBuffer");
         
-        mat = new Material("m_mat", new Shader("m_shader", "vertexShader", "fragmentShader"));
+        mat = new Material("m_mat", new Shader("m_shader", "vertexShader", "fragmentShader"), cmdBuffer);
         
         m_mesh = new Mesh("m_mesh");
         

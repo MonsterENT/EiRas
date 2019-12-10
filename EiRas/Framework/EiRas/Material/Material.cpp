@@ -29,7 +29,7 @@ Material::Material(std::string Name, Shader* shader, Graphics::CommandBuffer* co
     this->RenderState = new GraphicsRenderState();
 
 #if GRAPHICS_METAL
-    this->PlatformBridge = new MaterialMetalBridge(name);
+    this->PlatformBridge = new MaterialMetalBridge(Name);
 #endif
 
 #if GRAPHICS_DX

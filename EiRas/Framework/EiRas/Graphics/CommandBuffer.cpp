@@ -32,7 +32,7 @@ CommandBuffer::CommandBuffer(std::string Name)
     this->Name = Name;
 
 #if GRAPHICS_METAL
-    PlatformBridge = new CommandBufferMetalBridge(name);
+    PlatformBridge = new CommandBufferMetalBridge(Name);
 #endif
 
 #if GRAPHICS_DX
