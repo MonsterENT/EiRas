@@ -5,9 +5,9 @@
 
 using namespace MaterialSys;
 
-MaterialDX12Bridge::MaterialDX12Bridge(std::string name, EiRasPlatformBridgeProtocol* shaderObj)
+MaterialDX12Bridge::MaterialDX12Bridge(std::string Name, EiRasPlatformBridgeProtocol* shaderObj)
 {
-    raw_obj = new MaterialDX12(name, (ShaderDX12*)shaderObj->raw_obj);
+    raw_obj = new MaterialDX12(Name, (ShaderDX12*)shaderObj->raw_obj);
 }
 
 void MaterialDX12Bridge::SetProperty(MaterialProp* prop, void* res)

@@ -10,6 +10,7 @@
 #include "Shader.hpp"
 #include "ShaderLayout.h"
 #include <Graphics/GraphicsRenderState.hpp>
+#include <Graphics/CommandBuffer.hpp>
 
 #if GRAPHICS_METAL
 #include <PlatformDependency/OnMetal/Material/MaterialMetalBridge.hpp>
@@ -19,14 +20,12 @@
 #include <PlatformDependency/OnDX/Material/MaterialDX12Bridge.h>
 #endif
 
-using Graphics::GraphicsRenderState;
+using namespace Graphics;
+using namespace MaterialSys;
 
-using MaterialSys::Material;
-using MaterialSys::Shader;
-using MaterialSys::ShaderLayout;
-
-Material::Material(std::string name, Shader* shader)
+Material::Material(std::string Name, Shader* shader, Graphics::CommandBuffer* commandBuffer)
 {
+    this->Name = Name;
     this->RenderState = new GraphicsRenderState();
 
 #if GRAPHICS_METAL
@@ -34,7 +33,7 @@ Material::Material(std::string name, Shader* shader)
 #endif
 
 #if GRAPHICS_DX
-    this->PlatformBridge = new MaterialDX12Bridge(name, shader->PlatformBridge);
+    this->PlatformBridge = new MaterialDX12Bridge(Name, shader->PlatformBridge);
 #endif
 
     this->shader = shader;
@@ -48,7 +47,7 @@ Material::Material(std::string name, Shader* shader)
              if (shaderSlot->SlotType == ShaderSlotType::ShaderSlotType_Prop)
              {
                  ShaderProp* tmpProp = (ShaderProp*)shaderSlot;
-                 tmpMatProp = new MaterialProp(tmpProp->PropType, tmpProp->BufferSize);
+                 tmpMatProp = new MaterialProp(tmpProp->PropName, tmpProp->PropType, tmpProp->BufferSize);
                  tmpMatProp->SlotID = i;
                  Props.push_back(tmpMatProp);
                  LayoutProps.push_back(tmpMatProp);
@@ -62,13 +61,13 @@ Material::Material(std::string name, Shader* shader)
                  for (int propIndex = 0; propIndex < shaderTable->PropNum; propIndex++)
                  {
                      ShaderProp* tmpProp = shaderTable->Props[propIndex];
-                     tmpMatProp = new MaterialProp(tmpProp->PropType, tmpProp->BufferSize);
+                     tmpMatProp = new MaterialProp(tmpProp->PropName, tmpProp->PropType, tmpProp->BufferSize);
                      tmpMatProp->SlotID = -1;
                      Props.push_back(tmpMatProp);
                      tmpMatProps[propIndex] = tmpMatProp;
                      tmpResArray[propIndex] = tmpMatProp->Resource;
                  }
-                 MaterialTable* matTable = new MaterialTable(shaderTable->PropNum, tmpMatProps, tmpResArray);
+                 MaterialTable* matTable = new MaterialTable(shaderTable->PropNum, tmpMatProps);
                  matTable->SlotID = i;
                  LayoutTables.push_back(matTable);
                  delete [] tmpResArray;
@@ -76,7 +75,14 @@ Material::Material(std::string name, Shader* shader)
              }
          }
     }
-    
+
+    referenceCmdBuffer = commandBuffer;
+
+    if (commandBuffer == 0)
+    {
+        commandBuffer->RegMaterial(this);
+    }
+
     //init platform pso
     FinishStateChange();
 }
@@ -106,4 +112,12 @@ void Material::FinishStateChange()
     ((MaterialDX12Bridge*)this->PlatformBridge)->UpdateRenderState(RenderState, shader->PlatformBridge);
 #endif
 
+}
+
+Material::~Material()
+{
+    if (referenceCmdBuffer)
+    {
+        referenceCmdBuffer->RemoveMaterial(this);
+    }
 }

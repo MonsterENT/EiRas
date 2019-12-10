@@ -9,18 +9,10 @@ HANDLE fenceEvent;
 ID3D12Fence* fence = 0;
 UINT64 fenceValue = 0;
 
-IDXGISwapChain3* swapChain3 = 0;
-UINT frameCount = 2; 
+UINT frameCount = 2;
 UINT curFrameIndex = -1;
 UINT rtvDescriptorSize;
 ID3D12Resource* renderTargets[2];
-ID3D12PipelineState* curPipelineState;
-
-ID3D12CommandAllocator* workCmdAllocator = 0;
-ID3D12CommandAllocator* cmdAllocator = 0;
-ID3D12GraphicsCommandList* cmdList = 0;
-ID3D12GraphicsCommandList* workCmdList;
-ID3D12CommandQueue* cmdQueue = 0;
 
 ID3D12DescriptorHeap* rtvHeap = 0;
 ID3D12DescriptorHeap* dsvHeap = 0;
@@ -147,17 +139,6 @@ void EiRasDX12::InitDevice()
     }
     /////////////////
 
-    // Create CommandAllocator///////////////
-    device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&cmdAllocator));
-
-    device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&workCmdAllocator));
-    /////////////////
-
-    // Create the command list.
-    device->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, cmdAllocator, 0, IID_PPV_ARGS(&cmdList));
-    // Create the work command list.
-    device->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, workCmdAllocator, 0, IID_PPV_ARGS(&workCmdList));
-
     // Create synchronization objects and wait until assets have been uploaded to the GPU.
     device->CreateFence(0, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&fence));
     fenceValue = 1;
@@ -165,4 +146,25 @@ void EiRasDX12::InitDevice()
     // Create an event handle to use for frame synchronization.
     fenceEvent = CreateEvent(nullptr, FALSE, FALSE, nullptr);
     assert(fenceEvent != nullptr);
+}
+
+void EiRasDX12::WaitForPreviousFrame()
+{
+    // WAITING FOR THE FRAME TO COMPLETE BEFORE CONTINUING IS NOT BEST PRACTICE.
+    // This is code implemented as such for simplicity. The D3D12HelloFrameBuffering
+    // sample illustrates how to use fences for efficient resource usage and to
+    // maximize GPU utilization.
+
+    // Signal and increment the fence value.
+    const UINT64 c_fence_value = fenceValue;
+    cmdQueue->Signal(fence, c_fence_value);
+    fenceValue++;
+
+    // Wait until the previous frame is finished.
+    if (fence->GetCompletedValue() < c_fence_value)
+    {
+        fence->SetEventOnCompletion(c_fence_value, fenceEvent);
+        WaitForSingleObject(fenceEvent, INFINITE);
+    }
+    curFrameIndex = swapChain3->GetCurrentBackBufferIndex();
 }

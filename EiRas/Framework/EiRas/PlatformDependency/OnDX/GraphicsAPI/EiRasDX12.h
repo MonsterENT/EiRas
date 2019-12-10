@@ -16,6 +16,11 @@ namespace GraphicsAPI
         void InitDevice();
 
         ID3D12Device* device;
+        IDXGISwapChain3* swapChain3;
+        ID3D12CommandQueue* cmdQueue;
+
+        void WaitForPreviousFrame();
+
     private:
         HWND hwnd;
         int frameWidth, frameHeight;

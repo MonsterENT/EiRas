@@ -20,7 +20,7 @@ namespace MaterialSys
     {
     public:
         std::string Name;
-        MaterialDX12(std::string name, ShaderDX12* shaderObj);
+        MaterialDX12(std::string Name, ShaderDX12* shaderObj);
 
         void SetProperty(MaterialProp* prop, void* res);
 

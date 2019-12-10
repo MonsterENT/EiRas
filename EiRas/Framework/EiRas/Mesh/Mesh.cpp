@@ -21,7 +21,7 @@ static AAPLVertex triangleVertices[] =
 };
 #endif
 
-Mesh::Mesh(std::string name)
+Mesh::Mesh(std::string Name)
 {
     
 }

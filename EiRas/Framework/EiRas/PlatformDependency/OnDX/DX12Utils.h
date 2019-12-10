@@ -29,14 +29,14 @@ namespace DX12Utils
     static bool g_compileShader(LPCSTR fileName, LPCSTR fnName, LPCSTR target, ID3DBlob*& shader)
     {
 #pragma message("TOFIX")
-        CHAR assetsPath[512];
+        CHAR assetsPath[128];
         g_getAssetsPath(assetsPath, _countof(assetsPath));
         std::string m_assetsPath;
         m_assetsPath = assetsPath;
         m_assetsPath += fileName;
 
-        wchar_t tmp_ws[512];
-        swprintf(tmp_ws, 512, L"%hs", m_assetsPath.c_str());
+        wchar_t tmp_ws[128];
+        swprintf(tmp_ws, 128, L"%hs", m_assetsPath.c_str());
         return SUCCEEDED(D3DCompileFromFile(tmp_ws, 0, 0, fnName, target, 0, 0, &shader, 0));
     }
 

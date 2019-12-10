@@ -5,13 +5,13 @@
 
 namespace MaterialSys
 {
-    class GraphicsResourceDX12;
-
+    class MaterialTable;
     class GraphicsResourceHeapDX12
     {
     public:
+        int Offset;
         ID3D12DescriptorHeap* heap = 0;
-        GraphicsResourceHeapDX12(UINT resCount, MaterialSys::GraphicsResourceDX12** resArray, UINT initCount = -1);
+        GraphicsResourceHeapDX12(int propCount, int tableCount, MaterialTable** tableArray);
         ~GraphicsResourceHeapDX12();
     };
 

@@ -7,7 +7,7 @@
 
 using namespace MaterialSys;
 
-GraphicsResource::GraphicsResource(std::string name, GraphicsResourceType type, int bufferSize)
+GraphicsResource::GraphicsResource(std::string Name, GraphicsResourceType type, int bufferSize)
 {
     ResourceType = type;
 #if GRAPHICS_DX

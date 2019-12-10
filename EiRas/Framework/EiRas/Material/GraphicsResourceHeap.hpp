@@ -5,11 +5,11 @@
 
 namespace MaterialSys
 {
-    class GraphicsResource;
+    class MaterialTable;
     class GraphicsResourceHeap
     {
     public:
-        GraphicsResourceHeap(int resCount, GraphicsResource** resArray);
+        GraphicsResourceHeap(int propCount, int tableCount, MaterialTable** tableArray);
         EiRasPlatformBridgeProtocol* PlatformBridge;
     };
 }

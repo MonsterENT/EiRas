@@ -11,17 +11,15 @@ using Graphics::CommandBufferDX12;
 using GraphicsAPI::EiRasDX12;
 using namespace MaterialSys;
 
-#define EIRAS_MATERIAL_MAX_HEAP 8
-
-CommandBufferDX12::CommandBufferDX12(std::string name)
+CommandBufferDX12::CommandBufferDX12(std::string Name)
 {
     GET_EIRAS_DX12(deviceObj)
     deviceObj->device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&cmdAllocator));
     deviceObj->device->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, cmdAllocator, 0, IID_PPV_ARGS(&cmdList));
     wchar_t tmp_ws[16];
-    swprintf(tmp_ws, 16, L"%hs", name.c_str());
+    swprintf(tmp_ws, 16, L"%hs", Name.c_str());
     cmdList->SetName(tmp_ws);
-    heapPool = new ID3D12DescriptorHeap * [EIRAS_MATERIAL_MAX_HEAP];
+    CurrentUseingHeap = NULL;
 }
 
 CommandBufferDX12::~CommandBufferDX12()
@@ -30,18 +28,43 @@ CommandBufferDX12::~CommandBufferDX12()
     cmdAllocator->Release();
 }
 
+void CommandBufferDX12::BeginFrame(MaterialSys::GraphicsResourceHeapDX12* heapObj)
+{
+    cmdAllocator->Reset();
+    cmdList->Reset(cmdAllocator, NULL);
+    CurrentUseingHeap = heapObj;
+    cmdList->SetDescriptorHeaps(1, &heapObj->heap);
+}
+
+void CommandBufferDX12::Commit()
+{
+    GET_EIRAS_DX12(deviceObj)
+    ID3D12CommandList* ppCommandLists[] = { cmdList };
+    deviceObj->cmdQueue->ExecuteCommandLists(1, ppCommandLists);
+}
+
+void CommandBufferDX12::Present()
+{
+    GET_EIRAS_DX12(deviceObj)
+    deviceObj->swapChain3->Present(1, 0);
+#pragma message("TOFIX")
+    deviceObj->WaitForPreviousFrame();
+}
+
 void CommandBufferDX12::SetPipelineState(MaterialSys::MaterialDX12* mat, std::vector<MaterialSys::MaterialProp*>* props, std::vector<MaterialSys::MaterialTable*>* tables)
 {
     cmdList->SetGraphicsRootSignature(mat->RawShaderObj->RootSignature);
     cmdList->SetPipelineState(mat->PipelineState);
 
-    for (int i = 0; i < tables->size(); i++)
+    if (CurrentUseingHeap)
     {
-        heapPool[i] = ((GraphicsResourceHeapDX12*)(*tables)[i]->ResourceHeap->PlatformBridge->raw_obj)->heap;
-        cmdList->SetGraphicsRootDescriptorTable((*tables)[i]->SlotID, heapPool[i]->GetGPUDescriptorHandleForHeapStart());
+        CD3DX12_GPU_DESCRIPTOR_HANDLE gpuHandle(CurrentUseingHeap->heap->GetGPUDescriptorHandleForHeapStart());
+        for (int i = 0; i < tables->size(); i++)
+        {
+            cmdList->SetGraphicsRootDescriptorTable((*tables)[i]->SlotID, gpuHandle);
+            gpuHandle.Offset((*tables)[i]->PropNum, CurrentUseingHeap->Offset);
+        }
     }
-
-    cmdList->SetDescriptorHeaps(tables->size(), heapPool);
 
     for (int i = 0; i < props->size(); i++)
     {

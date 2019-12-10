@@ -1,17 +1,9 @@
 #include "GraphicsResourceHeapDX12Bridge.h"
 #include "GraphicsResourceHeapDX12.h"
-#include <Material/GraphicsResource.hpp>
-#include "GraphicsResourceDX12.h"
+#include <Material/MaterialLayout.hpp>
 using namespace MaterialSys;
 
-GraphicsResourceHeapDX12Bridge::GraphicsResourceHeapDX12Bridge(UINT resCount, GraphicsResource** resArray)
+GraphicsResourceHeapDX12Bridge::GraphicsResourceHeapDX12Bridge(int propCount, int tableCount, MaterialTable** tableArray)
 {
-    GraphicsResourceDX12** tmpResArray = new GraphicsResourceDX12 * [resCount];
-
-    for (int i = 0; i < resCount; i++)
-    {
-        tmpResArray[i] = (GraphicsResourceDX12*)resArray[i]->PlatformBridge->raw_obj;
-    }
-
-    raw_obj = new GraphicsResourceHeapDX12(resCount, tmpResArray);
+    raw_obj = new GraphicsResourceHeapDX12(propCount, tableCount, tableArray);
 }

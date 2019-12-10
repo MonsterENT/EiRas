@@ -5,10 +5,10 @@
 
 namespace MaterialSys
 {
-    class GraphicsResource;
+    class MaterialTable;
     class GraphicsResourceHeapDX12Bridge : public EiRasPlatformBridgeProtocol
     {
     public:
-        GraphicsResourceHeapDX12Bridge(UINT resCount, GraphicsResource** resArray);
+        GraphicsResourceHeapDX12Bridge(int propCount, int tableCount, MaterialTable** tableArray);
     };
 }

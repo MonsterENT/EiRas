@@ -3,10 +3,10 @@
 
 #include <Material/GraphicsResource.hpp>
 #include <Material/GraphicsResourceHeap.hpp>
+#include <string>
 
 namespace MaterialSys
 {
-
     typedef enum MaterialSlotType
     {
         MaterialSlotType_Prop = 0,
@@ -23,14 +23,16 @@ namespace MaterialSys
     class MaterialProp : public MaterialSlot
     {
     public:
+        std::string Name;
         GraphicsResourceType PropType;
         GraphicsResource* Resource;
         int BufferSize;
-        MaterialProp(GraphicsResourceType propType, int bufferSize)
+        MaterialProp(std::string Name, GraphicsResourceType propType, int bufferSize)
         {
+            this->Name = Name;
             BufferSize = bufferSize;
             PropType = propType;
-            Resource = new GraphicsResource("111", PropType, bufferSize);
+            Resource = new GraphicsResource(Name, PropType, bufferSize);
         }
     };
 
@@ -39,13 +41,10 @@ namespace MaterialSys
     public:
         int PropNum;
         MaterialProp** Props;
-        GraphicsResourceHeap* ResourceHeap;
-
-        MaterialTable(int propNum, MaterialProp** matProps, GraphicsResource** resArray)
+        MaterialTable(int propNum, MaterialProp** matProps)
         {
             PropNum = propNum;
             this->Props = matProps;
-            ResourceHeap = new GraphicsResourceHeap(PropNum, resArray);
         }
     };
 

@@ -23,7 +23,7 @@ namespace MeshSys {
 class Mesh
 {
 public:
-    Mesh(std::string name);
+    Mesh(std::string Name);
 #if GRAPHICS_METAL
     AAPLVertex* GetVertices();
 #endif

@@ -15,6 +15,7 @@
 
 namespace Graphics {
     class GraphicsRenderState;
+    class CommandBuffer;
 }
 
 namespace MaterialSys {
@@ -27,7 +28,9 @@ namespace MaterialSys {
     class Material
     {
     public:
-        Material(std::string name, Shader* shader);
+        std::string Name;
+        Material(std::string Name, Shader* shader, Graphics::CommandBuffer* commandBuffer = 0);
+        ~Material();
         Graphics::GraphicsRenderState* RenderState;
 
         void FinishStateChange();
@@ -41,7 +44,7 @@ namespace MaterialSys {
         std::vector<MaterialProp*> LayoutProps;
         std::vector<MaterialTable*> LayoutTables;
     private:
-
+        Graphics::CommandBuffer* referenceCmdBuffer;
     };
 
 };//namespace Material

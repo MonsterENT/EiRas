@@ -12,9 +12,9 @@
 using namespace MaterialSys;
 using GraphicsAPI::EiRasDX12;
 
-MaterialDX12::MaterialDX12(std::string name, ShaderDX12* shaderObj)
+MaterialDX12::MaterialDX12(std::string Name, ShaderDX12* shaderObj)
 {
-    Name = name;
+    this->Name = Name;
     RawShaderObj = shaderObj;
     PipelineState = 0;
 }

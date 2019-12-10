@@ -11,40 +11,52 @@
 
 #include <Global/PlatformDependency/EiRasPlatformBridgeProtocol.h>
 #include <string>
-
+#include <vector>
+#include <map>
 
 namespace MaterialSys {
-class Material;
+    class Material;
+    class MaterialTable;
+    class GraphicsResourceHeap;
 }
 
 namespace MeshSys {
-class Mesh;
+    class Mesh;
 }
 
 namespace Graphics {
 
-class GraphicsRenderSate;
+    class GraphicsRenderSate;
 
-class CommandBuffer
-{
-public:
-    std::string name;
+    class CommandBuffer
+    {
+        friend MaterialSys::Material;
+        typedef std::map<std::string, MaterialSys::Material*> MaterialCache_MAP;
+        typedef std::pair<std::string, MaterialSys::Material*> MaterialCache_PAIR;
+    public:
+        std::string Name;
 
-    CommandBuffer(std::string name);
-    
-    void SetMaterial(MaterialSys::Material* material);
-    
-    void DrawMesh(MeshSys::Mesh* mesh);
-    
-    void BeginFrame();
-    
-    void Present();
-    
-    void Commit();
-    
-private:
-    EiRasPlatformBridgeProtocol* PlatformBridge;
-};
+        CommandBuffer(std::string Name);
+
+        void SetMaterial(MaterialSys::Material* material);
+
+        void DrawMesh(MeshSys::Mesh* mesh);
+
+        void BeginFrame();
+
+        void Present();
+
+        void Commit();
+
+        EiRasPlatformBridgeProtocol* PlatformBridge;
+
+    private:
+        MaterialSys::GraphicsResourceHeap* resourceHeap;
+        void RegMaterial(MaterialSys::Material* material);
+        void RemoveMaterial(MaterialSys::Material* material);
+        std::vector<MaterialSys::MaterialTable*> tmpMaterialTableArray;
+        std::map<std::string, MaterialSys::Material*> MaterialMap;
+    };
 
 }
 
