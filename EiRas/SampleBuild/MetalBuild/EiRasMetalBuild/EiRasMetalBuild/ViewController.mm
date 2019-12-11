@@ -23,10 +23,8 @@
 #include <string>
 using std::string;
 using GraphicsAPI::EiRas;
-using MaterialSys::Material;
-using MaterialSys::Shader;
+using namespace MaterialSys;
 using Graphics::CommandBuffer;
-using MeshSys::Mesh;
 
 @interface ViewController()<MTKViewDelegate>
 @property(strong, nonatomic)MTKView* mtkView;
@@ -78,8 +76,7 @@ Mesh* m_mesh = 0;
     cmdBuffer->SetMaterial(mat);
     
     cmdBuffer->DrawMesh(m_mesh);
-    cmdBuffer->Present();
-    cmdBuffer->Commit();
+    cmdBuffer->Commit(true);
 }
 
 

@@ -7,25 +7,15 @@
 //
 
 #import "ConstantBufferMetal.h"
-#include <Global/EiRasGlobalManager.hpp>
-#import <PlatformDependency/OnMetal/GraphicsAPI/EiRasMetal.h>
-#include <PlatformDependency/OnMetal/MetalMacro.h>
+
 
 @implementation ConstantBufferMetal
 
--(instancetype)initWithBufferSize:(int)bufferSize allocMemory:(bool)allocMemory
+-(instancetype)initWithBufferSize:(unsigned int)bufferSize initResource:(bool)initResource
 {
-    self = [super init];
+    self = [super initWithBufferSize:bufferSize initResource:initResource];
     if(self)
     {
-        if(allocMemory)
-        {
-            GET_EIRAS_METAL(deviceObj)
-            _rawBuffer = [[deviceObj getMetalDevice] newBufferWithLength:bufferSize options:MTLResourceStorageModeShared];
-        }
-        _bufferSize = bufferSize;
-        
-        
     }
     return self;
 }

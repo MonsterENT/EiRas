@@ -7,15 +7,14 @@
 //
 
 #import "BaseMetalObject.h"
+#include <Material/MaterialLayout.hpp>
 
-NS_ASSUME_NONNULL_BEGIN
+using namespace MaterialSys;
 
 @interface GraphicsResourceHeapMetal : BaseMetalObject
 
--(instancetype)initWithGraphicsResource:(NSArray<id>*)resArray;
+-(instancetype)initWithPropCount:(_uint)propCount tableCount:(_uint) tableCount tableArray:(MaterialTable**) tableArray;
 
 @property(strong, nonatomic)id<MTLHeap> resourceHeap;
 
 @end
-
-NS_ASSUME_NONNULL_END

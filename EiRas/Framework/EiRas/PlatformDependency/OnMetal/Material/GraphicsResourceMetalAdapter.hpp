@@ -11,8 +11,11 @@
 
 namespace MaterialSys {
 
-void* createConstantBufferMetal(int bufferSize);
+void* createConstantBufferMetal(int bufferSize, bool initResource);
 
+void* createDefaultBufferMetal(int bufferSize, bool initResource);
+
+void setResourceMetal(void* ptr, void* res, bool shouldUnmap);
 }
 
 #endif /* GraphicsResourceMetalAdapter_hpp */

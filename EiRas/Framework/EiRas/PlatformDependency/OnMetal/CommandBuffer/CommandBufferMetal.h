@@ -29,9 +29,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 -(void)beginFrame;
 
--(void)present;
+-(void)reset;
 
--(void)commit;
+-(void)commit:(bool)present;
 
 @end
 

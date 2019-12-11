@@ -31,12 +31,12 @@ void CommandBufferMetalBridge::BeginFrame()
     beginFrameMetal(raw_obj);
 }
 
-void CommandBufferMetalBridge::Present()
+void CommandBufferMetalBridge::Reset()
 {
-    presentMetal(raw_obj);
+    resetCmdBufferMetal(raw_obj);
 }
 
-void CommandBufferMetalBridge::Commit()
+void CommandBufferMetalBridge::Commit(bool present)
 {
-    commitMetal(raw_obj);
+    commitMetal(raw_obj, present);
 }

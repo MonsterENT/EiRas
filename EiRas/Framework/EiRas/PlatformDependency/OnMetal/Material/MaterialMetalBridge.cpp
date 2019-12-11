@@ -20,7 +20,7 @@ MaterialMetalBridge::MaterialMetalBridge(std::string name)
 
 void MaterialMetalBridge::SetProperty(MaterialProp* prop, void* res)
 {
-    
+    setPropertyMetal(raw_obj, prop, res);
 }
 
 void MaterialMetalBridge::UpdateRenderState(Graphics::GraphicsRenderState* renderState, Shader* shaderObj)

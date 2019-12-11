@@ -14,17 +14,9 @@
 
 using MaterialSys::GraphicsResource;
 
-void* MaterialSys::createResourceHeapMetal(int resCount, GraphicsResource** resArray)
+void* MaterialSys::createResourceHeapMetal(_uint propCount, _uint tableCount, MaterialTable** tableArray)
 {
-
-    NSMutableArray* tmpArray = [NSMutableArray array];
-    for(int i = 0; i < resCount; i++)
-    {
-        GraphicsResource* resObj = resArray[i];
-        [tmpArray addObject:(__bridge id)resObj->PlatformBridge->raw_obj];
-    }
-    
-    GraphicsResourceHeapMetal* oc_obj = [[GraphicsResourceHeapMetal alloc]initWithGraphicsResource:tmpArray];
+    GraphicsResourceHeapMetal* oc_obj = [[GraphicsResourceHeapMetal alloc] initWithPropCount:propCount tableCount:tableCount tableArray:tableArray];
     PROCESS_OC_OBJ(oc_obj, bridgePtr)
     return bridgePtr;
 }

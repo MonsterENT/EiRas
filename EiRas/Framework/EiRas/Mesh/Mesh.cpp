@@ -12,8 +12,7 @@
 #include <PlatformDependency/OnDX/Mesh/MeshDX12Bridge.h>
 #endif
 
-using MaterialSys::Mesh;
-using namespace Graphics;
+using namespace MaterialSys;
 
 #if GRAPHICS_METAL
 static AAPLVertex triangleVertices[] =
@@ -36,7 +35,7 @@ static VertexDefault triangleVertices[] =
 
 Mesh::Mesh(std::string Name)
 {
-    VertexBuffer = new GraphicsResource(Name, GraphicsResourceType::Default, GetMeshDataSize());
+    VertexBuffer = new GraphicsResource(Name, GraphicsResourceType::Default, true, GetMeshDataSize());
     VertexBuffer->SetResource(GetVertices(), true);
 
 #if GRAPHICS_DX

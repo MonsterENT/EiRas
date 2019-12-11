@@ -36,15 +36,15 @@ void Graphics::beginFrameMetal(void* ptr)
     [oc_obj beginFrame];
 }
 
-void Graphics::presentMetal(void* ptr)
+void Graphics::resetCmdBufferMetal(void* ptr)
 {
     CommandBufferMetal* oc_obj = (__bridge CommandBufferMetal*)ptr;
-    [oc_obj present];
+    [oc_obj reset];
 }
 
-void Graphics::commitMetal(void* ptr)
+void Graphics::commitMetal(void* ptr, bool present)
 {
     CommandBufferMetal* oc_obj = (__bridge CommandBufferMetal*)ptr;
-    [oc_obj commit];
+    [oc_obj commit:present];
 }
 

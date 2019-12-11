@@ -4,6 +4,8 @@
 
 #if GRAPHICS_DX
 #include <PlatformDependency/OnDX/Material/GraphicsResourceHeapDX12Bridge.h>
+#elif GRAPHICS_METAL
+#include <PlatformDependency/OnMetal/Material/GraphicsResourceHeapMetalBridge.hpp>
 #endif
 
 using namespace MaterialSys;
@@ -12,5 +14,8 @@ GraphicsResourceHeap::GraphicsResourceHeap(int propCount, int tableCount, Materi
 {
 #if GRAPHICS_DX
     PlatformBridge = new GraphicsResourceHeapDX12Bridge(propCount, tableCount, tableArray);
+#elif GRAPHICS_METAL
+    PlatformBridge = new GraphicsResourceHeapMetalBridge(propCount, tableCount, tableArray);
+    
 #endif
 }

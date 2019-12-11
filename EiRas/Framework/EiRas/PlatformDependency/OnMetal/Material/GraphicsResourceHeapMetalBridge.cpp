@@ -9,7 +9,7 @@
 #include "GraphicsResourceHeapMetalBridge.hpp"
 using namespace MaterialSys;
 
-GraphicsResourceHeapMetalBridge::GraphicsResourceHeapMetalBridge(int resCount, GraphicsResource** resArray)
+GraphicsResourceHeapMetalBridge::GraphicsResourceHeapMetalBridge(UINT propCount, UINT tableCount, MaterialTable** tableArray)
 {
 //    raw_obj = 
 }

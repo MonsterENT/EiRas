@@ -19,7 +19,7 @@ namespace MaterialSys
     class GraphicsResource
     {
     public:
-        GraphicsResource(std::string Name, GraphicsResourceType type, int bufferSize = -1);
+        GraphicsResource(std::string Name, GraphicsResourceType type, bool shouldInitResource, int bufferSize);
 
         GraphicsResourceType ResourceType;
         EiRasPlatformBridgeProtocol* PlatformBridge;

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <MetalKit/MetalKit.h>
+#include <Global/GlobalDefine.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

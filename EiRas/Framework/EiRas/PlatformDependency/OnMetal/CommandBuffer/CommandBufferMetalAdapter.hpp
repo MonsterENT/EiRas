@@ -27,9 +27,9 @@ void drawMeshMetal(void* ptr, void* meshData, int dataSize, int index);
 
 void beginFrameMetal(void* ptr);
 
-void presentMetal(void* ptr);
+void resetCmdBufferMetal(void* ptr);
 
-void commitMetal(void* ptr);
+void commitMetal(void* ptr, bool present);
 
 }
 

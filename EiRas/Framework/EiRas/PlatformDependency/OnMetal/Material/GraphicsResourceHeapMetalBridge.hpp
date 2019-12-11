@@ -10,14 +10,15 @@
 #define GraphicsResourceHeapMetalBridge_hpp
 
 #include <Global/PlatformDependency/EiRasPlatformBridgeProtocol.h>
+#include <Global/PlatformDefine.h>
 
 namespace MaterialSys {
-    class GraphicsResource;
+    class MaterialTable;
 
     class GraphicsResourceHeapMetalBridge : public EiRasPlatformBridgeProtocol
     {
     public:
-        GraphicsResourceHeapMetalBridge(int resCount, GraphicsResource** resArray);
+        GraphicsResourceHeapMetalBridge(UINT propCount, UINT tableCount, MaterialTable** tableArray);
     };
 }
 

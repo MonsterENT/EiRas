@@ -96,6 +96,10 @@ void CommandBuffer::Reset()
 #if GRAPHICS_DX
     ((CommandBufferDX12Bridge*)PlatformBridge)->Reset(resourceHeap->PlatformBridge);
 #endif
+    
+#if GRAPHICE_METAL
+    ((CommandBufferMetalBridge*)PlatformBridge)->Reset();
+#endif
 }
 
 void CommandBuffer::Commit(bool present)

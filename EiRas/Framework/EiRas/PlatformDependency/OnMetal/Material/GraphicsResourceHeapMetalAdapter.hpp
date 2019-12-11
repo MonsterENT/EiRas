@@ -9,10 +9,12 @@
 #ifndef GraphicsResourceHeapMetalAdapter_hpp
 #define GraphicsResourceHeapMetalAdapter_hpp
 
+#include <Global/GlobalDefine.h>
+
 namespace MaterialSys {
 
-class GraphicsResource;
-void* createResourceHeapMetal(int resCount, GraphicsResource** resArray);
+class MaterialTable;
+void* createResourceHeapMetal(_uint propCount, _uint tableCount, MaterialTable** tableArray);
 
 }
 

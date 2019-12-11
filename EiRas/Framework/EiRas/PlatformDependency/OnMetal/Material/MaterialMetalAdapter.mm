@@ -18,7 +18,7 @@ void* MaterialSys::createMaterialMetal(std::string name)
     return bridgePtr;
 }
 
-void MaterialSys::setProperty(void* ptr, MaterialProp* prop, void* res)
+void MaterialSys::setPropertyMetal(void* ptr, MaterialProp* prop, void* res)
 {
     MaterialMetal* _ptr = (__bridge MaterialMetal*)ptr;
     [_ptr SetProperty:prop resPtr:res];

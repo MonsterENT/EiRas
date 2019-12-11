@@ -30,9 +30,9 @@ public:
     
     void BeginFrame();
     
-    void Present();
+    void Reset();
 
-    void Commit();
+    void Commit(bool present);
 
 };
 

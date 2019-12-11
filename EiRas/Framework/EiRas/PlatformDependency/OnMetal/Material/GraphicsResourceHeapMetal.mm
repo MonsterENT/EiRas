@@ -10,12 +10,14 @@
 #include <Global/EiRasGlobalManager.hpp>
 #import <PlatformDependency/OnMetal/GraphicsAPI/EiRasMetal.h>
 #include <PlatformDependency/OnMetal/MetalMacro.h>
-
+#include <Material/GraphicsResource.hpp>
+#include <PlatformDependency/OnMetal/Material/GraphicsResourceMetalBridge.hpp>
+#include <PlatformDependency/OnMetal/Material/GraphicsResourceMetal.h>
 #include "ConstantBufferMetal.h"
 
 @implementation GraphicsResourceHeapMetal
 
--(instancetype)initWithGraphicsResource:(NSArray<id>*)resArray
+-(instancetype)initWithPropCount:(_uint)propCount tableCount:(_uint) tableCount tableArray:(MaterialTable**) tableArray
 {
     self = [super init];
     if(self)
@@ -23,18 +25,25 @@
         GET_EIRAS_METAL(deviceObj)
         MTLHeapDescriptor* desc = [[MTLHeapDescriptor alloc] init];
         desc.storageMode = MTLStorageModeShared;
-        desc.size = 0;
+        desc.size = propCount;
         
         _resourceHeap = [[deviceObj getMetalDevice] newHeapWithDescriptor:desc];
         
         int allocOffset = 0;
-        for(id resMetalObj in resArray)
+        for(_uint i = 0; i < tableCount; i++)
         {
-            if([resMetalObj isKindOfClass:[ConstantBufferMetal class]])
+            MaterialTable* table = tableArray[i];
+            for(_uint propIndex = 0; propIndex < table->PropNum; propIndex++)
             {
-                ConstantBufferMetal* tmpCBObj = resMetalObj;
-                tmpCBObj.rawBuffer = [_resourceHeap newBufferWithLength:tmpCBObj.bufferSize options:MTLStorageModeShared offset:allocOffset];
-                allocOffset += tmpCBObj.bufferSize;
+                MaterialProp* prop = table->Props[propIndex];
+                id rawObj = (__bridge id)prop->Resource->PlatformBridge->raw_obj;
+                
+                if([rawObj isKindOfClass:[ConstantBufferMetal class]])
+                {
+                    ConstantBufferMetal* tmpCBObj = rawObj;
+                    tmpCBObj.rawBuffer = [_resourceHeap newBufferWithLength:tmpCBObj.bufferSize options:MTLStorageModeShared offset:allocOffset];
+                    allocOffset += tmpCBObj.bufferSize;
+                }
             }
         }
     }
