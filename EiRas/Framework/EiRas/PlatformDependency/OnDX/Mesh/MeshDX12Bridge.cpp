@@ -3,7 +3,7 @@
 
 using namespace MaterialSys;
 
-MeshDX12Bridge::MeshDX12Bridge(EiRasPlatformBridgeProtocol* vertexResBridge, EiRasPlatformBridgeProtocol* indexResBridge)
+MeshDX12Bridge::MeshDX12Bridge(EiRasPlatformBridgeProtocol* vertexResBridge, EiRasPlatformBridgeProtocol* indexResBridge, UINT vertexCount, UINT indexCount)
 {
-    raw_obj = new MeshDX12(vertexResBridge->raw_obj, indexResBridge->raw_obj);
+    raw_obj = new MeshDX12(vertexResBridge->raw_obj, indexResBridge->raw_obj, vertexCount, indexCount);
 }

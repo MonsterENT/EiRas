@@ -7,8 +7,12 @@
 using namespace MaterialSys;
 using GraphicsAPI::EiRasDX12;
 
-MeshDX12::MeshDX12(void* vertexRes, void* indexRes)
+MeshDX12::MeshDX12(void* vertexRes, void* indexRes, UINT vertextCount, UINT indexCount)
 {
+    VertextCount = vertextCount;
+
+    IndexCount = indexCount;
+
     GraphicsResourceDX12* rawVertexResObj = (GraphicsResourceDX12*)vertexRes;
     //GraphicsResourceDX12* rawIndexResObj = (GraphicsResourceDX12*)indexRes;
 

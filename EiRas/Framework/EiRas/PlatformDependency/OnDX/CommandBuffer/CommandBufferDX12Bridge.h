@@ -5,6 +5,7 @@
 namespace MaterialSys
 {
     class Material;
+    class Mesh;
 }
 
 namespace Graphics {
@@ -15,8 +16,12 @@ namespace Graphics {
 
         void SetMaterial(MaterialSys::Material* mat);
 
-        void BeginFrame(EiRasPlatformBridgeProtocol* heapBridge);
-        void Commit();
-        void Present();
+        void DrawMesh(MaterialSys::Mesh* mesh);
+
+        void BeginFrame();
+
+        void Reset(EiRasPlatformBridgeProtocol* heapBridge);
+
+        void Commit(bool present);
     };
 }

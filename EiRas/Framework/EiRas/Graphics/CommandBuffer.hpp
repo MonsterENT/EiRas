@@ -41,9 +41,9 @@ namespace Graphics {
 
         void BeginFrame();
 
-        void Present();
+        void Reset();
 
-        void Commit();
+        void Commit(bool present);
 
         EiRasPlatformBridgeProtocol* PlatformBridge;
 

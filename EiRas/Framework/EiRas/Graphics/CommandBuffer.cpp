@@ -44,6 +44,10 @@ void CommandBuffer::SetMaterial(MaterialSys::Material* material)
 #if GRAPHICS_METAL
     ((CommandBufferMetalBridge*)PlatformBridge)->SetMaterial(material);
 #endif
+
+#if GRAPHICS_DX
+    ((CommandBufferDX12Bridge*)PlatformBridge)->SetMaterial(material);
+#endif
 }
 
 void CommandBuffer::DrawMesh(Mesh* mesh)
@@ -51,19 +55,34 @@ void CommandBuffer::DrawMesh(Mesh* mesh)
 #if GRAPHICS_METAL
     ((CommandBufferMetalBridge*)PlatformBridge)->DrawMesh(mesh->GetVertices(), mesh->GetMeshDataSize(), 0);
 #endif
+
+#if GRAPHICS_DX
+    ((CommandBufferDX12Bridge*)PlatformBridge)->DrawMesh(mesh);
+#endif
 }
 
 void CommandBuffer::BeginFrame()
 {
+#if GRAPHICS_DX
+    ((CommandBufferDX12Bridge*)PlatformBridge)->BeginFrame();
+#endif
+
+#if GRAPHICS_METAL
+    ((CommandBufferMetalBridge*)PlatformBridge)->BeginFrame();
+#endif
+}
+
+void CommandBuffer::Reset()
+{
     if (!resourceHeap)
     {
-        int materialPropCount = 0;
+        UINT materialPropCount = 0;
         tmpMaterialTableArray.clear();
         MaterialCache_MAP::iterator it = MaterialMap.begin();
         while (it != MaterialMap.end())
         {
             Material* mat = it->second;
-            for (int matTableIndex = 0; matTableIndex < mat->LayoutTables.size(); matTableIndex++)
+            for (UINT matTableIndex = 0; matTableIndex < mat->LayoutTables.size(); matTableIndex++)
             {
                 MaterialTable* table = mat->LayoutTables[matTableIndex];
                 tmpMaterialTableArray.push_back(table);
@@ -75,33 +94,18 @@ void CommandBuffer::BeginFrame()
     }
 
 #if GRAPHICS_DX
-    ((CommandBufferDX12Bridge*)PlatformBridge)->BeginFrame(resourceHeap->PlatformBridge);
-#endif
-
-#if GRAPHICS_METAL
-    ((CommandBufferMetalBridge*)PlatformBridge)->BeginFrame();
+    ((CommandBufferDX12Bridge*)PlatformBridge)->Reset(resourceHeap->PlatformBridge);
 #endif
 }
 
-void CommandBuffer::Commit()
+void CommandBuffer::Commit(bool present)
 {
 #if GRAPHICS_METAL
-    ((CommandBufferMetalBridge*)PlatformBridge)->Commit();
+    ((CommandBufferMetalBridge*)PlatformBridge)->Commit(present);
 #endif
 
 #if GRAPHICS_DX
-    ((CommandBufferDX12Bridge*)PlatformBridge)->Commit();
-#endif
-}
-
-void CommandBuffer::Present()
-{
-#if GRAPHICS_METAL
-    ((CommandBufferMetalBridge*)PlatformBridge)->Present();
-#endif
-
-#if GRAPHICS_DX
-    ((CommandBufferDX12Bridge*)PlatformBridge)->Present();
+    ((CommandBufferDX12Bridge*)PlatformBridge)->Commit(present);
 #endif
 }
 

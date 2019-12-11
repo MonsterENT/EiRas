@@ -1,6 +1,7 @@
 #pragma once
-
+#include <Global/PlatformDefine.h>
 #include <Global/PlatformDependency/EiRasPlatformBridgeProtocol.h>
+#include <Windows.h>
 
 namespace MaterialSys
 {
@@ -8,6 +9,6 @@ namespace MaterialSys
     class MeshDX12Bridge : public EiRasPlatformBridgeProtocol
     {
     public:
-        MeshDX12Bridge(EiRasPlatformBridgeProtocol* vertexResBridge, EiRasPlatformBridgeProtocol* indexResBridge);
+        MeshDX12Bridge(EiRasPlatformBridgeProtocol* vertexResBridge, EiRasPlatformBridgeProtocol* indexResBridgem, UINT vertexCount, UINT indexCount);
     };
 }

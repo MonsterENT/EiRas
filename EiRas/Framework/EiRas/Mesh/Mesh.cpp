@@ -40,7 +40,7 @@ Mesh::Mesh(std::string Name)
     VertexBuffer->SetResource(GetVertices(), true);
 
 #if GRAPHICS_DX
-    PlatformBridge = new MeshDX12Bridge(VertexBuffer->PlatformBridge, NULL);
+    PlatformBridge = new MeshDX12Bridge(VertexBuffer->PlatformBridge, NULL, 3, -1);
 #endif
 }
 
@@ -49,7 +49,7 @@ void* Mesh::GetVertices()
     return triangleVertices;
 }
 
-int Mesh::GetMeshDataSize()
+UINT Mesh::GetMeshDataSize()
 {
 #if GRAPHICS_METAL
     return sizeof(triangleVertices);

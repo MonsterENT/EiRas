@@ -31,7 +31,7 @@ public:
     Mesh(std::string Name);
 
     void* GetVertices();
-    int GetMeshDataSize();
+    UINT GetMeshDataSize();
 
     EiRasPlatformBridgeProtocol* PlatformBridge;
 
