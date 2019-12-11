@@ -10,6 +10,9 @@ namespace MaterialSys
     class MaterialDX12;
     class MaterialTable;
     class MaterialProp;
+    
+    class MeshDX12;
+    class GraphicsResourceDX12;
 }
 
 namespace Graphics {
@@ -20,9 +23,12 @@ namespace Graphics {
         CommandBufferDX12(std::string Name);
         ~CommandBufferDX12();
 
-        void BeginFrame(MaterialSys::GraphicsResourceHeapDX12* heapObj);
-        void Commit();
-        void Present();
+        void BeginFrame();
+
+        void Reset(MaterialSys::GraphicsResourceHeapDX12* heapObj);
+        void Commit(bool present);
+
+        void DrawMesh(MaterialSys::MeshDX12* mesh);
 
         void SetPipelineState(MaterialSys::MaterialDX12* mat, std::vector<MaterialSys::MaterialProp*>* props, std::vector<MaterialSys::MaterialTable*>* tables);
 

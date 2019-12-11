@@ -9,17 +9,10 @@ HANDLE fenceEvent;
 ID3D12Fence* fence = 0;
 UINT64 fenceValue = 0;
 
-UINT frameCount = 2;
-UINT curFrameIndex = -1;
-UINT rtvDescriptorSize;
-ID3D12Resource* renderTargets[2];
-
-ID3D12DescriptorHeap* rtvHeap = 0;
-ID3D12DescriptorHeap* dsvHeap = 0;
-ID3D12Resource* depthStencil = 0;
-
 EiRasDX12::EiRasDX12(HWND hwnd, int frameWidth, int frameHeight)
 {
+    frameCount = 2;
+    curFrameIndex = -1;
     this->hwnd = hwnd;
     this->frameWidth = frameWidth;
     this->frameHeight = frameHeight;

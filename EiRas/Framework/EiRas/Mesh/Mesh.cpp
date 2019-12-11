@@ -8,8 +8,12 @@
 
 #include "Mesh.hpp"
 
+#if GRAPHICS_DX
+#include <PlatformDependency/OnDX/Mesh/MeshDX12Bridge.h>
+#endif
 
-using MeshSys::Mesh;
+using MaterialSys::Mesh;
+using namespace Graphics;
 
 #if GRAPHICS_METAL
 static AAPLVertex triangleVertices[] =
@@ -21,18 +25,31 @@ static AAPLVertex triangleVertices[] =
 };
 #endif
 
+#if GRAPHICS_DX
+static VertexDefault triangleVertices[] =
+{
+    { { 250, -250, 0.5 }, { 0, 0 }, { 1, 0, 0, 1 }, { 1, 0, 0 } },
+    { { -250, -250, 0.5 }, { 0, 0 }, { 1, 0, 0, 1 }, { 1, 0, 0 } },
+    { { 0, 250, 0.5 }, { 0, 0 }, { 1, 0, 0, 1 }, { 1, 0, 0 } }
+};
+#endif
+
 Mesh::Mesh(std::string Name)
 {
-    
+    VertexBuffer = new GraphicsResource(Name, GraphicsResourceType::Default, GetMeshDataSize());
+    VertexBuffer->SetResource(GetVertices(), true);
+
+#if GRAPHICS_DX
+    PlatformBridge = new MeshDX12Bridge(VertexBuffer->PlatformBridge, NULL, 3, -1);
+#endif
 }
 
-#if GRAPHICS_METAL
-AAPLVertex* Mesh::GetVertices()
+void* Mesh::GetVertices()
 {
     return triangleVertices;
 }
-#endif
-int Mesh::GetMeshDataSize()
+
+UINT Mesh::GetMeshDataSize()
 {
 #if GRAPHICS_METAL
     return sizeof(triangleVertices);

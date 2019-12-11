@@ -19,13 +19,24 @@ namespace GraphicsAPI
         IDXGISwapChain3* swapChain3;
         ID3D12CommandQueue* cmdQueue;
 
+        CD3DX12_VIEWPORT viewPort;
+        CD3DX12_RECT scissorRect;
+
+        UINT frameCount;
+        UINT curFrameIndex;
+        UINT rtvDescriptorSize;
+        ID3D12Resource* renderTargets[2];
+
+        ID3D12DescriptorHeap* rtvHeap;
+        ID3D12DescriptorHeap* dsvHeap;
+        ID3D12Resource* depthStencil;
+
         void WaitForPreviousFrame();
 
     private:
         HWND hwnd;
         int frameWidth, frameHeight;
-        CD3DX12_VIEWPORT viewPort;
-        CD3DX12_RECT scissorRect;
+
     };
 }
 

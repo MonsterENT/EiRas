@@ -10,17 +10,24 @@ namespace MaterialSys
     class GraphicsResourceDX12
     {
     public:
-        GraphicsResourceDX12();
+        GraphicsResourceDX12(int bufferSize, bool initResource);
         virtual ~GraphicsResourceDX12();
 
-    public:
         ID3D12Resource* Resource;
-        UINT8* ResMappingDestPtr;
+        
         GraphicsResourceType ResType;
         CD3DX12_CPU_DESCRIPTOR_HANDLE CpuHandle;
         CD3DX12_GPU_DESCRIPTOR_HANDLE GpuHandle;
-    protected:
 
+        void SetResource(void* res, bool shouldUnmap);
+
+        int GetBufferSize();
+
+    protected:
+        UINT8* ResMappingDestPtr;
+
+    private:
+        int bufferSize;
     };
 }
 

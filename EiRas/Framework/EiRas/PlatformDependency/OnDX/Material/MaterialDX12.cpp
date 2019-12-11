@@ -21,11 +21,9 @@ MaterialDX12::MaterialDX12(std::string Name, ShaderDX12* shaderObj)
 
 void MaterialDX12::SetProperty(MaterialProp* prop, void* res)
 {
-    GraphicsResourceDX12* obj = (GraphicsResourceDX12*)prop->Resource->PlatformBridge->raw_obj;
-    if (obj->ResType == GraphicsResourceType::CBV)
+    if (prop->Resource->ResourceType == GraphicsResourceType::CBV)
     {
-        ConstantBufferDX12* cbObj = (ConstantBufferDX12*)obj;
-        memcpy(cbObj->ResMappingDestPtr, res, cbObj->GetBufferSize());
+        prop->Resource->SetResource(res, false);
     }
 }
 

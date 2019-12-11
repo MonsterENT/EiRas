@@ -11,10 +11,8 @@ namespace MaterialSys
         ConstantBufferDX12(UINT bufferSize);
         ~ConstantBufferDX12();
 
-        UINT GetBufferSize();
-
     private:
-        UINT bufferSize;
+
     };
 }
 #endif // !EIRAS_CONSTANT_BUFFER

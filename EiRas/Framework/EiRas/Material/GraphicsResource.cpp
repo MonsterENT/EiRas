@@ -17,5 +17,16 @@ GraphicsResource::GraphicsResource(std::string Name, GraphicsResourceType type, 
     {
         ((GraphicsResourceDX12Bridge*)PlatformBridge)->InitAsConstantBuffer(bufferSize);
     }
+    else if (type == GraphicsResourceType::Default)
+    {
+        ((GraphicsResourceDX12Bridge*)PlatformBridge)->InitAsDefault(bufferSize);
+    }
+#endif
+}
+
+void GraphicsResource::SetResource(void* res, bool shouldUnmap)
+{
+#if GRAPHICS_DX
+    ((GraphicsResourceDX12Bridge*)PlatformBridge)->SetResource(res, shouldUnmap);
 #endif
 }

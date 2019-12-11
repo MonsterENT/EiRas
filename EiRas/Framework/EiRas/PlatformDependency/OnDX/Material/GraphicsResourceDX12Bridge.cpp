@@ -14,6 +14,17 @@ GraphicsResourceDX12Bridge::GraphicsResourceDX12Bridge()
     raw_obj = 0;
 }
 
+void GraphicsResourceDX12Bridge::SetResource(void* res, bool shouldUnmap)
+{
+    ((GraphicsResourceDX12*)raw_obj)->SetResource(res, shouldUnmap);
+}
+
+void GraphicsResourceDX12Bridge::InitAsDefault(int bufferSize)
+{
+    this->type = GraphicsResourceType::Default;
+    raw_obj = new GraphicsResourceDX12(bufferSize, true);
+}
+
 void GraphicsResourceDX12Bridge::InitAsConstantBuffer(int bufferSize)
 {
     this->type = GraphicsResourceType::CBV;

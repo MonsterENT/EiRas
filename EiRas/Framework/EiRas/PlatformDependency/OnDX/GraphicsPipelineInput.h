@@ -17,11 +17,11 @@ namespace Graphics
         { "NORMAL",  0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 36, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
     };
 
-    struct VertexDefault
+    typedef struct VertexDefault
     {
         XMFLOAT3 POSITION;
         XMFLOAT2 TEXCOORD;
         XMFLOAT4 COLOR;
         XMFLOAT3 NORMAL;
-    };
+    } VertexDefault;
 };
