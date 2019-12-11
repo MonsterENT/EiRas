@@ -23,7 +23,6 @@
 
 #include <Mesh/Mesh.hpp>
 
-using namespace MeshSys;
 using namespace MaterialSys;
 using Graphics::CommandBuffer;
 

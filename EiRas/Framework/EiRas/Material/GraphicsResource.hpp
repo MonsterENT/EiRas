@@ -12,7 +12,8 @@ namespace MaterialSys
         SRV = 0,
         UAV = (SRV + 1),
         CBV = (UAV + 1),
-        SAMPLER = (CBV + 1)
+        SAMPLER = (CBV + 1),
+        Default = (SAMPLER + 1)
     } GraphicsResourceType;
 
     class GraphicsResource
@@ -22,6 +23,8 @@ namespace MaterialSys
 
         GraphicsResourceType ResourceType;
         EiRasPlatformBridgeProtocol* PlatformBridge;
+
+        void SetResource(void* res, bool shouldUnmap);
 
     private:
         int bufferSize;

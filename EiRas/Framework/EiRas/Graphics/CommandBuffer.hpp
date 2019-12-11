@@ -18,9 +18,6 @@ namespace MaterialSys {
     class Material;
     class MaterialTable;
     class GraphicsResourceHeap;
-}
-
-namespace MeshSys {
     class Mesh;
 }
 
@@ -40,7 +37,7 @@ namespace Graphics {
 
         void SetMaterial(MaterialSys::Material* material);
 
-        void DrawMesh(MeshSys::Mesh* mesh);
+        void DrawMesh(MaterialSys::Mesh* mesh);
 
         void BeginFrame();
 

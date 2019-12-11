@@ -13,6 +13,10 @@ namespace MaterialSys
     public:
         GraphicsResourceDX12Bridge();
 
+        void SetResource(void* res, bool shouldUnmap);
+
+        void InitAsDefault(int bufferSize);
+
         void InitAsConstantBuffer(int bufferSize);
 
         void InitAsShaderResource();

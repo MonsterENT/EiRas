@@ -7,7 +7,7 @@ using MaterialSys::GraphicsResourceType;
 using MaterialSys::ShaderResourceDX12;
 using GraphicsAPI::EiRasDX12;
 
-ShaderResourceDX12::ShaderResourceDX12(DXGI_FORMAT format, UINT width, UINT height, UINT8* texData)
+ShaderResourceDX12::ShaderResourceDX12(DXGI_FORMAT format, UINT width, UINT height, UINT8* texData) : GraphicsResourceDX12(-1, false)
 {
     GET_EIRAS_DX12(deviceObj)
 

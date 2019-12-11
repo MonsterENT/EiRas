@@ -11,24 +11,33 @@
 
 #include <Global/PlatformDefine.h>
 #include <string>
+#include <Material/GraphicsResource.hpp>
+#include <Global/PlatformDependency/EiRasPlatformBridgeProtocol.h>
 
 #if GRAPHICS_METAL
 #include <ShaderFile/Metal/MetalGraphicsPipelineInput.h>
 #endif
 
+#if GRAPHICS_DX
+#include <PlatformDependency/OnDX/GraphicsPipelineInput.h>
+#endif
 
 
-namespace MeshSys {
+namespace MaterialSys {
 
 class Mesh
 {
 public:
     Mesh(std::string Name);
-#if GRAPHICS_METAL
-    AAPLVertex* GetVertices();
-#endif
 
+    void* GetVertices();
     int GetMeshDataSize();
+
+    EiRasPlatformBridgeProtocol* PlatformBridge;
+
+private:
+    GraphicsResource* VertexBuffer;
+    GraphicsResource* IndexBuffer;
 };
 
 }
