@@ -8,9 +8,11 @@
 #include <PlatformDependency/OnMetal/Material/GraphicsResourceHeapMetalBridge.hpp>
 #endif
 
+
+
 using namespace MaterialSys;
 
-GraphicsResourceHeap::GraphicsResourceHeap(int propCount, int tableCount, MaterialTable** tableArray)
+GraphicsResourceHeap::GraphicsResourceHeap(_uint propCount, _uint tableCount, MaterialTable** tableArray)
 {
 #if GRAPHICS_DX
     PlatformBridge = new GraphicsResourceHeapDX12Bridge(propCount, tableCount, tableArray);

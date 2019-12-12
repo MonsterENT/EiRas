@@ -12,7 +12,7 @@ using std::vector;
 using GraphicsAPI::EiRasDX12;
 using namespace MaterialSys;
 
-GraphicsResourceHeapDX12::GraphicsResourceHeapDX12(int propCount, int tableCount, MaterialTable** tableArray)
+GraphicsResourceHeapDX12::GraphicsResourceHeapDX12(_uint propCount, _uint tableCount, MaterialTable** tableArray)
 {
     D3D12_DESCRIPTOR_HEAP_DESC heapDesc = {};
     heapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
@@ -28,11 +28,11 @@ GraphicsResourceHeapDX12::GraphicsResourceHeapDX12(int propCount, int tableCount
 
     Offset = deviceObj->device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
-    for (int tableIndex = 0; tableIndex < tableCount; tableIndex++)
+    for (_uint tableIndex = 0; tableIndex < tableCount; tableIndex++)
     {
         MaterialTable* table = tableArray[tableIndex];
 
-        for (int propIndex = 0; propIndex < table->PropNum; propIndex++)
+        for (_uint propIndex = 0; propIndex < table->PropNum; propIndex++)
         {
             MaterialProp* prop = table->Props[propIndex];
 

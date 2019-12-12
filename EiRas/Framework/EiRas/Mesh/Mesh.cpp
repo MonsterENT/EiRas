@@ -13,6 +13,9 @@
 #endif
 
 using namespace MaterialSys;
+#if GRAPHICS_DX
+using namespace Graphics;
+#endif
 
 #if GRAPHICS_METAL
 static AAPLVertex triangleVertices[] =

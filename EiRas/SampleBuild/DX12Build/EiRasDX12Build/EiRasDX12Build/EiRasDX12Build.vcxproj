@@ -154,6 +154,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Framework\EiRas\Global\EiRasGlobalManager.hpp" />
+    <ClInclude Include="..\..\..\..\Framework\EiRas\Global\GlobalDefine.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Global\PlatformDefine.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Global\PlatformDependency\EiRasPlatformBridgeProtocol.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\GraphicsAPI\EiRas.hpp" />

@@ -3,7 +3,7 @@
 #include <Material/MaterialLayout.hpp>
 using namespace MaterialSys;
 
-GraphicsResourceHeapDX12Bridge::GraphicsResourceHeapDX12Bridge(int propCount, int tableCount, MaterialTable** tableArray)
+GraphicsResourceHeapDX12Bridge::GraphicsResourceHeapDX12Bridge(_uint propCount, _uint tableCount, MaterialTable** tableArray)
 {
     raw_obj = new GraphicsResourceHeapDX12(propCount, tableCount, tableArray);
 }
