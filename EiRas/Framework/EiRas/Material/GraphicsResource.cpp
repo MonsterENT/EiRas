@@ -30,6 +30,13 @@ GraphicsResource::GraphicsResource(std::string Name, GraphicsResourceType type, 
         ((GraphicsResourceMetalBridge*)PlatformBridge)->InitAsConstantBuffer(bufferSize);
 #endif
     }
+    else if (type == GraphicsResourceType::SRV)
+    {
+#if GRAPHICS_DX
+        ((GraphicsResourceDX12Bridge*)PlatformBridge)->InitAsShaderResource();
+#elif GRAPHICS_METAL
+#endif
+    }
     else if (type == GraphicsResourceType::Default)
     {
 #if GRAPHICS_DX

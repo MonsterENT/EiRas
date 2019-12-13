@@ -61,7 +61,7 @@ void ShaderResourceDX12::invoke(void* data)
     
     D3D12_SUBRESOURCE_DATA textureData = {};
     textureData.pData = &texData[0];
-    textureData.RowPitch = width * 4;
+    textureData.RowPitch = width * (__int64)4;
     textureData.SlicePitch = textureData.RowPitch * height;
     
     UpdateSubresources(cmdList, Resource, tmpResource, 0, 0, 1, &textureData);
