@@ -10,7 +10,7 @@ using GraphicsAPI::EiRasDX12;
 GraphicsResourceDX12::GraphicsResourceDX12(int bufferSize, bool initResource)
 {
     this->bufferSize = bufferSize;
-    ResType = GraphicsResourceType::CBV;
+    ResType = GraphicsResourceType::Default;
 
     if (initResource)
     {
@@ -32,7 +32,7 @@ GraphicsResourceDX12::GraphicsResourceDX12(int bufferSize, bool initResource)
 void GraphicsResourceDX12::SetResource(void* res, bool shouldUnmap)
 {
     CD3DX12_RANGE range(0, 0);
-    Resource->Map(0, &range, (void**)&ResMappingDestPtr);
+    Resource->Map(0, &range, (void**)(&ResMappingDestPtr));
     memcpy(ResMappingDestPtr, res, bufferSize);
     if (shouldUnmap)
     {

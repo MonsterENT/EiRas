@@ -70,7 +70,7 @@ void EiRasDX12::InitDevice()
 
     IDXGISwapChain1* swapChain = 0;
 
-    factory->CreateSwapChainForHwnd(cmdQueue, hwnd, &swapChainDesc, 0, 0, &swapChain);
+    assert(SUCCEEDED(factory->CreateSwapChainForHwnd(cmdQueue, hwnd, &swapChainDesc, 0, 0, &swapChain)));
     swapChain3 = (IDXGISwapChain3*)swapChain;
     /////////////////
 
@@ -111,12 +111,12 @@ void EiRasDX12::InitDevice()
     // Create the depth stencil view.
     {
         D3D12_DEPTH_STENCIL_VIEW_DESC depthStencilDesc = {};
-        depthStencilDesc.Format = DXGI_FORMAT_D32_FLOAT;
+        depthStencilDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
         depthStencilDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
         depthStencilDesc.Flags = D3D12_DSV_FLAG_NONE;
 
         D3D12_CLEAR_VALUE depthOptimizedClearValue = {};
-        depthOptimizedClearValue.Format = DXGI_FORMAT_D32_FLOAT;
+        depthOptimizedClearValue.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
         depthOptimizedClearValue.DepthStencil.Depth = 1.0f;
         depthOptimizedClearValue.DepthStencil.Stencil = 0;
 

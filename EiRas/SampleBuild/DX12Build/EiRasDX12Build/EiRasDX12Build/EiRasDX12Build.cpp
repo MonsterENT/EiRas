@@ -5,7 +5,14 @@
 #include "EiRasDX12Build.h"
 
 #include <GraphicsAPI/EiRas.hpp>
+#include <Graphics/CommandBuffer.hpp>
+#include <Mesh/Mesh.hpp>
+#include <Material/Material.hpp>
+#include <Material/Shader.hpp>
+#include <Material/ShaderLayout.h>
 
+using namespace MaterialSys;
+using namespace Graphics;
 using GraphicsAPI::EiRas;
 
 #define MAX_LOADSTRING 100
@@ -16,6 +23,10 @@ WCHAR szTitle[MAX_LOADSTRING];                  // 标题栏文本
 WCHAR szWindowClass[MAX_LOADSTRING];            // 主窗口类名
 
 EiRas* device = 0;
+Material* mat = 0;
+Shader* shader = 0;
+CommandBuffer* cmdBuffer = 0;
+Mesh* mesh = 0;
 
 // 此代码模块中包含的函数的前向声明:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -56,6 +67,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             TranslateMessage(&msg);
             DispatchMessage(&msg);
         }
+
+        cmdBuffer->BeginFrame();
+        cmdBuffer->Reset();
+        cmdBuffer->SetMaterial(mat);
+        cmdBuffer->DrawMesh(mesh);
+        cmdBuffer->Commit(true);
     }
 
     return (int) msg.wParam;
@@ -113,9 +130,16 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
 #pragma region EiRas Init
    device = EiRas::Create(hWnd, 1024, 1080);
+   cmdBuffer = new CommandBuffer("main buffer");
+
+   ShaderLayout* layout = new ShaderLayout();
+   layout->SlotNum = 0;
+   shader = new Shader("shaders.hlsl", "VSMain", "PSMain");
+   shader->InitLayout(layout);
+   mat = new Material("material", shader, cmdBuffer);
+
+   mesh = new Mesh("mesh");
 #pragma endregion
-
-
 
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);

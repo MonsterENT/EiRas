@@ -47,7 +47,7 @@ void CommandBufferDX12::BeginFrame()
     cmdList->OMSetRenderTargets(1, &rtvHandle, FALSE, &dsvHandle);
 
     // Record commands.
-    const float clearColor[] = { 0.0f, 0.2f, 0.4f, 1.0f };
+    const float clearColor[] = { 0.2f, 0.2f, 0.2f, 1.0f };
     cmdList->ClearRenderTargetView(rtvHandle, clearColor, 0, nullptr);
     cmdList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
     cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
@@ -56,8 +56,11 @@ void CommandBufferDX12::BeginFrame()
 
 void CommandBufferDX12::Reset(MaterialSys::GraphicsResourceHeapDX12* heapObj)
 {
-    CurrentUseingHeap = heapObj;
-    cmdList->SetDescriptorHeaps(1, &heapObj->heap);
+    if (heapObj)
+    {
+        CurrentUseingHeap = heapObj;
+        cmdList->SetDescriptorHeaps(1, &heapObj->heap);
+    }
 }
 
 void CommandBufferDX12::Commit(bool present)
@@ -67,13 +70,13 @@ void CommandBufferDX12::Commit(bool present)
     {
         cmdList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(deviceObj->renderTargets[deviceObj->curFrameIndex], D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PRESENT));
     }
-    cmdList->Close();
+    assert(SUCCEEDED(cmdList->Close()));
     ID3D12CommandList* ppCommandLists[] = { cmdList };
     deviceObj->cmdQueue->ExecuteCommandLists(1, ppCommandLists);
 
     if (present)
     {
-        deviceObj->swapChain3->Present(1, 0);
+        assert(SUCCEEDED(deviceObj->swapChain3->Present(1, 0)));
 #pragma message("TOFIX")
         deviceObj->WaitForPreviousFrame();
     }

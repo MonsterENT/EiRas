@@ -18,5 +18,5 @@ MeshDX12::MeshDX12(void* vertexRes, void* indexRes, UINT vertextCount, UINT inde
 
     VertexBufferView.BufferLocation = rawVertexResObj->Resource->GetGPUVirtualAddress();
     VertexBufferView.StrideInBytes = sizeof(Graphics::VertexDefault);
-    VertexBufferView.StrideInBytes = rawVertexResObj->GetBufferSize();
+    VertexBufferView.SizeInBytes = rawVertexResObj->GetBufferSize();
 }

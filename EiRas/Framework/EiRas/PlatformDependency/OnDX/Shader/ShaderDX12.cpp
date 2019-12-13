@@ -18,7 +18,7 @@ ShaderDX12::ShaderDX12(LPCSTR fileName, LPCSTR vertexFuncName, LPCSTR pixelFuncN
     this->VertexFunc = 0;
     this->PixelFunc = 0;
     DX12Utils::g_compileShader(fileName, vertexFuncName, "vs_5_1", this->VertexFunc);
-    DX12Utils::g_compileShader(fileName, vertexFuncName, "ps_5_1", this->PixelFunc);
+    DX12Utils::g_compileShader(fileName, pixelFuncName, "ps_5_1", this->PixelFunc);
     RootSignature = 0;
 }       
 
