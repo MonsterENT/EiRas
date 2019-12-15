@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Global/PlatformDependency/EiRasPlatformBridgeProtocol.h>
-#include <Windows.h>
+#include <Global/GlobalDefine.h>
 
 namespace MaterialSys
 {
@@ -9,6 +9,6 @@ namespace MaterialSys
     class GraphicsResourceHeapDX12Bridge : public EiRasPlatformBridgeProtocol
     {
     public:
-        GraphicsResourceHeapDX12Bridge(int propCount, int tableCount, MaterialTable** tableArray);
+        GraphicsResourceHeapDX12Bridge(_uint propCount, _uint tableCount, MaterialTable** tableArray);
     };
 }

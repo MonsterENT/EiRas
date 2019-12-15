@@ -132,6 +132,12 @@
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Mesh\MeshDX12Bridge.h">
       <Filter>framework</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\Framework\EiRas\Global\GlobalDefine.h">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Framework\EiRas\Graphics\RenderTexture.hpp">
+      <Filter>framework</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EiRasDX12Build.cpp">
@@ -219,6 +225,9 @@
       <Filter>framework</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Mesh\MeshDX12Bridge.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Framework\EiRas\Graphics\RenderTexture.cpp">
       <Filter>framework</Filter>
     </ClCompile>
   </ItemGroup>

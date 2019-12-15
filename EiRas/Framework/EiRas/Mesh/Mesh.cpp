@@ -13,6 +13,9 @@
 #endif
 
 using namespace MaterialSys;
+#if GRAPHICS_DX
+using namespace Graphics;
+#endif
 
 #if GRAPHICS_METAL
 static AAPLVertex triangleVertices[] =
@@ -27,9 +30,9 @@ static AAPLVertex triangleVertices[] =
 #if GRAPHICS_DX
 static VertexDefault triangleVertices[] =
 {
-    { { 250, -250, 0.5 }, { 0, 0 }, { 1, 0, 0, 1 }, { 1, 0, 0 } },
-    { { -250, -250, 0.5 }, { 0, 0 }, { 1, 0, 0, 1 }, { 1, 0, 0 } },
-    { { 0, 250, 0.5 }, { 0, 0 }, { 1, 0, 0, 1 }, { 1, 0, 0 } }
+    { { 0.5, -0.5, 0.5 }, { 0, 0 }, { 1, 0, 0, 1 }, { 1, 0, 0 } },
+    { { -0.5, -0.5, 0.5 }, { 0, 0 }, { 0, 1, 0, 1 }, { 1, 0, 0 } },
+    { { 0, 0.5, 0.5 }, { 0, 0 }, { 0, 0, 1, 1 }, { 1, 0, 0 } }
 };
 #endif
 
@@ -50,8 +53,5 @@ void* Mesh::GetVertices()
 
 UINT Mesh::GetMeshDataSize()
 {
-#if GRAPHICS_METAL
     return sizeof(triangleVertices);
-#endif
-    return 0;
 }

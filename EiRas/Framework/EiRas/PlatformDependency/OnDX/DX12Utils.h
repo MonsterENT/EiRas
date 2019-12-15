@@ -53,13 +53,13 @@ namespace DX12Utils
         psoDesc.RasterizerState = rasterizerStateDesc;
         psoDesc.BlendState = CD3DX12_BLEND_DESC(D3D12_DEFAULT);
         psoDesc.DepthStencilState = CD3DX12_DEPTH_STENCIL_DESC(D3D12_DEFAULT);
-        //psoDesc.DepthStencilState.DepthEnable = false;
-        //psoDesc.DepthStencilState.StencilEnable = false;
+        psoDesc.DepthStencilState.DepthEnable = true;
+        psoDesc.DepthStencilState.StencilEnable = true;
         psoDesc.SampleMask = UINT_MAX;
         psoDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
         psoDesc.NumRenderTargets = 1;
         psoDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM;
-        psoDesc.DSVFormat = DXGI_FORMAT_D32_FLOAT;
+        psoDesc.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
         psoDesc.SampleDesc.Count = 1;
         return SUCCEEDED(device->CreateGraphicsPipelineState(&psoDesc, IID_PPV_ARGS(&pso)));
     }

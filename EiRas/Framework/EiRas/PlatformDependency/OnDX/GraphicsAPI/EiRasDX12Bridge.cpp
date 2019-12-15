@@ -14,4 +14,5 @@ EiRasDX12Bridge::EiRasDX12Bridge(HWND hwnd, int frameWidth, int frameHeight)
 
 void EiRasDX12Bridge::InitDevice()
 {
+    ((EiRasDX12*)raw_obj)->InitDevice();
 }

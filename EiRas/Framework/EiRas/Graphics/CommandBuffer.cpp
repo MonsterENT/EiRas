@@ -90,11 +90,19 @@ void CommandBuffer::Reset()
             }
             it++;
         }
-        resourceHeap = new GraphicsResourceHeap(materialPropCount, tmpMaterialTableArray.size(), &tmpMaterialTableArray[0]);
+        if (tmpMaterialTableArray.size() > 0)
+        {
+            resourceHeap = new GraphicsResourceHeap(materialPropCount, tmpMaterialTableArray.size(), &tmpMaterialTableArray[0]);
+        }
     }
 
 #if GRAPHICS_DX
-    ((CommandBufferDX12Bridge*)PlatformBridge)->Reset(resourceHeap->PlatformBridge);
+    EiRasPlatformBridgeProtocol* tmpBridge = NULL;
+    if (resourceHeap)
+    {
+        tmpBridge = resourceHeap->PlatformBridge;
+    }
+    ((CommandBufferDX12Bridge*)PlatformBridge)->Reset(tmpBridge);
 #endif
     
 #if GRAPHICE_METAL

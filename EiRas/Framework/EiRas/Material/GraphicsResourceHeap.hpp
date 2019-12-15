@@ -2,6 +2,7 @@
 #define Graphics_Resource_Heap_hpp
 
 #include <Global/PlatformDependency/EiRasPlatformBridgeProtocol.h>
+#include <Global/GlobalDefine.h>
 
 namespace MaterialSys
 {
@@ -9,7 +10,7 @@ namespace MaterialSys
     class GraphicsResourceHeap
     {
     public:
-        GraphicsResourceHeap(int propCount, int tableCount, MaterialTable** tableArray);
+        GraphicsResourceHeap(_uint propCount, _uint tableCount, MaterialTable** tableArray);
         EiRasPlatformBridgeProtocol* PlatformBridge;
     };
 }
