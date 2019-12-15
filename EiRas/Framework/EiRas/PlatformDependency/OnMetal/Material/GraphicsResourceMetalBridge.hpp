@@ -11,6 +11,7 @@
 
 #include <Global/PlatformDependency/EiRasPlatformBridgeProtocol.h>
 #include <Global/PlatformDefine.h>
+#include <Global/GlobalDefine.h>
 
 namespace MaterialSys {
 
@@ -20,11 +21,11 @@ namespace MaterialSys {
     public:
         GraphicsResourceMetalBridge(bool initResource);
         
-        void InitAsConstantBuffer(UINT bufferSize);
+        void InitAsConstantBuffer(_uint bufferSize);
         
-        void InitAsDefault(UINT bufferSize);
+        void InitAsDefault(_uint bufferSize);
         
-        void SetResource(void* res, bool shouldUnmap);
+        void SetResource(void* res);
         
         GraphicsResourceType type;
     private:

@@ -22,6 +22,7 @@
 #include <PlatformDependency/OnDX/GraphicsPipelineInput.h>
 #endif
 
+#include <Global/GlobalDefine.h>
 
 namespace MaterialSys {
 
@@ -31,7 +32,7 @@ public:
     Mesh(std::string Name);
 
     void* GetVertices();
-    UINT GetMeshDataSize();
+    _uint GetMeshDataSize();
 
     EiRasPlatformBridgeProtocol* PlatformBridge;
 

@@ -27,11 +27,11 @@
 {
     if(prop->PropType == MaterialSys::GraphicsResourceType::CBV)
     {
-        ConstantBufferMetal* obj =((__bridge ConstantBufferMetal*)prop->Resource->PlatformBridge->raw_obj);
-        void* content = obj.rawBuffer.contents;
-        memcpy(content, res, obj.bufferSize);
-#warning FIX MacOS
-//        [obj.rawBuffer didModifyRange:NSMakeRange(0, obj.bufferSize)];
+        prop->Resource->SetResource(res, false);
+    }
+    else
+    {
+        prop->Resource->SetResource(res, true);
     }
 }
 

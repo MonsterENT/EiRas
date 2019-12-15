@@ -23,7 +23,7 @@ void* createCommandBufferMetal(std::string name);
 
 void setMaterialMetal(void* ptr, void* material_raw_obj, std::vector<MaterialSys::MaterialProp*>* props, std::vector<MaterialSys::MaterialTable*>* tables);
 
-void drawMeshMetal(void* ptr, void* meshData, int dataSize, int index);
+void drawMeshMetal(void* ptr, void* meshObj);
 
 void beginFrameMetal(void* ptr);
 

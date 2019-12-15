@@ -8,6 +8,7 @@
 
 #include "CommandBufferMetalAdapter.hpp"
 #import "CommandBufferMetal.h"
+#include <Global/PlatformDependency/EiRasPlatformBridgeProtocol.h>
 #include <PlatformDependency/OnMetal/MetalMacro.h>
 
 void* Graphics::createCommandBufferMetal(std::string name)
@@ -24,10 +25,17 @@ void Graphics::setMaterialMetal(void* ptr, void* material_raw_obj, std::vector<M
     [oc_obj setMaterial:(__bridge MaterialMetal*)material_raw_obj props:props tables:tables];
 }
 
-void Graphics::drawMeshMetal(void* ptr, void* meshData, int dataSize, int index)
+void Graphics::drawMeshMetal(void* ptr, void* meshObj)
 {
     CommandBufferMetal* oc_obj = (__bridge CommandBufferMetal*)ptr;
-    [oc_obj drawMesh:meshData dataSize:dataSize index:index];
+    
+    id meshRawObj = nullptr;
+    
+    if(meshObj)
+    {
+        meshRawObj = (__bridge id)((EiRasPlatformBridgeProtocol*)meshObj)->raw_obj;
+    }
+    [oc_obj drawMesh:meshRawObj];
 }
 
 void Graphics::beginFrameMetal(void* ptr)

@@ -12,6 +12,10 @@
 #include <PlatformDependency/OnDX/Mesh/MeshDX12Bridge.h>
 #endif
 
+#if GRAPHICS_METAL
+#include <PlatformDependency/OnMetal/Mesh/MeshMetalBridge.hpp>
+#endif
+
 using namespace MaterialSys;
 #if GRAPHICS_DX
 using namespace Graphics;
@@ -44,6 +48,10 @@ Mesh::Mesh(std::string Name)
 #if GRAPHICS_DX
     PlatformBridge = new MeshDX12Bridge(VertexBuffer->PlatformBridge, NULL, 3, -1);
 #endif
+    
+#if GRAPHICS_METAL
+    PlatformBridge = new MeshMetalBridge(VertexBuffer->PlatformBridge, nullptr, 3, 0, 0, 0);
+#endif
 }
 
 void* Mesh::GetVertices()
@@ -51,7 +59,7 @@ void* Mesh::GetVertices()
     return triangleVertices;
 }
 
-UINT Mesh::GetMeshDataSize()
+_uint Mesh::GetMeshDataSize()
 {
     return sizeof(triangleVertices);
 }

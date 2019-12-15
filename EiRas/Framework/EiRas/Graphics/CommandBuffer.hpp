@@ -10,6 +10,7 @@
 #define CommandBuffer_hpp
 
 #include <Global/PlatformDependency/EiRasPlatformBridgeProtocol.h>
+#include <Global/GlobalDefine.h>
 #include <string>
 #include <vector>
 #include <map>

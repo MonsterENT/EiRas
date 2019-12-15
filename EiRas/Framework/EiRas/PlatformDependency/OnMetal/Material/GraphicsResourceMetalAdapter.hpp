@@ -15,7 +15,7 @@ void* createConstantBufferMetal(int bufferSize, bool initResource);
 
 void* createDefaultBufferMetal(int bufferSize, bool initResource);
 
-void setResourceMetal(void* ptr, void* res, bool shouldUnmap);
+void setResourceMetal(void* ptr, void* res);
 }
 
 #endif /* GraphicsResourceMetalAdapter_hpp */

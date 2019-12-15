@@ -52,6 +52,6 @@ void GraphicsResource::SetResource(void* res, bool shouldUnmap)
 #if GRAPHICS_DX
     ((GraphicsResourceDX12Bridge*)PlatformBridge)->SetResource(res, shouldUnmap);
 #elif GRAPHICS_METAL
-    ((GraphicsResourceMetalBridge*)PlatformBridge)->SetResource(res, shouldUnmap);
+    ((GraphicsResourceMetalBridge*)PlatformBridge)->SetResource(res);
 #endif
 }

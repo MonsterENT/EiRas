@@ -7,18 +7,19 @@
 //
 
 #import "BaseMetalObject.h"
+#import <Global/GlobalDefine.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface GraphicsResourceMetal : BaseMetalObject
 
--(instancetype)initWithBufferSize:(unsigned int)bufferSize initResource:(bool)initResource;
+-(instancetype)initWithBufferSize:(_uint)bufferSize initResource:(bool)initResource;
 
--(void)setResource:(void*)res shouldUnmap:(bool)shouldUnmap;
+-(void)setResource:(void*)res;
 
 @property(strong, nonatomic)id<MTLBuffer> rawBuffer;
 
-@property(assign, readonly, nonatomic)int bufferSize;
+@property(assign, readonly, nonatomic)_uint bufferSize;
 
 @end
 

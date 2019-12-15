@@ -34,7 +34,8 @@ using Graphics::CommandBuffer;
 
 GraphicsAPI::EiRas* device = 0;
 
-MaterialSys::Material* mat = 0;
+Material* mat = 0;
+Shader* shader = 0;
 
 Graphics::CommandBuffer* cmdBuffer = 0;
 
@@ -49,11 +50,12 @@ Mesh* m_mesh = 0;
         [EiRasMetal SetMetalKitView:_mtkView];
         
         device = GraphicsAPI::EiRas::Create();
-        // Do any additional setup after loading the view.
         
         cmdBuffer = new Graphics::CommandBuffer("m_cmdBuffer");
         
-        mat = new Material("m_mat", new Shader("m_shader", "vertexShader", "fragmentShader"), cmdBuffer);
+        shader = new Shader("m_shader", "vertexShader", "fragmentShader");
+        
+        mat = new Material("m_mat", shader, cmdBuffer);
         
         m_mesh = new Mesh("m_mesh");
         

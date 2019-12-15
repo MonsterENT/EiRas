@@ -47,6 +47,9 @@
 		C23CACB82379A38200AA5737 /* EiRasMetalBuildTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C23CACB72379A38200AA5737 /* EiRasMetalBuildTests.m */; };
 		C23CACC32379A38200AA5737 /* EiRasMetalBuildUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = C23CACC22379A38200AA5737 /* EiRasMetalBuildUITests.m */; };
 		C23CAD31237AF2E600AA5737 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C23CAD30237AF2E600AA5737 /* MetalKit.framework */; };
+		C2B2F6F223A62CA6002E27D7 /* MeshMetal.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2B2F6F123A62CA6002E27D7 /* MeshMetal.mm */; };
+		C2B2F6F523A6305F002E27D7 /* MeshMetalAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2B2F6F323A6305F002E27D7 /* MeshMetalAdapter.mm */; };
+		C2B2F6F823A63583002E27D7 /* MeshMetalBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2B2F6F623A63583002E27D7 /* MeshMetalBridge.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -153,6 +156,12 @@
 		C23CACC22379A38200AA5737 /* EiRasMetalBuildUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EiRasMetalBuildUITests.m; sourceTree = "<group>"; };
 		C23CACC42379A38200AA5737 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C23CAD30237AF2E600AA5737 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
+		C2B2F6F023A62CA6002E27D7 /* MeshMetal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MeshMetal.h; sourceTree = "<group>"; };
+		C2B2F6F123A62CA6002E27D7 /* MeshMetal.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MeshMetal.mm; sourceTree = "<group>"; };
+		C2B2F6F323A6305F002E27D7 /* MeshMetalAdapter.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MeshMetalAdapter.mm; sourceTree = "<group>"; };
+		C2B2F6F423A6305F002E27D7 /* MeshMetalAdapter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MeshMetalAdapter.hpp; sourceTree = "<group>"; };
+		C2B2F6F623A63583002E27D7 /* MeshMetalBridge.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MeshMetalBridge.cpp; sourceTree = "<group>"; };
+		C2B2F6F723A63583002E27D7 /* MeshMetalBridge.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MeshMetalBridge.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -357,6 +366,7 @@
 		C211D92E23A1481700CFE6E6 /* OnMetal */ = {
 			isa = PBXGroup;
 			children = (
+				C2B2F6EF23A62C76002E27D7 /* Mesh */,
 				C211D92F23A1481700CFE6E6 /* BaseMetalObject.m */,
 				C211D93023A1481700CFE6E6 /* Shader */,
 				C211D93723A1481700CFE6E6 /* GraphicsAPI */,
@@ -412,11 +422,11 @@
 				C211D94C23A1481700CFE6E6 /* GraphicsResourceHeapMetal.mm */,
 				C211D94223A1481700CFE6E6 /* GraphicsResourceHeapMetal.h */,
 				C211D94423A1481700CFE6E6 /* MaterialMetalAdapter.hpp */,
-				C211D94523A1481700CFE6E6 /* MaterialMetalBridge.cpp */,
 				C211D94723A1481700CFE6E6 /* MaterialMetalAdapter.mm */,
 				C211D94823A1481700CFE6E6 /* MaterialMetal.h */,
 				C211D94D23A1481700CFE6E6 /* MaterialMetal.mm */,
 				C211D95123A1481700CFE6E6 /* MaterialMetalBridge.hpp */,
+				C211D94523A1481700CFE6E6 /* MaterialMetalBridge.cpp */,
 			);
 			path = Material;
 			sourceTree = "<group>";
@@ -425,9 +435,9 @@
 			isa = PBXGroup;
 			children = (
 				C211D95323A1481700CFE6E6 /* CommandBufferMetal.h */,
+				C211D95623A1481700CFE6E6 /* CommandBufferMetal.mm */,
 				C211D95423A1481700CFE6E6 /* CommandBufferMetalAdapter.hpp */,
 				C211D95523A1481700CFE6E6 /* CommandBufferMetalAdapter.mm */,
-				C211D95623A1481700CFE6E6 /* CommandBufferMetal.mm */,
 				C211D95723A1481700CFE6E6 /* CommandBufferMetalBridge.cpp */,
 				C211D95823A1481700CFE6E6 /* CommandBufferMetalBridge.hpp */,
 			);
@@ -496,6 +506,19 @@
 				C23CAD30237AF2E600AA5737 /* MetalKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C2B2F6EF23A62C76002E27D7 /* Mesh */ = {
+			isa = PBXGroup;
+			children = (
+				C2B2F6F023A62CA6002E27D7 /* MeshMetal.h */,
+				C2B2F6F123A62CA6002E27D7 /* MeshMetal.mm */,
+				C2B2F6F323A6305F002E27D7 /* MeshMetalAdapter.mm */,
+				C2B2F6F423A6305F002E27D7 /* MeshMetalAdapter.hpp */,
+				C2B2F6F623A63583002E27D7 /* MeshMetalBridge.cpp */,
+				C2B2F6F723A63583002E27D7 /* MeshMetalBridge.hpp */,
+			);
+			path = Mesh;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -636,8 +659,10 @@
 				C211D97C23A1481700CFE6E6 /* EiRasMetalBridge.cpp in Sources */,
 				C211D95F23A1481700CFE6E6 /* EiRasGlobalManager.cpp in Sources */,
 				C211D95C23A1481700CFE6E6 /* GraphicsRenderState.cpp in Sources */,
+				C2B2F6F823A63583002E27D7 /* MeshMetalBridge.cpp in Sources */,
 				C211D96423A1481700CFE6E6 /* Shader.cpp in Sources */,
 				C211D98323A1481700CFE6E6 /* GraphicsResourceHeapMetalAdapter.mm in Sources */,
+				C2B2F6F523A6305F002E27D7 /* MeshMetalAdapter.mm in Sources */,
 				C211D97B23A1481700CFE6E6 /* EiRasMetalAdapter.mm in Sources */,
 				C211D96023A1481700CFE6E6 /* MaterialLayout.cpp in Sources */,
 				C211D96123A1481700CFE6E6 /* GraphicsResourceHeap.cpp in Sources */,
@@ -649,6 +674,7 @@
 				C211D95B23A1481700CFE6E6 /* AAPLShaders.metal in Sources */,
 				C211D98123A1481700CFE6E6 /* MaterialMetalBridge.cpp in Sources */,
 				C23CACA22379A37F00AA5737 /* AppDelegate.m in Sources */,
+				C2B2F6F223A62CA6002E27D7 /* MeshMetal.mm in Sources */,
 				C211D97823A1481700CFE6E6 /* ShaderMetalAdapter.mm in Sources */,
 				C211D98623A1481700CFE6E6 /* MaterialMetal.mm in Sources */,
 				C211D97723A1481700CFE6E6 /* BaseMetalObject.m in Sources */,

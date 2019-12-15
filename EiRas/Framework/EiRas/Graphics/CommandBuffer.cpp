@@ -53,7 +53,7 @@ void CommandBuffer::SetMaterial(MaterialSys::Material* material)
 void CommandBuffer::DrawMesh(Mesh* mesh)
 {
 #if GRAPHICS_METAL
-    ((CommandBufferMetalBridge*)PlatformBridge)->DrawMesh(mesh->GetVertices(), mesh->GetMeshDataSize(), 0);
+    ((CommandBufferMetalBridge*)PlatformBridge)->DrawMesh(mesh->PlatformBridge);
 #endif
 
 #if GRAPHICS_DX
@@ -76,13 +76,13 @@ void CommandBuffer::Reset()
 {
     if (!resourceHeap)
     {
-        UINT materialPropCount = 0;
+        _uint materialPropCount = 0;
         tmpMaterialTableArray.clear();
         MaterialCache_MAP::iterator it = MaterialMap.begin();
         while (it != MaterialMap.end())
         {
             Material* mat = it->second;
-            for (UINT matTableIndex = 0; matTableIndex < mat->LayoutTables.size(); matTableIndex++)
+            for (_uint matTableIndex = 0; matTableIndex < mat->LayoutTables.size(); matTableIndex++)
             {
                 MaterialTable* table = mat->LayoutTables[matTableIndex];
                 tmpMaterialTableArray.push_back(table);
@@ -92,7 +92,7 @@ void CommandBuffer::Reset()
         }
         if (tmpMaterialTableArray.size() > 0)
         {
-            resourceHeap = new GraphicsResourceHeap(materialPropCount, tmpMaterialTableArray.size(), &tmpMaterialTableArray[0]);
+            resourceHeap = new GraphicsResourceHeap(materialPropCount, (_uint)tmpMaterialTableArray.size(), &tmpMaterialTableArray[0]);
         }
     }
 

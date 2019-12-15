@@ -26,7 +26,7 @@ public:
     
     void SetMaterial(MaterialSys::Material* material);
     
-    void DrawMesh(void* meshData, int dataSize, int index);
+    void DrawMesh(EiRasPlatformBridgeProtocol* meshObjBridge);
     
     void BeginFrame();
     

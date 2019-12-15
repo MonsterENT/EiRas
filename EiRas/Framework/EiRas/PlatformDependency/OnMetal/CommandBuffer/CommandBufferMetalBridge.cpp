@@ -22,9 +22,9 @@ void CommandBufferMetalBridge::SetMaterial(MaterialSys::Material* material)
     setMaterialMetal(raw_obj, material->PlatformBridge->raw_obj, &material->Props, &material->LayoutTables);
 }
 
-void CommandBufferMetalBridge::DrawMesh(void* meshData, int dataSize, int index)
+void CommandBufferMetalBridge::DrawMesh(EiRasPlatformBridgeProtocol* meshObjBridge)
 {
-    drawMeshMetal(raw_obj, meshData, dataSize, index);
+    drawMeshMetal(raw_obj, meshObjBridge->raw_obj);
 }
 void CommandBufferMetalBridge::BeginFrame()
 {

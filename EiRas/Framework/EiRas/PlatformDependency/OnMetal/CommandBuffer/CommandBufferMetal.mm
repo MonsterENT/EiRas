@@ -12,7 +12,7 @@
 #include <Global/EiRasGlobalManager.hpp>
 #include <Material/MaterialLayout.hpp>
 #include <PlatformDependency/OnMetal/Material/ConstantBufferMetal.h>
-
+#import <PlatformDependency/OnMetal/Mesh/MeshMetal.h>
 using namespace MaterialSys;
 
 @interface CommandBufferMetal()
@@ -63,12 +63,12 @@ using namespace MaterialSys;
     }
 }
 
--(void)drawMesh:(void*)meshData dataSize:(int)dataSize index:(int)index
+-(void)drawMesh:(MeshMetal*)meshObj
 {
-    [_renderCommandEncoder setVertexBytes:meshData length:dataSize atIndex:index];
+    [_renderCommandEncoder setVertexBuffer:meshObj.vertexBuffer offset:0 atIndex:meshObj.vertexBufferIndex];
     [_renderCommandEncoder drawPrimitives:MTLPrimitiveTypeTriangle
                               vertexStart:0
-                              vertexCount:3];
+                              vertexCount:meshObj.vertexCount];
 }
 
 -(void)beginFrame

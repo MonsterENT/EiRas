@@ -13,7 +13,7 @@
 
 @implementation GraphicsResourceMetal
 
--(instancetype)initWithBufferSize:(unsigned int)bufferSize initResource:(bool)initResource
+-(instancetype)initWithBufferSize:(_uint)bufferSize initResource:(bool)initResource
 {
     self = [super init];
     if(self)
@@ -28,8 +28,9 @@
     return self;
 }
 
--(void)setResource:(void*)res shouldUnmap:(bool)shouldUnmap
+-(void)setResource:(void*)res
 {
-    
+    memcpy(_rawBuffer.contents, res, _bufferSize);
 }
+
 @end

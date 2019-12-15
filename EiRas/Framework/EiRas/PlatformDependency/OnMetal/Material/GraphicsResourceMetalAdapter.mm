@@ -25,8 +25,8 @@ void* MaterialSys::createDefaultBufferMetal(int bufferSize, bool initResource)
     return bridgePtr;
 }
 
-void MaterialSys::setResourceMetal(void* ptr, void* res, bool shouldUnmap)
+void MaterialSys::setResourceMetal(void* ptr, void* res)
 {
     GraphicsResourceMetal* oc_obj = (__bridge GraphicsResourceMetal*)ptr;
-    [oc_obj setResource:res shouldUnmap:shouldUnmap];
+    [oc_obj setResource:res];
 }
