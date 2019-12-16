@@ -31,4 +31,10 @@ typedef struct
 } AAPLVertex;
 //}
 
+
+typedef struct
+{
+    vector_float4 _TmpColor;
+} PixelCBV;
+
 #endif /* MetalGraphicsPipelineInput_h */

@@ -56,9 +56,10 @@ vertexShader(uint vertexID [[vertex_id]],
     return out;
 }
 
-fragment float4 fragmentShader(RasterizerData in [[stage_in]])
+fragment float4 fragmentShader(RasterizerData in [[stage_in]],
+                            constant PixelCBV& cbv[[buffer(0)]] )
 {
     // Return the interpolated color.
-    return in.color;
+    return cbv._TmpColor;
 }
 

@@ -83,15 +83,15 @@ using namespace MaterialSys;
 
 -(void)commit:(bool)present
 {
+    if(_renderCommandEncoder)
+    {
+        [_renderCommandEncoder setViewport:(MTLViewport){0.0, 0.0, 1600, 1200, 0.0, 1.0 }];
+        [_renderCommandEncoder setCullMode:MTLCullModeBack];
+        [_renderCommandEncoder endEncoding];
+        _renderCommandEncoder = nullptr;
+    }
     if(present)
     {
-        if(_renderCommandEncoder)
-        {
-            [_renderCommandEncoder setViewport:(MTLViewport){0.0, 0.0, 1600, 1200, 0.0, 1.0 }];
-            [_renderCommandEncoder setCullMode:MTLCullModeBack];
-            [_renderCommandEncoder endEncoding];
-            _renderCommandEncoder = nullptr;
-        }
         GET_EIRAS_METAL(deviceObj)
         [_commandBuffer presentDrawable:[deviceObj getMTKView].currentDrawable];
     }

@@ -105,7 +105,7 @@ void CommandBuffer::Reset()
     ((CommandBufferDX12Bridge*)PlatformBridge)->Reset(tmpBridge);
 #endif
     
-#if GRAPHICE_METAL
+#if GRAPHICS_METAL
     ((CommandBufferMetalBridge*)PlatformBridge)->Reset();
 #endif
 }
