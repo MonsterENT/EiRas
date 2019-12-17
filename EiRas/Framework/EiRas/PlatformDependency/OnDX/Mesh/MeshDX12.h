@@ -2,15 +2,18 @@
 
 #include <PlatformDependency/OnDX/Material/GraphicsResourceDX12.h>
 #include <Global/PlatformDefine.h>
+#include <Global/GlobalDefine.h>
 
-namespace MaterialSys
+namespace MeshSys
 {
     class MeshDX12
     {
     public:
-        MeshDX12(void* vertexRes, void* indexRes, UINT vertextCount, UINT indexCount);
+        MeshDX12();
 
-        UINT VertextCount, IndexCount;
+        void BuildBuffer(void* vertexRes, void* indexRes, _uint vertextCount, _uint indexCount);
+
+        _uint VertextCount, IndexCount;
 
         D3D12_VERTEX_BUFFER_VIEW VertexBufferView;
         D3D12_INDEX_BUFFER_VIEW IndexBufferView;

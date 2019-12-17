@@ -50,7 +50,7 @@ void CommandBuffer::SetMaterial(MaterialSys::Material* material)
 #endif
 }
 
-void CommandBuffer::DrawMesh(Mesh* mesh)
+void CommandBuffer::DrawMesh(MeshSys::Mesh* mesh)
 {
 #if GRAPHICS_METAL
     ((CommandBufferMetalBridge*)PlatformBridge)->DrawMesh(mesh->PlatformBridge);

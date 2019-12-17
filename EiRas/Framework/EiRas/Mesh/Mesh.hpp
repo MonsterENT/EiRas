@@ -24,21 +24,30 @@
 
 #include <Global/GlobalDefine.h>
 
-namespace MaterialSys {
+namespace MaterialSys
+{
+    class GraphicsResource;
+}
+
+namespace MeshSys {
 
 class Mesh
 {
 public:
     Mesh(std::string Name);
 
+    std::string Name;
+
     void* GetVertices();
     _uint GetMeshDataSize();
+
+    void BuildBuffer();
 
     EiRasPlatformBridgeProtocol* PlatformBridge;
 
 private:
-    GraphicsResource* VertexBuffer;
-    GraphicsResource* IndexBuffer;
+    MaterialSys::GraphicsResource* VertexBuffer;
+    MaterialSys::GraphicsResource* IndexBuffer;
 };
 
 }

@@ -76,7 +76,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <SourcePath>E:\EiRasWorkspace\EiRas\EiRas\Framework\EiRas;$(SourcePath)</SourcePath>
-    <IncludePath>E:\EiRasWorkspace\EiRas\EiRas\Framework\EiRas;$(IncludePath)</IncludePath>
+    <IncludePath>E:\EiRasWorkspace\EiRas\EiRas\SampleBuild\Library\assimp\include\assimp;E:\EiRasWorkspace\EiRas\EiRas\SampleBuild\Common;E:\EiRasWorkspace\EiRas\EiRas\Framework\EiRas;$(IncludePath)</IncludePath>
+    <LibraryPath>E:\EiRasWorkspace\EiRas\EiRas\SampleBuild\Library\assimp;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -108,6 +109,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -189,6 +191,8 @@
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Shader\ShaderDX12.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Shader\ShaderDX12Bridge.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Protocols\EiRasProtocol.h" />
+    <ClInclude Include="..\..\..\Common\Engine.hpp" />
+    <ClInclude Include="..\..\..\Common\LoadModel_Assimp.h" />
     <ClInclude Include="EiRasDX12Build.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Resource.h" />
@@ -224,6 +228,8 @@
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Mesh\MeshDX12Bridge.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Shader\ShaderDX12.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Shader\ShaderDX12Bridge.cpp" />
+    <ClCompile Include="..\..\..\Common\Engine.cpp" />
+    <ClCompile Include="..\..\..\Common\LoadModel_Assimp.cpp" />
     <ClCompile Include="EiRasDX12Build.cpp" />
   </ItemGroup>
   <ItemGroup>

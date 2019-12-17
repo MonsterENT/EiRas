@@ -4,6 +4,7 @@
 #include <Material/GraphicsResource.hpp>
 #include <Material/GraphicsResourceHeap.hpp>
 #include <string>
+#include <Global/GlobalDefine.h>
 
 namespace MaterialSys
 {
@@ -16,7 +17,7 @@ namespace MaterialSys
     class MaterialSlot
     {
     public:
-        int SlotID;
+        _uint SlotID;
         MaterialSlotType SlotType;
     };
 
@@ -26,8 +27,8 @@ namespace MaterialSys
         std::string Name;
         GraphicsResourceType PropType;
         GraphicsResource* Resource;
-        int BufferSize;
-        MaterialProp(std::string Name, GraphicsResourceType propType, bool initResource, int bufferSize)
+        _uint BufferSize;
+        MaterialProp(std::string Name, GraphicsResourceType propType, bool initResource, _uint bufferSize)
         {
             this->Name = Name;
             BufferSize = bufferSize;
@@ -39,9 +40,9 @@ namespace MaterialSys
     class MaterialTable : public MaterialSlot
     {
     public:
-        int PropNum;
+        _uint PropNum;
         MaterialProp** Props;
-        MaterialTable(int propNum, MaterialProp** matProps)
+        MaterialTable(_uint propNum, MaterialProp** matProps)
         {
             PropNum = propNum;
             this->Props = matProps;
@@ -51,10 +52,10 @@ namespace MaterialSys
     class MaterialLayout
     {
     public:
-        int SlotNum;
+        _uint SlotNum;
         MaterialSlot** Slots;
 
-        MaterialLayout(int slotNum)
+        MaterialLayout(_uint slotNum)
         {
             SlotNum = slotNum;
             Slots = new MaterialSlot*[SlotNum];

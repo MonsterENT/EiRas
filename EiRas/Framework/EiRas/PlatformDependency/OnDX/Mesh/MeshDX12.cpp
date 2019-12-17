@@ -4,10 +4,15 @@
 #include <PlatformDependency/OnDX/Material/GraphicsResourceDX12.h>
 #include <PlatformDependency/OnDX/GraphicsPipelineInput.h>
 
-using namespace MaterialSys;
+using namespace MeshSys;
+using MaterialSys::GraphicsResourceDX12;
 using GraphicsAPI::EiRasDX12;
 
-MeshDX12::MeshDX12(void* vertexRes, void* indexRes, UINT vertextCount, UINT indexCount)
+MeshDX12::MeshDX12()
+{
+}
+
+void MeshDX12::BuildBuffer(void* vertexRes, void* indexRes, _uint vertextCount, _uint indexCount)
 {
     VertextCount = vertextCount;
 

@@ -82,7 +82,7 @@ void CommandBufferDX12::Commit(bool present)
     }
 }
 
-void CommandBufferDX12::DrawMesh(MeshDX12* mesh)
+void CommandBufferDX12::DrawMesh(MeshSys::MeshDX12* mesh)
 {
     cmdList->IASetVertexBuffers(0, 1, &mesh->VertexBufferView);
     cmdList->DrawInstanced(mesh->VertextCount, 1, 0, 0);

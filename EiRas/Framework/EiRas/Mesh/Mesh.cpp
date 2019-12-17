@@ -16,6 +16,7 @@
 #include <PlatformDependency/OnMetal/Mesh/MeshMetalBridge.hpp>
 #endif
 
+using namespace MeshSys;
 using namespace MaterialSys;
 #if GRAPHICS_DX
 using namespace Graphics;
@@ -42,15 +43,27 @@ static VertexDefault triangleVertices[] =
 
 Mesh::Mesh(std::string Name)
 {
+    this->Name = Name;
+#if GRAPHICS_DX
+    PlatformBridge = new MeshDX12Bridge();
+#endif
+    
+#if GRAPHICS_METAL
+    PlatformBridge = new MeshMetalBridge();
+#endif
+}
+
+void Mesh::BuildBuffer()
+{
     VertexBuffer = new GraphicsResource(Name, GraphicsResourceType::Default, true, GetMeshDataSize());
     VertexBuffer->SetResource(GetVertices(), true);
 
 #if GRAPHICS_DX
-    PlatformBridge = new MeshDX12Bridge(VertexBuffer->PlatformBridge, NULL, 3, -1);
+    ((MeshDX12Bridge*)PlatformBridge)->BuildBuffer(VertexBuffer->PlatformBridge, NULL, 3, -1);
 #endif
-    
+
 #if GRAPHICS_METAL
-    PlatformBridge = new MeshMetalBridge(VertexBuffer->PlatformBridge, nullptr, 3, 0, 0, 0);
+    ((MeshMetalBridge*)PlatformBridge)->BuildBuffer(VertexBuffer->PlatformBridge, nullptr, 3, 0, 0, 0);
 #endif
 }
 

@@ -10,6 +10,7 @@
 
 using namespace Graphics;
 using namespace MaterialSys;
+using namespace MeshSys;
 
 CommandBufferDX12Bridge::CommandBufferDX12Bridge(std::string Name)
 {
@@ -42,8 +43,8 @@ void CommandBufferDX12Bridge::SetMaterial(Material* mat)
     obj->SetPipelineState((MaterialDX12*)mat->PlatformBridge->raw_obj, &mat->LayoutProps, &mat->LayoutTables);
 }
 
-void CommandBufferDX12Bridge::DrawMesh(MaterialSys::Mesh* mesh)
+void CommandBufferDX12Bridge::DrawMesh(Mesh* mesh)
 {
     CommandBufferDX12* obj = (CommandBufferDX12*)raw_obj;
-    obj->DrawMesh((MeshDX12*)mesh->PlatformBridge->raw_obj);
+    obj->DrawMesh((MeshSys::MeshDX12*)mesh->PlatformBridge->raw_obj);
 }

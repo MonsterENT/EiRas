@@ -138,6 +138,12 @@
     <ClInclude Include="..\..\..\..\Framework\EiRas\Graphics\RenderTexture.hpp">
       <Filter>framework</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Common\Engine.hpp">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Common\LoadModel_Assimp.h">
+      <Filter>framework</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EiRasDX12Build.cpp">
@@ -228,6 +234,12 @@
       <Filter>framework</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\Framework\EiRas\Graphics\RenderTexture.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Common\Engine.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Common\LoadModel_Assimp.cpp">
       <Filter>framework</Filter>
     </ClCompile>
   </ItemGroup>

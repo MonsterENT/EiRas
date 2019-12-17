@@ -5,6 +5,10 @@
 namespace MaterialSys
 {
     class Material;
+}
+
+namespace MeshSys
+{
     class Mesh;
 }
 
@@ -16,7 +20,7 @@ namespace Graphics {
 
         void SetMaterial(MaterialSys::Material* mat);
 
-        void DrawMesh(MaterialSys::Mesh* mesh);
+        void DrawMesh(MeshSys::Mesh* mesh);
 
         void BeginFrame();
 
