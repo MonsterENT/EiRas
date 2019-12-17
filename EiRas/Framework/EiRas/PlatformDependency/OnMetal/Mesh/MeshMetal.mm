@@ -11,28 +11,23 @@
 
 @implementation MeshMetal
 
--(instancetype)initWithVertexRes:(id)vertexRes indexRes:(id)indexRes vertexCount:(_uint)vertexCount indexCount:(_uint)indexCount vertexBufferIndex:(_uint)vertexBufferIndex indexBufferIndex:(_uint)indexBufferIndex
+-(void)buildBufferWithVertexRes:(id)vertexRes indexRes:(id)indexRes vertexCount:(_uint)vertexCount indexCount:(_uint)indexCount vertexBufferIndex:(_uint)vertexBufferIndex indexBufferIndex:(_uint)indexBufferIndex
 {
-    self = [super init];
-    if(self)
+    if([vertexRes isKindOfClass:[GraphicsResourceMetal class]])
     {
-        if([vertexRes isKindOfClass:[GraphicsResourceMetal class]])
-        {
-            GraphicsResourceMetal* obj = vertexRes;
-            _vertexBuffer = obj.rawBuffer;
-            _vertexCount = vertexCount;
-            _vertexBufferIndex = vertexBufferIndex;
-        }
-        
-        if([indexRes isKindOfClass:[GraphicsResourceMetal class]])
-        {
-            GraphicsResourceMetal* obj = indexRes;
-            _indexBuffer = obj.rawBuffer;
-            _indexCount = indexCount;
-            _indexBufferIndex = indexBufferIndex;
-        }
+        GraphicsResourceMetal* obj = vertexRes;
+        _vertexBuffer = obj.rawBuffer;
+        _vertexCount = vertexCount;
+        _vertexBufferIndex = vertexBufferIndex;
     }
-    return self;
+    
+    if([indexRes isKindOfClass:[GraphicsResourceMetal class]])
+    {
+        GraphicsResourceMetal* obj = indexRes;
+        _indexBuffer = obj.rawBuffer;
+        _indexCount = indexCount;
+        _indexBufferIndex = indexBufferIndex;
+    }
 }
 
 @end

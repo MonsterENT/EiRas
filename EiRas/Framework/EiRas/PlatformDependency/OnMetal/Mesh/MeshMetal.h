@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MeshMetal : BaseMetalObject
 
--(instancetype)initWithVertexRes:(id)vertexRes indexRes:(id)indexRes vertexCount:(_uint)vertexCount indexCount:(_uint)indexCount vertexBufferIndex:(_uint)vertexBufferIndex indexBufferIndex:(_uint)indexBufferIndex;
+-(void)buildBufferWithVertexRes:(id)vertexRes indexRes:(id)indexRes vertexCount:(_uint)vertexCount indexCount:(_uint)indexCount vertexBufferIndex:(_uint)vertexBufferIndex indexBufferIndex:(_uint)indexBufferIndex;
 
 @property(strong, readonly, nonatomic)id<MTLBuffer> vertexBuffer;
 @property(strong, readonly, nonatomic)id<MTLBuffer> indexBuffer;

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C206145323A93D07003ED81D /* Engine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C206145023A93D07003ED81D /* Engine.cpp */; };
 		C211D95A23A1481700CFE6E6 /* Mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C211D8DA23A1481700CFE6E6 /* Mesh.cpp */; };
 		C211D95B23A1481700CFE6E6 /* AAPLShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = C211D8E423A1481700CFE6E6 /* AAPLShaders.metal */; };
 		C211D95C23A1481700CFE6E6 /* GraphicsRenderState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C211D8E823A1481700CFE6E6 /* GraphicsRenderState.cpp */; };
@@ -70,6 +71,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C206144E23A93D07003ED81D /* Engine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Engine.hpp; sourceTree = "<group>"; };
+		C206145023A93D07003ED81D /* Engine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Engine.cpp; sourceTree = "<group>"; };
 		C211D8DA23A1481700CFE6E6 /* Mesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mesh.cpp; sourceTree = "<group>"; };
 		C211D8DB23A1481700CFE6E6 /* Mesh.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Mesh.hpp; sourceTree = "<group>"; };
 		C211D8E323A1481700CFE6E6 /* MetalGraphicsPipelineInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetalGraphicsPipelineInput.h; sourceTree = "<group>"; };
@@ -190,6 +193,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C206144D23A93D07003ED81D /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				C206144E23A93D07003ED81D /* Engine.hpp */,
+				C206145023A93D07003ED81D /* Engine.cpp */,
+			);
+			name = Common;
+			path = ../../../Common;
+			sourceTree = "<group>";
+		};
 		C211D8D623A1481700CFE6E6 /* Framework */ = {
 			isa = PBXGroup;
 			children = (
@@ -468,6 +481,7 @@
 		C23CAC9F2379A37F00AA5737 /* EiRasMetalBuild */ = {
 			isa = PBXGroup;
 			children = (
+				C206144D23A93D07003ED81D /* Common */,
 				C211D8D623A1481700CFE6E6 /* Framework */,
 				C23CACA02379A37F00AA5737 /* AppDelegate.h */,
 				C23CACA12379A37F00AA5737 /* AppDelegate.m */,
@@ -658,6 +672,7 @@
 				C211D97E23A1481700CFE6E6 /* GraphicsResourceMetalAdapter.mm in Sources */,
 				C211D97C23A1481700CFE6E6 /* EiRasMetalBridge.cpp in Sources */,
 				C211D95F23A1481700CFE6E6 /* EiRasGlobalManager.cpp in Sources */,
+				C206145323A93D07003ED81D /* Engine.cpp in Sources */,
 				C211D95C23A1481700CFE6E6 /* GraphicsRenderState.cpp in Sources */,
 				C2B2F6F823A63583002E27D7 /* MeshMetalBridge.cpp in Sources */,
 				C211D96423A1481700CFE6E6 /* Shader.cpp in Sources */,

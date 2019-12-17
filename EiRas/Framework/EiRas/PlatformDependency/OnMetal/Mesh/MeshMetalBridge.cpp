@@ -8,9 +8,15 @@
 
 #include "MeshMetalBridge.hpp"
 #include "MeshMetalAdapter.hpp"
-using namespace MaterialSys;
+using namespace MeshSys;
 
-MeshMetalBridge::MeshMetalBridge(EiRasPlatformBridgeProtocol* vertexResBridge, EiRasPlatformBridgeProtocol* indexResBridge, _uint vertexCount, _uint indexCount, _uint vertexBufferIndex, _uint indexBufferIndex)
+MeshMetalBridge::MeshMetalBridge()
+{
+    raw_obj = createMeshMetal();
+}
+
+
+void MeshMetalBridge::BuildBuffer(EiRasPlatformBridgeProtocol* vertexResBridge, EiRasPlatformBridgeProtocol* indexResBridge, _uint vertexCount, _uint indexCount, _uint vertexBufferIndex, _uint indexBufferIndex)
 {
     void* vertexResRawObj = 0;
     void* indexResRawObj = 0;
@@ -25,5 +31,5 @@ MeshMetalBridge::MeshMetalBridge(EiRasPlatformBridgeProtocol* vertexResBridge, E
         indexResRawObj = indexResBridge->raw_obj;
     }
     
-    raw_obj = createMeshMetal(vertexResRawObj, indexResRawObj, vertexCount, indexCount, vertexBufferIndex, indexBufferIndex);
+    buildBufferMetal(raw_obj, vertexResRawObj, indexResRawObj, vertexCount, indexCount, vertexBufferIndex, indexBufferIndex);
 }

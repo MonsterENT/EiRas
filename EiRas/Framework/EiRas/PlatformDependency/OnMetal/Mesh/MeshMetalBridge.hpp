@@ -12,12 +12,14 @@
 #include <Global/PlatformDependency/EiRasPlatformBridgeProtocol.h>
 #include <Global/GlobalDefine.h>
 
-namespace MaterialSys {
+namespace MeshSys {
 
 class MeshMetalBridge : public EiRasPlatformBridgeProtocol
 {
 public:
-    MeshMetalBridge(EiRasPlatformBridgeProtocol* vertexResBridge, EiRasPlatformBridgeProtocol* indexResBridge, _uint vertexCount, _uint indexCount, _uint vertexBufferIndex, _uint indexBufferIndex);
+    MeshMetalBridge();
+    
+    void BuildBuffer(EiRasPlatformBridgeProtocol* vertexResBridge, EiRasPlatformBridgeProtocol* indexResBridge, _uint vertexCount, _uint indexCount, _uint vertexBufferIndex, _uint indexBufferIndex);
 };
 
 }

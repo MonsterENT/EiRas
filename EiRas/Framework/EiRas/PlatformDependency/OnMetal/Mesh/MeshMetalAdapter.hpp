@@ -11,9 +11,11 @@
 
 #include <Global/GlobalDefine.h>
 
-namespace MaterialSys {
+namespace MeshSys {
 
-void* createMeshMetal(void* vertexRes, void* indexRes, _uint vertexCount, _uint indexCount, _uint vertexBufferIndex, _uint indexBufferIndex);
+void* createMeshMetal();
+
+void buildBufferMetal(void* ptr, void* vertexRes, void* indexRes, _uint vertexCount, _uint indexCount, _uint vertexBufferIndex, _uint indexBufferIndex);
 }
 
 #endif /* MeshMetalAdapter_hpp */
