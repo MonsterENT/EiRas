@@ -29,6 +29,12 @@ namespace MaterialSys
     class GraphicsResource;
 }
 
+namespace Math {
+class float2;
+class float3;
+class float4;
+}
+
 namespace MeshSys {
 
 class Mesh
@@ -37,8 +43,8 @@ public:
     Mesh(std::string Name);
 
     std::string Name;
-
-    void* GetVertices();
+    
+    void* GetMeshData();
     _uint GetMeshDataSize();
 
     void BuildBuffer();
@@ -48,6 +54,18 @@ public:
 private:
     MaterialSys::GraphicsResource* VertexBuffer;
     MaterialSys::GraphicsResource* IndexBuffer;
+    
+    _uint IndicesCount;
+    _uint* IndicesData;
+    
+    _uint VerticesCount;
+    Math::float3* PositionData;
+    Math::float3* NormalData;
+    Math::float2* UVData;
+    Math::float4* ColorData;
+    
+    void* MeshData;
+    _uint MeshDataSize;
 };
 
 }

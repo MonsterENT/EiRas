@@ -51,6 +51,7 @@
 		C2B2F6F223A62CA6002E27D7 /* MeshMetal.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2B2F6F123A62CA6002E27D7 /* MeshMetal.mm */; };
 		C2B2F6F523A6305F002E27D7 /* MeshMetalAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2B2F6F323A6305F002E27D7 /* MeshMetalAdapter.mm */; };
 		C2B2F6F823A63583002E27D7 /* MeshMetalBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2B2F6F623A63583002E27D7 /* MeshMetalBridge.cpp */; };
+		C2F34C7C23AF942900995E92 /* Math.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2F34C7A23AF942900995E92 /* Math.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -165,6 +166,9 @@
 		C2B2F6F423A6305F002E27D7 /* MeshMetalAdapter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MeshMetalAdapter.hpp; sourceTree = "<group>"; };
 		C2B2F6F623A63583002E27D7 /* MeshMetalBridge.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MeshMetalBridge.cpp; sourceTree = "<group>"; };
 		C2B2F6F723A63583002E27D7 /* MeshMetalBridge.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MeshMetalBridge.hpp; sourceTree = "<group>"; };
+		C2F34C7A23AF942900995E92 /* Math.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Math.cpp; sourceTree = "<group>"; };
+		C2F34C7B23AF942900995E92 /* Math.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Math.hpp; sourceTree = "<group>"; };
+		C2F34C7D23AFAC6900995E92 /* GraphicsPipelineInput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GraphicsPipelineInput.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -215,6 +219,7 @@
 		C211D8D723A1481700CFE6E6 /* EiRas */ = {
 			isa = PBXGroup;
 			children = (
+				C2F34C7923AF940900995E92 /* Math */,
 				C211D8D823A1481700CFE6E6 /* BuiltinProtocols */,
 				C211D8D923A1481700CFE6E6 /* Mesh */,
 				C211D8DF23A1481700CFE6E6 /* Utils */,
@@ -241,32 +246,8 @@
 			children = (
 				C211D8DA23A1481700CFE6E6 /* Mesh.cpp */,
 				C211D8DB23A1481700CFE6E6 /* Mesh.hpp */,
-				C211D8DC23A1481700CFE6E6 /* PlatformDependency */,
 			);
 			path = Mesh;
-			sourceTree = "<group>";
-		};
-		C211D8DC23A1481700CFE6E6 /* PlatformDependency */ = {
-			isa = PBXGroup;
-			children = (
-				C211D8DD23A1481700CFE6E6 /* Mesh */,
-			);
-			path = PlatformDependency;
-			sourceTree = "<group>";
-		};
-		C211D8DD23A1481700CFE6E6 /* Mesh */ = {
-			isa = PBXGroup;
-			children = (
-				C211D8DE23A1481700CFE6E6 /* Metal */,
-			);
-			path = Mesh;
-			sourceTree = "<group>";
-		};
-		C211D8DE23A1481700CFE6E6 /* Metal */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Metal;
 			sourceTree = "<group>";
 		};
 		C211D8DF23A1481700CFE6E6 /* Utils */ = {
@@ -308,6 +289,7 @@
 				C211D8E723A1481700CFE6E6 /* CommandBuffer.hpp */,
 				C211D8E823A1481700CFE6E6 /* GraphicsRenderState.cpp */,
 				C211D8E923A1481700CFE6E6 /* CommandBuffer.cpp */,
+				C2F34C7D23AFAC6900995E92 /* GraphicsPipelineInput.h */,
 			);
 			path = Graphics;
 			sourceTree = "<group>";
@@ -535,6 +517,15 @@
 			path = Mesh;
 			sourceTree = "<group>";
 		};
+		C2F34C7923AF940900995E92 /* Math */ = {
+			isa = PBXGroup;
+			children = (
+				C2F34C7A23AF942900995E92 /* Math.cpp */,
+				C2F34C7B23AF942900995E92 /* Math.hpp */,
+			);
+			path = Math;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -683,6 +674,7 @@
 				C211D96123A1481700CFE6E6 /* GraphicsResourceHeap.cpp in Sources */,
 				C211D96223A1481700CFE6E6 /* ShaderLayout.cpp in Sources */,
 				C211D98723A1481700CFE6E6 /* CommandBufferMetalAdapter.mm in Sources */,
+				C2F34C7C23AF942900995E92 /* Math.cpp in Sources */,
 				C211D96523A1481700CFE6E6 /* Material.cpp in Sources */,
 				C211D98C23A14CDE00CFE6E6 /* GraphicsResourceMetal.mm in Sources */,
 				C211D95A23A1481700CFE6E6 /* Mesh.cpp in Sources */,
