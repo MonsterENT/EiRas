@@ -16,6 +16,7 @@
 #include <PlatformDependency/OnMetal/Mesh/MeshMetalBridge.hpp>
 #endif
 
+#include "MeshLoader.h"
 #include <Graphics/GraphicsPipelineInput.h>
 #include <Math/Math.hpp>
 
@@ -53,21 +54,23 @@ Mesh::Mesh(std::string Name)
     PlatformBridge = new MeshMetalBridge();
 #endif
     
-    VerticesCount = 0;
-    IndicesCount = 0;
+    SubMeshCount = 0;
+//    VerticesCount = 0;
+//    IndicesCount = 0;
     //Load MeshData
+    LoadMeshFromFile(Name, this);
 }
 
 void Mesh::BuildBuffer()
 {
-    MeshData = new VertexData3D[VerticesCount];
-    for(_uint i = 0; i < VerticesCount; i++)
-    {
-        VertexData3D* tmpData = (VertexData3D*)MeshData + i;
-        tmpData->Position = PositionData[i];
-        tmpData->UV = UVData[i];
-        tmpData->Normal = NormalData[i];
-    }
+//    MeshData = new VertexData3D[VerticesCount];
+//    for(_uint i = 0; i < VerticesCount; i++)
+//    {
+//        VertexData3D* tmpData = (VertexData3D*)MeshData + i;
+//        tmpData->Position = PositionData[i];
+//        tmpData->UV = UVData[i];
+//        tmpData->Normal = NormalData[i];
+//    }
     VertexBuffer = new GraphicsResource(Name, GraphicsResourceType::Default, true, GetMeshDataSize());
     VertexBuffer->SetResource(GetMeshData(), true);
 

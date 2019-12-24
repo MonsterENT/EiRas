@@ -37,6 +37,19 @@ class float4;
 
 namespace MeshSys {
 
+class SubMesh
+{
+public:
+    _uint IndicesCount;
+    _uint* IndicesData;
+    
+    _uint VerticesCount;
+    Math::float3* PositionData;
+    Math::float3* NormalData;
+    Math::float2* UVData;
+    Math::float4* ColorData;
+};
+
 class Mesh
 {
 public:
@@ -51,18 +64,12 @@ public:
 
     EiRasPlatformBridgeProtocol* PlatformBridge;
 
+    _uint SubMeshCount;
+    SubMesh* SubMeshes;
+    
 private:
     MaterialSys::GraphicsResource* VertexBuffer;
     MaterialSys::GraphicsResource* IndexBuffer;
-    
-    _uint IndicesCount;
-    _uint* IndicesData;
-    
-    _uint VerticesCount;
-    Math::float3* PositionData;
-    Math::float3* NormalData;
-    Math::float2* UVData;
-    Math::float4* ColorData;
     
     void* MeshData;
     _uint MeshDataSize;
