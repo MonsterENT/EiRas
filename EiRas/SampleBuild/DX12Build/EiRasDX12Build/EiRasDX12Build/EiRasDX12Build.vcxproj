@@ -77,7 +77,7 @@
     <LinkIncremental>true</LinkIncremental>
     <SourcePath>E:\EiRasWorkspace\EiRas\EiRas\Framework\EiRas;$(SourcePath)</SourcePath>
     <IncludePath>E:\EiRasWorkspace\EiRas\EiRas\SampleBuild\Library\assimp\include\assimp;E:\EiRasWorkspace\EiRas\EiRas\SampleBuild\Common;E:\EiRasWorkspace\EiRas\EiRas\Framework\EiRas;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\EiRasWorkspace\EiRas\EiRas\SampleBuild\Library\assimp;$(LibraryPath)</LibraryPath>
+    <LibraryPath>E:\EiRasWorkspace\EiRas\EiRas\SampleBuild\DX12Build\EiRasDX12Build\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -169,7 +169,9 @@
     <ClInclude Include="..\..\..\..\Framework\EiRas\Material\MaterialLayout.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Material\Shader.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Material\ShaderLayout.h" />
+    <ClInclude Include="..\..\..\..\Framework\EiRas\Math\Math.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Mesh\Mesh.hpp" />
+    <ClInclude Include="..\..\..\..\Framework\EiRas\Mesh\MeshLoader.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\CommandBuffer\CommandBufferDX12.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\CommandBuffer\CommandBufferDX12Bridge.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\d3dx12.h" />
@@ -210,7 +212,9 @@
     <ClCompile Include="..\..\..\..\Framework\EiRas\Material\MaterialLayout.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\Material\Shader.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\Material\ShaderLayout.cpp" />
+    <ClCompile Include="..\..\..\..\Framework\EiRas\Math\Math.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\Mesh\Mesh.cpp" />
+    <ClCompile Include="..\..\..\..\Framework\EiRas\Mesh\MeshLoader.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\CommandBuffer\CommandBufferDX12.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\CommandBuffer\CommandBufferDX12Bridge.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\DX12Utils.cpp" />
