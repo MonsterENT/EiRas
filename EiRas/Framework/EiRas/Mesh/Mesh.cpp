@@ -24,25 +24,6 @@ using namespace MeshSys;
 using namespace MaterialSys;
 using namespace Graphics;
 
-//#if GRAPHICS_METAL
-//static AAPLVertex triangleVertices[] =
-//{
-//    // 2D positions,    RGBA colors
-//    { {  250,  -250 }, { 1, 0, 0, 1 } },
-//    { { -250,  -250 }, { 0, 1, 0, 1 } },
-//    { {    0,   250 }, { 0, 0, 1, 1 } },
-//};
-//#endif
-//
-//#if GRAPHICS_DX
-//static VertexDefault triangleVertices[] =
-//{
-//    { { 0.5, -0.5, 0.5 }, { 0, 0 }, { 1, 0, 0, 1 }, { 1, 0, 0 } },
-//    { { -0.5, -0.5, 0.5 }, { 0, 0 }, { 0, 1, 0, 1 }, { 1, 0, 0 } },
-//    { { 0, 0.5, 0.5 }, { 0, 0 }, { 0, 0, 1, 1 }, { 1, 0, 0 } }
-//};
-//#endif
-
 Mesh::Mesh(std::string Name)
 {
     this->Name = Name;
@@ -55,40 +36,77 @@ Mesh::Mesh(std::string Name)
 #endif
     
     SubMeshCount = 0;
-//    VerticesCount = 0;
-//    IndicesCount = 0;
+    VerticesCount = 0;
+    IndicesCount = 0;
     //Load MeshData
     LoadMeshFromFile(Name, this);
 }
 
 void Mesh::BuildBuffer()
 {
-//    MeshData = new VertexData3D[VerticesCount];
-//    for(_uint i = 0; i < VerticesCount; i++)
-//    {
-//        VertexData3D* tmpData = (VertexData3D*)MeshData + i;
-//        tmpData->Position = PositionData[i];
-//        tmpData->UV = UVData[i];
-//        tmpData->Normal = NormalData[i];
-//    }
-    VertexBuffer = new GraphicsResource(Name, GraphicsResourceType::Default, true, GetMeshDataSize());
-    VertexBuffer->SetResource(GetMeshData(), true);
+    for(_uint i = 0; i < SubMeshCount; i++)
+    {
+        SubMesh* subMesh = &SubMeshes[i];
+        VerticesCount += subMesh->VerticesCount;
+        IndicesCount += subMesh->IndicesCount;
+    }
+    
+    TriangleData = new VertexData3D[VerticesCount];
+    TriangleDataSize = sizeof(VertexData3D) * VerticesCount;
+    
+    IndexData = new _uint[IndicesCount];
+    IndexDataSize = sizeof(_uint) * IndicesCount;
+    
+    _uint curMeshDataIndex = 0;
+    _uint curIndexDataIndex = 0;
+    for(_uint i = 0; i < SubMeshCount; i++)
+    {
+        SubMesh* subMesh = &SubMeshes[i];
+        VerticesCount += subMesh->VerticesCount;
+        IndicesCount += subMesh->IndicesCount;
+        for(_uint j = 0; j < subMesh->VerticesCount; j++)
+        {
+            VertexData3D* tmpData = (VertexData3D*)TriangleData + curMeshDataIndex;
+            tmpData->Position = subMesh->PositionData[j];
+            tmpData->UV = subMesh->UVData[j];
+            tmpData->Normal = subMesh->NormalData[j];
+            curMeshDataIndex++;
+        }
+        
+        memcpy((_uint*)IndexData + curIndexDataIndex, subMesh->IndicesData, subMesh->IndicesCount * sizeof(_uint));
+        curIndexDataIndex += subMesh->IndicesCount;
+    }
+    VertexBuffer = new GraphicsResource(Name, GraphicsResourceType::Default, true, GetTriangleDataSize());
+    VertexBuffer->SetResource(GetTriangleData(), true);
+    
+    IndexBuffer = new GraphicsResource(Name, GraphicsResourceType::Default, true, GetIndexDataSize());
+    VertexBuffer->SetResource(GetIndexData(), true);
 
 #if GRAPHICS_DX
-    ((MeshDX12Bridge*)PlatformBridge)->BuildBuffer(VertexBuffer->PlatformBridge, NULL, 3, -1);
+    ((MeshDX12Bridge*)PlatformBridge)->BuildBuffer(VertexBuffer->PlatformBridge, IndexBuffer->PlatformBridge, VerticesCount, IndicesCount);
 #endif
 
 #if GRAPHICS_METAL
-    ((MeshMetalBridge*)PlatformBridge)->BuildBuffer(VertexBuffer->PlatformBridge, nullptr, 3, 0, 0, 0);
+    ((MeshMetalBridge*)PlatformBridge)->BuildBuffer(VertexBuffer->PlatformBridge, IndexBuffer->PlatformBridge, VerticesCount, IndicesCount, 0, 0);
 #endif
 }
 
-void* Mesh::GetMeshData()
+void* Mesh::GetTriangleData()
 {
-    return MeshData;
+    return TriangleData;
 }
 
-_uint Mesh::GetMeshDataSize()
+_uint Mesh::GetTriangleDataSize()
 {
-    return MeshDataSize;
+    return TriangleDataSize;
+}
+
+void* Mesh::GetIndexData()
+{
+    return IndexData;
+}
+
+_uint Mesh::GetIndexDataSize()
+{
+    return IndexDataSize;
 }

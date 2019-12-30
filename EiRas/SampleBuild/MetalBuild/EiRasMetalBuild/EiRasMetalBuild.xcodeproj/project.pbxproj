@@ -48,17 +48,17 @@
 		C23CACB82379A38200AA5737 /* EiRasMetalBuildTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C23CACB72379A38200AA5737 /* EiRasMetalBuildTests.m */; };
 		C23CACC32379A38200AA5737 /* EiRasMetalBuildUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = C23CACC22379A38200AA5737 /* EiRasMetalBuildUITests.m */; };
 		C23CAD31237AF2E600AA5737 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C23CAD30237AF2E600AA5737 /* MetalKit.framework */; };
-		C273246623B2617800C61878 /* miniunz in Resources */ = {isa = PBXBuildFile; fileRef = C273244523B2617800C61878 /* miniunz */; };
-		C273246723B2617800C61878 /* minizip in Resources */ = {isa = PBXBuildFile; fileRef = C273244623B2617800C61878 /* minizip */; };
-		C273246823B2617800C61878 /* libminizip.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C273244F23B2617800C61878 /* libminizip.a */; };
-		C273246923B2617800C61878 /* libminizip.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C273245223B2617800C61878 /* libminizip.a */; };
-		C273246A23B2617800C61878 /* libz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C273245823B2617800C61878 /* libz.a */; };
-		C273246B23B2617800C61878 /* libz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C273245B23B2617800C61878 /* libz.a */; };
-		C273246C23B2617800C61878 /* assimp.pc in Resources */ = {isa = PBXBuildFile; fileRef = C273245F23B2617800C61878 /* assimp.pc */; };
-		C273246D23B2617800C61878 /* libassimp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C273246023B2617800C61878 /* libassimp.a */; };
-		C273246E23B2617800C61878 /* libIrrXML.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C273246123B2617800C61878 /* libIrrXML.a */; };
-		C273246F23B2617800C61878 /* libIrrXMLd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C273246423B2617800C61878 /* libIrrXMLd.a */; };
-		C273247023B2617800C61878 /* libassimpd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C273246523B2617800C61878 /* libassimpd.a */; };
+		C2768ECC23B9B62E00796824 /* miniunz in Resources */ = {isa = PBXBuildFile; fileRef = C2768EAB23B9B62E00796824 /* miniunz */; };
+		C2768ECD23B9B62E00796824 /* minizip in Resources */ = {isa = PBXBuildFile; fileRef = C2768EAC23B9B62E00796824 /* minizip */; };
+		C2768ECE23B9B62E00796824 /* libminizip.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C2768EB523B9B62E00796824 /* libminizip.a */; };
+		C2768ECF23B9B62E00796824 /* libminizip.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C2768EB823B9B62E00796824 /* libminizip.a */; };
+		C2768ED023B9B62E00796824 /* libz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C2768EBE23B9B62E00796824 /* libz.a */; };
+		C2768ED123B9B62E00796824 /* libz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C2768EC123B9B62E00796824 /* libz.a */; };
+		C2768ED223B9B62E00796824 /* assimp.pc in Resources */ = {isa = PBXBuildFile; fileRef = C2768EC523B9B62E00796824 /* assimp.pc */; };
+		C2768ED323B9B62E00796824 /* libassimp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C2768EC623B9B62E00796824 /* libassimp.a */; };
+		C2768ED423B9B62E00796824 /* libIrrXML.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C2768EC723B9B62E00796824 /* libIrrXML.a */; };
+		C2768ED523B9B62E00796824 /* libIrrXMLd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C2768ECA23B9B62E00796824 /* libIrrXMLd.a */; };
+		C2768ED623B9B62E00796824 /* libassimpd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C2768ECB23B9B62E00796824 /* libassimpd.a */; };
 		C2B2F6F223A62CA6002E27D7 /* MeshMetal.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2B2F6F123A62CA6002E27D7 /* MeshMetal.mm */; };
 		C2B2F6F523A6305F002E27D7 /* MeshMetalAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2B2F6F323A6305F002E27D7 /* MeshMetalAdapter.mm */; };
 		C2B2F6F823A63583002E27D7 /* MeshMetalBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2B2F6F623A63583002E27D7 /* MeshMetalBridge.cpp */; };
@@ -172,24 +172,24 @@
 		C23CACC22379A38200AA5737 /* EiRasMetalBuildUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EiRasMetalBuildUITests.m; sourceTree = "<group>"; };
 		C23CACC42379A38200AA5737 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C23CAD30237AF2E600AA5737 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
-		C273244523B2617800C61878 /* miniunz */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = miniunz; sourceTree = "<group>"; };
-		C273244623B2617800C61878 /* minizip */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = minizip; sourceTree = "<group>"; };
-		C273244923B2617800C61878 /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
-		C273244A23B2617800C61878 /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
-		C273244B23B2617800C61878 /* unzip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unzip.h; sourceTree = "<group>"; };
-		C273244C23B2617800C61878 /* mztools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mztools.h; sourceTree = "<group>"; };
-		C273244D23B2617800C61878 /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi.h; sourceTree = "<group>"; };
-		C273244F23B2617800C61878 /* libminizip.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libminizip.a; sourceTree = "<group>"; };
-		C273245223B2617800C61878 /* libminizip.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libminizip.a; sourceTree = "<group>"; };
-		C273245523B2617800C61878 /* zlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zlib.h; sourceTree = "<group>"; };
-		C273245623B2617800C61878 /* zconf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zconf.h; sourceTree = "<group>"; };
-		C273245823B2617800C61878 /* libz.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libz.a; sourceTree = "<group>"; };
-		C273245B23B2617800C61878 /* libz.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libz.a; sourceTree = "<group>"; };
-		C273245F23B2617800C61878 /* assimp.pc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = assimp.pc; sourceTree = "<group>"; };
-		C273246023B2617800C61878 /* libassimp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libassimp.a; sourceTree = "<group>"; };
-		C273246123B2617800C61878 /* libIrrXML.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libIrrXML.a; sourceTree = "<group>"; };
-		C273246423B2617800C61878 /* libIrrXMLd.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libIrrXMLd.a; sourceTree = "<group>"; };
-		C273246523B2617800C61878 /* libassimpd.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libassimpd.a; sourceTree = "<group>"; };
+		C2768EAB23B9B62E00796824 /* miniunz */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = miniunz; sourceTree = "<group>"; };
+		C2768EAC23B9B62E00796824 /* minizip */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = minizip; sourceTree = "<group>"; };
+		C2768EAF23B9B62E00796824 /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
+		C2768EB023B9B62E00796824 /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
+		C2768EB123B9B62E00796824 /* unzip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unzip.h; sourceTree = "<group>"; };
+		C2768EB223B9B62E00796824 /* mztools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mztools.h; sourceTree = "<group>"; };
+		C2768EB323B9B62E00796824 /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi.h; sourceTree = "<group>"; };
+		C2768EB523B9B62E00796824 /* libminizip.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libminizip.a; sourceTree = "<group>"; };
+		C2768EB823B9B62E00796824 /* libminizip.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libminizip.a; sourceTree = "<group>"; };
+		C2768EBB23B9B62E00796824 /* zlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zlib.h; sourceTree = "<group>"; };
+		C2768EBC23B9B62E00796824 /* zconf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zconf.h; sourceTree = "<group>"; };
+		C2768EBE23B9B62E00796824 /* libz.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libz.a; sourceTree = "<group>"; };
+		C2768EC123B9B62E00796824 /* libz.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libz.a; sourceTree = "<group>"; };
+		C2768EC523B9B62E00796824 /* assimp.pc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = assimp.pc; sourceTree = "<group>"; };
+		C2768EC623B9B62E00796824 /* libassimp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libassimp.a; sourceTree = "<group>"; };
+		C2768EC723B9B62E00796824 /* libIrrXML.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libIrrXML.a; sourceTree = "<group>"; };
+		C2768ECA23B9B62E00796824 /* libIrrXMLd.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libIrrXMLd.a; sourceTree = "<group>"; };
+		C2768ECB23B9B62E00796824 /* libassimpd.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libassimpd.a; sourceTree = "<group>"; };
 		C2B2F6F023A62CA6002E27D7 /* MeshMetal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MeshMetal.h; sourceTree = "<group>"; };
 		C2B2F6F123A62CA6002E27D7 /* MeshMetal.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MeshMetal.mm; sourceTree = "<group>"; };
 		C2B2F6F323A6305F002E27D7 /* MeshMetalAdapter.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MeshMetalAdapter.mm; sourceTree = "<group>"; };
@@ -208,15 +208,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C273246D23B2617800C61878 /* libassimp.a in Frameworks */,
-				C273246B23B2617800C61878 /* libz.a in Frameworks */,
-				C273246823B2617800C61878 /* libminizip.a in Frameworks */,
-				C273246E23B2617800C61878 /* libIrrXML.a in Frameworks */,
-				C273246F23B2617800C61878 /* libIrrXMLd.a in Frameworks */,
+				C2768ED323B9B62E00796824 /* libassimp.a in Frameworks */,
+				C2768ED123B9B62E00796824 /* libz.a in Frameworks */,
+				C2768ECE23B9B62E00796824 /* libminizip.a in Frameworks */,
+				C2768ED423B9B62E00796824 /* libIrrXML.a in Frameworks */,
+				C2768ED523B9B62E00796824 /* libIrrXMLd.a in Frameworks */,
 				C23CAD31237AF2E600AA5737 /* MetalKit.framework in Frameworks */,
-				C273246A23B2617800C61878 /* libz.a in Frameworks */,
-				C273247023B2617800C61878 /* libassimpd.a in Frameworks */,
-				C273246923B2617800C61878 /* libminizip.a in Frameworks */,
+				C2768ED023B9B62E00796824 /* libz.a in Frameworks */,
+				C2768ED623B9B62E00796824 /* libassimpd.a in Frameworks */,
+				C2768ECF23B9B62E00796824 /* libminizip.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -505,7 +505,7 @@
 		C23CAC9F2379A37F00AA5737 /* EiRasMetalBuild */ = {
 			isa = PBXGroup;
 			children = (
-				C273244123B2617800C61878 /* osx_lib */,
+				C2768EA723B9B62E00796824 /* osx_lib */,
 				C206144D23A93D07003ED81D /* Common */,
 				C211D8D623A1481700CFE6E6 /* Framework */,
 				C23CACA02379A37F00AA5737 /* AppDelegate.h */,
@@ -547,172 +547,171 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		C273244123B2617800C61878 /* osx_lib */ = {
+		C2768EA723B9B62E00796824 /* osx_lib */ = {
 			isa = PBXGroup;
 			children = (
-				C273244223B2617800C61878 /* minizip_x64-osx */,
-				C273245323B2617800C61878 /* zlib_x64-osx */,
-				C273245C23B2617800C61878 /* assimp_x64-osx */,
+				C2768EA823B9B62E00796824 /* minizip_x64-osx */,
+				C2768EB923B9B62E00796824 /* zlib_x64-osx */,
+				C2768EC223B9B62E00796824 /* assimp_x64-osx */,
 			);
-			name = osx_lib;
-			path = ../../../Library/assimp/osx_lib;
-			sourceTree = "<group>";
+			path = osx_lib;
+			sourceTree = SOURCE_ROOT;
 		};
-		C273244223B2617800C61878 /* minizip_x64-osx */ = {
+		C2768EA823B9B62E00796824 /* minizip_x64-osx */ = {
 			isa = PBXGroup;
 			children = (
-				C273244323B2617800C61878 /* tools */,
-				C273244723B2617800C61878 /* include */,
-				C273244E23B2617800C61878 /* lib */,
-				C273245023B2617800C61878 /* debug */,
+				C2768EA923B9B62E00796824 /* tools */,
+				C2768EAD23B9B62E00796824 /* include */,
+				C2768EB423B9B62E00796824 /* lib */,
+				C2768EB623B9B62E00796824 /* debug */,
 			);
 			path = "minizip_x64-osx";
 			sourceTree = "<group>";
 		};
-		C273244323B2617800C61878 /* tools */ = {
+		C2768EA923B9B62E00796824 /* tools */ = {
 			isa = PBXGroup;
 			children = (
-				C273244423B2617800C61878 /* minizip */,
+				C2768EAA23B9B62E00796824 /* minizip */,
 			);
 			path = tools;
 			sourceTree = "<group>";
 		};
-		C273244423B2617800C61878 /* minizip */ = {
+		C2768EAA23B9B62E00796824 /* minizip */ = {
 			isa = PBXGroup;
 			children = (
-				C273244523B2617800C61878 /* miniunz */,
-				C273244623B2617800C61878 /* minizip */,
+				C2768EAB23B9B62E00796824 /* miniunz */,
+				C2768EAC23B9B62E00796824 /* minizip */,
 			);
 			path = minizip;
 			sourceTree = "<group>";
 		};
-		C273244723B2617800C61878 /* include */ = {
+		C2768EAD23B9B62E00796824 /* include */ = {
 			isa = PBXGroup;
 			children = (
-				C273244823B2617800C61878 /* minizip */,
+				C2768EAE23B9B62E00796824 /* minizip */,
 			);
 			path = include;
 			sourceTree = "<group>";
 		};
-		C273244823B2617800C61878 /* minizip */ = {
+		C2768EAE23B9B62E00796824 /* minizip */ = {
 			isa = PBXGroup;
 			children = (
-				C273244923B2617800C61878 /* crypt.h */,
-				C273244A23B2617800C61878 /* zip.h */,
-				C273244B23B2617800C61878 /* unzip.h */,
-				C273244C23B2617800C61878 /* mztools.h */,
-				C273244D23B2617800C61878 /* ioapi.h */,
+				C2768EAF23B9B62E00796824 /* crypt.h */,
+				C2768EB023B9B62E00796824 /* zip.h */,
+				C2768EB123B9B62E00796824 /* unzip.h */,
+				C2768EB223B9B62E00796824 /* mztools.h */,
+				C2768EB323B9B62E00796824 /* ioapi.h */,
 			);
 			path = minizip;
 			sourceTree = "<group>";
 		};
-		C273244E23B2617800C61878 /* lib */ = {
+		C2768EB423B9B62E00796824 /* lib */ = {
 			isa = PBXGroup;
 			children = (
-				C273244F23B2617800C61878 /* libminizip.a */,
+				C2768EB523B9B62E00796824 /* libminizip.a */,
 			);
 			path = lib;
 			sourceTree = "<group>";
 		};
-		C273245023B2617800C61878 /* debug */ = {
+		C2768EB623B9B62E00796824 /* debug */ = {
 			isa = PBXGroup;
 			children = (
-				C273245123B2617800C61878 /* lib */,
+				C2768EB723B9B62E00796824 /* lib */,
 			);
 			path = debug;
 			sourceTree = "<group>";
 		};
-		C273245123B2617800C61878 /* lib */ = {
+		C2768EB723B9B62E00796824 /* lib */ = {
 			isa = PBXGroup;
 			children = (
-				C273245223B2617800C61878 /* libminizip.a */,
+				C2768EB823B9B62E00796824 /* libminizip.a */,
 			);
 			path = lib;
 			sourceTree = "<group>";
 		};
-		C273245323B2617800C61878 /* zlib_x64-osx */ = {
+		C2768EB923B9B62E00796824 /* zlib_x64-osx */ = {
 			isa = PBXGroup;
 			children = (
-				C273245423B2617800C61878 /* include */,
-				C273245723B2617800C61878 /* lib */,
-				C273245923B2617800C61878 /* debug */,
+				C2768EBA23B9B62E00796824 /* include */,
+				C2768EBD23B9B62E00796824 /* lib */,
+				C2768EBF23B9B62E00796824 /* debug */,
 			);
 			path = "zlib_x64-osx";
 			sourceTree = "<group>";
 		};
-		C273245423B2617800C61878 /* include */ = {
+		C2768EBA23B9B62E00796824 /* include */ = {
 			isa = PBXGroup;
 			children = (
-				C273245523B2617800C61878 /* zlib.h */,
-				C273245623B2617800C61878 /* zconf.h */,
+				C2768EBB23B9B62E00796824 /* zlib.h */,
+				C2768EBC23B9B62E00796824 /* zconf.h */,
 			);
 			path = include;
 			sourceTree = "<group>";
 		};
-		C273245723B2617800C61878 /* lib */ = {
+		C2768EBD23B9B62E00796824 /* lib */ = {
 			isa = PBXGroup;
 			children = (
-				C273245823B2617800C61878 /* libz.a */,
+				C2768EBE23B9B62E00796824 /* libz.a */,
 			);
 			path = lib;
 			sourceTree = "<group>";
 		};
-		C273245923B2617800C61878 /* debug */ = {
+		C2768EBF23B9B62E00796824 /* debug */ = {
 			isa = PBXGroup;
 			children = (
-				C273245A23B2617800C61878 /* lib */,
+				C2768EC023B9B62E00796824 /* lib */,
 			);
 			path = debug;
 			sourceTree = "<group>";
 		};
-		C273245A23B2617800C61878 /* lib */ = {
+		C2768EC023B9B62E00796824 /* lib */ = {
 			isa = PBXGroup;
 			children = (
-				C273245B23B2617800C61878 /* libz.a */,
+				C2768EC123B9B62E00796824 /* libz.a */,
 			);
 			path = lib;
 			sourceTree = "<group>";
 		};
-		C273245C23B2617800C61878 /* assimp_x64-osx */ = {
+		C2768EC223B9B62E00796824 /* assimp_x64-osx */ = {
 			isa = PBXGroup;
 			children = (
-				C273245D23B2617800C61878 /* lib */,
-				C273246223B2617800C61878 /* debug */,
+				C2768EC323B9B62E00796824 /* lib */,
+				C2768EC823B9B62E00796824 /* debug */,
 			);
 			path = "assimp_x64-osx";
 			sourceTree = "<group>";
 		};
-		C273245D23B2617800C61878 /* lib */ = {
+		C2768EC323B9B62E00796824 /* lib */ = {
 			isa = PBXGroup;
 			children = (
-				C273245E23B2617800C61878 /* pkgconfig */,
-				C273246023B2617800C61878 /* libassimp.a */,
-				C273246123B2617800C61878 /* libIrrXML.a */,
+				C2768EC423B9B62E00796824 /* pkgconfig */,
+				C2768EC623B9B62E00796824 /* libassimp.a */,
+				C2768EC723B9B62E00796824 /* libIrrXML.a */,
 			);
 			path = lib;
 			sourceTree = "<group>";
 		};
-		C273245E23B2617800C61878 /* pkgconfig */ = {
+		C2768EC423B9B62E00796824 /* pkgconfig */ = {
 			isa = PBXGroup;
 			children = (
-				C273245F23B2617800C61878 /* assimp.pc */,
+				C2768EC523B9B62E00796824 /* assimp.pc */,
 			);
 			path = pkgconfig;
 			sourceTree = "<group>";
 		};
-		C273246223B2617800C61878 /* debug */ = {
+		C2768EC823B9B62E00796824 /* debug */ = {
 			isa = PBXGroup;
 			children = (
-				C273246323B2617800C61878 /* lib */,
+				C2768EC923B9B62E00796824 /* lib */,
 			);
 			path = debug;
 			sourceTree = "<group>";
 		};
-		C273246323B2617800C61878 /* lib */ = {
+		C2768EC923B9B62E00796824 /* lib */ = {
 			isa = PBXGroup;
 			children = (
-				C273246423B2617800C61878 /* libIrrXMLd.a */,
-				C273246523B2617800C61878 /* libassimpd.a */,
+				C2768ECA23B9B62E00796824 /* libIrrXMLd.a */,
+				C2768ECB23B9B62E00796824 /* libassimpd.a */,
 			);
 			path = lib;
 			sourceTree = "<group>";
@@ -842,11 +841,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C273246C23B2617800C61878 /* assimp.pc in Resources */,
-				C273246623B2617800C61878 /* miniunz in Resources */,
+				C2768ED223B9B62E00796824 /* assimp.pc in Resources */,
+				C2768ECC23B9B62E00796824 /* miniunz in Resources */,
 				C23CACA72379A38200AA5737 /* Assets.xcassets in Resources */,
 				C23CACAA2379A38200AA5737 /* Main.storyboard in Resources */,
-				C273246723B2617800C61878 /* minizip in Resources */,
+				C2768ECD23B9B62E00796824 /* minizip in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1010,10 +1009,10 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					/Users/user/Desktop/EiRas/EiRas/Framework/EiRas,
-					"/Users/user/Desktop/EiRas/EiRas/SampleBuild/Library/assimp/include/**",
+					"/Users/user/Desktop/EiRasWorkspace/EiRas/EiRas/Framework/EiRas/**",
+					"/Users/user/Desktop/EiRasWorkspace/EiRas/EiRas/SampleBuild/Library/assimp/include/**",
 				);
-				LIBRARY_SEARCH_PATHS = "/Users/user/Desktop/EiRas/EiRas/SampleBuild/Library/assimp/**";
+				LIBRARY_SEARCH_PATHS = "/Users/user/Desktop/EiRasWorkspace/EiRas/EiRas/SampleBuild/MetalBuild/EiRasMetalBuild/osx_lib/**";
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -1069,10 +1068,10 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					/Users/user/Desktop/EiRas/EiRas/Framework/EiRas,
-					"/Users/user/Desktop/EiRas/EiRas/SampleBuild/Library/assimp/include/**",
+					"/Users/user/Desktop/EiRasWorkspace/EiRas/EiRas/Framework/EiRas/**",
+					"/Users/user/Desktop/EiRasWorkspace/EiRas/EiRas/SampleBuild/Library/assimp/include/**",
 				);
-				LIBRARY_SEARCH_PATHS = "/Users/user/Desktop/EiRas/EiRas/SampleBuild/Library/assimp/**";
+				LIBRARY_SEARCH_PATHS = "/Users/user/Desktop/EiRasWorkspace/EiRas/EiRas/SampleBuild/MetalBuild/EiRasMetalBuild/osx_lib/**";
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -1095,6 +1094,15 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/osx_lib/minizip_x64-osx/lib",
+					"$(PROJECT_DIR)/osx_lib/minizip_x64-osx/debug/lib",
+					"$(PROJECT_DIR)/osx_lib/zlib_x64-osx/lib",
+					"$(PROJECT_DIR)/osx_lib/zlib_x64-osx/debug/lib",
+					"$(PROJECT_DIR)/osx_lib/assimp_x64-osx/lib",
+					"$(PROJECT_DIR)/osx_lib/assimp_x64-osx/debug/lib",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.monsterent.EiRasMetalBuild;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1113,6 +1121,15 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/osx_lib/minizip_x64-osx/lib",
+					"$(PROJECT_DIR)/osx_lib/minizip_x64-osx/debug/lib",
+					"$(PROJECT_DIR)/osx_lib/zlib_x64-osx/lib",
+					"$(PROJECT_DIR)/osx_lib/zlib_x64-osx/debug/lib",
+					"$(PROJECT_DIR)/osx_lib/assimp_x64-osx/lib",
+					"$(PROJECT_DIR)/osx_lib/assimp_x64-osx/debug/lib",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.monsterent.EiRasMetalBuild;
 				PRODUCT_NAME = "$(TARGET_NAME)";

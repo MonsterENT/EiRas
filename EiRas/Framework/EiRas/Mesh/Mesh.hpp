@@ -57,8 +57,11 @@ public:
 
     std::string Name;
     
-    void* GetMeshData();
-    _uint GetMeshDataSize();
+    void* GetTriangleData();
+    _uint GetTriangleDataSize();
+    
+    void* GetIndexData();
+    _uint GetIndexDataSize();
 
     void BuildBuffer();
 
@@ -71,8 +74,14 @@ private:
     MaterialSys::GraphicsResource* VertexBuffer;
     MaterialSys::GraphicsResource* IndexBuffer;
     
-    void* MeshData;
-    _uint MeshDataSize;
+    void* TriangleData;
+    _uint TriangleDataSize;
+    
+    void* IndexData;
+    _uint IndexDataSize;
+    
+    _uint VerticesCount;
+    _uint IndicesCount;
 };
 
 }
