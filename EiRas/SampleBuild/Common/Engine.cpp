@@ -44,8 +44,11 @@ void Engine::m_initEngine()
     tmpCol.z = 0;
     tmpCol.w = 1;
     mat->SetProperty(0, &tmpCol);
-    mesh = new Mesh("mesh");
+    mesh = 0;
+#if GRAPHICS_DX
+    mesh = new Mesh("E:\\EiRasWorkspace\\EiRas\\EiRas\\SampleBuild\\Common\\Resource\\qumian.obj");
     mesh->BuildBuffer();
+#endif
 }
 
 Engine::Engine()
@@ -77,6 +80,7 @@ void Engine::Update()
     cmdBuffer->BeginFrame();
     cmdBuffer->Reset();
     cmdBuffer->SetMaterial(mat);
-    cmdBuffer->DrawMesh(mesh);
+    if(mesh)
+        cmdBuffer->DrawMesh(mesh);
     cmdBuffer->Commit(true);
 }

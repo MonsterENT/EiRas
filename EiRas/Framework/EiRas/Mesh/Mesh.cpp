@@ -62,8 +62,6 @@ void Mesh::BuildBuffer()
     for(_uint i = 0; i < SubMeshCount; i++)
     {
         SubMesh* subMesh = &SubMeshes[i];
-        VerticesCount += subMesh->VerticesCount;
-        IndicesCount += subMesh->IndicesCount;
         for(_uint j = 0; j < subMesh->VerticesCount; j++)
         {
             VertexData3D* tmpData = (VertexData3D*)TriangleData + curMeshDataIndex;
