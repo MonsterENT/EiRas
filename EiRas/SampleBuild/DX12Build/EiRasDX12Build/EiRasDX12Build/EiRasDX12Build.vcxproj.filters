@@ -141,9 +141,6 @@
     <ClInclude Include="..\..\..\Common\Engine.hpp">
       <Filter>framework</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\LoadModel_Assimp.h">
-      <Filter>framework</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\Framework\EiRas\Mesh\MeshLoader.h">
       <Filter>framework</Filter>
     </ClInclude>
@@ -243,9 +240,6 @@
       <Filter>framework</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Common\Engine.cpp">
-      <Filter>framework</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Common\LoadModel_Assimp.cpp">
       <Filter>framework</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\Framework\EiRas\Mesh\MeshLoader.cpp">

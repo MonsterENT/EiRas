@@ -31,7 +31,7 @@ void Engine::m_initEngine()
     layout->Slots = new ShaderSlot*[1];
     layout->Slots[0] = commonCb0;
 
-#ifdef GRAPHICS_METAL
+#if GRAPHICS_METAL
     shader = new Shader("m_shader", "vertexShader", "fragmentShader");
 #elif GRAPHICS_DX
     shader = new Shader("shaders.hlsl", "VSMain", "PSMain");
