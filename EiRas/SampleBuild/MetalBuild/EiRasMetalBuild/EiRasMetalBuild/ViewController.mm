@@ -37,7 +37,6 @@ Engine* engine = 0;
     });
 }
 
-
 #pragma MTKView Delegate
 - (void)mtkView:(nonnull MTKView *)view drawableSizeWillChange:(CGSize)size
 {

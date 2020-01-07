@@ -8,6 +8,9 @@
 #include <Mesh/Mesh.hpp>
 #include <Global/PlatformDefine.h>
 #include <Math/Math.hpp>
+
+#include <Component/LogSys/LogManager.hpp>
+
 #if GRAPHICS_DX
 #pragma comment( lib,"assimp-vc140-mt.lib" )
 #pragma comment( lib,"zlibstatic.lib" )
@@ -20,6 +23,7 @@ void MeshSys::LoadMeshFromFile(std::string fileName, Mesh* meshObj)
 {
     Assimp::Importer imp;
     const aiScene* pscene = imp.ReadFile(fileName, aiProcess_Triangulate | aiProcess_GenSmoothNormals);
+    std::string tmpStr = imp.GetErrorString();
     if (pscene == 0)
     {
         return;
@@ -57,6 +61,6 @@ void MeshSys::LoadMeshFromFile(std::string fileName, Mesh* meshObj)
             submesh->IndicesData[curIndex++] = pmesh->mFaces[k].mIndices[2];
         }
     }
-
+    imp.FreeScene();
 }
 

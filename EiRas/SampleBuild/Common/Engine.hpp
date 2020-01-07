@@ -6,6 +6,7 @@
 #if GRAPHICS_DX
 #include <Windows.h>
 #endif
+#include <string>
 
 namespace Graphics
 {

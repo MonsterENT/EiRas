@@ -20,6 +20,8 @@
 #include <Graphics/GraphicsPipelineInput.h>
 #include <Math/Math.hpp>
 
+#include <Component/LogSys/LogManager.hpp>
+
 using namespace MeshSys;
 using namespace MaterialSys;
 using namespace Graphics;
@@ -47,6 +49,7 @@ void Mesh::BuildBuffer()
     for(_uint i = 0; i < SubMeshCount; i++)
     {
         SubMesh* subMesh = &SubMeshes[i];
+        
         VerticesCount += subMesh->VerticesCount;
         IndicesCount += subMesh->IndicesCount;
     }
@@ -74,11 +77,13 @@ void Mesh::BuildBuffer()
         memcpy((_uint*)IndexData + curIndexDataIndex, subMesh->IndicesData, subMesh->IndicesCount * sizeof(_uint));
         curIndexDataIndex += subMesh->IndicesCount;
     }
+
+    
     VertexBuffer = new GraphicsResource(Name, GraphicsResourceType::Default, true, GetTriangleDataSize());
     VertexBuffer->SetResource(GetTriangleData(), true);
     
     IndexBuffer = new GraphicsResource(Name, GraphicsResourceType::Default, true, GetIndexDataSize());
-    VertexBuffer->SetResource(GetIndexData(), true);
+    IndexBuffer->SetResource(GetIndexData(), true);
 
 #if GRAPHICS_DX
     ((MeshDX12Bridge*)PlatformBridge)->BuildBuffer(VertexBuffer->PlatformBridge, IndexBuffer->PlatformBridge, VerticesCount, IndicesCount);

@@ -6,6 +6,8 @@
 #include <Material/Shader.hpp>
 #include <Mesh/Mesh.hpp>
 
+#include <Component/FileSys/FileManager.hpp>
+
 using namespace MaterialSys;
 using namespace Graphics;
 using namespace GraphicsAPI;
@@ -45,10 +47,9 @@ void Engine::m_initEngine()
     tmpCol.w = 1;
     mat->SetProperty(0, &tmpCol);
     mesh = 0;
-#if GRAPHICS_DX
-    mesh = new Mesh("E:\\EiRasWorkspace\\EiRas\\EiRas\\SampleBuild\\Common\\Resource\\qumian.obj");
+    std::string resPath = FileSys::FileManager::shareInstance()->GetResourcePath("qumian", "obj");
+    mesh = new Mesh(resPath);
     mesh->BuildBuffer();
-#endif
 }
 
 Engine::Engine()

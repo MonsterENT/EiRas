@@ -64,6 +64,13 @@
 		C2B2F6F823A63583002E27D7 /* MeshMetalBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2B2F6F623A63583002E27D7 /* MeshMetalBridge.cpp */; };
 		C2F34C7C23AF942900995E92 /* Math.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2F34C7A23AF942900995E92 /* Math.cpp */; };
 		C2F34CCC23B24EF700995E92 /* MeshLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2F34CCB23B24EF700995E92 /* MeshLoader.cpp */; };
+		C2F6BB0923C0F65B0031E0C7 /* FileManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2F6BB0723C0F65B0031E0C7 /* FileManager.cpp */; };
+		C2F6BB1023C0FBCA0031E0C7 /* FileManagerMacOSAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2F6BB0E23C0FBCA0031E0C7 /* FileManagerMacOSAdapter.mm */; };
+		C2F6BB1323C0FC680031E0C7 /* FileManagerMacOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2F6BB1223C0FC680031E0C7 /* FileManagerMacOS.mm */; };
+		C2F6BB1523C10D860031E0C7 /* qumian.obj in Resources */ = {isa = PBXBuildFile; fileRef = C2F6BB1423C10D860031E0C7 /* qumian.obj */; };
+		C2F6BB1923C399E00031E0C7 /* LogManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2F6BB1723C399E00031E0C7 /* LogManager.cpp */; };
+		C2F6BB1D23C39A860031E0C7 /* LogManagerMacOSAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2F6BB1B23C39A860031E0C7 /* LogManagerMacOSAdapter.mm */; };
+		C2F6BB2023C39AE20031E0C7 /* LogManagerMacOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2F6BB1F23C39AE20031E0C7 /* LogManagerMacOS.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -201,6 +208,19 @@
 		C2F34C7D23AFAC6900995E92 /* GraphicsPipelineInput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GraphicsPipelineInput.h; sourceTree = "<group>"; };
 		C2F34CCA23B24EF700995E92 /* MeshLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeshLoader.h; sourceTree = "<group>"; };
 		C2F34CCB23B24EF700995E92 /* MeshLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MeshLoader.cpp; sourceTree = "<group>"; };
+		C2F6BB0723C0F65B0031E0C7 /* FileManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FileManager.cpp; sourceTree = "<group>"; };
+		C2F6BB0823C0F65B0031E0C7 /* FileManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FileManager.hpp; sourceTree = "<group>"; };
+		C2F6BB0E23C0FBCA0031E0C7 /* FileManagerMacOSAdapter.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = FileManagerMacOSAdapter.mm; sourceTree = "<group>"; };
+		C2F6BB0F23C0FBCA0031E0C7 /* FileManagerMacOSAdapter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FileManagerMacOSAdapter.h; sourceTree = "<group>"; };
+		C2F6BB1123C0FC680031E0C7 /* FileManagerMacOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FileManagerMacOS.h; sourceTree = "<group>"; };
+		C2F6BB1223C0FC680031E0C7 /* FileManagerMacOS.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = FileManagerMacOS.mm; sourceTree = "<group>"; };
+		C2F6BB1423C10D860031E0C7 /* qumian.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = qumian.obj; path = ../../../Common/Resource/qumian.obj; sourceTree = "<group>"; };
+		C2F6BB1723C399E00031E0C7 /* LogManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LogManager.cpp; sourceTree = "<group>"; };
+		C2F6BB1823C399E00031E0C7 /* LogManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LogManager.hpp; sourceTree = "<group>"; };
+		C2F6BB1B23C39A860031E0C7 /* LogManagerMacOSAdapter.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = LogManagerMacOSAdapter.mm; sourceTree = "<group>"; };
+		C2F6BB1C23C39A860031E0C7 /* LogManagerMacOSAdapter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LogManagerMacOSAdapter.hpp; sourceTree = "<group>"; };
+		C2F6BB1E23C39AE20031E0C7 /* LogManagerMacOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LogManagerMacOS.h; sourceTree = "<group>"; };
+		C2F6BB1F23C39AE20031E0C7 /* LogManagerMacOS.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = LogManagerMacOS.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -250,6 +270,7 @@
 		C211D8D623A1481700CFE6E6 /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				C2F6BB0623C0F6370031E0C7 /* Component */,
 				C211D8D723A1481700CFE6E6 /* EiRas */,
 			);
 			name = Framework;
@@ -505,6 +526,7 @@
 		C23CAC9F2379A37F00AA5737 /* EiRasMetalBuild */ = {
 			isa = PBXGroup;
 			children = (
+				C2F6BB1423C10D860031E0C7 /* qumian.obj */,
 				C2768EA723B9B62E00796824 /* osx_lib */,
 				C206144D23A93D07003ED81D /* Common */,
 				C211D8D623A1481700CFE6E6 /* Framework */,
@@ -738,6 +760,73 @@
 			path = Math;
 			sourceTree = "<group>";
 		};
+		C2F6BB0623C0F6370031E0C7 /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				C2F6BB1623C399C40031E0C7 /* LogSys */,
+				C2F6BB0C23C0FB800031E0C7 /* FileSys */,
+				C2F6BB0A23C0FB290031E0C7 /* PlatformDependency */,
+			);
+			path = Component;
+			sourceTree = "<group>";
+		};
+		C2F6BB0A23C0FB290031E0C7 /* PlatformDependency */ = {
+			isa = PBXGroup;
+			children = (
+				C2F6BB0B23C0FB440031E0C7 /* macOS */,
+			);
+			path = PlatformDependency;
+			sourceTree = "<group>";
+		};
+		C2F6BB0B23C0FB440031E0C7 /* macOS */ = {
+			isa = PBXGroup;
+			children = (
+				C2F6BB1A23C39A6B0031E0C7 /* LogSys */,
+				C2F6BB0D23C0FB910031E0C7 /* FileSys */,
+			);
+			path = macOS;
+			sourceTree = "<group>";
+		};
+		C2F6BB0C23C0FB800031E0C7 /* FileSys */ = {
+			isa = PBXGroup;
+			children = (
+				C2F6BB0723C0F65B0031E0C7 /* FileManager.cpp */,
+				C2F6BB0823C0F65B0031E0C7 /* FileManager.hpp */,
+			);
+			path = FileSys;
+			sourceTree = "<group>";
+		};
+		C2F6BB0D23C0FB910031E0C7 /* FileSys */ = {
+			isa = PBXGroup;
+			children = (
+				C2F6BB0E23C0FBCA0031E0C7 /* FileManagerMacOSAdapter.mm */,
+				C2F6BB0F23C0FBCA0031E0C7 /* FileManagerMacOSAdapter.h */,
+				C2F6BB1123C0FC680031E0C7 /* FileManagerMacOS.h */,
+				C2F6BB1223C0FC680031E0C7 /* FileManagerMacOS.mm */,
+			);
+			path = FileSys;
+			sourceTree = "<group>";
+		};
+		C2F6BB1623C399C40031E0C7 /* LogSys */ = {
+			isa = PBXGroup;
+			children = (
+				C2F6BB1723C399E00031E0C7 /* LogManager.cpp */,
+				C2F6BB1823C399E00031E0C7 /* LogManager.hpp */,
+			);
+			path = LogSys;
+			sourceTree = "<group>";
+		};
+		C2F6BB1A23C39A6B0031E0C7 /* LogSys */ = {
+			isa = PBXGroup;
+			children = (
+				C2F6BB1B23C39A860031E0C7 /* LogManagerMacOSAdapter.mm */,
+				C2F6BB1C23C39A860031E0C7 /* LogManagerMacOSAdapter.hpp */,
+				C2F6BB1E23C39AE20031E0C7 /* LogManagerMacOS.h */,
+				C2F6BB1F23C39AE20031E0C7 /* LogManagerMacOS.mm */,
+			);
+			path = LogSys;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -841,6 +930,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C2F6BB1523C10D860031E0C7 /* qumian.obj in Resources */,
 				C2768ED223B9B62E00796824 /* assimp.pc in Resources */,
 				C2768ECC23B9B62E00796824 /* miniunz in Resources */,
 				C23CACA72379A38200AA5737 /* Assets.xcassets in Resources */,
@@ -877,6 +967,8 @@
 				C23CACAD2379A38200AA5737 /* main.m in Sources */,
 				C211D97E23A1481700CFE6E6 /* GraphicsResourceMetalAdapter.mm in Sources */,
 				C211D97C23A1481700CFE6E6 /* EiRasMetalBridge.cpp in Sources */,
+				C2F6BB2023C39AE20031E0C7 /* LogManagerMacOS.mm in Sources */,
+				C2F6BB1023C0FBCA0031E0C7 /* FileManagerMacOSAdapter.mm in Sources */,
 				C211D95F23A1481700CFE6E6 /* EiRasGlobalManager.cpp in Sources */,
 				C206145323A93D07003ED81D /* Engine.cpp in Sources */,
 				C211D95C23A1481700CFE6E6 /* GraphicsRenderState.cpp in Sources */,
@@ -884,6 +976,7 @@
 				C211D96423A1481700CFE6E6 /* Shader.cpp in Sources */,
 				C211D98323A1481700CFE6E6 /* GraphicsResourceHeapMetalAdapter.mm in Sources */,
 				C2B2F6F523A6305F002E27D7 /* MeshMetalAdapter.mm in Sources */,
+				C2F6BB1923C399E00031E0C7 /* LogManager.cpp in Sources */,
 				C211D97B23A1481700CFE6E6 /* EiRasMetalAdapter.mm in Sources */,
 				C211D96023A1481700CFE6E6 /* MaterialLayout.cpp in Sources */,
 				C211D96123A1481700CFE6E6 /* GraphicsResourceHeap.cpp in Sources */,
@@ -904,11 +997,14 @@
 				C211D97D23A1481700CFE6E6 /* EiRasMetal.mm in Sources */,
 				C211D98023A1481700CFE6E6 /* GraphicsResourceHeapMetalBridge.cpp in Sources */,
 				C211D98523A1481700CFE6E6 /* GraphicsResourceHeapMetal.mm in Sources */,
+				C2F6BB1323C0FC680031E0C7 /* FileManagerMacOS.mm in Sources */,
 				C211D96323A1481700CFE6E6 /* GraphicsResource.cpp in Sources */,
+				C2F6BB1D23C39A860031E0C7 /* LogManagerMacOSAdapter.mm in Sources */,
 				C211D98423A1481700CFE6E6 /* GraphicsResourceMetalBridge.cpp in Sources */,
 				C211D98923A1481700CFE6E6 /* CommandBufferMetalBridge.cpp in Sources */,
 				C211D98223A1481700CFE6E6 /* MaterialMetalAdapter.mm in Sources */,
 				C211D97A23A1481700CFE6E6 /* ShaderMetalBridge.cpp in Sources */,
+				C2F6BB0923C0F65B0031E0C7 /* FileManager.cpp in Sources */,
 				C211D95E23A1481700CFE6E6 /* EiRas.cpp in Sources */,
 				C211D95D23A1481700CFE6E6 /* CommandBuffer.cpp in Sources */,
 			);
@@ -1009,7 +1105,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					"/Users/user/Desktop/EiRasWorkspace/EiRas/EiRas/Framework/EiRas/**",
+					"/Users/user/Desktop/EiRasWorkspace/EiRas/EiRas/Framework/**",
 					"/Users/user/Desktop/EiRasWorkspace/EiRas/EiRas/SampleBuild/Library/assimp/include/**",
 				);
 				LIBRARY_SEARCH_PATHS = "/Users/user/Desktop/EiRasWorkspace/EiRas/EiRas/SampleBuild/MetalBuild/EiRasMetalBuild/osx_lib/**";
@@ -1068,7 +1164,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					"/Users/user/Desktop/EiRasWorkspace/EiRas/EiRas/Framework/EiRas/**",
+					"/Users/user/Desktop/EiRasWorkspace/EiRas/EiRas/Framework/**",
 					"/Users/user/Desktop/EiRasWorkspace/EiRas/EiRas/SampleBuild/Library/assimp/include/**",
 				);
 				LIBRARY_SEARCH_PATHS = "/Users/user/Desktop/EiRasWorkspace/EiRas/EiRas/SampleBuild/MetalBuild/EiRasMetalBuild/osx_lib/**";
