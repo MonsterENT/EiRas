@@ -76,7 +76,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <SourcePath>E:\EiRasWorkspace\EiRas\EiRas\Framework\EiRas;$(SourcePath)</SourcePath>
-    <IncludePath>E:\EiRasWorkspace\EiRas\EiRas\SampleBuild\Library\assimp\include\assimp;E:\EiRasWorkspace\EiRas\EiRas\SampleBuild\Common;E:\EiRasWorkspace\EiRas\EiRas\Framework\EiRas;$(IncludePath)</IncludePath>
+    <IncludePath>E:\EiRasWorkspace\EiRas\EiRas\Framework\EiRas;E:\EiRasWorkspace\EiRas\EiRas\Framework;E:\EiRasWorkspace\EiRas\EiRas\Framework\Component;E:\EiRasWorkspace\EiRas\EiRas\SampleBuild\Library\assimp\include\assimp;E:\EiRasWorkspace\EiRas\EiRas\SampleBuild\Common;$(IncludePath)</IncludePath>
     <LibraryPath>E:\EiRasWorkspace\EiRas\EiRas\SampleBuild\DX12Build\EiRasDX12Build\lib\assimp;$(LibraryPath)</LibraryPath>
     <LibraryWPath>$(LibraryWPath)</LibraryWPath>
   </PropertyGroup>
@@ -108,7 +108,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
@@ -156,6 +156,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\Framework\Component\FileSys\FileManager.hpp" />
+    <ClInclude Include="..\..\..\..\Framework\Component\LogSys\LogManager.hpp" />
+    <ClInclude Include="..\..\..\..\Framework\Component\PlatformDependency\Windows\FileSys\FileManagerWin.hpp" />
+    <ClInclude Include="..\..\..\..\Framework\Component\PlatformDependency\Windows\LogSys\LogManagerWin.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Global\EiRasGlobalManager.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Global\GlobalDefine.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Global\PlatformDefine.h" />
@@ -201,6 +205,10 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\Framework\Component\FileSys\FileManager.cpp" />
+    <ClCompile Include="..\..\..\..\Framework\Component\LogSys\LogManager.cpp" />
+    <ClCompile Include="..\..\..\..\Framework\Component\PlatformDependency\Windows\FileSys\FileManagerWin.cpp" />
+    <ClCompile Include="..\..\..\..\Framework\Component\PlatformDependency\Windows\LogSys\LogManagerWin.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\Global\EiRasGlobalManager.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\GraphicsAPI\EiRas.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\Graphics\CommandBuffer.cpp" />

@@ -7,7 +7,10 @@
 //
 
 #include "LogManager.hpp"
+#if GRAPHICS_METAL
 #include "LogManagerMacOSAdapter.hpp"
+#endif
+
 
 char logCache[150];
 
@@ -20,7 +23,9 @@ void _ClearLogCache()
 
 void LogManager::DebugPrint(std::string str)
 {
+#if GRAPHICS_METAL
     DebugPrintMacOS(str);
+#endif
 }
 
 void LogManager::DebugPrint(int i)

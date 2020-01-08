@@ -147,6 +147,18 @@
     <ClInclude Include="..\..\..\..\Framework\EiRas\Math\Math.hpp">
       <Filter>framework</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\Framework\Component\FileSys\FileManager.hpp">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Framework\Component\LogSys\LogManager.hpp">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Framework\Component\PlatformDependency\Windows\FileSys\FileManagerWin.hpp">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Framework\Component\PlatformDependency\Windows\LogSys\LogManagerWin.hpp">
+      <Filter>framework</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EiRasDX12Build.cpp">
@@ -246,6 +258,18 @@
       <Filter>framework</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\Framework\EiRas\Math\Math.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Framework\Component\FileSys\FileManager.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Framework\Component\LogSys\LogManager.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Framework\Component\PlatformDependency\Windows\FileSys\FileManagerWin.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Framework\Component\PlatformDependency\Windows\LogSys\LogManagerWin.cpp">
       <Filter>framework</Filter>
     </ClCompile>
   </ItemGroup>
