@@ -78,10 +78,10 @@ void Mesh::BuildBuffer()
         curIndexDataIndex += subMesh->IndicesCount;
     }
 
-    VertexBuffer = new GraphicsResource(Name, GraphicsResourceType::Default, true, GetTriangleDataSize());
+    VertexBuffer = new GraphicsResource(Name, GraphicsResourceType::Default, GraphicsResourceVisibility::VISIBILITY_VERTEX, true, GetTriangleDataSize());
     VertexBuffer->SetResource(GetTriangleData(), true);
     
-    IndexBuffer = new GraphicsResource(Name, GraphicsResourceType::Default, true, GetIndexDataSize());
+    IndexBuffer = new GraphicsResource(Name, GraphicsResourceType::Default, GraphicsResourceVisibility::VISIBILITY_VERTEX, true, GetIndexDataSize());
     IndexBuffer->SetResource(GetIndexData(), true);
 
 #if GRAPHICS_DX

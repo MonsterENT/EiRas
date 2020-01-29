@@ -13,6 +13,7 @@
 #include <Material/MaterialLayout.hpp>
 #include <PlatformDependency/OnMetal/Material/ConstantBufferMetal.h>
 #import <PlatformDependency/OnMetal/Mesh/MeshMetal.h>
+
 using namespace MaterialSys;
 
 @interface CommandBufferMetal()
@@ -52,13 +53,20 @@ using namespace MaterialSys;
     _renderCommandEncoder = [_commandBuffer renderCommandEncoderWithDescriptor:[deviceObj getMTKView].currentRenderPassDescriptor];
     [_renderCommandEncoder setRenderPipelineState:material.pipelineState];
     
-    for(int i = 0; i < props->size(); i++)
+    for(_uint i = 0; i < props->size(); i++)
     {
         if((*props)[i]->PropType == GraphicsResourceType::CBV)
         {
+            GraphicsResource* resource = (*props)[i]->Resource;
             ConstantBufferMetal* cbObj = (__bridge ConstantBufferMetal*)(*props)[i]->Resource->PlatformBridge->raw_obj;
-            [_renderCommandEncoder setVertexBuffer:cbObj.rawBuffer offset:0 atIndex:(*props)[i]->SlotID];
-            [_renderCommandEncoder setFragmentBuffer:cbObj.rawBuffer offset:0 atIndex:(*props)[i]->SlotID];
+            if(resource->Visibility == GraphicsResourceVisibility::VISIBILITY_ALL || resource->Visibility == GraphicsResourceVisibility::VISIBILITY_VERTEX)
+            {
+                [_renderCommandEncoder setVertexBuffer:cbObj.rawBuffer offset:0 atIndex:(*props)[i]->SlotID];
+            }
+            if(resource->Visibility == GraphicsResourceVisibility::VISIBILITY_ALL || resource->Visibility == GraphicsResourceVisibility::VISIBILITY_PIXEL)
+            {
+                [_renderCommandEncoder setFragmentBuffer:cbObj.rawBuffer offset:0 atIndex:(*props)[i]->SlotID];
+            }
         }
     }
 }

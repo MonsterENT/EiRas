@@ -11,9 +11,11 @@
 
 using namespace MaterialSys;
 
-GraphicsResource::GraphicsResource(std::string Name, GraphicsResourceType type, bool shouldInitResource, int bufferSize)
+GraphicsResource::GraphicsResource(std::string Name, GraphicsResourceType type, GraphicsResourceVisibility visibile, bool shouldInitResource, int bufferSize)
 {
     ResourceType = type;
+    
+    Visibility = visibile;
     
 #if GRAPHICS_DX
     PlatformBridge = new GraphicsResourceDX12Bridge();
