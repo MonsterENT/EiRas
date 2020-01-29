@@ -12,12 +12,18 @@
 #include <string>
 #include <Global/PlatformDependency/EiRasPlatformBridgeProtocol.h>
 
+namespace Graphics {
+class GraphicsVertexDescriptor;
+}
+
 namespace MaterialSys {
 
 class ShaderMetalBridge : public EiRasPlatformBridgeProtocol
 {
 public:
     ShaderMetalBridge(std::string fileName, std::string vertexFuncName, std::string pixelFuncName);
+    
+    void InitVertexDescriptor(Graphics::GraphicsVertexDescriptor* desc);
 };
 
 };//namespace MaterialSys

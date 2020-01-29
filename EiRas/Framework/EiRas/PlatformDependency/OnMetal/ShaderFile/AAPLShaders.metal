@@ -11,7 +11,29 @@ Metal shaders used for this sample
 using namespace metal;
 
 // Include header shared between this Metal shader code and C code executing Metal API commands.
-#import "MetalGraphicsPipelineInput.h"
+typedef enum AAPLVertexInputIndex
+{
+    AAPLVertexInputIndexVertices     = 0,
+    AAPLVertexInputIndexViewportSize = 1,
+} AAPLVertexInputIndex;
+
+//  This structure defines the layout of vertices sent to the vertex
+//  shader. This header is shared between the .metal shader and C code, to guarantee that
+//  the layout of the vertex array in the C code matches the layout that the .metal
+//  vertex shader expects.
+typedef struct
+{
+    float3 position [[ attribute(0) ]];
+    float2 uv [[ attribute(1) ]];
+    float3 normal [[ attribute(2) ]];
+} AAPLVertex;
+//}
+
+
+typedef struct
+{
+    float4 _TmpColor;
+} PixelCBV;
 
 // Vertex shader outputs and fragment shader inputs
 typedef struct
@@ -31,23 +53,14 @@ typedef struct
 
 vertex RasterizerData
 vertexShader(uint vertexID [[vertex_id]],
-             constant AAPLVertex *vertices [[buffer(AAPLVertexInputIndexVertices)]],
+             AAPLVertex vertices [[ stage_in ]],
              constant vector_uint2 *viewportSizePointer [[buffer(AAPLVertexInputIndexViewportSize)]])
 {
     RasterizerData out;
-
-    // Index into the array of positions to get the current vertex.
-    // The positions are specified in pixel dimensions (i.e. a value of 100
-    // is 100 pixels from the origin).
-    float3 pixelSpacePosition = vertices[vertexID].position.xyz;
-
-    // To convert from positions in pixel space to positions in clip-space,
-    //  divide the pixel coordinates by half the size of the viewport.
-    out.position = vector_float4(0.0, 0.0, 0.0, 1.0);
+    float3 pixelSpacePosition = vertices.position.xyz;
     out.position.xyz = pixelSpacePosition;
-
-    // Pass the input color directly to the rasterizer.
-    out.color = 0;
+    out.position.w = 1;
+//    out.color = 0;
 
     return out;
 }

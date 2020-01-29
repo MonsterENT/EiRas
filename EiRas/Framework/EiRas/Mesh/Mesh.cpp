@@ -17,7 +17,7 @@
 #endif
 
 #include "MeshLoader.h"
-#include <Graphics/GraphicsPipelineInput.h>
+#include <Graphics/VertexDataType.h>
 #include <Math/Math.hpp>
 
 #include <Component/LogSys/LogManager.hpp>
@@ -68,9 +68,9 @@ void Mesh::BuildBuffer()
         for(_uint j = 0; j < subMesh->VerticesCount; j++)
         {
             VertexData3D* tmpData = (VertexData3D*)TriangleData + curMeshDataIndex;
-            tmpData->Position = subMesh->PositionData[j];
-            tmpData->UV = subMesh->UVData[j];
-            tmpData->Normal = subMesh->NormalData[j];
+            tmpData->Position = float3(subMesh->PositionData[j].x, subMesh->PositionData[j].y, subMesh->PositionData[j].z);
+            tmpData->UV = float2(subMesh->UVData[j].x, subMesh->UVData[j].y);
+            tmpData->Normal = float3(subMesh->NormalData[j].x, subMesh->NormalData[j].y, subMesh->NormalData[j].z);
             curMeshDataIndex++;
         }
         
@@ -78,7 +78,6 @@ void Mesh::BuildBuffer()
         curIndexDataIndex += subMesh->IndicesCount;
     }
 
-    
     VertexBuffer = new GraphicsResource(Name, GraphicsResourceType::Default, true, GetTriangleDataSize());
     VertexBuffer->SetResource(GetTriangleData(), true);
     

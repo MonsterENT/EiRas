@@ -12,9 +12,5 @@
 const char* FileSys::getResourcePathMacOs(std::string resName, std::string type)
 {
     NSString* tmp = [FileManagerMacOS getResourcePath:[NSString stringWithUTF8String:resName.c_str()] type:[NSString stringWithUTF8String:type.c_str()]];
-    size_t len = strlen([tmp UTF8String]);
-    char* path = new char[len + 1];
-    path[len] = '\0';
-    memcpy(path, [tmp UTF8String], sizeof(char) * len);
-    return path;
+    return [tmp UTF8String];
 }

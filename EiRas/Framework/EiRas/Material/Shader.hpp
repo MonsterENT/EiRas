@@ -13,6 +13,10 @@
 #include <Global/PlatformDependency/EiRasPlatformBridgeProtocol.h>
 #include <Global/PlatformDefine.h>
 
+namespace Graphics {
+class GraphicsVertexDescriptor;
+}
+
 namespace MaterialSys {
 
     class ShaderLayout;
@@ -29,6 +33,8 @@ namespace MaterialSys {
         void* GetRawObj();
 
         void InitLayout(ShaderLayout* layout);
+        
+        void InitVertexDescriptor(Graphics::GraphicsVertexDescriptor* vertexDescriptor);
 
         EiRasPlatformBridgeProtocol* PlatformBridge;
 

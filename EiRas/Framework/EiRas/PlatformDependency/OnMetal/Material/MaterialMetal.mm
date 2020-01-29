@@ -41,6 +41,7 @@
     GET_EIRAS_METAL(deviceObj)
     
     MTLRenderPipelineDescriptor *pipelineStateDescriptor = [[MTLRenderPipelineDescriptor alloc] init];
+    pipelineStateDescriptor.vertexDescriptor = shaderObj.vertexDesc;
     pipelineStateDescriptor.label = _name;
     pipelineStateDescriptor.vertexFunction = shaderObj.vertexFunc;
     pipelineStateDescriptor.fragmentFunction = shaderObj.pixelFunc;

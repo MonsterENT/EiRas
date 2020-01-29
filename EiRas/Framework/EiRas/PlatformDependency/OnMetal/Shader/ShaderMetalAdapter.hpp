@@ -12,9 +12,15 @@
 #include <string>
 using std::string;
 
+namespace Graphics {
+class GraphicsVertexDescriptor;
+}
+
 namespace MaterialSys
 {
     void* createShaderMetal(std::string fileName, std::string vertexFuncName, std::string pixelFuncName);
+
+    void initVertexDescriptor(void* ptr, Graphics::GraphicsVertexDescriptor* desc);
 }
 
 #endif /* ShaderMetalAdapter_hpp */

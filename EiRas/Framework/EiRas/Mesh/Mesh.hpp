@@ -14,10 +14,6 @@
 #include <Material/GraphicsResource.hpp>
 #include <Global/PlatformDependency/EiRasPlatformBridgeProtocol.h>
 
-#if GRAPHICS_METAL
-#include <ShaderFile/Metal/MetalGraphicsPipelineInput.h>
-#endif
-
 #if GRAPHICS_DX
 #include <PlatformDependency/OnDX/GraphicsPipelineInput.h>
 #endif

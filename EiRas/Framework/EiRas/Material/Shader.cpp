@@ -9,6 +9,7 @@
 #include "Shader.hpp"
 
 #include <Material/ShaderLayout.h>
+#include <Graphics/GraphicsVertexDescriptor.hpp>
 
 #if GRAPHICS_DX
 #include <PlatformDependency/OnDX/Shader/ShaderDX12Bridge.h>
@@ -19,6 +20,7 @@
 #endif
 
 using MaterialSys::Shader;
+using namespace Graphics;
 
 #if GRAPHICS_DX
 using MaterialSys::ShaderLayout;
@@ -42,6 +44,11 @@ void Shader::InitLayout(ShaderLayout* layout)
 #if GRAPHICS_DX
     ((ShaderDX12Bridge*)PlatformBridge)->InitRootSignature(layout);
 #endif
+}
+
+void Shader::InitVertexDescriptor(GraphicsVertexDescriptor* vertexDescriptor)
+{
+    ((ShaderMetalBridge*)PlatformBridge)->InitVertexDescriptor(vertexDescriptor);
 }
 
 void* Shader::GetRawObj()

@@ -15,3 +15,8 @@ ShaderMetalBridge::ShaderMetalBridge(std::string fileName, std::string vertexFun
 {
     raw_obj = createShaderMetal(fileName, vertexFuncName, pixelFuncName);
 }
+
+void ShaderMetalBridge::InitVertexDescriptor(Graphics::GraphicsVertexDescriptor* desc)
+{
+    initVertexDescriptor(raw_obj, desc);
+}

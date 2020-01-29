@@ -9,8 +9,9 @@
 #import "ShaderMetal.h"
 #import <Global/EiRasGlobalManager.hpp>
 #import <MetalKit/MetalKit.h>
-
 #import <PlatformDependency/OnMetal/GraphicsAPI/EiRasMetal.h>
+
+#include <Graphics/GraphicsVertexDescriptor.hpp>
 
 @interface ShaderMetal()
 @end
@@ -38,6 +39,27 @@
         }
     }
     return self;
+}
+
+-(void)initVertexDescriptor:(void*)desc
+{
+    Graphics::GraphicsVertexDescriptor* _desc = (Graphics::GraphicsVertexDescriptor*)desc;
+    _vertexDesc = [MTLVertexDescriptor vertexDescriptor];
+    
+    for(int i = 0; i < _desc->_AttributeIndex; i++)
+    {
+        _vertexDesc.attributes[i].offset = _desc->Attributes[i].Offset;
+        _vertexDesc.attributes[i].format = (MTLVertexFormat)_desc->Attributes[i].attributeFormat;
+        _vertexDesc.attributes[i].bufferIndex = _desc->Attributes[i].BufferIndex;
+    }
+    
+    for(int i = 0; i < _desc->_LayoutIndex; i++)
+    {
+        _vertexDesc.layouts[i].stepFunction = MTLVertexStepFunctionPerVertex;
+        _vertexDesc.layouts[i].stepRate = 1;
+        _vertexDesc.layouts[i].stride = _desc->Layouts[i].Stride;
+    }
+    
 }
 
 @end

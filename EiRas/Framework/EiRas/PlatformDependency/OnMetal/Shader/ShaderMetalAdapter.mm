@@ -17,3 +17,9 @@ void* MaterialSys::createShaderMetal(std::string fileName, std::string vertexFun
     PROCESS_OC_OBJ(oc_obj, bridgePtr)
     return bridgePtr;
 }
+
+void MaterialSys::initVertexDescriptor(void* ptr, Graphics::GraphicsVertexDescriptor* desc)
+{
+    ShaderMetal* _ptr = (__bridge ShaderMetal*)ptr;
+    [_ptr initVertexDescriptor:desc];
+}

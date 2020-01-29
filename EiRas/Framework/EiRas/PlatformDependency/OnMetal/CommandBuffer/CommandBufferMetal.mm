@@ -66,7 +66,7 @@ using namespace MaterialSys;
 -(void)drawMesh:(MeshMetal*)meshObj
 {
     [_renderCommandEncoder setVertexBuffer:meshObj.vertexBuffer offset:0 atIndex:meshObj.vertexBufferIndex];
-    [_renderCommandEncoder drawIndexedPrimitives:MTLPrimitiveTypeTriangle indexCount:meshObj.indexCount indexType:MTLIndexTypeUInt32 indexBuffer:meshObj.indexBuffer indexBufferOffset:0];
+    [_renderCommandEncoder drawIndexedPrimitives:MTLPrimitiveTypeTriangleStrip indexCount:meshObj.indexCount indexType:MTLIndexTypeUInt32 indexBuffer:meshObj.indexBuffer indexBufferOffset:0];
 }
 
 -(void)beginFrame

@@ -13,12 +13,16 @@
 
 -(instancetype)initWithFileName:(NSString*)fileName vertexFuncName:(NSString*)vertexFuncName pixelFuncName:(NSString*)pixelFuncName;
 
+-(void)initVertexDescriptor:(void*)desc;
+
 @property(copy, nonatomic)NSString* fileName;
 @property(copy, nonatomic)NSString* vertexFuncName;
 @property(copy, nonatomic)NSString* pixelFuncName;
 
 @property(strong, nonatomic)id<MTLFunction> vertexFunc;
 @property(strong, nonatomic)id<MTLFunction> pixelFunc;
+
+@property(strong, nonatomic)MTLVertexDescriptor* vertexDesc;
 
 @end
 

@@ -42,7 +42,10 @@ const char * FileManager::GetResourcePath(std::string resName, std::string type)
     }
 
 #if GRAPHICS_METAL
-    return getResourcePathMacOs(resName, type);
+    
+    const char* tSource = getResourcePathMacOs(resName, type);
+    size_t len = strlen(tSource) + 1;
+    memcpy(g_ResPath, tSource, sizeof(char) * len);
 #endif
 
 #if GRAPHICS_DX
@@ -50,6 +53,6 @@ const char * FileManager::GetResourcePath(std::string resName, std::string type)
     tmpPath += FileManagerWin::GetResourcePath();
     tmpPath += resName + "." + type;
     memcpy(g_ResPath, tmpPath.c_str(), 150 * sizeof(char));
-    return g_ResPath;
 #endif
+    return g_ResPath;
 }

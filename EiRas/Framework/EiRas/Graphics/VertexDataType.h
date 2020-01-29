@@ -1,13 +1,13 @@
 //
-//  GraphicsPipelineInput.h
+//  VertexDataType.h
 //  EiRasMetalBuild
 //
 //  Created by MonsterENT on 12/22/19.
 //  Copyright © 2019 MonsterENT. All rights reserved.
 //
 
-#ifndef GraphicsPipelineInput_h
-#define GraphicsPipelineInput_h
+#ifndef VertexDataType_h
+#define VertexDataType_h
 
 #include <Math/Math.hpp>
 using Math::float2;
@@ -31,6 +31,7 @@ struct VertexData3D {
     float3 Position;
     float2 UV;
     float3 Normal;
+    
 };
 
 struct VertexData3D_Color {
@@ -40,5 +41,6 @@ struct VertexData3D_Color {
     float4 Color;
 };
 
+
 }
-#endif /* GraphicsPipelineInput_h */
+#endif /* VertexDataType_h */

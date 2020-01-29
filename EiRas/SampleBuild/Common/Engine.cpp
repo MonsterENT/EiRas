@@ -2,20 +2,17 @@
 #include <Material/ShaderLayout.h>
 #include <GraphicsAPI/EiRas.hpp>
 #include <Graphics/CommandBuffer.hpp>
+#include <Graphics/GraphicsVertexDescriptor.hpp>
 #include <Material/Material.hpp>
 #include <Material/Shader.hpp>
 #include <Mesh/Mesh.hpp>
-
+#include <Graphics/VertexDataType.h>
 #include <Component/FileSys/FileManager.hpp>
 
 using namespace MaterialSys;
 using namespace Graphics;
 using namespace GraphicsAPI;
 using namespace MeshSys;
-
-struct float4 {
-    float x, y, z, w;
-};
 
 void Engine::m_initEngine()
 {
@@ -39,6 +36,16 @@ void Engine::m_initEngine()
     shader = new Shader("shaders.hlsl", "VSMain", "PSMain");
 #endif
     shader->InitLayout(layout);
+    
+    GraphicsVertexDescriptor* m_vertexDesc = new GraphicsVertexDescriptor();
+    
+    m_vertexDesc->AddBufferAttribute(GraphicsVertexAttributeFormat::VertexFormatFloat3, 0);
+    m_vertexDesc->AddBufferAttribute(GraphicsVertexAttributeFormat::VertexFormatFloat2, 0);
+    m_vertexDesc->AddBufferAttribute(GraphicsVertexAttributeFormat::VertexFormatFloat3, 0);
+    m_vertexDesc->InitBufferLayout();
+    
+    shader->InitVertexDescriptor(m_vertexDesc);
+    
     mat = new Material("material", shader, cmdBuffer);
     static float4 tmpCol;
     tmpCol.x = 1;
