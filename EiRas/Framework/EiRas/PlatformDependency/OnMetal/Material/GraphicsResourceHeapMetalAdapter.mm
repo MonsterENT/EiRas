@@ -18,5 +18,6 @@ void* MaterialSys::createResourceHeapMetal(_uint propCount, _uint tableCount, Ma
 {
     GraphicsResourceHeapMetal* oc_obj = [[GraphicsResourceHeapMetal alloc] initWithPropCount:propCount tableCount:tableCount tableArray:tableArray];
     PROCESS_OC_OBJ(oc_obj, bridgePtr)
+    [oc_obj setLabel:@"GraphicsResourceHeap"];
     return bridgePtr;
 }

@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(strong, nonatomic)id<MTLRenderCommandEncoder> renderCommandEncoder;
 
--(void)setLabel:(NSString*)name;
+@property(copy, nonatomic)NSString* name;
 
 -(void)setMaterial:(MaterialMetal*)material props:(std::vector<MaterialSys::MaterialProp*>*)props tables:(std::vector<MaterialSys::MaterialTable*>*)tables;
 

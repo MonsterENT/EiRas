@@ -13,16 +13,6 @@
 
 @implementation MaterialMetal
 
--(instancetype)initWithName:(NSString*)name
-{
-    if(self)
-    {
-        self = [super init];
-        _name = name;
-    }
-    return self;
-}
-
 -(void)SetProperty:(MaterialSys::MaterialProp*)prop resPtr:(void*)res
 {
     if(prop->PropType == MaterialSys::GraphicsResourceType::CBV)
@@ -33,6 +23,12 @@
     {
         prop->Resource->SetResource(res, true);
     }
+}
+
+-(void)setLabel:(NSString *)name
+{
+    _name = name;
+    
 }
 
 -(void)UpdateRenderState:(Graphics::GraphicsRenderState*)renderState Shader:(ShaderMetal*)shaderObj
@@ -53,8 +49,6 @@
         pipelineStateDescriptor.colorAttachments[0].destinationAlphaBlendFactor = MTLBlendFactor(renderState->_BlendDstAlphaFactor);
     _pipelineState = [[deviceObj getMetalDevice] newRenderPipelineStateWithDescriptor:pipelineStateDescriptor
                                                                                 error:&errorCode];
-    
-    _renderPassDescriptor = [deviceObj getMTKView].currentRenderPassDescriptor;
 }
 
 @end

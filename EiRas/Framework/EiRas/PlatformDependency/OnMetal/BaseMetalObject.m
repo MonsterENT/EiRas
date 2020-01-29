@@ -10,4 +10,8 @@
 
 @implementation BaseMetalObject
 
+-(void)setLabel:(NSString*)name
+{
+}
+
 @end

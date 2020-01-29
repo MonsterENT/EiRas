@@ -11,16 +11,16 @@
 
 using namespace MaterialSys;
 
-GraphicsResource::GraphicsResource(std::string Name, GraphicsResourceType type, GraphicsResourceVisibility visibile, bool shouldInitResource, int bufferSize)
+GraphicsResource::GraphicsResource(std::string Name, GraphicsResourceType type, GraphicsResourceVisibility visible, bool shouldInitResource, int bufferSize)
 {
     ResourceType = type;
     
-    Visibility = visibile;
+    Visibility = visible;
     
 #if GRAPHICS_DX
     PlatformBridge = new GraphicsResourceDX12Bridge();
 #elif GRAPHICS_METAL
-    PlatformBridge = new GraphicsResourceMetalBridge(shouldInitResource);
+    PlatformBridge = new GraphicsResourceMetalBridge(Name, shouldInitResource);
 #endif
     
     this->bufferSize = bufferSize;

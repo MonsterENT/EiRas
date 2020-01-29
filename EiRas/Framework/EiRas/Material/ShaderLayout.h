@@ -24,6 +24,7 @@ namespace MaterialSys
     public:
         std::string PropName;
         GraphicsResourceType PropType;
+        GraphicsResourceVisibility Visibility;
         int BufferSize;
     };
 

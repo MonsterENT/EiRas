@@ -27,13 +27,15 @@ namespace MaterialSys
         std::string Name;
         GraphicsResourceType PropType;
         GraphicsResource* Resource;
+        GraphicsResourceVisibility Visibility;
         _uint BufferSize;
-        MaterialProp(std::string Name, GraphicsResourceType propType, GraphicsResourceVisibility visibile, bool initResource, _uint bufferSize)
+        MaterialProp(std::string name, GraphicsResourceType propType, GraphicsResourceVisibility visible, bool initResource, _uint bufferSize)
         {
-            this->Name = Name;
+            Name = name;
             BufferSize = bufferSize;
             PropType = propType;
-            Resource = new GraphicsResource(Name, PropType, visibile, initResource, bufferSize);
+            Visibility = visible;
+            Resource = new GraphicsResource(name, propType, visible, initResource, bufferSize);
         }
     };
 

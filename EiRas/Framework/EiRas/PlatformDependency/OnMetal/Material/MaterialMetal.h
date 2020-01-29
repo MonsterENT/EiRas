@@ -17,8 +17,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MaterialMetal : BaseMetalObject
 
--(instancetype)initWithName:(NSString*)name;
-
 -(void)SetProperty:(MaterialSys::MaterialProp*)prop resPtr:(void*)res;
 
 -(void)UpdateRenderState:(Graphics::GraphicsRenderState*)renderState Shader:(ShaderMetal*)shaderObj;
@@ -26,8 +24,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property(copy, nonatomic)NSString* name;
 
 @property(strong, nonatomic)id<MTLRenderPipelineState> pipelineState;
-
-@property(strong, nonatomic)MTLRenderPassDescriptor* renderPassDescriptor;
 
 @end
 

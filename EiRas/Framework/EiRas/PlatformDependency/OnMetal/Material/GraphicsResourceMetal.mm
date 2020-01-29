@@ -33,4 +33,9 @@
     memcpy(_rawBuffer.contents, res, _bufferSize);
 }
 
+-(void)setLabel:(NSString *)name
+{
+    [_rawBuffer setLabel:name];
+}
+
 @end

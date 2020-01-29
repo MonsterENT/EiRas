@@ -33,13 +33,14 @@ using namespace MaterialSys;
 
 -(void)setLabel:(NSString*)name
 {
-    [_commandBuffer setLabel:name];
+    _name = name;
 }
 
 -(id<MTLCommandBuffer>)getCmdBuffer
 {
     GET_EIRAS_METAL(deviceObj)
     _commandBuffer = [[deviceObj getMetalCommandQueue] commandBuffer];
+    [_commandBuffer setLabel:_name];
     return _commandBuffer;
 }
 
@@ -51,6 +52,7 @@ using namespace MaterialSys;
     }
     GET_EIRAS_METAL(deviceObj)
     _renderCommandEncoder = [_commandBuffer renderCommandEncoderWithDescriptor:[deviceObj getMTKView].currentRenderPassDescriptor];
+    [_renderCommandEncoder setLabel:[NSString stringWithFormat:@"Render Pass Set Material : %@",material.name]];
     [_renderCommandEncoder setRenderPipelineState:material.pipelineState];
     
     for(_uint i = 0; i < props->size(); i++)

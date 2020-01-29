@@ -50,4 +50,9 @@
     return self;
 }
 
+-(void)setLabel:(NSString *)name
+{
+    [_resourceHeap setLabel:name];
+}
+
 @end

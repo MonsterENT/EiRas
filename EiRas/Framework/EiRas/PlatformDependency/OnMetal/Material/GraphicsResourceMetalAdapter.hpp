@@ -9,11 +9,13 @@
 #ifndef GraphicsResourceMetalAdapter_hpp
 #define GraphicsResourceMetalAdapter_hpp
 
+#include <string>
+
 namespace MaterialSys {
 
-void* createConstantBufferMetal(int bufferSize, bool initResource);
+void* createConstantBufferMetal(std::string name, int bufferSize, bool initResource);
 
-void* createDefaultBufferMetal(int bufferSize, bool initResource);
+void* createDefaultBufferMetal(std::string name, int bufferSize, bool initResource);
 
 void setResourceMetal(void* ptr, void* res);
 }

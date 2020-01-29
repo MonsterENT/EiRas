@@ -13,7 +13,8 @@
 
 void* MaterialSys::createMaterialMetal(std::string name)
 {
-    MaterialMetal* oc_obj = [[MaterialMetal alloc]initWithName:[NSString stringWithUTF8String:name.c_str()]];
+    MaterialMetal* oc_obj = [MaterialMetal new];
+    [oc_obj setLabel:[NSString stringWithUTF8String:name.c_str()]];
     PROCESS_OC_OBJ(oc_obj, bridgePtr)
     return bridgePtr;
 }

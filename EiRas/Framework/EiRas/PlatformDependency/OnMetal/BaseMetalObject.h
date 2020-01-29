@@ -14,6 +14,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface BaseMetalObject : NSObject
 @property(strong,nonatomic,nullable)id self_retain;
+
+-(void)setLabel:(NSString*)name;
+
 @end
 
 NS_ASSUME_NONNULL_END

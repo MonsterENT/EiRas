@@ -13,13 +13,15 @@
 #include <Global/PlatformDefine.h>
 #include <Global/GlobalDefine.h>
 
+#include <string>
+
 namespace MaterialSys {
 
     enum class GraphicsResourceType;
     class GraphicsResourceMetalBridge : public EiRasPlatformBridgeProtocol
     {
     public:
-        GraphicsResourceMetalBridge(bool initResource);
+        GraphicsResourceMetalBridge(std::string name, bool initResource);
         
         void InitAsConstantBuffer(_uint bufferSize);
         
@@ -28,6 +30,8 @@ namespace MaterialSys {
         void SetResource(void* res);
         
         GraphicsResourceType type;
+        
+        std::string name;
     private:
         bool shouldInitResource;
     };

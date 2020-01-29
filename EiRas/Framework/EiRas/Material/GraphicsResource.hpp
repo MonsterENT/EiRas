@@ -26,7 +26,7 @@ namespace MaterialSys
     class GraphicsResource
     {
     public:
-        GraphicsResource(std::string Name, GraphicsResourceType type, GraphicsResourceVisibility visibile, bool shouldInitResource, int bufferSize);
+        GraphicsResource(std::string Name, GraphicsResourceType type, GraphicsResourceVisibility visible, bool shouldInitResource, int bufferSize);
 
         GraphicsResourceType ResourceType;
         GraphicsResourceVisibility Visibility;

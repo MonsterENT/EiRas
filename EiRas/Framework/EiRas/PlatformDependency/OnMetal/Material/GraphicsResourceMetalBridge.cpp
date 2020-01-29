@@ -12,21 +12,22 @@
 
 using namespace MaterialSys;
 
-GraphicsResourceMetalBridge::GraphicsResourceMetalBridge(bool initResource)
+GraphicsResourceMetalBridge::GraphicsResourceMetalBridge(std::string name, bool initResource)
 {
     type = GraphicsResourceType::Default;
+    this->name = name;
     shouldInitResource = initResource;
 }
 
 void GraphicsResourceMetalBridge::InitAsConstantBuffer(_uint bufferSize)
 {
     type = GraphicsResourceType::CBV;
-    raw_obj = createConstantBufferMetal(bufferSize, shouldInitResource);
+    raw_obj = createConstantBufferMetal(name, bufferSize, shouldInitResource);
 }
 
 void GraphicsResourceMetalBridge::InitAsDefault(_uint bufferSize)
 {
-    raw_obj = createDefaultBufferMetal(bufferSize, shouldInitResource);
+    raw_obj = createDefaultBufferMetal(name, bufferSize, shouldInitResource);
 }
 
 void GraphicsResourceMetalBridge::SetResource(void* res)

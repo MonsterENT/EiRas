@@ -25,6 +25,7 @@ void Engine::m_initEngine()
     commonCb0->BufferSize = sizeof(float) * 4;
     commonCb0->PropName = "CommonCB0";
     commonCb0->PropType = GraphicsResourceType::CBV;
+    commonCb0->Visibility = GraphicsResourceVisibility::VISIBILITY_PIXEL;
     commonCb0->SlotType = ShaderSlotType::ShaderSlotType_Prop;
 
     layout->Slots = new ShaderSlot*[1];
