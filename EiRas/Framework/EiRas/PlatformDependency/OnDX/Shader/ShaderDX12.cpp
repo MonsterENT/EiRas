@@ -3,6 +3,7 @@
 #include <Material/ShaderLayout.h>
 #include <PlatformDependency/OnDX/GraphicsAPI/EiRasDX12.h>
 #include <PlatformDependency/OnDX/DXMacro.h>
+#include <Graphics/GraphicsVertexDescriptor.hpp>
 
 using MaterialSys::ShaderDX12;
 using MaterialSys::ShaderLayout;
@@ -10,6 +11,7 @@ using MaterialSys::ShaderSlot;
 using MaterialSys::ShaderProp;
 using MaterialSys::ShaderTable;
 using GraphicsAPI::EiRasDX12;
+using namespace Graphics;
 
 ID3D12RootSignature* createRootSig(ShaderLayout* shaderLayout);
 
@@ -20,11 +22,34 @@ ShaderDX12::ShaderDX12(LPCSTR fileName, LPCSTR vertexFuncName, LPCSTR pixelFuncN
     DX12Utils::g_compileShader(fileName, vertexFuncName, "vs_5_1", this->VertexFunc);
     DX12Utils::g_compileShader(fileName, pixelFuncName, "ps_5_1", this->PixelFunc);
     RootSignature = 0;
+    VertexDescriptor = 0;
+    VertexAttributesCount = 0;
 }       
 
 void ShaderDX12::InitRootSignature(ShaderLayout* shaderLayout)
 {
     this->RootSignature = createRootSig(shaderLayout);
+}
+
+void ShaderDX12::InitVertexDescriptor(Graphics::GraphicsVertexDescriptor* desc)
+{
+    if (desc->_AttributeIndex < 1)
+    {
+        return;
+    }
+    VertexAttributesCount = desc->_AttributeIndex;
+    VertexDescriptor = new D3D12_INPUT_ELEMENT_DESC[VertexAttributesCount];
+    for (_uint i = 0; i < desc->_AttributeIndex; i++)
+    {
+        Graphics::GraphiceVertexAttribute& att = desc->Attributes[i];
+        VertexDescriptor[i].SemanticName = att.SemanticName.c_str();
+        VertexDescriptor[i].SemanticIndex = 0;
+        VertexDescriptor[i].Format = (DXGI_FORMAT)Graphics::GraphicsVertexAttributeToDX12Format(att.AttributeFormat);
+        VertexDescriptor[i].InputSlot = att.BufferIndex;
+        VertexDescriptor[i].AlignedByteOffset = att.Offset;
+        VertexDescriptor[i].InputSlotClass = D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA;
+        VertexDescriptor[i].InstanceDataStepRate = 0;
+    }
 }
 
 ID3D12RootSignature* createRootSig(ShaderLayout* shaderLayout)

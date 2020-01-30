@@ -3,6 +3,11 @@
 #include <Global/PlatformDependency/EiRasPlatformBridgeProtocol.h>
 #include <Windows.h>
 
+namespace Graphics
+{
+    class GraphicsVertexDescriptor;
+}
+
 namespace MaterialSys
 {
     class ShaderLayout;
@@ -14,6 +19,8 @@ namespace MaterialSys
         
         void InitRootSignature(ShaderLayout* shaderLayout);
         
+        void InitVertexDescriptor(Graphics::GraphicsVertexDescriptor* desc);
+
         virtual ~ShaderDX12Bridge()
         {
 

@@ -30,5 +30,5 @@ void MaterialDX12::SetProperty(MaterialProp* prop, void* res)
 void MaterialDX12::UpdateRenderState(Graphics::GraphicsRenderState* renderState, ShaderDX12* shaderObj)
 {
     GET_EIRAS_DX12(deviceObj)
-    DX12Utils::g_createPSO(deviceObj->device, shaderObj->VertexFunc, shaderObj->PixelFunc, PipelineState, shaderObj->RootSignature);
+    DX12Utils::g_createPSO(deviceObj->device, shaderObj, PipelineState);
 }

@@ -11,9 +11,9 @@ namespace MeshSys
     public:
         MeshDX12();
 
-        void BuildBuffer(void* vertexRes, void* indexRes, _uint vertextCount, _uint indexCount);
+        void BuildBuffer(void* vertexRes, void* indexRes, _uint vertexCount, _uint indexCount);
 
-        _uint VertextCount, IndexCount;
+        _uint VertexCount, IndexCount;
 
         D3D12_VERTEX_BUFFER_VIEW VertexBufferView;
         D3D12_INDEX_BUFFER_VIEW IndexBufferView;

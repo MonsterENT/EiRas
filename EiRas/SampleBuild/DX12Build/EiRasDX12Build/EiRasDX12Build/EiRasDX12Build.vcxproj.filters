@@ -123,9 +123,6 @@
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\CommandBuffer\CommandBufferDX12Bridge.h">
       <Filter>framework</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\GraphicsPipelineInput.h">
-      <Filter>framework</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Mesh\MeshDX12.h">
       <Filter>framework</Filter>
     </ClInclude>
@@ -157,6 +154,9 @@
       <Filter>framework</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Framework\Component\PlatformDependency\Windows\LogSys\LogManagerWin.hpp">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Framework\EiRas\Graphics\GraphicsVertexDescriptor.hpp">
       <Filter>framework</Filter>
     </ClInclude>
   </ItemGroup>
@@ -270,6 +270,9 @@
       <Filter>framework</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\Framework\Component\PlatformDependency\Windows\LogSys\LogManagerWin.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Framework\EiRas\Graphics\GraphicsVertexDescriptor.cpp">
       <Filter>framework</Filter>
     </ClCompile>
   </ItemGroup>

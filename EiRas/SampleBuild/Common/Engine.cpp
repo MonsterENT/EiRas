@@ -40,9 +40,9 @@ void Engine::m_initEngine()
     
     GraphicsVertexDescriptor* m_vertexDesc = new GraphicsVertexDescriptor();
     
-    m_vertexDesc->AddBufferAttribute(GraphicsVertexAttributeFormat::VertexFormatFloat3, 0);
-    m_vertexDesc->AddBufferAttribute(GraphicsVertexAttributeFormat::VertexFormatFloat2, 0);
-    m_vertexDesc->AddBufferAttribute(GraphicsVertexAttributeFormat::VertexFormatFloat3, 0);
+    m_vertexDesc->AddBufferAttribute("POSITION", GraphicsVertexAttributeFormat::VertexFormatFloat3, 0);
+    m_vertexDesc->AddBufferAttribute("TEXCOORD", GraphicsVertexAttributeFormat::VertexFormatFloat2, 0);
+    m_vertexDesc->AddBufferAttribute("NORMAL", GraphicsVertexAttributeFormat::VertexFormatFloat3, 0);
     m_vertexDesc->InitBufferLayout();
     
     shader->InitVertexDescriptor(m_vertexDesc);

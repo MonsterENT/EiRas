@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include <PlatformDependency/OnDX/GraphicsPipelineInput.h>
+#include <PlatformDependency/OnDX/Shader/ShaderDX12.h>
 #include <PlatformDependency/OnDX/GraphicsAPI/EiRasDX12.h>
 #pragma comment (lib, "D3DCompiler.lib")
 
@@ -40,16 +40,16 @@ namespace DX12Utils
         return SUCCEEDED(D3DCompileFromFile(tmp_ws, 0, 0, fnName, target, 0, 0, &shader, 0));
     }
 
-    static bool g_createPSO(ID3D12Device* device, ID3DBlob* VS, ID3DBlob* PS, ID3D12PipelineState*& pso, ID3D12RootSignature* rootSignature)
+    static bool g_createPSO(ID3D12Device* device, MaterialSys::ShaderDX12* shaderObj, ID3D12PipelineState*& pso)
     {
         CD3DX12_RASTERIZER_DESC rasterizerStateDesc(D3D12_DEFAULT);
         rasterizerStateDesc.CullMode = D3D12_CULL_MODE_NONE;
 
         D3D12_GRAPHICS_PIPELINE_STATE_DESC psoDesc = {};
-        psoDesc.InputLayout = { Graphics::PipelineInput, _countof(Graphics::PipelineInput) };
-        psoDesc.pRootSignature = rootSignature;
-        psoDesc.VS = CD3DX12_SHADER_BYTECODE(VS);
-        psoDesc.PS = CD3DX12_SHADER_BYTECODE(PS);
+        psoDesc.InputLayout = { shaderObj->VertexDescriptor, shaderObj->VertexAttributesCount };
+        psoDesc.pRootSignature = shaderObj->RootSignature;
+        psoDesc.VS = CD3DX12_SHADER_BYTECODE(shaderObj->VertexFunc);
+        psoDesc.PS = CD3DX12_SHADER_BYTECODE(shaderObj->PixelFunc);
         psoDesc.RasterizerState = rasterizerStateDesc;
         psoDesc.BlendState = CD3DX12_BLEND_DESC(D3D12_DEFAULT);
         psoDesc.DepthStencilState = CD3DX12_DEPTH_STENCIL_DESC(D3D12_DEFAULT);

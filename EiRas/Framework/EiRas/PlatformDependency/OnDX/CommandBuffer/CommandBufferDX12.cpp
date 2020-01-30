@@ -85,7 +85,7 @@ void CommandBufferDX12::Commit(bool present)
 void CommandBufferDX12::DrawMesh(MeshSys::MeshDX12* mesh)
 {
     cmdList->IASetVertexBuffers(0, 1, &mesh->VertexBufferView);
-    cmdList->DrawInstanced(mesh->VertextCount, 1, 0, 0);
+    cmdList->DrawInstanced(mesh->VertexCount, 1, 0, 0);
 }
 
 void CommandBufferDX12::SetPipelineState(MaterialSys::MaterialDX12* mat, std::vector<MaterialSys::MaterialProp*>* props, std::vector<MaterialSys::MaterialTable*>* tables)

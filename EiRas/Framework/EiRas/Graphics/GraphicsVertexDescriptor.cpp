@@ -7,6 +7,11 @@
 //
 
 #include "GraphicsVertexDescriptor.hpp"
+
+#if GRAPHICS_DX
+#include <dxgiformat.h>
+#endif
+
 using namespace Graphics;
 
 //VertexFormatFloat = 28,
@@ -26,6 +31,7 @@ using namespace Graphics;
 
 _uint Graphics::GraphicsVertexAttributeFormatSize(GraphicsVertexAttributeFormat format)
 {
+#if GRAPHICS_DX
     switch (format) {
         case GraphicsVertexAttributeFormat::VertexFormatFloat:
             return sizeof(float);
@@ -68,5 +74,52 @@ _uint Graphics::GraphicsVertexAttributeFormatSize(GraphicsVertexAttributeFormat 
         default:
             break;
     }
+#endif
     return 0;
+}
+
+_uint Graphics::GraphicsVertexAttributeToDX12Format(GraphicsVertexAttributeFormat format)
+{
+    switch (format)
+    {
+    case Graphics::GraphicsVertexAttributeFormat::VertexFormatFloat:
+        return DXGI_FORMAT_R32_FLOAT;
+        break;
+    case Graphics::GraphicsVertexAttributeFormat::VertexFormatFloat2:
+        return DXGI_FORMAT_R32G32_FLOAT;
+        break;
+    case Graphics::GraphicsVertexAttributeFormat::VertexFormatFloat3:
+        return DXGI_FORMAT_R32G32B32_FLOAT;
+        break;
+    case Graphics::GraphicsVertexAttributeFormat::VertexFormatFloat4:
+        return DXGI_FORMAT_R32G32B32A32_FLOAT;
+        break;
+    case Graphics::GraphicsVertexAttributeFormat::VertexFormatInt:
+        return DXGI_FORMAT_R32_SINT;
+        break;
+    case Graphics::GraphicsVertexAttributeFormat::VertexFormatInt2:
+        return DXGI_FORMAT_R32G32_SINT;
+        break;
+    case Graphics::GraphicsVertexAttributeFormat::VertexFormatInt3:
+        return DXGI_FORMAT_R32G32B32_SINT;
+        break;
+    case Graphics::GraphicsVertexAttributeFormat::VertexFormatInt4:
+        return DXGI_FORMAT_R32G32B32A32_SINT;
+        break;
+    case Graphics::GraphicsVertexAttributeFormat::VertexFormatUInt:
+        return DXGI_FORMAT_R32_UINT;
+        break;
+    case Graphics::GraphicsVertexAttributeFormat::VertexFormatUInt2:
+        return DXGI_FORMAT_R32G32_UINT;
+        break;
+    case Graphics::GraphicsVertexAttributeFormat::VertexFormatUInt3:
+        return DXGI_FORMAT_R32G32B32_UINT;
+        break;
+    case Graphics::GraphicsVertexAttributeFormat::VertexFormatUInt4:
+        return DXGI_FORMAT_R32G32B32A32_UINT;
+        break;
+    default:
+        break;
+    }
+    return DXGI_FORMAT_UNKNOWN;
 }

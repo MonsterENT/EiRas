@@ -48,7 +48,13 @@ void Shader::InitLayout(ShaderLayout* layout)
 
 void Shader::InitVertexDescriptor(GraphicsVertexDescriptor* vertexDescriptor)
 {
+#if GRAPHICS_METAL
     ((ShaderMetalBridge*)PlatformBridge)->InitVertexDescriptor(vertexDescriptor);
+#endif
+
+#if GRAPHICS_DX
+    ((ShaderDX12Bridge*)PlatformBridge)->InitVertexDescriptor(vertexDescriptor);
+#endif
 }
 
 void* Shader::GetRawObj()
