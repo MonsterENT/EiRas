@@ -31,7 +31,6 @@ using namespace Graphics;
 
 _uint Graphics::GraphicsVertexAttributeFormatSize(GraphicsVertexAttributeFormat format)
 {
-#if GRAPHICS_DX
     switch (format) {
         case GraphicsVertexAttributeFormat::VertexFormatFloat:
             return sizeof(float);
@@ -74,12 +73,13 @@ _uint Graphics::GraphicsVertexAttributeFormatSize(GraphicsVertexAttributeFormat 
         default:
             break;
     }
-#endif
+
     return 0;
 }
 
 _uint Graphics::GraphicsVertexAttributeToDX12Format(GraphicsVertexAttributeFormat format)
 {
+#if GRAPHICS_DX
     switch (format)
     {
     case Graphics::GraphicsVertexAttributeFormat::VertexFormatFloat:
@@ -121,5 +121,8 @@ _uint Graphics::GraphicsVertexAttributeToDX12Format(GraphicsVertexAttributeForma
     default:
         break;
     }
+    
     return DXGI_FORMAT_UNKNOWN;
+#endif
+    return 0;
 }

@@ -49,7 +49,7 @@
     for(int i = 0; i < _desc->_AttributeIndex; i++)
     {
         _vertexDesc.attributes[i].offset = _desc->Attributes[i].Offset;
-        _vertexDesc.attributes[i].format = (MTLVertexFormat)_desc->Attributes[i].attributeFormat;
+        _vertexDesc.attributes[i].format = (MTLVertexFormat)_desc->Attributes[i].AttributeFormat;
         _vertexDesc.attributes[i].bufferIndex = _desc->Attributes[i].BufferIndex;
     }
     
