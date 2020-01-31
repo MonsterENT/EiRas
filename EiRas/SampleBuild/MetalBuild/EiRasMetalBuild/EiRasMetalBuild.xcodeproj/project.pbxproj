@@ -59,6 +59,8 @@
 		C2768ED423B9B62E00796824 /* libIrrXML.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C2768EC723B9B62E00796824 /* libIrrXML.a */; };
 		C2768ED523B9B62E00796824 /* libIrrXMLd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C2768ECA23B9B62E00796824 /* libIrrXMLd.a */; };
 		C2768ED623B9B62E00796824 /* libassimpd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C2768ECB23B9B62E00796824 /* libassimpd.a */; };
+		C28BA18123E487E900EDAE43 /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C28BA17F23E487E900EDAE43 /* Camera.cpp */; };
+		C28BA18723E494C100EDAE43 /* TransformSys.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C28BA18623E494C100EDAE43 /* TransformSys.cpp */; };
 		C2B2F6F223A62CA6002E27D7 /* MeshMetal.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2B2F6F123A62CA6002E27D7 /* MeshMetal.mm */; };
 		C2B2F6F523A6305F002E27D7 /* MeshMetalAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = C2B2F6F323A6305F002E27D7 /* MeshMetalAdapter.mm */; };
 		C2B2F6F823A63583002E27D7 /* MeshMetalBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2B2F6F623A63583002E27D7 /* MeshMetalBridge.cpp */; };
@@ -197,6 +199,10 @@
 		C2768EC723B9B62E00796824 /* libIrrXML.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libIrrXML.a; sourceTree = "<group>"; };
 		C2768ECA23B9B62E00796824 /* libIrrXMLd.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libIrrXMLd.a; sourceTree = "<group>"; };
 		C2768ECB23B9B62E00796824 /* libassimpd.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libassimpd.a; sourceTree = "<group>"; };
+		C28BA17F23E487E900EDAE43 /* Camera.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Camera.cpp; sourceTree = "<group>"; };
+		C28BA18023E487E900EDAE43 /* Camera.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Camera.hpp; sourceTree = "<group>"; };
+		C28BA18523E494C100EDAE43 /* TransformSys.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TransformSys.hpp; sourceTree = "<group>"; };
+		C28BA18623E494C100EDAE43 /* TransformSys.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TransformSys.cpp; sourceTree = "<group>"; };
 		C2B2F6F023A62CA6002E27D7 /* MeshMetal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MeshMetal.h; sourceTree = "<group>"; };
 		C2B2F6F123A62CA6002E27D7 /* MeshMetal.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MeshMetal.mm; sourceTree = "<group>"; };
 		C2B2F6F323A6305F002E27D7 /* MeshMetalAdapter.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MeshMetalAdapter.mm; sourceTree = "<group>"; };
@@ -282,6 +288,7 @@
 		C211D8D723A1481700CFE6E6 /* EiRas */ = {
 			isa = PBXGroup;
 			children = (
+				C28BA17E23E487CE00EDAE43 /* Basic */,
 				C2F34C7923AF940900995E92 /* Math */,
 				C211D8D923A1481700CFE6E6 /* Mesh */,
 				C211D8DF23A1481700CFE6E6 /* Utils */,
@@ -709,6 +716,17 @@
 			path = lib;
 			sourceTree = "<group>";
 		};
+		C28BA17E23E487CE00EDAE43 /* Basic */ = {
+			isa = PBXGroup;
+			children = (
+				C28BA17F23E487E900EDAE43 /* Camera.cpp */,
+				C28BA18023E487E900EDAE43 /* Camera.hpp */,
+				C28BA18623E494C100EDAE43 /* TransformSys.cpp */,
+				C28BA18523E494C100EDAE43 /* TransformSys.hpp */,
+			);
+			path = Basic;
+			sourceTree = "<group>";
+		};
 		C2B2F6EF23A62C76002E27D7 /* Mesh */ = {
 			isa = PBXGroup;
 			children = (
@@ -955,6 +973,8 @@
 				C2B2F6F823A63583002E27D7 /* MeshMetalBridge.cpp in Sources */,
 				C211D96423A1481700CFE6E6 /* Shader.cpp in Sources */,
 				C211D98323A1481700CFE6E6 /* GraphicsResourceHeapMetalAdapter.mm in Sources */,
+				C28BA18723E494C100EDAE43 /* TransformSys.cpp in Sources */,
+				C28BA18123E487E900EDAE43 /* Camera.cpp in Sources */,
 				C2B2F6F523A6305F002E27D7 /* MeshMetalAdapter.mm in Sources */,
 				C2F6BB1923C399E00031E0C7 /* LogManager.cpp in Sources */,
 				C211D97B23A1481700CFE6E6 /* EiRasMetalAdapter.mm in Sources */,
