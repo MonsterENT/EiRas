@@ -76,8 +76,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <SourcePath>E:\EiRasWorkspace\EiRas\EiRas\Framework\EiRas;$(SourcePath)</SourcePath>
-    <IncludePath>E:\EiRasWorkspace\EiRas\EiRas\Framework\EiRas;E:\EiRasWorkspace\EiRas\EiRas\Framework;E:\EiRasWorkspace\EiRas\EiRas\Framework\Component;E:\EiRasWorkspace\EiRas\EiRas\SampleBuild\Library\assimp\include\assimp;E:\EiRasWorkspace\EiRas\EiRas\SampleBuild\Common;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\EiRasWorkspace\EiRas\EiRas\SampleBuild\DX12Build\EiRasDX12Build\lib\assimp;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\Administrator\Desktop\WorkSpace\EiRas\EiRas\Framework\EiRas;C:\Users\Administrator\Desktop\WorkSpace\EiRas\EiRas\Framework;C:\Users\Administrator\Desktop\WorkSpace\EiRas\EiRas\Framework\Component;C:\Users\Administrator\Desktop\WorkSpace\EiRas\EiRas\SampleBuild\Library\assimp\include\assimp;C:\Users\Administrator\Desktop\WorkSpace\EiRas\EiRas\SampleBuild\Common;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Administrator\Desktop\WorkSpace\EiRas\EiRas\SampleBuild\DX12Build\EiRasDX12Build\lib\assimp;$(LibraryPath)</LibraryPath>
     <LibraryWPath>$(LibraryWPath)</LibraryWPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

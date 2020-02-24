@@ -98,6 +98,7 @@ void CommandBufferDX12::SetPipelineState(MaterialSys::MaterialDX12* mat, std::ve
         CD3DX12_GPU_DESCRIPTOR_HANDLE gpuHandle(CurrentUseingHeap->heap->GetGPUDescriptorHandleForHeapStart());
         for (int i = 0; i < tables->size(); i++)
         {
+#pragma message("save handle in table")
             cmdList->SetGraphicsRootDescriptorTable((*tables)[i]->SlotID, gpuHandle);
             gpuHandle.Offset((*tables)[i]->PropNum, CurrentUseingHeap->Offset);
         }
