@@ -3,11 +3,10 @@
 #include <PlatformDependency/OnDX/DXMacro.h>
 #include <PlatformDependency/OnDX/GraphicsAPI/EiRasDX12.h>
 
-using MaterialSys::GraphicsResourceType;
-using MaterialSys::ShaderResourceDX12;
+using namespace MaterialSys;
 using GraphicsAPI::EiRasDX12;
 
-ShaderResourceDX12::ShaderResourceDX12(DXGI_FORMAT format, UINT width, UINT height, UINT8* texData) : GraphicsResourceDX12(-1, false)
+ShaderResourceDX12::ShaderResourceDX12(DXGI_FORMAT format, UINT width, UINT height, UINT8* texData) : GraphicsResourceDX12(-1, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_ONINIT, false)
 {
     GET_EIRAS_DX12(deviceObj)
 

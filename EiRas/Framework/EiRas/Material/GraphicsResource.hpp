@@ -23,13 +23,21 @@ namespace MaterialSys
         VISIBILITY_PIXEL = (VISIBILITY_VERTEX + 1),
     } GraphicsResourceVisibility;
 
+    typedef enum class GraphicsResourceUpdateFreq
+    {
+        UPDATE_FREQ_ONINIT = 0,
+        UPDATE_FREQ_LOW = (UPDATE_FREQ_ONINIT + 1),
+        UPDATE_FREQ_HEIGH = (UPDATE_FREQ_LOW + 1),
+    } GraphicsResourceUpdateFreq;
+
     class GraphicsResource
     {
     public:
-        GraphicsResource(std::string Name, GraphicsResourceType type, GraphicsResourceVisibility visible, bool shouldInitResource, int bufferSize);
+        GraphicsResource(std::string Name, GraphicsResourceType type, GraphicsResourceVisibility visible, GraphicsResourceUpdateFreq updateFreq, bool shouldInitResource, int bufferSize);
 
         GraphicsResourceType ResourceType;
         GraphicsResourceVisibility Visibility;
+        GraphicsResourceUpdateFreq UpdateFreq;
         EiRasPlatformBridgeProtocol* PlatformBridge;
 
         void SetResource(void* res, bool shouldUnmap);
