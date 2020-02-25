@@ -12,8 +12,9 @@ using std::vector;
 using GraphicsAPI::EiRasDX12;
 using namespace MaterialSys;
 
-GraphicsResourceHeapDX12::GraphicsResourceHeapDX12(_uint propCount, _uint tableCount, MaterialTable** tableArray)
+GraphicsResourceHeapDX12::GraphicsResourceHeapDX12(_uint propCount)
 {
+    this->propCount = propCount;
     D3D12_DESCRIPTOR_HEAP_DESC heapDesc = {};
     heapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
     heapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
@@ -23,21 +24,31 @@ GraphicsResourceHeapDX12::GraphicsResourceHeapDX12(_uint propCount, _uint tableC
 
     deviceObj->device->CreateDescriptorHeap(&heapDesc, IID_PPV_ARGS(&heap));
 
-    CD3DX12_CPU_DESCRIPTOR_HANDLE cpuHandle =  CD3DX12_CPU_DESCRIPTOR_HANDLE(heap->GetCPUDescriptorHandleForHeapStart());
-    CD3DX12_GPU_DESCRIPTOR_HANDLE gpuHandle(heap->GetGPUDescriptorHandleForHeapStart());
-
     Offset = deviceObj->device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+}
+
+GraphicsResourceHeapDX12::~GraphicsResourceHeapDX12()
+{
+    heap->Release();
+    heap = NULL;
+}
+
+void GraphicsResourceHeapDX12::FillHeap(_uint tableCount, MaterialTable** tableArray)
+{
+    GET_EIRAS_DX12(deviceObj)
+    CD3DX12_CPU_DESCRIPTOR_HANDLE cpuHandle = CD3DX12_CPU_DESCRIPTOR_HANDLE(heap->GetCPUDescriptorHandleForHeapStart());
+    CD3DX12_GPU_DESCRIPTOR_HANDLE gpuHandle(heap->GetGPUDescriptorHandleForHeapStart());
 
     for (_uint tableIndex = 0; tableIndex < tableCount; tableIndex++)
     {
         MaterialTable* table = tableArray[tableIndex];
-
+    
         for (_uint propIndex = 0; propIndex < table->PropNum; propIndex++)
         {
             MaterialProp* prop = table->Props[propIndex];
-
+    
             GraphicsResourceDX12* resObj = (GraphicsResourceDX12*)prop->Resource->PlatformBridge->raw_obj;
-
+    
             if (resObj->Behaviors->ResourceType == GraphicsResourceType::CBV)
             {
                 ConstantBufferDX12* resCb = (ConstantBufferDX12*)resObj;
@@ -56,18 +67,12 @@ GraphicsResourceHeapDX12::GraphicsResourceHeapDX12(_uint propCount, _uint tableC
                 srvDesc.Texture2D.MipLevels = 1;
                 deviceObj->device->CreateShaderResourceView(resSrv->Resource, &srvDesc, cpuHandle);
             }
-
+    
             resObj->CpuHandle = cpuHandle;
             resObj->GpuHandle = gpuHandle;
-
+    
             cpuHandle.Offset(1, Offset);
             gpuHandle.Offset(1, Offset);
         }
     }
-}
-
-GraphicsResourceHeapDX12::~GraphicsResourceHeapDX12()
-{
-    heap->Release();
-    heap = NULL;
 }

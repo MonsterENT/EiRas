@@ -10,7 +10,10 @@ namespace MaterialSys
     class GraphicsResourceHeap
     {
     public:
-        GraphicsResourceHeap(_uint propCount, _uint tableCount, MaterialTable** tableArray);
+        GraphicsResourceHeap(_uint propCount);
+
+        void FillHeap(_uint tableCount, MaterialTable** tableArray);
+
         EiRasPlatformBridgeProtocol* PlatformBridge;
     };
 }

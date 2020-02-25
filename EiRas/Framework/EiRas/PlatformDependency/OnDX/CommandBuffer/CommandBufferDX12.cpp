@@ -88,7 +88,8 @@ void CommandBufferDX12::DrawMesh(MeshSys::MeshDX12* mesh)
     cmdList->DrawInstanced(mesh->VertexCount, 1, 0, 0);
 }
 
-void CommandBufferDX12::SetPipelineState(MaterialSys::MaterialDX12* mat, std::vector<MaterialSys::MaterialProp*>* props, std::vector<MaterialSys::MaterialTable*>* tables)
+
+void CommandBufferDX12::SetMaterial(MaterialSys::MaterialDX12* mat, std::vector<MaterialSys::MaterialProp*>* props, std::vector<MaterialSys::MaterialTable*>* tables)
 {
     cmdList->SetGraphicsRootSignature(mat->RawShaderObj->RootSignature);
     cmdList->SetPipelineState(mat->PipelineState);

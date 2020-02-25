@@ -38,7 +38,7 @@ namespace Graphics {
     public:
         std::string Name;
 
-        CommandBuffer(std::string Name);
+        CommandBuffer(std::string Name, _uint maxHeapSize = 100);
 
         void SetMaterial(MaterialSys::Material* material);
 
@@ -58,6 +58,9 @@ namespace Graphics {
         void RemoveMaterial(MaterialSys::Material* material);
         std::vector<MaterialSys::MaterialTable*> tmpMaterialTableArray;
         std::map<std::string, MaterialSys::Material*> MaterialMap;
+        
+        _uint maxHeapSize;
+        _uint lastRegdeMatCount;
     };
 
 }

@@ -26,7 +26,7 @@
 using namespace MaterialSys;
 using Graphics::CommandBuffer;
 
-CommandBuffer::CommandBuffer(std::string Name)
+CommandBuffer::CommandBuffer(std::string Name, _uint maxHeapSize)
 {
     this->Name = Name;
 
@@ -37,6 +37,10 @@ CommandBuffer::CommandBuffer(std::string Name)
 #if GRAPHICS_DX
     PlatformBridge = new CommandBufferDX12Bridge(Name);
 #endif
+
+    resourceHeap = new GraphicsResourceHeap(maxHeapSize);
+    this->maxHeapSize = maxHeapSize;
+    lastRegdeMatCount = 0;
 }
 
 void CommandBuffer::SetMaterial(MaterialSys::Material* material)
@@ -74,7 +78,7 @@ void CommandBuffer::BeginFrame()
 
 void CommandBuffer::Reset()
 {
-    if (!resourceHeap)
+    if (lastRegdeMatCount != MaterialMap.size())
     {
         _uint materialPropCount = 0;
         tmpMaterialTableArray.clear();
@@ -90,10 +94,14 @@ void CommandBuffer::Reset()
             }
             it++;
         }
-        if (tmpMaterialTableArray.size() > 0)
+
+#pragma message("TOFIX")
+        if (tmpMaterialTableArray.size() > 0 && materialPropCount <= maxHeapSize)
         {
-            resourceHeap = new GraphicsResourceHeap(materialPropCount, (_uint)tmpMaterialTableArray.size(), &tmpMaterialTableArray[0]);
+            resourceHeap->FillHeap((_uint)tmpMaterialTableArray.size(), &tmpMaterialTableArray[0]);
         }
+
+        lastRegdeMatCount = (_uint)MaterialMap.size();
     }
 
 #if GRAPHICS_DX

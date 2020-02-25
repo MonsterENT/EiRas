@@ -9,6 +9,7 @@ namespace MaterialSys
     class GraphicsResourceHeapDX12Bridge : public EiRasPlatformBridgeProtocol
     {
     public:
-        GraphicsResourceHeapDX12Bridge(_uint propCount, _uint tableCount, MaterialTable** tableArray);
+        GraphicsResourceHeapDX12Bridge(_uint propCount);
+        void FillHeap(_uint tableCount, MaterialTable** tableArray);
     };
 }
