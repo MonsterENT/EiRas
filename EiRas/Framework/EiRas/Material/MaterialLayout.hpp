@@ -28,14 +28,16 @@ namespace MaterialSys
         GraphicsResourceType PropType;
         GraphicsResource* Resource;
         GraphicsResourceVisibility Visibility;
+        GraphicsResourceUpdateFreq UpdateFreq;
         _uint BufferSize;
-        MaterialProp(std::string name, GraphicsResourceType propType, GraphicsResourceVisibility visible, bool initResource, _uint bufferSize)
+        MaterialProp(std::string name, GraphicsResourceType propType, GraphicsResourceVisibility visible, GraphicsResourceUpdateFreq updateFreq, bool initResource, _uint bufferSize)
         {
             Name = name;
             BufferSize = bufferSize;
             PropType = propType;
             Visibility = visible;
-            Resource = new GraphicsResource(name, propType, visible, initResource, bufferSize);
+            UpdateFreq = updateFreq;
+            Resource = new GraphicsResource(name, propType, visible, updateFreq, initResource, bufferSize);
         }
     };
 

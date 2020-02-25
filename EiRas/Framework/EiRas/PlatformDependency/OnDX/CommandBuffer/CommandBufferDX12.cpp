@@ -95,11 +95,9 @@ void CommandBufferDX12::SetPipelineState(MaterialSys::MaterialDX12* mat, std::ve
 
     if (CurrentUseingHeap)
     {
-        CD3DX12_GPU_DESCRIPTOR_HANDLE gpuHandle(CurrentUseingHeap->heap->GetGPUDescriptorHandleForHeapStart());
         for (int i = 0; i < tables->size(); i++)
         {
-            cmdList->SetGraphicsRootDescriptorTable((*tables)[i]->SlotID, gpuHandle);
-            gpuHandle.Offset((*tables)[i]->PropNum, CurrentUseingHeap->Offset);
+            cmdList->SetGraphicsRootDescriptorTable((*tables)[i]->SlotID, ((GraphicsResourceDX12*)(*tables)[i]->Props[0]->Resource->PlatformBridge->raw_obj)->GpuHandle);
         }
     }
 

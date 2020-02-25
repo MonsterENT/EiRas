@@ -47,7 +47,7 @@ Material::Material(std::string Name, Shader* shader, Graphics::CommandBuffer* co
             if (shaderSlot->SlotType == ShaderSlotType::ShaderSlotType_Prop)
             {
                 ShaderProp* tmpProp = (ShaderProp*)shaderSlot;
-                tmpMatProp = new MaterialProp(tmpProp->PropName, tmpProp->PropType, tmpProp->Visibility, true, tmpProp->BufferSize);
+                tmpMatProp = new MaterialProp(tmpProp->PropName, tmpProp->PropType, tmpProp->Visibility, tmpProp->UpdateFreq, true, tmpProp->BufferSize);
                 tmpMatProp->SlotID = i;
                 Props.push_back(tmpMatProp);
                 LayoutProps.push_back(tmpMatProp);
@@ -62,7 +62,7 @@ Material::Material(std::string Name, Shader* shader, Graphics::CommandBuffer* co
                 {
                     ShaderProp* tmpProp = shaderTable->Props[propIndex];
 #if GRAPHICS_DX
-                    tmpMatProp = new MaterialProp(tmpProp->PropName, tmpProp->PropType, tmpProp->Visibility, true, tmpProp->BufferSize);
+                    tmpMatProp = new MaterialProp(tmpProp->PropName, tmpProp->PropType, tmpProp->Visibility, tmpProp->UpdateFreq, true, tmpProp->BufferSize);
 #elif GRAPHICS_METAL
                     tmpMatProp = new MaterialProp(tmpProp->PropName, tmpProp->PropType, tmpProp->Visibility, false, tmpProp->BufferSize);
 #endif

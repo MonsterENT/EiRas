@@ -1,10 +1,9 @@
 #include "ConstantBufferDX12.h"
 #include <Material/GraphicsResource.hpp>
 
-using MaterialSys::ConstantBufferDX12;
-using MaterialSys::GraphicsResourceType;
+using namespace MaterialSys;
 
-ConstantBufferDX12::ConstantBufferDX12(UINT bufferSize) : GraphicsResourceDX12(bufferSize, true)
+ConstantBufferDX12::ConstantBufferDX12(UINT bufferSize, GraphicsResourceVisibility visible, GraphicsResourceUpdateFreq updateFreq) : GraphicsResourceDX12(bufferSize, visible, updateFreq, true)
 {
     ResType = GraphicsResourceType::CBV;
     CD3DX12_RANGE range(0, 0);

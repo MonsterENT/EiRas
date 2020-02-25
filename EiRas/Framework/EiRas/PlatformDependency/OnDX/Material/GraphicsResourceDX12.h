@@ -6,11 +6,13 @@
 namespace MaterialSys
 {
     enum class GraphicsResourceType;
+    enum class GraphicsResourceVisibility;
+    enum class GraphicsResourceUpdateFreq;
 
     class GraphicsResourceDX12
     {
     public:
-        GraphicsResourceDX12(int bufferSize, bool initResource);
+        GraphicsResourceDX12(int bufferSize, GraphicsResourceVisibility visible, GraphicsResourceUpdateFreq updateFreq, bool initResource);
         virtual ~GraphicsResourceDX12();
 
         ID3D12Resource* Resource;

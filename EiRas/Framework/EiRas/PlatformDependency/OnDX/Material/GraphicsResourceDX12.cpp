@@ -3,11 +3,10 @@
 #include <PlatformDependency/OnDX/GraphicsAPI/EiRasDX12.h>
 #include <PlatformDependency/OnDX/DXMacro.h>
 
-using MaterialSys::GraphicsResourceType;
-using MaterialSys::GraphicsResourceDX12;
+using namespace MaterialSys;
 using GraphicsAPI::EiRasDX12;
 
-GraphicsResourceDX12::GraphicsResourceDX12(int bufferSize, bool initResource)
+GraphicsResourceDX12::GraphicsResourceDX12(int bufferSize, GraphicsResourceVisibility visible, GraphicsResourceUpdateFreq updateFreq, bool initResource)
 {
     this->bufferSize = bufferSize;
     ResType = GraphicsResourceType::Default;

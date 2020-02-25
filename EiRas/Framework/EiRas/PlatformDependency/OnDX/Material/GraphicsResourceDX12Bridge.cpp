@@ -19,19 +19,19 @@ void GraphicsResourceDX12Bridge::SetResource(void* res, bool shouldUnmap)
     ((GraphicsResourceDX12*)raw_obj)->SetResource(res, shouldUnmap);
 }
 
-void GraphicsResourceDX12Bridge::InitAsDefault(int bufferSize)
+void GraphicsResourceDX12Bridge::InitAsDefault(int bufferSize, GraphicsResourceVisibility visible, GraphicsResourceUpdateFreq updateFreq)
 {
     this->type = GraphicsResourceType::Default;
-    raw_obj = new GraphicsResourceDX12(bufferSize, true);
+    raw_obj = new GraphicsResourceDX12(bufferSize, visible, updateFreq, true);
 }
 
-void GraphicsResourceDX12Bridge::InitAsConstantBuffer(int bufferSize)
+void GraphicsResourceDX12Bridge::InitAsConstantBuffer(int bufferSize, GraphicsResourceVisibility visible, GraphicsResourceUpdateFreq updateFreq)
 {
     this->type = GraphicsResourceType::CBV;
-    raw_obj = new ConstantBufferDX12(bufferSize);
+    raw_obj = new ConstantBufferDX12(bufferSize, visible, updateFreq);
 }
 
-void GraphicsResourceDX12Bridge::InitAsShaderResource()
+void GraphicsResourceDX12Bridge::InitAsShaderResource(int bufferSize, GraphicsResourceVisibility visible, GraphicsResourceUpdateFreq updateFreq)
 {
     this->type = GraphicsResourceType::SRV;
     //raw_obj = new ShaderResourceDX12();
