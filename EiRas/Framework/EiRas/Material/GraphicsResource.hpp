@@ -30,17 +30,22 @@ namespace MaterialSys
         UPDATE_FREQ_HEIGH = (UPDATE_FREQ_LOW + 1),
     } GraphicsResourceUpdateFreq;
 
+    typedef struct GraphicsResourceBehaviors
+    {
+        GraphicsResourceType ResourceType;
+        GraphicsResourceVisibility Visibility;
+        GraphicsResourceUpdateFreq UpdateFreq;
+    } GraphicsResourceBehaviors;
+
     class GraphicsResource
     {
     public:
         GraphicsResource(std::string Name, GraphicsResourceType type, GraphicsResourceVisibility visible, GraphicsResourceUpdateFreq updateFreq, bool shouldInitResource, int bufferSize);
 
-        GraphicsResourceType ResourceType;
-        GraphicsResourceVisibility Visibility;
-        GraphicsResourceUpdateFreq UpdateFreq;
+        GraphicsResourceBehaviors Behaviors;
         EiRasPlatformBridgeProtocol* PlatformBridge;
 
-        void SetResource(void* res, bool shouldUnmap);
+        void SetResource(void* res, bool noMoreUpdate);
 
     private:
         int bufferSize;

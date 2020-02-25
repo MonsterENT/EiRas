@@ -21,7 +21,7 @@ MaterialDX12::MaterialDX12(std::string Name, ShaderDX12* shaderObj)
 
 void MaterialDX12::SetProperty(MaterialProp* prop, void* res)
 {
-    if (prop->Resource->ResourceType == GraphicsResourceType::CBV)
+    if (prop->Resource->Behaviors.ResourceType == GraphicsResourceType::CBV)
     {
         prop->Resource->SetResource(res, false);
     }

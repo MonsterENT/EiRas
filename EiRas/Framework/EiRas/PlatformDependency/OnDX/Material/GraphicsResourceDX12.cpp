@@ -6,10 +6,11 @@
 using namespace MaterialSys;
 using GraphicsAPI::EiRasDX12;
 
-GraphicsResourceDX12::GraphicsResourceDX12(int bufferSize, GraphicsResourceVisibility visible, GraphicsResourceUpdateFreq updateFreq, bool initResource)
+GraphicsResourceDX12::GraphicsResourceDX12(int bufferSize, GraphicsResourceBehaviors* behaviors, bool initResource)
 {
     this->bufferSize = bufferSize;
-    ResType = GraphicsResourceType::Default;
+
+    Behaviors = behaviors;
 
     if (initResource)
     {
@@ -26,16 +27,32 @@ GraphicsResourceDX12::GraphicsResourceDX12(int bufferSize, GraphicsResourceVisib
         Resource = NULL;
     }
     ResMappingDestPtr = NULL;
+
+    if (Behaviors->UpdateFreq == GraphicsResourceUpdateFreq::UPDATE_FREQ_HEIGH)
+    {
+        CD3DX12_RANGE range(0, 0);
+        Resource->Map(0, &range, (void**)(&ResMappingDestPtr));
+    }
 }
 
-void GraphicsResourceDX12::SetResource(void* res, bool shouldUnmap)
+void GraphicsResourceDX12::SetResource(void* res, bool noMoreUpdate)
 {
-    CD3DX12_RANGE range(0, 0);
-    Resource->Map(0, &range, (void**)(&ResMappingDestPtr));
+    if (Behaviors->UpdateFreq == GraphicsResourceUpdateFreq::UPDATE_FREQ_LOW)
+    {
+        CD3DX12_RANGE range(0, 0);
+        Resource->Map(0, &range, (void**)(&ResMappingDestPtr));
+    }
+
     memcpy(ResMappingDestPtr, res, bufferSize);
-    if (shouldUnmap)
+
+    if (Behaviors->UpdateFreq == GraphicsResourceUpdateFreq::UPDATE_FREQ_LOW || noMoreUpdate)
     {
         Resource->Unmap(0, NULL);
+    }
+
+    if (noMoreUpdate)
+    {
+        Behaviors->UpdateFreq = GraphicsResourceUpdateFreq::UPDATE_FREQ_ONINIT;
     }
 }
 

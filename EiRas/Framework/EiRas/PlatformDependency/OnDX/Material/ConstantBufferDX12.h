@@ -8,7 +8,7 @@ namespace MaterialSys
     class ConstantBufferDX12 : public GraphicsResourceDX12
     {
     public:
-        ConstantBufferDX12(UINT bufferSize, GraphicsResourceVisibility visible, GraphicsResourceUpdateFreq updateFreq);
+        ConstantBufferDX12(UINT bufferSize, GraphicsResourceBehaviors* behaviors);
         ~ConstantBufferDX12();
 
     private:

@@ -6,24 +6,20 @@
 
 namespace MaterialSys
 {
-    enum class GraphicsResourceType;
-    enum class GraphicsResourceVisibility;
-    enum class GraphicsResourceUpdateFreq;
+    struct GraphicsResourceBehaviors;
 
     class GraphicsResourceDX12Bridge : public EiRasPlatformBridgeProtocol
     {
     public:
         GraphicsResourceDX12Bridge();
 
-        void SetResource(void* res, bool shouldUnmap);
+        void SetResource(void* res, bool noMoreUpdate);
 
-        void InitAsDefault(int bufferSize, GraphicsResourceVisibility visible, GraphicsResourceUpdateFreq updateFreq);
+        void InitAsDefault(int bufferSize, GraphicsResourceBehaviors* behaviors);
 
-        void InitAsConstantBuffer(int bufferSize, GraphicsResourceVisibility visible, GraphicsResourceUpdateFreq updateFreq);
+        void InitAsConstantBuffer(int bufferSize, GraphicsResourceBehaviors* behaviors);
 
-        void InitAsShaderResource(int bufferSize, GraphicsResourceVisibility visible, GraphicsResourceUpdateFreq updateFreq);
-
-        GraphicsResourceType type;
+        void InitAsShaderResource(int bufferSize, GraphicsResourceBehaviors* behaviors);
     };
 }
 

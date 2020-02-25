@@ -5,23 +5,22 @@
 
 namespace MaterialSys
 {
-    enum class GraphicsResourceType;
-    enum class GraphicsResourceVisibility;
-    enum class GraphicsResourceUpdateFreq;
+    struct GraphicsResourceBehaviors;
 
     class GraphicsResourceDX12
     {
     public:
-        GraphicsResourceDX12(int bufferSize, GraphicsResourceVisibility visible, GraphicsResourceUpdateFreq updateFreq, bool initResource);
+        GraphicsResourceDX12(int bufferSize, GraphicsResourceBehaviors* behaviors, bool initResource);
         virtual ~GraphicsResourceDX12();
 
         ID3D12Resource* Resource;
-        
-        GraphicsResourceType ResType;
+
         CD3DX12_CPU_DESCRIPTOR_HANDLE CpuHandle;
         CD3DX12_GPU_DESCRIPTOR_HANDLE GpuHandle;
 
-        void SetResource(void* res, bool shouldUnmap);
+        GraphicsResourceBehaviors* Behaviors;
+
+        void SetResource(void* res, bool noMoreUpdate);
 
         int GetBufferSize();
 

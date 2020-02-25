@@ -6,14 +6,13 @@
 using namespace MaterialSys;
 using GraphicsAPI::EiRasDX12;
 
-ShaderResourceDX12::ShaderResourceDX12(DXGI_FORMAT format, UINT width, UINT height, UINT8* texData) : GraphicsResourceDX12(-1, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_ONINIT, false)
+ShaderResourceDX12::ShaderResourceDX12(DXGI_FORMAT format, UINT width, UINT height, UINT8* texData) : GraphicsResourceDX12(-1, 0, false)
 {
     GET_EIRAS_DX12(deviceObj)
 
     this->texData = texData;
         //new UINT8[width * height];
     //memcpy(this->texData, texData, width * height);
-    ResType = GraphicsResourceType::SRV;
     textureFormat = format;
     this->width = width;
     this->height = height;

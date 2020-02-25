@@ -38,7 +38,7 @@ GraphicsResourceHeapDX12::GraphicsResourceHeapDX12(_uint propCount, _uint tableC
 
             GraphicsResourceDX12* resObj = (GraphicsResourceDX12*)prop->Resource->PlatformBridge->raw_obj;
 
-            if (resObj->ResType == GraphicsResourceType::CBV)
+            if (resObj->Behaviors->ResourceType == GraphicsResourceType::CBV)
             {
                 ConstantBufferDX12* resCb = (ConstantBufferDX12*)resObj;
                 D3D12_CONSTANT_BUFFER_VIEW_DESC viewDesc = {};
@@ -46,7 +46,7 @@ GraphicsResourceHeapDX12::GraphicsResourceHeapDX12(_uint propCount, _uint tableC
                 viewDesc.SizeInBytes = (resCb->GetBufferSize() + 255) & ~255;
                 deviceObj->device->CreateConstantBufferView(&viewDesc, cpuHandle);
             }
-            else if (resObj->ResType == GraphicsResourceType::CBV)
+            else if (resObj->Behaviors->ResourceType == GraphicsResourceType::CBV)
             {
                 ShaderResourceDX12* resSrv = dynamic_cast<ShaderResourceDX12*>(resObj);
                 D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
