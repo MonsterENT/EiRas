@@ -9,6 +9,7 @@
 #ifndef Material_hpp
 #define Material_hpp
 
+#include <Global/GlobalDefine.h>
 #include <Global/PlatformDependency/EiRasPlatformBridgeProtocol.h>
 #include <string>
 #include <vector>
@@ -16,6 +17,11 @@
 namespace Graphics {
     class GraphicsRenderState;
     class CommandBuffer;
+}
+
+namespace ImageSys
+{
+    class Image;
 }
 
 namespace MaterialSys {
@@ -36,13 +42,11 @@ namespace MaterialSys {
         void FinishStateChange();
         EiRasPlatformBridgeProtocol* PlatformBridge;
 
-        void SetProperty(int propertyId, void* res);
+        void SetProperty(_uint slotIndex, _uint propIndex, void* res);
+        void SetProperty(_uint slotIndex, _uint propIndex, ImageSys::Image* image, Graphics::CommandBuffer* cmdBuffer);
 
         Shader* shader;
         MaterialLayout* materialLayout;
-        std::vector<MaterialProp*> Props;
-        std::vector<MaterialProp*> LayoutProps;
-        std::vector<MaterialTable*> LayoutTables;
     private:
         Graphics::CommandBuffer* referenceCmdBuffer;
     };

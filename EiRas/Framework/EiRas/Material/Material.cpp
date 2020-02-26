@@ -49,8 +49,6 @@ Material::Material(std::string Name, Shader* shader, Graphics::CommandBuffer* co
                 ShaderProp* tmpProp = (ShaderProp*)shaderSlot;
                 tmpMatProp = new MaterialProp(tmpProp->PropName, tmpProp->PropType, tmpProp->Visibility, tmpProp->UpdateFreq, true, tmpProp->BufferSize);
                 tmpMatProp->SlotID = i;
-                Props.push_back(tmpMatProp);
-                LayoutProps.push_back(tmpMatProp);
             }
             else if (shaderSlot->SlotType == ShaderSlotType::ShaderSlotType_Table)
             {
@@ -66,13 +64,10 @@ Material::Material(std::string Name, Shader* shader, Graphics::CommandBuffer* co
                     tmpMatProp = new MaterialProp(tmpProp->PropName, tmpProp->PropType, tmpProp->Visibility, false, tmpProp->BufferSize);
 #endif
                     tmpMatProp->SlotID = -1;
-                    Props.push_back(tmpMatProp);
                     tmpMatProps[propIndex] = tmpMatProp;
                 }
                 MaterialTable* matTable = new MaterialTable(shaderTable->PropNum, tmpMatProps);
                 matTable->SlotID = i;
-                LayoutTables.push_back(matTable);
-                delete [] tmpMatProps;
             }
         }
     }
@@ -88,19 +83,61 @@ Material::Material(std::string Name, Shader* shader, Graphics::CommandBuffer* co
     FinishStateChange();
 }
 
-void Material::SetProperty(int propertyId, void* res)
+inline MaterialProp* getMaterialProp(Material* mat, _uint slotIndex, _uint propIndex)
 {
-    if (propertyId >= Props.size())
+    if (!mat->materialLayout)
+    {
+        return 0;
+    }
+
+    if (slotIndex >= mat->materialLayout->SlotNum)
+    {
+        return 0;
+    }
+
+    MaterialProp* tProp = 0;
+    MaterialSlot* tSlot = mat->materialLayout->Slots[slotIndex];
+    if (tSlot->SlotType == MaterialSlotType::MaterialSlotType_Table)
+    {
+        MaterialTable* tTable = (MaterialTable*)tSlot;
+        if (propIndex >= tTable->PropNum)
+        {
+            return 0;
+        }
+
+        tProp = tTable->Props[propIndex];
+    }
+    else
+    {
+        tProp = (MaterialProp*)tSlot;
+    }
+    return tProp;
+}
+
+void Material::SetProperty(_uint slotIndex, _uint propIndex, void* res)
+{
+    MaterialProp* tProp = getMaterialProp(this, slotIndex, propIndex);
+    if (tProp == 0)
     {
         return;
     }
 #if GRAPHICS_DX
-    ((MaterialDX12Bridge*)PlatformBridge)->SetProperty(Props[propertyId], res);
+    ((MaterialDX12Bridge*)PlatformBridge)->SetProperty(tProp, res);
 #endif
     
 #if GRAPHICS_METAL
-    ((MaterialMetalBridge*)PlatformBridge)->SetProperty(Props[propertyId], res);
+    ((MaterialMetalBridge*)PlatformBridge)->SetProperty(tProp, res);
 #endif
+}
+
+void Material::SetProperty(_uint slotIndex, _uint propIndex, ImageSys::Image* image, Graphics::CommandBuffer* cmdBuffer)
+{
+    MaterialProp* tProp = getMaterialProp(this, slotIndex, propIndex);
+    if (tProp == 0)
+    {
+        return;
+    }
+    //TODO
 }
 
 void Material::FinishStateChange()

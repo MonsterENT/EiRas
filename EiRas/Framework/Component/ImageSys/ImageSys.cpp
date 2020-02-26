@@ -2,6 +2,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb/stb_image.h>
 
+
 float* ImageSys::LoadImageFromFile(std::string path, int* width, int* height, int* comp)
 {
     return stbi_loadf(path.c_str(), width, height, comp, 0);

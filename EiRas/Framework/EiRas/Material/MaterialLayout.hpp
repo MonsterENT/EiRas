@@ -32,6 +32,8 @@ namespace MaterialSys
             Resource = new GraphicsResource(name, propType, visible, updateFreq, initResource);
             Resource->InitAsConstantBuffer(bufferSize);
         }
+
+        _uint _heapOffset;
     };
 
     class MaterialTable : public MaterialSlot

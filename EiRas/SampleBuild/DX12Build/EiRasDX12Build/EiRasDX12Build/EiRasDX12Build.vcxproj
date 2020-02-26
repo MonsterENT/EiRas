@@ -76,7 +76,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <SourcePath>..\..\..\..\Framework\EiRas;$(SourcePath)</SourcePath>
-    <IncludePath>..\..\..\..\Framework\EiRas;..\..\..\..\Framework;..\..\..\..\Framework\Component;E:\EiRasWorkspace\EiRas\EiRas\SampleBuild\Library;E:\EiRasWorkspace\EiRas\EiRas\SampleBuild\Library\assimp\include\assimp;..\..\..\Common;$(IncludePath)</IncludePath>
+    <IncludePath>..\..\..\..\Framework\EiRas;..\..\..\..\Framework;..\..\..\..\Framework\Component;..\..\..\..\SampleBuild\Library;..\..\..\..\SampleBuild\Library\assimp\include\assimp;..\..\..\Common;$(IncludePath)</IncludePath>
     <LibraryPath>..\..\..\DX12Build\EiRasDX12Build\lib\assimp;$(LibraryPath)</LibraryPath>
     <LibraryWPath>$(LibraryWPath)</LibraryWPath>
   </PropertyGroup>

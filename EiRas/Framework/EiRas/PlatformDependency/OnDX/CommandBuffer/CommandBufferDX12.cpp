@@ -104,39 +104,39 @@ void CommandBufferDX12::DrawMesh(MeshSys::MeshDX12* mesh)
 }
 
 
-void CommandBufferDX12::SetMaterial(MaterialSys::MaterialDX12* mat, std::vector<MaterialSys::MaterialProp*>* props, std::vector<MaterialSys::MaterialTable*>* tables)
+void CommandBufferDX12::SetMaterial(MaterialSys::MaterialDX12* mat)
 {
     cmdList->SetGraphicsRootSignature(mat->RawShaderObj->RootSignature);
     cmdList->SetPipelineState(mat->PipelineState);
 
     if (CurrentUseingHeap)
     {
-        for (int i = 0; i < tables->size(); i++)
-        {
-            cmdList->SetGraphicsRootDescriptorTable((*tables)[i]->SlotID, ((GraphicsResourceDX12*)(*tables)[i]->Props[0]->Resource->PlatformBridge->raw_obj)->GpuHandle);
-        }
+        //for (int i = 0; i < tables->size(); i++)
+        //{
+        //    cmdList->SetGraphicsRootDescriptorTable((*tables)[i]->SlotID, ((GraphicsResourceDX12*)(*tables)[i]->Props[0]->Resource->PlatformBridge->raw_obj)->GpuHandle);
+        //}
     }
 
-    for (int i = 0; i < props->size(); i++)
-    {
-        MaterialProp* prop = (*props)[i];
+    //for (int i = 0; i < props->size(); i++)
+    //{
+    //    MaterialProp* prop = (*props)[i];
 
-        D3D12_GPU_VIRTUAL_ADDRESS ADDR = ((GraphicsResourceDX12*)prop->Resource->PlatformBridge->raw_obj)->Resource->GetGPUVirtualAddress();
-        int rootParamIndex = prop->SlotID;
+    //    D3D12_GPU_VIRTUAL_ADDRESS ADDR = ((GraphicsResourceDX12*)prop->Resource->PlatformBridge->raw_obj)->Resource->GetGPUVirtualAddress();
+    //    int rootParamIndex = prop->SlotID;
 
-        GraphicsResourceType resType = prop->Resource->Behaviors.ResourceType;
+    //    GraphicsResourceType resType = prop->Resource->Behaviors.ResourceType;
 
-        if (resType == GraphicsResourceType::CBV)
-        {
-            cmdList->SetGraphicsRootConstantBufferView(rootParamIndex, ADDR);
-        }
-        else if (resType == GraphicsResourceType::SRV)
-        {
-            cmdList->SetGraphicsRootShaderResourceView(rootParamIndex, ADDR);
-        }
-        else if (resType == GraphicsResourceType::UAV)
-        {
-            cmdList->SetGraphicsRootUnorderedAccessView(rootParamIndex, ADDR);
-        }
-    }
+    //    if (resType == GraphicsResourceType::CBV)
+    //    {
+    //        cmdList->SetGraphicsRootConstantBufferView(rootParamIndex, ADDR);
+    //    }
+    //    else if (resType == GraphicsResourceType::SRV)
+    //    {
+    //        cmdList->SetGraphicsRootShaderResourceView(rootParamIndex, ADDR);
+    //    }
+    //    else if (resType == GraphicsResourceType::UAV)
+    //    {
+    //        cmdList->SetGraphicsRootUnorderedAccessView(rootParamIndex, ADDR);
+    //    }
+    //}
 }

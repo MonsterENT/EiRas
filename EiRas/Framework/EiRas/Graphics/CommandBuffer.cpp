@@ -86,11 +86,14 @@ void CommandBuffer::Reset()
         while (it != MaterialMap.end())
         {
             Material* mat = it->second;
-            for (_uint matTableIndex = 0; matTableIndex < mat->LayoutTables.size(); matTableIndex++)
+            for (_uint slotIndex = 0; slotIndex < mat->materialLayout->SlotNum; slotIndex++)
             {
-                MaterialTable* table = mat->LayoutTables[matTableIndex];
-                tmpMaterialTableArray.push_back(table);
-                materialPropCount += table->PropNum;
+                MaterialSlot* slot = mat->materialLayout->Slots[slotIndex];
+                if (slot->SlotType == MaterialSlotType::MaterialSlotType_Table)
+                {
+                    tmpMaterialTableArray.push_back((MaterialTable*)slot);
+                    materialPropCount += ((MaterialTable*)slot)->PropNum;
+                }
             }
             it++;
         }

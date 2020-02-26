@@ -37,7 +37,7 @@ namespace Graphics {
 
 //        void SetPipelineState(MaterialSys::MaterialDX12* mat, std::vector<MaterialSys::MaterialProp*>* props, std::vector<MaterialSys::MaterialTable*>* tables);
 
-        void SetMaterial(MaterialSys::MaterialDX12* mat, std::vector<MaterialSys::MaterialProp*>* props, std::vector<MaterialSys::MaterialTable*>* tables);
+        void SetMaterial(MaterialSys::MaterialDX12* mat);
 
         ID3D12CommandAllocator* cmdAllocator = 0;
         ID3D12GraphicsCommandList* cmdList = 0;

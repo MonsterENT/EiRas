@@ -67,7 +67,7 @@ void Engine::m_initEngine()
     tmpCol.y = 1;
     tmpCol.z = 0;
     tmpCol.w = 1;
-    mat->SetProperty(0, &tmpCol);
+    mat->SetProperty(0, -1, &tmpCol);
     mesh = 0;
     std::string resPath = FileSys::FileManager::shareInstance()->GetResourcePath("qumian", "obj");
     mesh = new Mesh(resPath);
