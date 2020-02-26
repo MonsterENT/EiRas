@@ -1,4 +1,5 @@
 #include "ShaderResourceDX12.h"
+#include <PlatformDependency/OnDX/d3dx12.h>
 #include <Material/GraphicsResource.hpp>
 #include <PlatformDependency/OnDX/DXMacro.h>
 #include <PlatformDependency/OnDX/GraphicsAPI/EiRasDX12.h>
@@ -6,14 +7,13 @@
 using namespace MaterialSys;
 using GraphicsAPI::EiRasDX12;
 
-ShaderResourceDX12::ShaderResourceDX12(DXGI_FORMAT format, UINT width, UINT height, UINT8* texData) : GraphicsResourceDX12(-1, 0, false)
+ShaderResourceDX12::ShaderResourceDX12(GraphicsResourceBehaviors* behaviors, DXGI_FORMAT format, UINT width, UINT height, void* texData, bool* buildStatusFlag) : GraphicsResourceDX12(-1, behaviors, false)
 {
     GET_EIRAS_DX12(deviceObj)
 
     this->texData = texData;
-        //new UINT8[width * height];
-    //memcpy(this->texData, texData, width * height);
-    textureFormat = format;
+    TexFormat = format;
+
     this->width = width;
     this->height = height;
 
@@ -45,6 +45,9 @@ ShaderResourceDX12::ShaderResourceDX12(DXGI_FORMAT format, UINT width, UINT heig
         D3D12_RESOURCE_STATE_GENERIC_READ,
         nullptr,
         IID_PPV_ARGS(&tmpResource));
+
+    outBuildStatusFlagPtr = buildStatusFlag;
+    buildStatusFlag = false;
 }
 
 
@@ -53,15 +56,23 @@ ShaderResourceDX12::~ShaderResourceDX12()
 }
 
 
-void ShaderResourceDX12::invoke(void* data)
+void ShaderResourceDX12::BuildTextureResource(void* cmdList)
 {
-    ID3D12GraphicsCommandList* cmdList = (ID3D12GraphicsCommandList*)data;
+    ID3D12GraphicsCommandList* _cmdList = (ID3D12GraphicsCommandList*)cmdList;
     
     D3D12_SUBRESOURCE_DATA textureData = {};
-    textureData.pData = &texData[0];
-    textureData.RowPitch = width * (__int64)4;
+    textureData.pData = texData;
+    textureData.RowPitch = width * 4ll * 4ll;
     textureData.SlicePitch = textureData.RowPitch * height;
     
-    UpdateSubresources(cmdList, Resource, tmpResource, 0, 0, 1, &textureData);
-    cmdList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(Resource, D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE));
+    UpdateSubresources(_cmdList, Resource, tmpResource, 0, 0, 1, &textureData);
+    _cmdList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(Resource, D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE));
+    
+    *outBuildStatusFlagPtr = true;
+    buildStatusFlag = true;
+}
+
+void ShaderResourceDX12::FinishBuild()
+{
+#pragma message("TOFIX FinishBuild")
 }

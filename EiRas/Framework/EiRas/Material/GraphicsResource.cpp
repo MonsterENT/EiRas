@@ -11,7 +11,7 @@
 
 using namespace MaterialSys;
 
-GraphicsResource::GraphicsResource(std::string Name, GraphicsResourceType type, GraphicsResourceVisibility visible, GraphicsResourceUpdateFreq updateFreq, bool shouldInitResource, int bufferSize)
+GraphicsResource::GraphicsResource(std::string Name, GraphicsResourceType type, GraphicsResourceVisibility visible, GraphicsResourceUpdateFreq updateFreq, bool shouldInitResource)
 {
     Behaviors.ResourceType = type;
     Behaviors.Visibility = visible;
@@ -22,31 +22,34 @@ GraphicsResource::GraphicsResource(std::string Name, GraphicsResourceType type, 
 #elif GRAPHICS_METAL
     PlatformBridge = new GraphicsResourceMetalBridge(Name, shouldInitResource);
 #endif
-    
-    this->bufferSize = bufferSize;
-    if (type == GraphicsResourceType::CBV)
-    {
+
+    this->bufferSize = -1;
+}
+
+void GraphicsResource::InitAsConstantBuffer(_uint bufferSize)
+{
 #if GRAPHICS_DX
-        ((GraphicsResourceDX12Bridge*)PlatformBridge)->InitAsConstantBuffer(bufferSize, &Behaviors);
+    ((GraphicsResourceDX12Bridge*)PlatformBridge)->InitAsConstantBuffer(bufferSize, &Behaviors);
 #elif GRAPHICS_METAL
-        ((GraphicsResourceMetalBridge*)PlatformBridge)->InitAsConstantBuffer(bufferSize);
+    ((GraphicsResourceMetalBridge*)PlatformBridge)->InitAsConstantBuffer(bufferSize);
 #endif
-    }
-    else if (type == GraphicsResourceType::SRV)
-    {
+}
+
+void GraphicsResource::InitAsDefault(_uint bufferSize)
+{
 #if GRAPHICS_DX
-        ((GraphicsResourceDX12Bridge*)PlatformBridge)->InitAsShaderResource(bufferSize, &Behaviors);
+    ((GraphicsResourceDX12Bridge*)PlatformBridge)->InitAsDefault(bufferSize, &Behaviors);
 #elif GRAPHICS_METAL
+    ((GraphicsResourceMetalBridge*)PlatformBridge)->InitAsDefault(bufferSize);
 #endif
-    }
-    else if (type == GraphicsResourceType::Default)
-    {
+}
+
+void GraphicsResource::InitAsShaderResource(_uint width, _uint height, void* texData, bool* buildStatusFlag)
+{
 #if GRAPHICS_DX
-        ((GraphicsResourceDX12Bridge*)PlatformBridge)->InitAsDefault(bufferSize, &Behaviors);
+    ((GraphicsResourceDX12Bridge*)PlatformBridge)->InitAsShaderResource(width, height, texData, &Behaviors, buildStatusFlag);
 #elif GRAPHICS_METAL
-        ((GraphicsResourceMetalBridge*)PlatformBridge)->InitAsDefault(bufferSize);
 #endif
-    }
 }
 
 void GraphicsResource::SetResource(void* res, bool noMoreUpdate)
@@ -59,5 +62,22 @@ void GraphicsResource::SetResource(void* res, bool noMoreUpdate)
     ((GraphicsResourceDX12Bridge*)PlatformBridge)->SetResource(res, noMoreUpdate);
 #elif GRAPHICS_METAL
     ((GraphicsResourceMetalBridge*)PlatformBridge)->SetResource(res);
+#endif
+}
+
+
+void GraphicsResource::ShaderResourceBuild(void* cmdList)
+{
+#if GRAPHICS_DX
+    ((GraphicsResourceDX12Bridge*)PlatformBridge)->ShaderResourceBuild(cmdList);
+#elif GRAPHICS_METAL
+#endif
+}
+
+void GraphicsResource::ShaderResourceFinishBuild()
+{
+#if GRAPHICS_DX
+    ((GraphicsResourceDX12Bridge*)PlatformBridge)->ShaderResourceFinishBuild();
+#elif GRAPHICS_METAL
 #endif
 }

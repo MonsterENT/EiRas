@@ -18,9 +18,23 @@ template<typename T>void swap(T& a, T& b)
     a = tmp;
 }
 
+class int2;
+
 class float2;
 class float3;
 class float4;
+
+class int2
+{
+public:
+    int x, y;
+public: 
+    int2()
+    {
+        x = 0;
+        y = 0;
+    }
+};
 
 class float2
 {

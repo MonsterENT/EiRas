@@ -8,29 +8,23 @@ namespace MaterialSys
     class ShaderResourceDX12 : public virtual GraphicsResourceDX12
     {
     public:
-        ShaderResourceDX12(DXGI_FORMAT format, UINT width, UINT height, UINT8* texData);
+        ShaderResourceDX12(GraphicsResourceBehaviors* behaviors, DXGI_FORMAT format, UINT width, UINT height, void* texData, bool* buildStatusFlag);
         ~ShaderResourceDX12();
 
-        DXGI_FORMAT getTextureFormat()
-        {
-            return textureFormat;
-        }
-
+        DXGI_FORMAT TexFormat;
+        
         bool isReady()
         {
-            return _isReady;
+            return buildStatusFlag;
         }
 
-        void invoke(void* data);
+        void BuildTextureResource(void* cmdList);
+        void FinishBuild();
 
-        void invokeFinished(void* data)
-        {
-            _isReady = true;
-        }
     private:
-        DXGI_FORMAT textureFormat;
-        bool _isReady = false;
-        UINT8* texData = 0;
+        bool* outBuildStatusFlagPtr;
+        bool buildStatusFlag = false;
+        void* texData = 0;
         ID3D12Resource* tmpResource = 0;
         UINT width, height;
     };

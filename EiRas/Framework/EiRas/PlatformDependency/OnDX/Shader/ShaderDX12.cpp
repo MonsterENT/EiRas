@@ -4,14 +4,11 @@
 #include <PlatformDependency/OnDX/GraphicsAPI/EiRasDX12.h>
 #include <PlatformDependency/OnDX/DXMacro.h>
 #include <Graphics/GraphicsVertexDescriptor.hpp>
+#include <Material/GraphicsResource.hpp>
 
-using MaterialSys::ShaderDX12;
-using MaterialSys::ShaderLayout;
-using MaterialSys::ShaderSlot;
-using MaterialSys::ShaderProp;
-using MaterialSys::ShaderTable;
-using GraphicsAPI::EiRasDX12;
+using namespace MaterialSys;
 using namespace Graphics;
+using GraphicsAPI::EiRasDX12;
 
 ID3D12RootSignature* createRootSig(ShaderLayout* shaderLayout);
 
@@ -64,7 +61,18 @@ ID3D12RootSignature* createRootSig(ShaderLayout* shaderLayout)
         if (slot->SlotType == MaterialSys::ShaderSlotType::ShaderSlotType_Prop)
         {
             ShaderProp* prop = (ShaderProp*)slot;
-            rootParameters[i].InitAsConstantBufferView(_BASE_CB_REGISTER++, _BASE_SPACE);
+            if (prop->PropType == GraphicsResourceType::CBV)
+            {
+                rootParameters[i].InitAsConstantBufferView(_BASE_CB_REGISTER++, _BASE_SPACE);
+            }
+            else if (prop->PropType == GraphicsResourceType::SRV)
+            {
+                rootParameters[i].InitAsShaderResourceView(_BASE_CB_REGISTER++, _BASE_SPACE);
+            }
+            else
+            {
+#pragma message("TOFIX")
+            }
         }
         else if (slot->SlotType == MaterialSys::ShaderSlotType::ShaderSlotType_Table)
         {
@@ -79,8 +87,20 @@ ID3D12RootSignature* createRootSig(ShaderLayout* shaderLayout)
         }
     }
 
+    D3D12_STATIC_SAMPLER_DESC samplerDesc = {};
+    samplerDesc.Filter = D3D12_FILTER::D3D12_FILTER_COMPARISON_MIN_MAG_MIP_LINEAR;
+    samplerDesc.AddressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+    samplerDesc.AddressV = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+    samplerDesc.AddressW = D3D12_TEXTURE_ADDRESS_MODE_CLAMP;
+    samplerDesc.MipLODBias = 0;
+    samplerDesc.MaxAnisotropy = 1;
+    samplerDesc.ComparisonFunc = D3D12_COMPARISON_FUNC_ALWAYS;
+    samplerDesc.ShaderRegister = 0;
+    samplerDesc.RegisterSpace = 0;
+    samplerDesc.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
+
     CD3DX12_VERSIONED_ROOT_SIGNATURE_DESC rootSignatureDesc;
-    rootSignatureDesc.Init_1_1(shaderLayout->SlotNum, rootParameters, 0, nullptr, D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
+    rootSignatureDesc.Init_1_1(shaderLayout->SlotNum, rootParameters, 1, &samplerDesc, D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
 
     ID3DBlob* signature;
     ID3DBlob* error;

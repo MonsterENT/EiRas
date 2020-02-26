@@ -56,7 +56,6 @@ Material::Material(std::string Name, Shader* shader, Graphics::CommandBuffer* co
             {
                 ShaderTable* shaderTable = (ShaderTable*)shaderSlot;
                 
-                GraphicsResource** tmpResArray = new GraphicsResource * [shaderTable->PropNum];
                 MaterialProp** tmpMatProps = new MaterialProp*[shaderTable->PropNum];
                 for (int propIndex = 0; propIndex < shaderTable->PropNum; propIndex++)
                 {
@@ -69,12 +68,10 @@ Material::Material(std::string Name, Shader* shader, Graphics::CommandBuffer* co
                     tmpMatProp->SlotID = -1;
                     Props.push_back(tmpMatProp);
                     tmpMatProps[propIndex] = tmpMatProp;
-                    tmpResArray[propIndex] = tmpMatProp->Resource;
                 }
                 MaterialTable* matTable = new MaterialTable(shaderTable->PropNum, tmpMatProps);
                 matTable->SlotID = i;
                 LayoutTables.push_back(matTable);
-                delete [] tmpResArray;
                 delete [] tmpMatProps;
             }
         }
