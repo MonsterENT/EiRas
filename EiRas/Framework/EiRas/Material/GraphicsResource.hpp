@@ -1,9 +1,10 @@
 #ifndef Graphics_Resource_hpp
 #define Graphics_Resource_hpp
 
-class EiRasPlatformBridgeProtocol;
-
 #include <string>
+#include <Global/GlobalDefine.h>
+
+class EiRasPlatformBridgeProtocol;
 
 namespace MaterialSys
 {
@@ -40,7 +41,16 @@ namespace MaterialSys
     class GraphicsResource
     {
     public:
-        GraphicsResource(std::string Name, GraphicsResourceType type, GraphicsResourceVisibility visible, GraphicsResourceUpdateFreq updateFreq, bool shouldInitResource, int bufferSize);
+        GraphicsResource(std::string Name, GraphicsResourceType type, GraphicsResourceVisibility visible, GraphicsResourceUpdateFreq updateFreq, bool shouldInitResource);
+
+        void InitAsConstantBuffer(_uint bufferSize);
+
+        void InitAsDefault(_uint bufferSize);
+
+        void InitAsShaderResource(_uint width, _uint height, void* texData, bool* buildStatusFlag);
+        void ShaderResourceBuild(void* cmdList);
+        void ShaderResourceFinishBuild();
+
 
         GraphicsResourceBehaviors Behaviors;
         EiRasPlatformBridgeProtocol* PlatformBridge;
@@ -48,7 +58,7 @@ namespace MaterialSys
         void SetResource(void* res, bool noMoreUpdate);
 
     private:
-        int bufferSize;
+        _uint bufferSize;
     };
 }
 

@@ -7,10 +7,12 @@
 #include <PlatformDependency/OnDX/Material/GraphicsResourceDX12.h>
 #include <PlatformDependency/OnDX/Material/GraphicsResourceHeapDX12.h>
 #include <PlatformDependency/OnDX/Mesh/MeshDX12.h>
+#include <Basic/Image.hpp>
 
 using Graphics::CommandBufferDX12;
 using GraphicsAPI::EiRasDX12;
 using namespace MaterialSys;
+using ImageSys::ImageSysBuildingList;
 
 CommandBufferDX12::CommandBufferDX12(std::string Name)
 {
@@ -52,6 +54,19 @@ void CommandBufferDX12::BeginFrame()
     cmdList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
     cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 #pragma endregion
+
+    for (int i = 0; i < ImageSysBuildingList.size(); i++)
+    {
+        if (!ImageSysBuildingList[i]->isFinishBuild)
+        {
+            ImageSysBuildingList[i]->Build(this);
+        }
+        else
+        {
+            //ImageSysBuildingList[i]->FinishBuild();
+        }
+    }
+    
 }
 
 void CommandBufferDX12::Reset(MaterialSys::GraphicsResourceHeapDX12* heapObj)
@@ -108,15 +123,18 @@ void CommandBufferDX12::SetMaterial(MaterialSys::MaterialDX12* mat, std::vector<
 
         D3D12_GPU_VIRTUAL_ADDRESS ADDR = ((GraphicsResourceDX12*)prop->Resource->PlatformBridge->raw_obj)->Resource->GetGPUVirtualAddress();
         int rootParamIndex = prop->SlotID;
-        if (prop->PropType == GraphicsResourceType::CBV)
+
+        GraphicsResourceType resType = prop->Resource->Behaviors.ResourceType;
+
+        if (resType == GraphicsResourceType::CBV)
         {
             cmdList->SetGraphicsRootConstantBufferView(rootParamIndex, ADDR);
         }
-        else if (prop->PropType == GraphicsResourceType::SRV)
+        else if (resType == GraphicsResourceType::SRV)
         {
             cmdList->SetGraphicsRootShaderResourceView(rootParamIndex, ADDR);
         }
-        else if (prop->PropType == GraphicsResourceType::UAV)
+        else if (resType == GraphicsResourceType::UAV)
         {
             cmdList->SetGraphicsRootUnorderedAccessView(rootParamIndex, ADDR);
         }

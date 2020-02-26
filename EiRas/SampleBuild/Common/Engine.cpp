@@ -9,17 +9,22 @@
 #include <Graphics/VertexDataType.h>
 #include <Component/FileSys/FileManager.hpp>
 
+#include <Basic/Image.hpp>
+
 using namespace MaterialSys;
 using namespace Graphics;
 using namespace GraphicsAPI;
 using namespace MeshSys;
+using namespace ImageSys;
+
+Image* imageObj = 0;
 
 void Engine::m_initEngine()
 {
     cmdBuffer = new CommandBuffer("main buffer");
 
     ShaderLayout* layout = new ShaderLayout();
-    layout->SlotNum = 1;
+    layout->SlotNum = 2;
 
     ShaderProp* commonCb0 = new ShaderProp();
     commonCb0->BufferSize = sizeof(float) * 4;
@@ -27,9 +32,18 @@ void Engine::m_initEngine()
     commonCb0->PropType = GraphicsResourceType::CBV;
     commonCb0->Visibility = GraphicsResourceVisibility::VISIBILITY_PIXEL;
     commonCb0->SlotType = ShaderSlotType::ShaderSlotType_Prop;
+    commonCb0->UpdateFreq = GraphicsResourceUpdateFreq::UPDATE_FREQ_HEIGH;
 
-    layout->Slots = new ShaderSlot*[1];
+    ShaderProp* commonSR1 = new ShaderProp();
+    commonSR1->BufferSize = 0;
+    commonSR1->PropName = "CommmonSR1";
+    commonSR1->PropType = GraphicsResourceType::SRV;
+    commonSR1->Visibility = GraphicsResourceVisibility::VISIBILITY_PIXEL;
+    commonSR1->UpdateFreq = GraphicsResourceUpdateFreq::UPDATE_FREQ_ONINIT;
+
+    layout->Slots = new ShaderSlot*[2];
     layout->Slots[0] = commonCb0;
+    layout->Slots[1] = commonSR1;
 
 #if GRAPHICS_METAL
     shader = new Shader("m_shader", "vertexShader", "fragmentShader");
@@ -58,6 +72,9 @@ void Engine::m_initEngine()
     std::string resPath = FileSys::FileManager::shareInstance()->GetResourcePath("qumian", "obj");
     mesh = new Mesh(resPath);
     mesh->BuildBuffer();
+
+    std::string imagePath = FileSys::FileManager::shareInstance()->GetResourcePath("ground", "png");
+    imageObj = new Image(imagePath);
 }
 
 Engine::Engine()

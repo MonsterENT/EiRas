@@ -25,19 +25,12 @@ namespace MaterialSys
     {
     public:
         std::string Name;
-        GraphicsResourceType PropType;
         GraphicsResource* Resource;
-        GraphicsResourceVisibility Visibility;
-        GraphicsResourceUpdateFreq UpdateFreq;
-        _uint BufferSize;
         MaterialProp(std::string name, GraphicsResourceType propType, GraphicsResourceVisibility visible, GraphicsResourceUpdateFreq updateFreq, bool initResource, _uint bufferSize)
         {
             Name = name;
-            BufferSize = bufferSize;
-            PropType = propType;
-            Visibility = visible;
-            UpdateFreq = updateFreq;
-            Resource = new GraphicsResource(name, propType, visible, updateFreq, initResource, bufferSize);
+            Resource = new GraphicsResource(name, propType, visible, updateFreq, initResource);
+            Resource->InitAsConstantBuffer(bufferSize);
         }
     };
 

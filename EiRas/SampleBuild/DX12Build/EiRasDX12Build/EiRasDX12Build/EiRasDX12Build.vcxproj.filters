@@ -159,6 +159,15 @@
     <ClInclude Include="..\..\..\..\Framework\EiRas\Graphics\GraphicsVertexDescriptor.hpp">
       <Filter>framework</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Library\stb\stb_image.h">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Framework\Component\ImageSys\ImageSys.hpp">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Framework\EiRas\Basic\Image.hpp">
+      <Filter>framework</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EiRasDX12Build.cpp">
@@ -273,6 +282,12 @@
       <Filter>framework</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\Framework\EiRas\Graphics\GraphicsVertexDescriptor.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Framework\Component\ImageSys\ImageSys.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Framework\EiRas\Basic\Image.cpp">
       <Filter>framework</Filter>
     </ClCompile>
   </ItemGroup>

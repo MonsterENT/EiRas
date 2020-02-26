@@ -57,12 +57,12 @@ void GraphicsResourceHeapDX12::FillHeap(_uint tableCount, MaterialTable** tableA
                 viewDesc.SizeInBytes = (resCb->GetBufferSize() + 255) & ~255;
                 deviceObj->device->CreateConstantBufferView(&viewDesc, cpuHandle);
             }
-            else if (resObj->Behaviors->ResourceType == GraphicsResourceType::CBV)
+            else if (resObj->Behaviors->ResourceType == GraphicsResourceType::SRV)
             {
                 ShaderResourceDX12* resSrv = dynamic_cast<ShaderResourceDX12*>(resObj);
                 D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
                 srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-                srvDesc.Format = resSrv->getTextureFormat();
+                srvDesc.Format = resSrv->TexFormat;
                 srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
                 srvDesc.Texture2D.MipLevels = 1;
                 deviceObj->device->CreateShaderResourceView(resSrv->Resource, &srvDesc, cpuHandle);
