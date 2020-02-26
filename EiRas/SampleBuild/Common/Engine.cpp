@@ -27,6 +27,7 @@ void Engine::m_initEngine()
     commonCb0->PropType = GraphicsResourceType::CBV;
     commonCb0->Visibility = GraphicsResourceVisibility::VISIBILITY_PIXEL;
     commonCb0->SlotType = ShaderSlotType::ShaderSlotType_Prop;
+    commonCb0->UpdateFreq = GraphicsResourceUpdateFreq::UPDATE_FREQ_HIGH;
 
     layout->Slots = new ShaderSlot*[1];
     layout->Slots[0] = commonCb0;

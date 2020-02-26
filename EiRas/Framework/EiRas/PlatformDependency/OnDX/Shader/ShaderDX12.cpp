@@ -57,7 +57,7 @@ ID3D12RootSignature* createRootSig(ShaderLayout* shaderLayout)
     UINT _BASE_CB_REGISTER = 0;
     ID3D12RootSignature* rootSig = nullptr;
     CD3DX12_ROOT_PARAMETER1* rootParameters = new CD3DX12_ROOT_PARAMETER1[shaderLayout->SlotNum];
-    for (int i = 0; i < shaderLayout->SlotNum; i++)
+    for (_uint i = 0; i < shaderLayout->SlotNum; i++)
     {
         UINT _BASE_SPACE = 0;
         ShaderSlot* slot = shaderLayout->Slots[i];
@@ -70,7 +70,7 @@ ID3D12RootSignature* createRootSig(ShaderLayout* shaderLayout)
         {
             ShaderTable* table = (ShaderTable*)slot;
             CD3DX12_DESCRIPTOR_RANGE1* ranges = new CD3DX12_DESCRIPTOR_RANGE1[table->PropNum];
-            for (int j = 0; j < table->PropNum; j++)
+            for (_uint j = 0; j < table->PropNum; j++)
             {
                 ranges[j].Init((D3D12_DESCRIPTOR_RANGE_TYPE)table->Props[j]->PropType, 1, _BASE_CB_REGISTER++, _BASE_SPACE);
             }

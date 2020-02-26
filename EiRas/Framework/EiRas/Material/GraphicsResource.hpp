@@ -27,7 +27,7 @@ namespace MaterialSys
     {
         UPDATE_FREQ_ONINIT = 0,
         UPDATE_FREQ_LOW = (UPDATE_FREQ_ONINIT + 1),
-        UPDATE_FREQ_HEIGH = (UPDATE_FREQ_LOW + 1),
+        UPDATE_FREQ_HIGH = (UPDATE_FREQ_LOW + 1),
     } GraphicsResourceUpdateFreq;
 
     typedef struct GraphicsResourceBehaviors

@@ -32,10 +32,10 @@ namespace MaterialSys
     class ShaderTable : public ShaderSlot
     {
     public:
-        int PropNum;
+        _uint PropNum;
         ShaderProp** Props;
 
-        ShaderTable(int propNum)
+        ShaderTable(_uint propNum)
         {
             PropNum = propNum;
             Props = new ShaderProp * [propNum];
@@ -46,7 +46,7 @@ namespace MaterialSys
     class ShaderLayout
     {
     public:
-        int SlotNum;
+        _uint SlotNum;
         ShaderSlot** Slots;
     };
 }

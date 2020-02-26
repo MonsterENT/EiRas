@@ -28,7 +28,7 @@ GraphicsResourceDX12::GraphicsResourceDX12(int bufferSize, GraphicsResourceBehav
     }
     ResMappingDestPtr = NULL;
 
-    if (Behaviors->UpdateFreq == GraphicsResourceUpdateFreq::UPDATE_FREQ_HEIGH)
+    if (Behaviors->UpdateFreq == GraphicsResourceUpdateFreq::UPDATE_FREQ_HIGH)
     {
         CD3DX12_RANGE range(0, 0);
         Resource->Map(0, &range, (void**)(&ResMappingDestPtr));
