@@ -25,32 +25,30 @@ Matrix4X4* TransformSys::GetLocalToWorldMatrix()
     {
         _finishBuildMat = true;
         
-        _rotateMat.m14 = Position.x;
-        _rotateMat.m24 = Position.y;
-        _rotateMat.m34 = Position.z;
+        _localToWorldMat.m14 = Position.x;
+        _localToWorldMat.m24 = Position.y;
+        _localToWorldMat.m34 = Position.z;
         
         //
-        _rotateMat.m11 = Right.x;
-        _rotateMat.m21 = Right.y;
-        _rotateMat.m31 = Right.z;
+        _localToWorldMat.m11 = Right.x;
+        _localToWorldMat.m21 = Right.y;
+        _localToWorldMat.m31 = Right.z;
         
-        _rotateMat.m12 = Up.x;
-        _rotateMat.m22 = Up.y;
-        _rotateMat.m32 = Up.z;
+        _localToWorldMat.m12 = Up.x;
+        _localToWorldMat.m22 = Up.y;
+        _localToWorldMat.m32 = Up.z;
         
-        _rotateMat.m13 = Forward.x;
-        _rotateMat.m23 = Forward.y;
-        _rotateMat.m33 = Forward.z;
+        _localToWorldMat.m13 = Forward.x;
+        _localToWorldMat.m23 = Forward.y;
+        _localToWorldMat.m33 = Forward.z;
         
         //
-        _scaleMat.m11 = LocalScale.x;
-        _scaleMat.m22 = LocalScale.y;
-        _scaleMat.m33 = LocalScale.z;
+        _localToWorldMat.m11 *= LocalScale.x;
+        _localToWorldMat.m22 *= LocalScale.y;
+        _localToWorldMat.m33 *= LocalScale.z;
         
-        _localToWorldMat = Matrix4X4::mul(_scaleMat, _localToWorldMat);
-        _localToWorldMat = Matrix4X4::mul(_rotateMat, _localToWorldMat);
 #if GRAPHICS_DX
-        _viewMat.transpose();
+        _localToWorldMat.transpose();
 #endif
     }
     return &_localToWorldMat;

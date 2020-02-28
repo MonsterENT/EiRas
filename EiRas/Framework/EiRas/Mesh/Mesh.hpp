@@ -45,7 +45,9 @@ public:
 class Mesh
 {
 public:
-    Mesh(std::string Name);
+    Mesh(std::string name);
+    
+    void LoadDataFromFile(std::string fileName);
 
     std::string Name;
     

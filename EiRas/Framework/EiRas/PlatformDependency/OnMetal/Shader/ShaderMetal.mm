@@ -10,7 +10,7 @@
 #import <Global/EiRasGlobalManager.hpp>
 #import <MetalKit/MetalKit.h>
 #import <PlatformDependency/OnMetal/GraphicsAPI/EiRasMetal.h>
-
+#include <PlatformDependency/OnMetal/MetalMacro.h>
 #include <Graphics/GraphicsVertexDescriptor.hpp>
 
 @interface ShaderMetal()
@@ -26,7 +26,7 @@
         _fileName = fileName;
         _vertexFuncName = vertexFuncName;
         _pixelFuncName = pixelFuncName;
-        EiRasMetal* deviceObj = (__bridge EiRasMetal*)EiRasGlobal::EiRasGlobalManager::SharedInstance()->GraphicsAPIDevice;
+        GET_EIRAS_METAL(deviceObj)
         if(deviceObj)
         {
             id<MTLDevice> device = [deviceObj getMetalDevice];

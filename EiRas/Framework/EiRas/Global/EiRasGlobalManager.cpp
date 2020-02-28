@@ -7,6 +7,9 @@
 //
 
 #include "EiRasGlobalManager.hpp"
+#include <Material/GraphicsResource.hpp>
+
+using namespace MaterialSys;
 using EiRasGlobal::EiRasGlobalManager;
 
 static EiRasGlobalManager* g_globalManager = 0;
@@ -18,4 +21,9 @@ EiRasGlobalManager* EiRasGlobalManager::SharedInstance()
         g_globalManager = new EiRasGlobalManager();
     }
     return g_globalManager;
+}
+
+EiRasGlobalManager::EiRasGlobalManager()
+{
+    //_CB0 = new GraphicsResource("CommonCB0", GraphicsResourceType::CBV, GraphicsResourceVisibility::VISIBILITY_ALL, true, 0);
 }
