@@ -29,7 +29,6 @@ FileManager* FileManager::shareInstance()
     if(_instance == 0)
     {
         _instance = new FileManager();
-         
     }
     return _instance;
 }

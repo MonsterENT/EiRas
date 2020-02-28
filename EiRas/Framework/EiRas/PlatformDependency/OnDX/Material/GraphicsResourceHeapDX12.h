@@ -7,6 +7,7 @@
 namespace MaterialSys
 {
     class MaterialTable;
+    class MaterialProp;
     class GraphicsResourceHeapDX12
     {
     public:
@@ -15,6 +16,7 @@ namespace MaterialSys
         ~GraphicsResourceHeapDX12();
 
         void FillHeap(_uint tableCount, MaterialTable** tableArray);
+        void DynamicFillHeap(MaterialSys::MaterialProp*);
 
     private:
         _uint Offset;

@@ -11,6 +11,7 @@
 #include "ShaderLayout.h"
 #include <Graphics/GraphicsRenderState.hpp>
 #include <Graphics/CommandBuffer.hpp>
+#include <Basic/Image.hpp>
 
 #if GRAPHICS_METAL
 #include <PlatformDependency/OnMetal/Material/MaterialMetalBridge.hpp>
@@ -22,6 +23,7 @@
 
 using namespace Graphics;
 using namespace MaterialSys;
+using namespace ImageSys;
 
 Material::Material(std::string Name, Shader* shader, Graphics::CommandBuffer* commandBuffer)
 {
@@ -40,7 +42,9 @@ Material::Material(std::string Name, Shader* shader, Graphics::CommandBuffer* co
     
     if(shader->Layout != 0)
     {
-        for (int i = 0; i < shader->Layout->SlotNum; i++)
+        _uint slotNum = shader->Layout->Slots.size();
+        materialLayout = new MaterialLayout(slotNum);
+        for (int i = 0; i < slotNum; i++)
         {
             ShaderSlot* shaderSlot = shader->Layout->Slots[i];
             MaterialProp* tmpMatProp = 0;
@@ -49,42 +53,59 @@ Material::Material(std::string Name, Shader* shader, Graphics::CommandBuffer* co
                 ShaderProp* tmpProp = (ShaderProp*)shaderSlot;
                 tmpMatProp = new MaterialProp(tmpProp->PropName, tmpProp->PropType, tmpProp->Visibility, tmpProp->UpdateFreq, true, tmpProp->BufferSize);
                 tmpMatProp->SlotID = i;
+                materialLayout->Slots[i] = tmpMatProp;
             }
             else if (shaderSlot->SlotType == ShaderSlotType::ShaderSlotType_Table)
             {
                 ShaderTable* shaderTable = (ShaderTable*)shaderSlot;
                 
-                MaterialProp** tmpMatProps = new MaterialProp*[shaderTable->PropNum];
-                for (int propIndex = 0; propIndex < shaderTable->PropNum; propIndex++)
+                _uint ranegNum = shaderTable->Ranges.size();
+
+                std::vector<MaterialProp*>* tmpMatProps = new std::vector<MaterialProp*>();
+                for (_uint ranegIndex = 0; ranegIndex < ranegNum; ranegIndex++)
                 {
-                    ShaderProp* tmpProp = shaderTable->Props[propIndex];
+                    ShaderPropRange* tmpRange = &shaderTable->Ranges[ranegIndex];
+
+                    for (_uint propIndex = 0; propIndex < tmpRange->PropNum; propIndex++)
+                    {
 #if GRAPHICS_DX
-                    tmpMatProp = new MaterialProp(tmpProp->PropName, tmpProp->PropType, tmpProp->Visibility, tmpProp->UpdateFreq, true, tmpProp->BufferSize);
+                        if (tmpRange->PropType == GraphicsResourceType::SRV)
+                        {
+                            tmpMatProp = new MaterialProp(tmpRange->BasePropName, tmpRange->PropType, tmpRange->Visibility, tmpRange->UpdateFreq, false, -1);
+                        }
+                        else
+                        {
+#pragma message("TODO")
+                            tmpMatProp = new MaterialProp(tmpRange->BasePropName, tmpRange->PropType, tmpRange->Visibility, tmpRange->UpdateFreq, true, tmpRange->BufferSizeList[propIndex]);
+                        }
 #elif GRAPHICS_METAL
-                    tmpMatProp = new MaterialProp(tmpProp->PropName, tmpProp->PropType, tmpProp->Visibility, false, tmpProp->BufferSize);
+                        tmpMatProp = new MaterialProp(tmpProp->BasePropName, tmpProp->PropType, tmpProp->Visibility, false, tmpProp->BufferSize);
 #endif
-                    tmpMatProp->SlotID = -1;
-                    tmpMatProps[propIndex] = tmpMatProp;
+                        tmpMatProp->SlotID = -1;
+                        tmpMatProps->push_back(tmpMatProp);
+                    }
                 }
-                MaterialTable* matTable = new MaterialTable(shaderTable->PropNum, tmpMatProps);
+                MaterialTable* matTable = new MaterialTable(tmpMatProps->size(), (MaterialProp**)&tmpMatProps[0]);
                 matTable->SlotID = i;
+                materialLayout->Slots[i] = matTable;
             }
         }
     }
     
+    //init platform pso
+    FinishStateChange();
+
     referenceCmdBuffer = commandBuffer;
-    
+
     if (commandBuffer == 0)
     {
         commandBuffer->RegMaterial(this);
     }
-    
-    //init platform pso
-    FinishStateChange();
 }
 
-inline MaterialProp* getMaterialProp(Material* mat, _uint slotIndex, _uint propIndex)
+inline MaterialProp* getMaterialProp(Material* mat, _uint slotIndex, _uint propIndex, bool &fromTable)
 {
+    fromTable = false;
     if (!mat->materialLayout)
     {
         return 0;
@@ -106,6 +127,7 @@ inline MaterialProp* getMaterialProp(Material* mat, _uint slotIndex, _uint propI
         }
 
         tProp = tTable->Props[propIndex];
+        fromTable = true;
     }
     else
     {
@@ -114,9 +136,10 @@ inline MaterialProp* getMaterialProp(Material* mat, _uint slotIndex, _uint propI
     return tProp;
 }
 
-void Material::SetProperty(_uint slotIndex, _uint propIndex, void* res)
+void Material::SetProperty(void* res, _uint slotIndex, _uint propIndex)
 {
-    MaterialProp* tProp = getMaterialProp(this, slotIndex, propIndex);
+    bool fromTable = false;
+    MaterialProp* tProp = getMaterialProp(this, slotIndex, propIndex, fromTable);
     if (tProp == 0)
     {
         return;
@@ -130,14 +153,19 @@ void Material::SetProperty(_uint slotIndex, _uint propIndex, void* res)
 #endif
 }
 
-void Material::SetProperty(_uint slotIndex, _uint propIndex, ImageSys::Image* image, Graphics::CommandBuffer* cmdBuffer)
+void Material::SetProperty(ImageSys::Image* image, _uint slotIndex, _uint propIndex)
 {
-    MaterialProp* tProp = getMaterialProp(this, slotIndex, propIndex);
+    bool fromTable = false;
+    MaterialProp* tProp = getMaterialProp(this, slotIndex, propIndex, fromTable);
     if (tProp == 0)
     {
         return;
     }
-    //TODO
+    tProp->Resource = image->PipelineResource;
+    if (fromTable)
+    {
+        referenceCmdBuffer->_DynamicFillHeap(tProp);
+    }
 }
 
 void Material::FinishStateChange()

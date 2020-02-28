@@ -30,7 +30,7 @@ void GraphicsResourceDX12Bridge::InitAsConstantBuffer(int bufferSize, GraphicsRe
 
 void GraphicsResourceDX12Bridge::InitAsShaderResource(int width, int height, void* texData, GraphicsResourceBehaviors* behaviors, bool* buildStatusFlag)
 {
-    raw_obj = new ShaderResourceDX12(behaviors, DXGI_FORMAT_R32G32B32A32_FLOAT, width, height, texData, buildStatusFlag);
+    raw_obj = new ShaderResourceDX12(behaviors, DXGI_FORMAT_R8G8B8A8_UNORM, width, height, texData, buildStatusFlag);
 }
 
 void GraphicsResourceDX12Bridge::ShaderResourceBuild(void* cmdList)

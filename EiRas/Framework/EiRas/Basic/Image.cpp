@@ -3,18 +3,19 @@
 #include <LogSys/LogManager.hpp>
 #include <Material/GraphicsResource.hpp>
 
-
+#include <Math/Math.hpp>
 using namespace ImageSys;
 using namespace LogSys;
 using namespace MaterialSys;
 using std::vector;
+using namespace Math;
 
 vector<Image*> ImageSys::ImageSysBuildingList;
 
 Image::Image(std::string filePath)
 {
     isFinishBuild = false;
-    float* data = LoadImageFromFile(filePath, (int*)&Width, (int*)&Height, (int*)&Channels);
+    unsigned char* data = LoadImageFromFile(filePath, (int*)&Width, (int*)&Height, (int*)&Channels);
     if (data == 0)
     {
         LogManager::DebugPrint("Load Fail " + filePath);

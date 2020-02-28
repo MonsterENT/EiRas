@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-
+#include <vector>
 #include <Material/MaterialLayout.hpp>
 #include <Material/GraphicsResource.hpp>
 
@@ -27,26 +27,69 @@ namespace MaterialSys
         GraphicsResourceVisibility Visibility;
         GraphicsResourceUpdateFreq UpdateFreq;
         int BufferSize;
+
+        ShaderProp(std::string propName, GraphicsResourceType propType, GraphicsResourceVisibility visibility, GraphicsResourceUpdateFreq updateFreq, int bufferSize)
+        {
+            SlotType = ShaderSlotType::ShaderSlotType_Prop;
+
+            PropName = propName;
+            PropType = propType;
+            Visibility = visibility;
+            UpdateFreq = updateFreq;
+            BufferSize = bufferSize;
+        }
+    };
+
+    class ShaderPropRange
+    {
+    public:
+        std::string BasePropName;
+        GraphicsResourceType PropType;
+        GraphicsResourceVisibility Visibility;
+        GraphicsResourceUpdateFreq UpdateFreq;
+        std::vector<int> BufferSizeList;
+        _uint PropNum;
+
+        ShaderPropRange(std::string basePropName, GraphicsResourceType propType, GraphicsResourceVisibility visibility, GraphicsResourceUpdateFreq updateFreq)
+        {
+            BasePropName = basePropName;
+            PropType = propType;
+            Visibility = visibility;
+            UpdateFreq = updateFreq;
+        }
+
+        void AddProp(int bufferSize)
+        {
+            PropNum++;
+            BufferSizeList.push_back(bufferSize);
+        }
     };
 
     class ShaderTable : public ShaderSlot
     {
     public:
-        _uint PropNum;
-        ShaderProp** Props;
+        std::vector<ShaderPropRange> Ranges;
 
-        ShaderTable(_uint propNum)
+        ShaderTable()
         {
-            PropNum = propNum;
-            Props = new ShaderProp * [propNum];
             SlotType = ShaderSlotType::ShaderSlotType_Table;
+        }
+
+        void AddRange(ShaderPropRange range)
+        {
+            Ranges.push_back(range);
         }
     };
 
     class ShaderLayout
     {
     public:
-        _uint SlotNum;
-        ShaderSlot** Slots;
+        std::vector<ShaderSlot*> Slots;
+
+        void AddSlot(ShaderSlot* slot)
+        {
+
+            Slots.push_back(slot);
+        }
     };
 }

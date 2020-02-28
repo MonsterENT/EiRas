@@ -40,7 +40,7 @@ namespace DX12Utils
         return SUCCEEDED(D3DCompileFromFile(tmp_ws, 0, 0, fnName, target, 0, 0, &shader, 0));
     }
 
-    static bool g_createPSO(ID3D12Device* device, MaterialSys::ShaderDX12* shaderObj, ID3D12PipelineState*& pso)
+    static HRESULT g_createPSO(ID3D12Device* device, MaterialSys::ShaderDX12* shaderObj, ID3D12PipelineState*& pso)
     {
         CD3DX12_RASTERIZER_DESC rasterizerStateDesc(D3D12_DEFAULT);
         rasterizerStateDesc.CullMode = D3D12_CULL_MODE_NONE;
@@ -61,6 +61,7 @@ namespace DX12Utils
         psoDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM;
         psoDesc.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
         psoDesc.SampleDesc.Count = 1;
-        return SUCCEEDED(device->CreateGraphicsPipelineState(&psoDesc, IID_PPV_ARGS(&pso)));
+        psoDesc.SampleDesc.Quality = 0;
+        return device->CreateGraphicsPipelineState(&psoDesc, IID_PPV_ARGS(&pso));
     }
 }

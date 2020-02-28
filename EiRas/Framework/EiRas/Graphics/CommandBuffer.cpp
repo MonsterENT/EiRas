@@ -78,35 +78,6 @@ void CommandBuffer::BeginFrame()
 
 void CommandBuffer::Reset()
 {
-    if (lastRegdeMatCount != MaterialMap.size())
-    {
-        _uint materialPropCount = 0;
-        tmpMaterialTableArray.clear();
-        MaterialCache_MAP::iterator it = MaterialMap.begin();
-        while (it != MaterialMap.end())
-        {
-            Material* mat = it->second;
-            for (_uint slotIndex = 0; slotIndex < mat->materialLayout->SlotNum; slotIndex++)
-            {
-                MaterialSlot* slot = mat->materialLayout->Slots[slotIndex];
-                if (slot->SlotType == MaterialSlotType::MaterialSlotType_Table)
-                {
-                    tmpMaterialTableArray.push_back((MaterialTable*)slot);
-                    materialPropCount += ((MaterialTable*)slot)->PropNum;
-                }
-            }
-            it++;
-        }
-
-#pragma message("TOFIX")
-        if (tmpMaterialTableArray.size() > 0 && materialPropCount <= maxHeapSize)
-        {
-            resourceHeap->FillHeap((_uint)tmpMaterialTableArray.size(), &tmpMaterialTableArray[0]);
-        }
-
-        lastRegdeMatCount = (_uint)MaterialMap.size();
-    }
-
 #if GRAPHICS_DX
     EiRasPlatformBridgeProtocol* tmpBridge = NULL;
     if (resourceHeap)
@@ -115,7 +86,7 @@ void CommandBuffer::Reset()
     }
     ((CommandBufferDX12Bridge*)PlatformBridge)->Reset(tmpBridge);
 #endif
-    
+
 #if GRAPHICS_METAL
     ((CommandBufferMetalBridge*)PlatformBridge)->Reset();
 #endif
@@ -132,23 +103,46 @@ void CommandBuffer::Commit(bool present)
 #endif
 }
 
+void CommandBuffer::_DynamicFillHeap(MaterialSys::MaterialProp* prop)
+{
+    resourceHeap->DynamicFillHeap(prop);
+}
+
+void CommandBuffer::_ReFillHeap()
+{
+    _uint materialPropCount = 0;
+    tmpMaterialTableArray.clear();
+    MaterialCache_MAP::iterator it = MaterialMap.begin();
+    while (it != MaterialMap.end())
+    {
+        Material* mat = it->second;
+        for (_uint slotIndex = 0; slotIndex < mat->materialLayout->SlotNum; slotIndex++)
+        {
+            MaterialSlot* slot = mat->materialLayout->Slots[slotIndex];
+            if (slot->SlotType == MaterialSlotType::MaterialSlotType_Table)
+            {
+                tmpMaterialTableArray.push_back((MaterialTable*)slot);
+                materialPropCount += ((MaterialTable*)slot)->PropNum;
+            }
+        }
+        it++;
+    }
+
+#pragma message("TOFIX")
+    if (tmpMaterialTableArray.size() > 0 && materialPropCount <= maxHeapSize)
+    {
+        resourceHeap->FillHeap((_uint)tmpMaterialTableArray.size(), &tmpMaterialTableArray[0]);
+    }
+}
+
 void CommandBuffer::RegMaterial(MaterialSys::Material* material)
 {
     MaterialMap.insert(MaterialCache_PAIR(material->Name, material));
-
-    if (resourceHeap)
-    {
-        resourceHeap = NULL;
-        delete resourceHeap;
-    }
+    _ReFillHeap();
 }
 
 void CommandBuffer::RemoveMaterial(MaterialSys::Material* material)
 {
     MaterialMap.erase(material->Name);
-    if (resourceHeap)
-    {
-        resourceHeap = NULL;
-        delete resourceHeap;
-    }
+    _ReFillHeap();
 }

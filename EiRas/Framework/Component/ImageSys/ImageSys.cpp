@@ -3,9 +3,9 @@
 #include <stb/stb_image.h>
 
 
-float* ImageSys::LoadImageFromFile(std::string path, int* width, int* height, int* comp)
+unsigned char* ImageSys::LoadImageFromFile(std::string path, int* width, int* height, int* comp)
 {
-    return stbi_loadf(path.c_str(), width, height, comp, 0);
+    return stbi_load(path.c_str(), width, height, comp, 0);
 }
 
 void ImageSys::FreeData(void* data)

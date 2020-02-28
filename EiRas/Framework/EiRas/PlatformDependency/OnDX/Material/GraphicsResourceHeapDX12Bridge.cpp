@@ -12,3 +12,8 @@ void GraphicsResourceHeapDX12Bridge::FillHeap(_uint tableCount, MaterialTable** 
 {
     ((GraphicsResourceHeapDX12*)raw_obj)->FillHeap(tableCount, tableArray);
 }
+
+void GraphicsResourceHeapDX12Bridge::DynamicFillHeap(MaterialSys::MaterialProp* prop)
+{
+    ((GraphicsResourceHeapDX12*)raw_obj)->DynamicFillHeap(prop);
+}

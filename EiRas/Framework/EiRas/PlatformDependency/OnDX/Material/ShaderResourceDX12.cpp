@@ -33,7 +33,7 @@ ShaderResourceDX12::ShaderResourceDX12(GraphicsResourceBehaviors* behaviors, DXG
         D3D12_HEAP_FLAG_NONE,
         &textureDesc,
         D3D12_RESOURCE_STATE_COPY_DEST,
-        nullptr,
+        NULL,
         IID_PPV_ARGS(&Resource));
 
     const UINT64 uploadBufferSize = GetRequiredIntermediateSize(Resource, 0, 1);
@@ -62,7 +62,7 @@ void ShaderResourceDX12::BuildTextureResource(void* cmdList)
     
     D3D12_SUBRESOURCE_DATA textureData = {};
     textureData.pData = texData;
-    textureData.RowPitch = width * 4ll * 4ll;
+    textureData.RowPitch = width * 4;
     textureData.SlicePitch = textureData.RowPitch * height;
     
     UpdateSubresources(_cmdList, Resource, tmpResource, 0, 0, 1, &textureData);

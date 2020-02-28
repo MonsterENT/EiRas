@@ -5,6 +5,7 @@
 namespace MaterialSys
 {
     class Material;
+    class MaterialProp;
 }
 
 namespace MeshSys

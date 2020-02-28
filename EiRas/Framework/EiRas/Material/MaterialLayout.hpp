@@ -57,7 +57,14 @@ namespace MaterialSys
         MaterialLayout(_uint slotNum)
         {
             SlotNum = slotNum;
-            Slots = new MaterialSlot*[SlotNum];
+            if (SlotNum > 0)
+            {
+                Slots = new MaterialSlot * [SlotNum];
+            }
+            else
+            {
+                Slots = NULL;
+            }
         }
     };
 

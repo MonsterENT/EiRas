@@ -24,6 +24,13 @@ void GraphicsResourceHeap::FillHeap(_uint tableCount, MaterialTable** tableArray
 #if GRAPHICS_DX
     ((GraphicsResourceHeapDX12Bridge*)PlatformBridge)->FillHeap(tableCount, tableArray);
 #elif GRAPHICS_METAL
-    PlatformBridge = new GraphicsResourceHeapMetalBridge(propCount, tableCount, tableArray);
+#endif
+}
+
+void GraphicsResourceHeap::DynamicFillHeap(MaterialSys::MaterialProp* prop)
+{
+#if GRAPHICS_DX
+    ((GraphicsResourceHeapDX12Bridge*)PlatformBridge)->DynamicFillHeap(prop);
+#elif GRAPHICS_METAL
 #endif
 }

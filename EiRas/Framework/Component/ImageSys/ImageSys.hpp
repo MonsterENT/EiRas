@@ -6,7 +6,7 @@
 
 namespace ImageSys
 {
-    float* LoadImageFromFile(std::string path, int* width, int* height, int* comp);
+    unsigned char* LoadImageFromFile(std::string path, int* width, int* height, int* comp);
     void FreeData(void* data);
 }
 

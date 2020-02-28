@@ -33,10 +33,49 @@ GraphicsResourceHeapDX12::~GraphicsResourceHeapDX12()
     heap = NULL;
 }
 
+inline void _FillHeapWithProp(CD3DX12_CPU_DESCRIPTOR_HANDLE cpuHandle, CD3DX12_GPU_DESCRIPTOR_HANDLE gpuHandle, MaterialProp* prop)
+{
+    GET_EIRAS_DX12(deviceObj)
+    GraphicsResourceDX12* resObj = (GraphicsResourceDX12*)prop->Resource->PlatformBridge->raw_obj;
+    resObj->CpuHandle = cpuHandle;
+    resObj->GpuHandle = gpuHandle;
+
+    if (prop->Resource->Behaviors.ResourceType == GraphicsResourceType::SRV)
+    {
+        ShaderResourceDX12* resSrv = (ShaderResourceDX12*)(resObj);
+        D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
+        srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+        srvDesc.Format = resSrv->TexFormat;
+        srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
+        srvDesc.Texture2D.MipLevels = 1;
+        deviceObj->device->CreateShaderResourceView(resSrv->Resource, &srvDesc, cpuHandle);
+    }
+    else if (prop->Resource->Behaviors.ResourceType == GraphicsResourceType::CBV)
+    {
+        ConstantBufferDX12* resCb = (ConstantBufferDX12*)resObj;
+        D3D12_CONSTANT_BUFFER_VIEW_DESC viewDesc = {};
+        viewDesc.BufferLocation = resCb->Resource->GetGPUVirtualAddress();
+        viewDesc.SizeInBytes = (resCb->GetBufferSize() + 255) & ~255;
+        deviceObj->device->CreateConstantBufferView(&viewDesc, cpuHandle);
+    }
+}
+
+void GraphicsResourceHeapDX12::DynamicFillHeap(MaterialSys::MaterialProp* prop)
+{
+    CD3DX12_CPU_DESCRIPTOR_HANDLE cpuHandle(heap->GetCPUDescriptorHandleForHeapStart());
+    CD3DX12_GPU_DESCRIPTOR_HANDLE gpuHandle(heap->GetGPUDescriptorHandleForHeapStart());
+
+    cpuHandle.Offset(prop->_heapOffset, Offset);
+    gpuHandle.Offset(prop->_heapOffset, Offset);
+
+    _FillHeapWithProp(cpuHandle, gpuHandle, prop);
+}
+
 void GraphicsResourceHeapDX12::FillHeap(_uint tableCount, MaterialTable** tableArray)
 {
     GET_EIRAS_DX12(deviceObj)
-        CD3DX12_CPU_DESCRIPTOR_HANDLE cpuHandle = CD3DX12_CPU_DESCRIPTOR_HANDLE(heap->GetCPUDescriptorHandleForHeapStart());
+    
+    CD3DX12_CPU_DESCRIPTOR_HANDLE cpuHandle(heap->GetCPUDescriptorHandleForHeapStart());
     CD3DX12_GPU_DESCRIPTOR_HANDLE gpuHandle(heap->GetGPUDescriptorHandleForHeapStart());
 
     _uint heapOffset = 0;
@@ -52,32 +91,11 @@ void GraphicsResourceHeapDX12::FillHeap(_uint tableCount, MaterialTable** tableA
 
             if (prop->Resource == 0)
             {
-                //SRV will be dynamic filled to heap
+                //unbound SRV slot will be dynamic filled to heap
             }
             else
             {
-                GraphicsResourceDX12* resObj = (GraphicsResourceDX12*)prop->Resource->PlatformBridge->raw_obj;
-
-                if (resObj->Behaviors->ResourceType == GraphicsResourceType::CBV)
-                {
-                    ConstantBufferDX12* resCb = (ConstantBufferDX12*)resObj;
-                    D3D12_CONSTANT_BUFFER_VIEW_DESC viewDesc = {};
-                    viewDesc.BufferLocation = resCb->Resource->GetGPUVirtualAddress();
-                    viewDesc.SizeInBytes = (resCb->GetBufferSize() + 255) & ~255;
-                    deviceObj->device->CreateConstantBufferView(&viewDesc, cpuHandle);
-                }
-                //else if (resObj->Behaviors->ResourceType == GraphicsResourceType::SRV)
-                //{
-                //    ShaderResourceDX12* resSrv = dynamic_cast<ShaderResourceDX12*>(resObj);
-                //    D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
-                //    srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-                //    srvDesc.Format = resSrv->TexFormat;
-                //    srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
-                //    srvDesc.Texture2D.MipLevels = 1;
-                //    deviceObj->device->CreateShaderResourceView(resSrv->Resource, &srvDesc, cpuHandle);
-                //}
-                resObj->CpuHandle = cpuHandle;
-                resObj->GpuHandle = gpuHandle;
+                _FillHeapWithProp(cpuHandle, gpuHandle, prop);
             }
             heapOffset++;
             cpuHandle.Offset(1, Offset);

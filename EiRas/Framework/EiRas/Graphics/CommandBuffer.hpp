@@ -17,6 +17,8 @@
 
 namespace MaterialSys {
     class Material;
+    class MaterialSlot;
+    class MaterialProp;
     class MaterialTable;
     class GraphicsResourceHeap;
 }
@@ -53,6 +55,10 @@ namespace Graphics {
         EiRasPlatformBridgeProtocol* PlatformBridge;
 
     private:
+        void _DynamicFillHeap(MaterialSys::MaterialProp* prop);
+
+        void _ReFillHeap();
+
         MaterialSys::GraphicsResourceHeap* resourceHeap;
         void RegMaterial(MaterialSys::Material* material);
         void RemoveMaterial(MaterialSys::Material* material);

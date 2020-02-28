@@ -8,8 +8,7 @@ namespace MaterialSys
 {
     class GraphicsResourceHeapDX12;
     class MaterialDX12;
-    class MaterialTable;
-    class MaterialProp;
+    class MaterialLayout;
     
     class MeshDX12;
     class GraphicsResourceDX12;
@@ -35,9 +34,7 @@ namespace Graphics {
 
         void DrawMesh(MeshSys::MeshDX12* mesh);
 
-//        void SetPipelineState(MaterialSys::MaterialDX12* mat, std::vector<MaterialSys::MaterialProp*>* props, std::vector<MaterialSys::MaterialTable*>* tables);
-
-        void SetMaterial(MaterialSys::MaterialDX12* mat);
+        void SetMaterial(MaterialSys::MaterialDX12* mat, MaterialSys::MaterialLayout* layout);
 
         ID3D12CommandAllocator* cmdAllocator = 0;
         ID3D12GraphicsCommandList* cmdList = 0;

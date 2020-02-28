@@ -5,7 +5,7 @@
 
 namespace MaterialSys
 {
-    class ShaderResourceDX12 : public virtual GraphicsResourceDX12
+    class ShaderResourceDX12 : public GraphicsResourceDX12
     {
     public:
         ShaderResourceDX12(GraphicsResourceBehaviors* behaviors, DXGI_FORMAT format, UINT width, UINT height, void* texData, bool* buildStatusFlag);

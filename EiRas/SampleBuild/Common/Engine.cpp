@@ -24,26 +24,20 @@ void Engine::m_initEngine()
     cmdBuffer = new CommandBuffer("main buffer");
 
     ShaderLayout* layout = new ShaderLayout();
-    layout->SlotNum = 2;
+    //table->Props[]
 
-    ShaderProp* commonCb0 = new ShaderProp();
-    commonCb0->BufferSize = sizeof(float) * 4;
-    commonCb0->PropName = "CommonCB0";
-    commonCb0->PropType = GraphicsResourceType::CBV;
-    commonCb0->Visibility = GraphicsResourceVisibility::VISIBILITY_PIXEL;
-    commonCb0->SlotType = ShaderSlotType::ShaderSlotType_Prop;
-    commonCb0->UpdateFreq = GraphicsResourceUpdateFreq::UPDATE_FREQ_HIGH;
+    ShaderProp* commonCB0 = new ShaderProp("CommonCB0", GraphicsResourceType::CBV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_HIGH, sizeof(float4));
 
-    ShaderProp* commonSR1 = new ShaderProp();
-    commonSR1->BufferSize = 0;
-    commonSR1->PropName = "CommmonSR1";
-    commonSR1->PropType = GraphicsResourceType::SRV;
-    commonSR1->Visibility = GraphicsResourceVisibility::VISIBILITY_PIXEL;
-    commonSR1->UpdateFreq = GraphicsResourceUpdateFreq::UPDATE_FREQ_ONINIT;
+    ShaderPropRange commonSR1("CommonSR1", GraphicsResourceType::SRV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_ONINIT);
+    commonSR1.PropNum = 1;
 
-    layout->Slots = new ShaderSlot*[2];
-    layout->Slots[0] = commonCb0;
-    layout->Slots[1] = commonSR1;
+    ShaderTable *table = new ShaderTable();
+    table->AddRange(commonSR1);
+
+    layout->AddSlot(commonCB0);
+    layout->AddSlot(table);
+
+    ShaderProp* tps = (ShaderProp*)(&layout->Slots[0]);
 
 #if GRAPHICS_METAL
     shader = new Shader("m_shader", "vertexShader", "fragmentShader");
@@ -67,13 +61,13 @@ void Engine::m_initEngine()
     tmpCol.y = 1;
     tmpCol.z = 0;
     tmpCol.w = 1;
-    mat->SetProperty(0, -1, &tmpCol);
+    //mat->SetProperty(&tmpCol, 0);
     mesh = 0;
     std::string resPath = FileSys::FileManager::shareInstance()->GetResourcePath("qumian", "obj");
     mesh = new Mesh(resPath);
     mesh->BuildBuffer();
 
-    std::string imagePath = FileSys::FileManager::shareInstance()->GetResourcePath("ground", "png");
+    std::string imagePath = FileSys::FileManager::shareInstance()->GetResourcePath("ground512", "png");
     imageObj = new Image(imagePath);
 }
 
@@ -105,6 +99,7 @@ void Engine::Update()
 {
     cmdBuffer->BeginFrame();
     cmdBuffer->Reset();
+    mat->SetProperty(imageObj, 1);
     cmdBuffer->SetMaterial(mat);
     if(mesh)
         cmdBuffer->DrawMesh(mesh);
