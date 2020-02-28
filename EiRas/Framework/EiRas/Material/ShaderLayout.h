@@ -84,12 +84,13 @@ namespace MaterialSys
     class ShaderLayout
     {
     public:
-        std::vector<ShaderSlot*> Slots;
+        _uint SlotNum;
+        ShaderSlot** Slots;
 
-        void AddSlot(ShaderSlot* slot)
+        ShaderLayout(_uint slotNum)
         {
-
-            Slots.push_back(slot);
+            SlotNum = slotNum;
+            Slots = new ShaderSlot * [slotNum];
         }
     };
 }

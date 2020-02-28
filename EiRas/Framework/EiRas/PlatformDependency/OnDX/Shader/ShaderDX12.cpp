@@ -51,7 +51,7 @@ void ShaderDX12::InitVertexDescriptor(Graphics::GraphicsVertexDescriptor* desc)
 
 ID3D12RootSignature* createRootSig(ShaderLayout* shaderLayout)
 {
-    _uint slotNum = shaderLayout->Slots.size();
+    _uint slotNum = shaderLayout->SlotNum;
 
     UINT _BASE_CB_REGISTER = 0;
     UINT _BASE_SR_REGISTER = 0;

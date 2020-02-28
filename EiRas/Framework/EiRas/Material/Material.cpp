@@ -42,7 +42,7 @@ Material::Material(std::string Name, Shader* shader, Graphics::CommandBuffer* co
     
     if(shader->Layout != 0)
     {
-        _uint slotNum = shader->Layout->Slots.size();
+        _uint slotNum = shader->Layout->SlotNum;
         materialLayout = new MaterialLayout(slotNum);
         for (int i = 0; i < slotNum; i++)
         {
@@ -121,7 +121,7 @@ inline MaterialProp* getMaterialProp(Material* mat, _uint slotIndex, _uint propI
     if (tSlot->SlotType == MaterialSlotType::MaterialSlotType_Table)
     {
         MaterialTable* tTable = (MaterialTable*)tSlot;
-        if (propIndex >= tTable->PropNum)
+        if (propIndex >= tTable->PropNum || propIndex < 0)
         {
             return 0;
         }
@@ -136,7 +136,7 @@ inline MaterialProp* getMaterialProp(Material* mat, _uint slotIndex, _uint propI
     return tProp;
 }
 
-void Material::SetProperty(void* res, _uint slotIndex, _uint propIndex)
+void Material::SetProperty(void* res, _uint slotIndex, int propIndex)
 {
     bool fromTable = false;
     MaterialProp* tProp = getMaterialProp(this, slotIndex, propIndex, fromTable);
@@ -153,7 +153,7 @@ void Material::SetProperty(void* res, _uint slotIndex, _uint propIndex)
 #endif
 }
 
-void Material::SetProperty(ImageSys::Image* image, _uint slotIndex, _uint propIndex)
+void Material::SetProperty(ImageSys::Image* image, _uint slotIndex, int propIndex)
 {
     bool fromTable = false;
     MaterialProp* tProp = getMaterialProp(this, slotIndex, propIndex, fromTable);

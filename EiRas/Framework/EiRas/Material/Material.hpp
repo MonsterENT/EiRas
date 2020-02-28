@@ -42,8 +42,8 @@ namespace MaterialSys {
         void FinishStateChange();
         EiRasPlatformBridgeProtocol* PlatformBridge;
 
-        void SetProperty(void* res, _uint slotIndex, _uint propIndex = -1);
-        void SetProperty(ImageSys::Image* image, _uint slotIndex, _uint propIndex = -1);
+        void SetProperty(void* res, _uint slotIndex, int propIndex = -1);
+        void SetProperty(ImageSys::Image* image, _uint slotIndex, int propIndex = -1);
 
         Shader* shader;
         MaterialLayout* materialLayout;

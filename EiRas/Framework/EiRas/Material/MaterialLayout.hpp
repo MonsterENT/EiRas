@@ -31,6 +31,7 @@ namespace MaterialSys
             Name = name;
             Resource = new GraphicsResource(name, propType, visible, updateFreq, initResource);
             Resource->InitAsConstantBuffer(bufferSize);
+            this->SlotType = MaterialSlotType::MaterialSlotType_Prop;
         }
 
         _uint _heapOffset;
@@ -45,6 +46,7 @@ namespace MaterialSys
         {
             PropNum = propNum;
             this->Props = matProps;
+            this->SlotType = MaterialSlotType::MaterialSlotType_Table;
         }
     };
 

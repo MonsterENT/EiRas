@@ -19,16 +19,11 @@ using namespace ImageSys;
 
 Image* imageObj = 0;
 
-float4* testDataArray;
-
 void Engine::m_initEngine()
 {
-    testDataArray = new float4[1000];
-    
     cmdBuffer = new CommandBuffer("main buffer");
     
-    ShaderLayout* layout = new ShaderLayout();
-    //table->Props[]
+    ShaderLayout* layout = new ShaderLayout(2);
 
     ShaderProp* commonCB0 = new ShaderProp("CommonCB0", GraphicsResourceType::CBV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_HIGH, sizeof(float4));
 
@@ -38,10 +33,8 @@ void Engine::m_initEngine()
     ShaderTable *table = new ShaderTable();
     table->AddRange(commonSR1);
 
-    layout->AddSlot(commonCB0);
-    layout->AddSlot(table);
-
-    ShaderProp* tps = (ShaderProp*)(&layout->Slots[0]);
+    layout->Slots[0] = commonCB0;
+    layout->Slots[1] = table;
 
 #if GRAPHICS_METAL
     shader = new Shader("m_shader", "vertexShader", "fragmentShader");
@@ -60,12 +53,15 @@ void Engine::m_initEngine()
     shader->InitVertexDescriptor(m_vertexDesc);
     
     mat = new Material("material", shader, cmdBuffer);
+
+    MaterialSlot* mSlot = mat->materialLayout->Slots[1];
+
     static float4 tmpCol;
     tmpCol.x = 1;
     tmpCol.y = 1;
     tmpCol.z = 0;
     tmpCol.w = 1;
-    //mat->SetProperty(&tmpCol, 0);
+    mat->SetProperty(&tmpCol, 0);
     mesh = 0;
     std::string resPath = FileSys::FileManager::shareInstance()->GetResourcePath("qumian", "obj");
     
@@ -75,8 +71,8 @@ void Engine::m_initEngine()
     subMesh->IndicesCount = 6;
     subMesh->VerticesCount = 4;
     subMesh->IndicesData = new _uint[6] {0, 1, 3, 1, 2, 3};
-    subMesh->PositionData = new float3[4] {{-1, 1, 0}, {1, 1, 0}, {1, -1, 0}, {-1, -1, 0}};
-    subMesh->UVData = new float2[4] {{0, 0}, {0, 0}, {0, 0}, {0, 0}};
+    subMesh->PositionData = new float3[4] {{-0.5, 0.5, 0}, {0.5, 0.5, 0}, {0.5, -0.5, 0}, {-0.5, -0.5, 0}};
+    subMesh->UVData = new float2[4] {{0, 0}, {1, 0}, {1, 1}, {0, 1}};
     subMesh->NormalData = new float3[4] {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
     mesh->SubMeshes = subMesh;
     //    mesh->LoadDataFromFile(resPath);
@@ -85,7 +81,7 @@ void Engine::m_initEngine()
     std::string imagePath = FileSys::FileManager::shareInstance()->GetResourcePath("ground512", "png");
     imageObj = new Image(imagePath);
     
-    
+    mat->SetProperty(imageObj, 1, 0);
 }
 
 Engine::Engine()
@@ -116,7 +112,7 @@ void Engine::Update()
 {
     cmdBuffer->BeginFrame();
     cmdBuffer->Reset();
-    mat->SetProperty(imageObj, 1);
+
     cmdBuffer->SetMaterial(mat);
     if(mesh)
         cmdBuffer->DrawMesh(mesh);
