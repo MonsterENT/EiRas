@@ -19,17 +19,25 @@ public:
     
     Camera()
     {
-        _finishBuildMat = false;
+        _finishBuildViewMat = false;
     }
     
     TransformSys Transform;
     
-    Math::Matrix4X4* GetViewMatrix();
+    void SetProjection(float fov, float aspect, float ZNear, float ZFar);
+    
+    const Math::Matrix4X4* GetViewMatrix();
+    
+    const Math::Matrix4X4* GetProjectionMatrix();
     
 private:
     Math::Matrix4X4 _viewMat;
+    Math::Matrix4X4 _projectionMat;
     
-    bool _finishBuildMat;
+    float _fov, _aspect, _ZNear, _ZFar;
+    
+    bool _finishBuildViewMat;
+    bool _finishBuildProjectionMat;
 };
 
 }

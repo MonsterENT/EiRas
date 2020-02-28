@@ -35,6 +35,11 @@ typedef struct
     float4 _TmpColor;
 } PixelCBV;
 
+typedef struct
+{
+    float4 _DataArray[1000];
+} CommonCB1;
+
 // Vertex shader outputs and fragment shader inputs
 typedef struct
 {
@@ -66,9 +71,12 @@ vertexShader(uint vertexID [[vertex_id]],
 }
 
 fragment float4 fragmentShader(RasterizerData in [[stage_in]],
-                            constant PixelCBV& cbv[[buffer(0)]] )
+                            constant PixelCBV& cbv[[buffer(0)]],
+                               constant CommonCB1& cb1[[buffer(1)]])
 {
     // Return the interpolated color.
-    return cbv._TmpColor;
+    float4 col = cbv._TmpColor;
+    col.x += cb1._DataArray[0].r;
+    return col;
 }
 

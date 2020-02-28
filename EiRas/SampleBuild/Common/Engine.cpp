@@ -19,10 +19,14 @@ using namespace ImageSys;
 
 Image* imageObj = 0;
 
+float4* testDataArray;
+
 void Engine::m_initEngine()
 {
+    testDataArray = new float4[1000];
+    
     cmdBuffer = new CommandBuffer("main buffer");
-
+    
     ShaderLayout* layout = new ShaderLayout();
     layout->SlotNum = 2;
 
@@ -70,11 +74,21 @@ void Engine::m_initEngine()
     mat->SetProperty(0, -1, &tmpCol);
     mesh = 0;
     std::string resPath = FileSys::FileManager::shareInstance()->GetResourcePath("qumian", "obj");
-    mesh = new Mesh(resPath);
+    
+    mesh = new Mesh("qumian");
+    mesh->SubMeshCount = 1;
+    SubMesh* subMesh = new SubMesh;
+    subMesh->IndicesCount = 6;
+    subMesh->VerticesCount = 4;
+    subMesh->IndicesData = new _uint[6] {0, 1, 3, 1, 2, 3};
+    subMesh->PositionData = new float3[4] {{-1, 1, 0}, {1, 1, 0}, {1, -1, 0}, {-1, -1, 0}};
+    subMesh->UVData = new float2[4] {{0, 0}, {0, 0}, {0, 0}, {0, 0}};
+    subMesh->NormalData = new float3[4] {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
+    mesh->SubMeshes = subMesh;
+    //    mesh->LoadDataFromFile(resPath);
     mesh->BuildBuffer();
-
-    std::string imagePath = FileSys::FileManager::shareInstance()->GetResourcePath("ground", "png");
-    imageObj = new Image(imagePath);
+    
+    
 }
 
 Engine::Engine()

@@ -41,7 +41,11 @@
                 if([rawObj isKindOfClass:[ConstantBufferMetal class]])
                 {
                     ConstantBufferMetal* tmpCBObj = rawObj;
-                    tmpCBObj.rawBuffer = [_resourceHeap newBufferWithLength:tmpCBObj.bufferSize options:MTLStorageModeShared offset:allocOffset];
+                    if (@available(iOS 13.0, *)) {
+                        tmpCBObj.rawBuffer = [_resourceHeap newBufferWithLength:tmpCBObj.bufferSize options:MTLStorageModeShared offset:allocOffset];
+                    } else {
+                        [_resourceHeap newBufferWithLength:tmpCBObj.bufferSize options:MTLResourceStorageModeShared];
+                    }
                     allocOffset += tmpCBObj.bufferSize;
                 }
             }

@@ -26,9 +26,9 @@ using namespace MeshSys;
 using namespace MaterialSys;
 using namespace Graphics;
 
-Mesh::Mesh(std::string Name)
+Mesh::Mesh(std::string name)
 {
-    this->Name = Name;
+    this->Name = name;
 #if GRAPHICS_DX
     PlatformBridge = new MeshDX12Bridge();
 #endif
@@ -40,8 +40,13 @@ Mesh::Mesh(std::string Name)
     SubMeshCount = 0;
     VerticesCount = 0;
     IndicesCount = 0;
+
+}
+
+void Mesh::LoadDataFromFile(std::string fileName)
+{
     //Load MeshData
-    LoadMeshFromFile(Name, this);
+    LoadMeshFromFile(fileName, this);
 }
 
 void Mesh::BuildBuffer()
