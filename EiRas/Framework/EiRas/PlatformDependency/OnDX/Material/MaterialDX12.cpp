@@ -9,8 +9,6 @@
 #include <PlatformDependency/OnDX/Material/GraphicsResourceDX12.h>
 #include <PlatformDependency/OnDX/Material/ConstantBufferDX12.h>
 
-#include <assert.h>
-
 using namespace MaterialSys;
 using GraphicsAPI::EiRasDX12;
 
@@ -32,16 +30,5 @@ void MaterialDX12::SetProperty(MaterialProp* prop, void* res)
 void MaterialDX12::UpdateRenderState(Graphics::GraphicsRenderState* renderState, ShaderDX12* shaderObj)
 {
     GET_EIRAS_DX12(deviceObj)
-
-        HRESULT hr = DX12Utils::g_createPSO(deviceObj->device, shaderObj, PipelineState);
-
-    if (FAILED(hr))
-    {
-        DWORD errorWord = GetLastError();
-        char lastErrorStr[20];
-        sprintf_s(lastErrorStr, "Last Error %d\n", errorWord);
-        OutputDebugStringA(lastErrorStr);
-    }
-
-        assert(SUCCEEDED(hr));
+    DX12Utils::g_createPSO(deviceObj->device, shaderObj, PipelineState);
 }

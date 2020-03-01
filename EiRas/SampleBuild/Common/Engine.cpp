@@ -51,10 +51,8 @@ void Engine::m_initEngine()
     m_vertexDesc->InitBufferLayout();
     
     shader->InitVertexDescriptor(m_vertexDesc);
-    
-    mat = new Material("material", shader, cmdBuffer);
 
-    MaterialSlot* mSlot = mat->materialLayout->Slots[1];
+    mat = new Material("material", shader, cmdBuffer);
 
     static float4 tmpCol;
     tmpCol.x = 1;
@@ -70,8 +68,8 @@ void Engine::m_initEngine()
     SubMesh* subMesh = new SubMesh;
     subMesh->IndicesCount = 6;
     subMesh->VerticesCount = 4;
-    subMesh->IndicesData = new _uint[6] {0, 1, 3, 1, 2, 3};
-    subMesh->PositionData = new float3[4] {{-0.5, 0.5, 0}, {0.5, 0.5, 0}, {0.5, -0.5, 0}, {-0.5, -0.5, 0}};
+    subMesh->IndicesData = new _uint[6] {0, 1, 2, 2, 0, 3};
+    subMesh->PositionData = new float3[4] {{-1, 1, 1}, {1, 1, 1}, {1, -1, 1}, {-1, -1, 1}};
     subMesh->UVData = new float2[4] {{0, 0}, {1, 0}, {1, 1}, {0, 1}};
     subMesh->NormalData = new float3[4] {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
     mesh->SubMeshes = subMesh;
@@ -95,7 +93,7 @@ Engine::~Engine()
 #if GRAPHICS_DX
 void Engine::InitEngine(HWND hWnd, _uint width, _uint height)
 {
-    device = EiRas::Create(hWnd, 1024, 1080);
+    device = EiRas::Create(hWnd, 2560, 1440);
     m_initEngine();
 }
 #endif

@@ -61,7 +61,7 @@ Material::Material(std::string Name, Shader* shader, Graphics::CommandBuffer* co
                 
                 _uint ranegNum = shaderTable->Ranges.size();
 
-                std::vector<MaterialProp*>* tmpMatProps = new std::vector<MaterialProp*>();
+                std::vector<MaterialProp*> tmpMatProps;
                 for (_uint ranegIndex = 0; ranegIndex < ranegNum; ranegIndex++)
                 {
                     ShaderPropRange* tmpRange = &shaderTable->Ranges[ranegIndex];
@@ -82,10 +82,11 @@ Material::Material(std::string Name, Shader* shader, Graphics::CommandBuffer* co
                         tmpMatProp = new MaterialProp(tmpProp->BasePropName, tmpProp->PropType, tmpProp->Visibility, false, tmpProp->BufferSize);
 #endif
                         tmpMatProp->SlotID = -1;
-                        tmpMatProps->push_back(tmpMatProp);
+                        tmpMatProps.push_back(tmpMatProp);
                     }
                 }
-                MaterialTable* matTable = new MaterialTable(tmpMatProps->size(), (MaterialProp**)&tmpMatProps[0]);
+
+                MaterialTable* matTable = new MaterialTable(tmpMatProps.size(), tmpMatProps);
                 matTable->SlotID = i;
                 materialLayout->Slots[i] = matTable;
             }

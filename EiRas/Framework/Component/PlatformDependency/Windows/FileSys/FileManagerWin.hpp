@@ -7,27 +7,32 @@ namespace FileSys
     class FileManagerWin
     {
     public:
-        static char* GetResourcePath()
+
+        static char* GetProjectBasePath()
         {
-#pragma message("TOFIX")
-            if (tmpResourcePath == 0)
+            if (tmpProjectBasePath == 0)
             {
-                std::string tmp = "E://EiRasWorkspace//EiRas/EiRas//SampleBuild/Common//Resource//";
-                tmpResourcePath = new char[150];
-                memcpy(tmpResourcePath, tmp.c_str(), 150 * sizeof(char));
-                //DX12Utils::g_getAssetsPath(tmpResourcePath, 150);
-                tmpResourcePathLen = strlen(tmpResourcePath) * sizeof(char);
+                tmpProjectBasePath = new char[MAX_STR_LEN];
+                char* tmp = new char[MAX_STR_LEN];
+                GetModuleFileNameA(NULL, tmp, MAX_STR_LEN);
+                _uint len = strlen(tmp);
+                memcpy(tmpProjectBasePath, tmp, len - BUILD_OFFSET);
+                delete[] tmp;
+                tmpProjectBasePath[len - BUILD_OFFSET] = '\0';
             }
-
-            return tmpResourcePath;
+            return tmpProjectBasePath;
         }
 
-        static _uint GetResourcePathLen()
+        ~FileManagerWin()
         {
-            return tmpResourcePathLen;
+            delete[] tmpProjectBasePath;
         }
+
     private:
-        static char* tmpResourcePath;
-        static _uint tmpResourcePathLen;
+        static char* tmpProjectBasePath;
+
+        static const _uint MAX_STR_LEN = 150;
+
+        static const _uint BUILD_OFFSET = 53;
     };
 }

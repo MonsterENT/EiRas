@@ -45,10 +45,15 @@ void MeshSys::LoadMeshFromFile(std::string fileName, Mesh* meshObj)
         submesh->NormalData = new float3[submesh->VerticesCount];
         submesh->UVData = new float2[submesh->VerticesCount];
         submesh->ColorData = new float4[submesh->VerticesCount];
+        
         for (_uint j = 0; j < pmesh->mNumVertices; j++)
         {
             submesh->PositionData[j] = float3(pmesh->mVertices[j].x, pmesh->mVertices[j].y, pmesh->mVertices[j].z);
             submesh->NormalData[j] = float3(pmesh->mNormals[j].x, pmesh->mNormals[j].y, pmesh->mNormals[j].z);
+            if (pmesh->HasTextureCoords(0))
+            {
+                submesh->UVData[j] = float2(pmesh->mTextureCoords[0][j].x, pmesh->mTextureCoords[0][j].y);
+            }
         }
 
         submesh->IndicesCount = pmesh->mNumFaces * 3;

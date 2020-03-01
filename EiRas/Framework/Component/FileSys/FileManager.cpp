@@ -49,7 +49,8 @@ const char * FileManager::GetResourcePath(std::string resName, std::string type)
 
 #if GRAPHICS_DX
     std::string tmpPath = "";
-    tmpPath += FileManagerWin::GetResourcePath();
+    tmpPath += FileManagerWin::GetProjectBasePath();
+    tmpPath += "Common\\Resource\\";
     tmpPath += resName + "." + type;
     memcpy(g_ResPath, tmpPath.c_str(), 150 * sizeof(char));
 #endif

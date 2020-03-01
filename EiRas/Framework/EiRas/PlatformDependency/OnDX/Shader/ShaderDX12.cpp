@@ -80,14 +80,13 @@ ID3D12RootSignature* createRootSig(ShaderLayout* shaderLayout)
         else if (slot->SlotType == MaterialSys::ShaderSlotType::ShaderSlotType_Table)
         {
             ShaderTable* table = (ShaderTable*)slot;
-
+            
             _uint rangeNum = table->Ranges.size();
 
             CD3DX12_DESCRIPTOR_RANGE1* ranges = new CD3DX12_DESCRIPTOR_RANGE1[rangeNum];
             for (_uint j = 0; j < rangeNum; j++)
             {
                 ShaderPropRange* range = &table->Ranges[j];
-#pragma message("TOFIX")
                 if (range->PropType == GraphicsResourceType::SRV)
                 {
                     ranges[j].Init((D3D12_DESCRIPTOR_RANGE_TYPE)range->PropType, range->PropNum, _BASE_SR_REGISTER, _BASE_SPACE);
@@ -99,7 +98,7 @@ ID3D12RootSignature* createRootSig(ShaderLayout* shaderLayout)
                     _BASE_CB_REGISTER += range->PropNum;
                 }
             }
-            rootParameters[i].InitAsDescriptorTable(rangeNum, ranges);
+            rootParameters[i].InitAsDescriptorTable(rangeNum, ranges, (D3D12_SHADER_VISIBILITY)MaterialSys::GraphicsResourceVisibilityToDX12(table->Ranges[0].Visibility));
         }
     }
 
@@ -114,7 +113,7 @@ ID3D12RootSignature* createRootSig(ShaderLayout* shaderLayout)
     GET_EIRAS_DX12(deviceObj)
     deviceObj->device->CreateRootSignature(0, signature->GetBufferPointer(), signature->GetBufferSize(), IID_PPV_ARGS(&rootSig));
 
-    for (int i = 0; i < slotNum; i++)
+    for (_uint i = 0; i < slotNum; i++)
     {
         if (rootParameters[i].DescriptorTable.NumDescriptorRanges > 0)
         {

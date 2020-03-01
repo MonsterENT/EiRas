@@ -4,6 +4,7 @@
 #include <Material/GraphicsResource.hpp>
 #include <Material/GraphicsResourceHeap.hpp>
 #include <string>
+#include <vector>
 #include <Global/GlobalDefine.h>
 
 namespace MaterialSys
@@ -30,7 +31,14 @@ namespace MaterialSys
         {
             Name = name;
             Resource = new GraphicsResource(name, propType, visible, updateFreq, initResource);
-            Resource->InitAsConstantBuffer(bufferSize);
+            if (propType == GraphicsResourceType::SRV)
+            {
+                Resource = NULL;
+            }
+            else
+            {
+                Resource->InitAsConstantBuffer(bufferSize);
+            }
             this->SlotType = MaterialSlotType::MaterialSlotType_Prop;
         }
 
@@ -42,10 +50,14 @@ namespace MaterialSys
     public:
         _uint PropNum;
         MaterialProp** Props;
-        MaterialTable(_uint propNum, MaterialProp** matProps)
+        MaterialTable(_uint propNum, std::vector<MaterialProp*> matProps)
         {
             PropNum = propNum;
-            this->Props = matProps;
+            this->Props = new MaterialProp*[PropNum];
+            for (_uint i = 0; i < PropNum; i++)
+            {
+                this->Props[i] = matProps[0];
+            }
             this->SlotType = MaterialSlotType::MaterialSlotType_Table;
         }
     };

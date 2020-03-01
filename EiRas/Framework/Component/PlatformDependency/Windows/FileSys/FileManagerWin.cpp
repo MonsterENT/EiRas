@@ -1,5 +1,4 @@
 #include "FileManagerWin.hpp"
 using namespace FileSys;
 
-char* FileManagerWin::tmpResourcePath = 0;
-_uint FileManagerWin::tmpResourcePathLen = -1;
+char* FileManagerWin::tmpProjectBasePath = 0;
