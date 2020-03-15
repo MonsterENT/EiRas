@@ -22,6 +22,10 @@ namespace ImageSys
 
         Image(std::string filePath);
 
+        void LoadFromFile(std::string filePath);
+
+        void LoadFromBuffer(void* buffer);
+
         int Width, Height, Channels;
 
         MaterialSys::GraphicsResource* PipelineResource;

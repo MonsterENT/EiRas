@@ -11,16 +11,21 @@
 
 #include <Basic/Image.hpp>
 
+#include <FontSys/FontSys.hpp>
+
 using namespace MaterialSys;
 using namespace Graphics;
 using namespace GraphicsAPI;
 using namespace MeshSys;
 using namespace ImageSys;
+using namespace FontSys;
 
 Image* imageObj = 0;
 
 void Engine::m_initEngine()
 {
+    FontSys::Font* font = new Font("C:\\Users\\Administrator\\Desktop\\WorkSpace\\EiRas\\EiRas\\SampleBuild\\Common\\Resource\\Font\\BELL.TTF");
+
     cmdBuffer = new CommandBuffer("main buffer");
     
     ShaderLayout* layout = new ShaderLayout(2);

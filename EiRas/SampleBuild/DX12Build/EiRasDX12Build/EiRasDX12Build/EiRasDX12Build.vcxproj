@@ -76,8 +76,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <SourcePath>..\..\..\..\Framework\EiRas;$(SourcePath)</SourcePath>
-    <IncludePath>..\..\..\..\Framework\EiRas;..\..\..\..\Framework;..\..\..\..\Framework\Component;..\..\..\..\SampleBuild\Library;..\..\..\..\SampleBuild\Library\assimp\include\assimp;..\..\..\Common;$(IncludePath)</IncludePath>
-    <LibraryPath>..\..\..\DX12Build\EiRasDX12Build\lib\assimp;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\..\..\Framework\EiRas;..\..\..\..\Framework;..\..\..\..\Framework\Component;..\..\..\..\SampleBuild\Library;..\..\..\..\SampleBuild\Library\freetype\include;..\..\..\..\SampleBuild\Library\assimp\include\assimp;..\..\..\Common;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\..\DX12Build\EiRasDX12Build\lib\freetype\win64;..\..\..\DX12Build\EiRasDX12Build\lib\assimp;$(LibraryPath)</LibraryPath>
     <LibraryWPath>$(LibraryWPath)</LibraryWPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -157,6 +157,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Framework\Component\FileSys\FileManager.hpp" />
+    <ClInclude Include="..\..\..\..\Framework\Component\FontSys\FontSys.hpp" />
     <ClInclude Include="..\..\..\..\Framework\Component\ImageSys\ImageSys.hpp" />
     <ClInclude Include="..\..\..\..\Framework\Component\LogSys\LogManager.hpp" />
     <ClInclude Include="..\..\..\..\Framework\Component\PlatformDependency\Windows\FileSys\FileManagerWin.hpp" />
@@ -209,6 +210,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\Framework\Component\FileSys\FileManager.cpp" />
+    <ClCompile Include="..\..\..\..\Framework\Component\FontSys\FontSys.cpp" />
     <ClCompile Include="..\..\..\..\Framework\Component\ImageSys\ImageSys.cpp" />
     <ClCompile Include="..\..\..\..\Framework\Component\LogSys\LogManager.cpp" />
     <ClCompile Include="..\..\..\..\Framework\Component\PlatformDependency\Windows\FileSys\FileManagerWin.cpp" />
