@@ -168,10 +168,14 @@
     <ClInclude Include="..\..\..\..\Framework\EiRas\Basic\Image.hpp">
       <Filter>framework</Filter>
     </ClInclude>
+
     <ClInclude Include="..\..\..\..\Framework\EiRas\Basic\TransformSys.hpp">
       <Filter>framework</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Framework\EiRas\Basic\Camera.hpp">
+        <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Framework\Component\FontSys\FontSys.hpp">
       <Filter>framework</Filter>
     </ClInclude>
   </ItemGroup>
@@ -296,10 +300,14 @@
     <ClCompile Include="..\..\..\..\Framework\EiRas\Basic\Image.cpp">
       <Filter>framework</Filter>
     </ClCompile>
+
     <ClCompile Include="..\..\..\..\Framework\EiRas\Basic\TransformSys.cpp">
       <Filter>framework</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\Framework\EiRas\Basic\Camera.cpp">
+        <Filter>framework</Filter>
+        </ClCompile>
+    <ClCompile Include="..\..\..\..\Framework\Component\FontSys\FontSys.cpp">
       <Filter>framework</Filter>
     </ClCompile>
   </ItemGroup>
