@@ -161,7 +161,9 @@
     <ClInclude Include="..\..\..\..\Framework\Component\LogSys\LogManager.hpp" />
     <ClInclude Include="..\..\..\..\Framework\Component\PlatformDependency\Windows\FileSys\FileManagerWin.hpp" />
     <ClInclude Include="..\..\..\..\Framework\Component\PlatformDependency\Windows\LogSys\LogManagerWin.hpp" />
+    <ClInclude Include="..\..\..\..\Framework\EiRas\Basic\Camera.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Basic\Image.hpp" />
+    <ClInclude Include="..\..\..\..\Framework\EiRas\Basic\TransformSys.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Global\EiRasGlobalManager.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Global\GlobalDefine.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Global\PlatformDefine.h" />
@@ -213,7 +215,9 @@
     <ClCompile Include="..\..\..\..\Framework\Component\LogSys\LogManager.cpp" />
     <ClCompile Include="..\..\..\..\Framework\Component\PlatformDependency\Windows\FileSys\FileManagerWin.cpp" />
     <ClCompile Include="..\..\..\..\Framework\Component\PlatformDependency\Windows\LogSys\LogManagerWin.cpp" />
+    <ClCompile Include="..\..\..\..\Framework\EiRas\Basic\Camera.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\Basic\Image.cpp" />
+    <ClCompile Include="..\..\..\..\Framework\EiRas\Basic\TransformSys.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\Global\EiRasGlobalManager.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\GraphicsAPI\EiRas.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\Graphics\CommandBuffer.cpp" />
