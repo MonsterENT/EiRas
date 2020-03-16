@@ -19,12 +19,13 @@ namespace ImageSys
     class Image
     {
     public:
+        std::string Name;
 
-        Image(std::string filePath);
+        Image(std::string name);
 
         void LoadFromFile(std::string filePath);
 
-        void LoadFromBuffer(void* buffer);
+        void LoadFromBuffer(void* buffer, int width, int height, int channels = 4);
 
         int Width, Height, Channels;
 
@@ -35,6 +36,9 @@ namespace ImageSys
         void Build(void* cmdList);
 
         void FinishBuild();
+
+    private:
+        void buildResourceWithData(void* data);
     };
 
 

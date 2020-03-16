@@ -12,9 +12,15 @@ using namespace Math;
 
 vector<Image*> ImageSys::ImageSysBuildingList;
 
-Image::Image(std::string filePath)
+Image::Image(std::string name)
 {
     isFinishBuild = false;
+    PipelineResource = 0;
+    ImageSysBuildingList.push_back(this);
+}
+
+void Image::LoadFromFile(std::string filePath)
+{
     unsigned char* data = LoadImageFromFile(filePath, (int*)&Width, (int*)&Height, (int*)&Channels);
     if (data == 0)
     {
@@ -22,13 +28,17 @@ Image::Image(std::string filePath)
         return;
     }
 
-    PipelineResource = new GraphicsResource(filePath, GraphicsResourceType::SRV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_ONINIT, false);
-    PipelineResource->InitAsShaderResource(Width, Height, data, &isFinishBuild);
-    
+    buildResourceWithData(data);
 #pragma message("TOFIX InitAsShaderResource will copy data")
     //FreeData(data);
+}
 
-    ImageSysBuildingList.push_back(this);
+void Image::LoadFromBuffer(void* buffer, int width, int height, int channels)
+{
+    Width = width;
+    Height = height;
+    Channels = channels;
+    buildResourceWithData(buffer);
 }
 
 void Image::Build(void* cmdList)
@@ -40,4 +50,14 @@ void Image::FinishBuild()
 {
     PipelineResource->ShaderResourceFinishBuild();
 #pragma message("TOFIX remove from building list")
+}
+
+void Image::buildResourceWithData(void* data)
+{
+    if (PipelineResource)
+    {
+        delete PipelineResource;
+    }
+    PipelineResource = new GraphicsResource(Name, GraphicsResourceType::SRV, GraphicsResourceVisibility::VISIBILITY_PIXEL, GraphicsResourceUpdateFreq::UPDATE_FREQ_ONINIT, false);
+    PipelineResource->InitAsShaderResource(Width, Height, data, &isFinishBuild);
 }

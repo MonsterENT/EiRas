@@ -24,8 +24,6 @@ Image* imageObj = 0;
 
 void Engine::m_initEngine()
 {
-    FontSys::Font* font = new Font("C:\\Users\\Administrator\\Desktop\\WorkSpace\\EiRas\\EiRas\\SampleBuild\\Common\\Resource\\Font\\BELL.TTF");
-
     cmdBuffer = new CommandBuffer("main buffer");
     
     ShaderLayout* layout = new ShaderLayout(2);
@@ -82,8 +80,14 @@ void Engine::m_initEngine()
     mesh->BuildBuffer();
 
     std::string imagePath = FileSys::FileManager::shareInstance()->GetResourcePath("ground512", "png");
-    imageObj = new Image(imagePath);
-    
+    //imageObj = new Image("ground512");
+    //imageObj->LoadFromFile(imagePath);
+
+    FontSys::Font* font = new Font("E:\\EiRasWorkspace\\EiRas\\EiRas\\SampleBuild\\Common\\Resource\\Font\\BELL.TTF");
+    font->InitData("ABC", 256);
+    imageObj = new Image("Font");
+    imageObj->LoadFromBuffer(font->data, font->width, font->height);
+
     mat->SetProperty(imageObj, 1, 0);
 }
 

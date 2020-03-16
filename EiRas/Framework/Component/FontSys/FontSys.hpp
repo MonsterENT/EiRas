@@ -9,6 +9,16 @@ namespace FontSys
     {
     public:
         Font(std::string filePath);
+        ~Font();
+        void InitData(std::string text, int fontSizeInPixel = 16);
+
+        int FontSizeInPixel;
+
+        int width, height;
+        unsigned char* data;
+
+    private:
+        std::string filePath;
     };
 }
 
