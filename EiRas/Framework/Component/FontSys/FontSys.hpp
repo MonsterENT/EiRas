@@ -5,14 +5,16 @@
 
 namespace FontSys
 {
+    class FontManager;
+    class FontMap;
     class Font
     {
+        friend FontManager;
+        friend FontMap;
     public:
         Font(std::string filePath);
         ~Font();
-        void InitData(std::string text, int fontSizeInPixel = 16);
-
-        int FontSizeInPixel;
+        void GetText(std::string text, int fontSizeInPixel = 16);
 
         int width, height;
         unsigned char* data;

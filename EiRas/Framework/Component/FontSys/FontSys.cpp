@@ -27,14 +27,13 @@ void scanToBuffer(unsigned char* dstBuffer, int dstBufferWidth, int dstBufferHei
 Font::Font(std::string filePath)
 {
     this->filePath = filePath;
-    FontSizeInPixel = 16;
 }
 
 Font::~Font()
 {
 }
 
-void Font::InitData(std::string text, int fontSizeInPixel)
+void Font::GetText(std::string text, int fontSizeInPixel)
 {
     FT_Library library;
 
@@ -54,20 +53,10 @@ void Font::InitData(std::string text, int fontSizeInPixel)
         return;
     }
 
-    FontSizeInPixel = fontSizeInPixel;
-
-
-    FT_Set_Pixel_Sizes(face, 0, FontSizeInPixel);
+    FT_Set_Pixel_Sizes(face, 0, fontSizeInPixel);
 
     const char* c_str_text = text.c_str();
     int lens = strlen(c_str_text);
-
-    FT_Matrix matrix;
-    double angle = 0;      /* use 25 degrees     */
-    matrix.xx = (FT_Fixed)(cos(angle) * 0x10000L);
-    matrix.xy = (FT_Fixed)(-sin(angle) * 0x10000L);
-    matrix.yx = (FT_Fixed)(sin(angle) * 0x10000L);
-    matrix.yy = (FT_Fixed)(cos(angle) * 0x10000L);
 
     FT_Vector vector;
     vector.x = 0;

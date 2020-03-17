@@ -24,6 +24,16 @@ class float2;
 class float3;
 class float4;
 
+class rect_int
+{
+public:
+    int top, left;
+    int width, height;
+    
+    rect_int()
+    {}
+};
+
 class int2
 {
 public:

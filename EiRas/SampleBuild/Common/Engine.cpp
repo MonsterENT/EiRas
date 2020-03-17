@@ -84,7 +84,7 @@ void Engine::m_initEngine()
     //imageObj->LoadFromFile(imagePath);
 
     FontSys::Font* font = new Font("E:\\EiRasWorkspace\\EiRas\\EiRas\\SampleBuild\\Common\\Resource\\Font\\BELL.TTF");
-    font->InitData("ABC", 256);
+    font->GetText("ABC", 25);
     imageObj = new Image("Font");
     imageObj->LoadFromBuffer(font->data, font->width, font->height);
 
