@@ -34,6 +34,16 @@ public:
     {}
 };
 
+class rect_float
+{
+public:
+    float top, left;
+    float width, height;
+
+    rect_float()
+    {}
+};
+
 class int2
 {
 public:
