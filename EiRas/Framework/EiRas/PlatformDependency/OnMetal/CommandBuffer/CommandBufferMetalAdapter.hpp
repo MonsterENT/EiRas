@@ -13,15 +13,14 @@
 #include <vector>
 
 namespace MaterialSys {
-class MaterialProp;
-class MaterialTable;
+class Material;
 }
 
 namespace Graphics {
 
 void* createCommandBufferMetal(std::string name);
 
-void setMaterialMetal(void* ptr, void* material_raw_obj, std::vector<MaterialSys::MaterialProp*>* props, std::vector<MaterialSys::MaterialTable*>* tables);
+void setMaterialMetal(void* ptr, MaterialSys::Material* material);
 
 void drawMeshMetal(void* ptr, void* meshObj);
 

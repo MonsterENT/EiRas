@@ -15,7 +15,7 @@
 
 -(void)SetProperty:(MaterialSys::MaterialProp*)prop resPtr:(void*)res
 {
-    if(prop->PropType == MaterialSys::GraphicsResourceType::CBV)
+    if(prop->Resource->Behaviors.ResourceType == MaterialSys::GraphicsResourceType::CBV)
     {
         prop->Resource->SetResource(res, false);
     }

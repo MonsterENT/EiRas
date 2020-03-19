@@ -18,7 +18,7 @@ namespace MaterialSys {
     class GraphicsResourceHeapMetalBridge : public EiRasPlatformBridgeProtocol
     {
     public:
-        GraphicsResourceHeapMetalBridge(_uint propCount, _uint tableCount, MaterialTable** tableArray);
+        GraphicsResourceHeapMetalBridge(_uint propCount);
     };
 }
 

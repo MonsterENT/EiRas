@@ -19,7 +19,7 @@ CommandBufferMetalBridge::CommandBufferMetalBridge(std::string name)
 
 void CommandBufferMetalBridge::SetMaterial(MaterialSys::Material* material)
 {
-    setMaterialMetal(raw_obj, material->PlatformBridge->raw_obj, &material->Props, &material->LayoutTables);
+    setMaterialMetal(raw_obj, material);
 }
 
 void CommandBufferMetalBridge::DrawMesh(EiRasPlatformBridgeProtocol* meshObjBridge)

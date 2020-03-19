@@ -15,7 +15,7 @@ GraphicsResourceHeap::GraphicsResourceHeap(_uint propCount)
 #if GRAPHICS_DX
     PlatformBridge = new GraphicsResourceHeapDX12Bridge(propCount);
 #elif GRAPHICS_METAL
-    PlatformBridge = new GraphicsResourceHeapMetalBridge(propCount, tableCount, tableArray);
+    PlatformBridge = new GraphicsResourceHeapMetalBridge(propCount);
 #endif
 }
 

@@ -27,17 +27,10 @@ typedef struct
     float2 uv [[ attribute(1) ]];
     float3 normal [[ attribute(2) ]];
 } AAPLVertex;
-//}
-
 
 typedef struct
 {
     float4 _TmpColor;
-} PixelCBV;
-
-typedef struct
-{
-    float4 _DataArray[1000];
 } CommonCB1;
 
 // Vertex shader outputs and fragment shader inputs
@@ -47,13 +40,8 @@ typedef struct
     // is the clip space position of the vertex when this structure is
     // returned from the vertex function.
     float4 position [[position]];
-
-    // Since this member does not have a special attribute, the rasterizer
-    // interpolates its value with the values of the other triangle vertices
-    // and then passes the interpolated value to the fragment shader for each
-    // fragment in the triangle.
-    float4 color;
-
+    float2 uv;
+    
 } RasterizerData;
 
 vertex RasterizerData
@@ -65,18 +53,21 @@ vertexShader(uint vertexID [[vertex_id]],
     float3 pixelSpacePosition = vertices.position.xyz;
     out.position.xyz = pixelSpacePosition;
     out.position.w = 1;
-//    out.color = 0;
-
+    out.uv = vertices.uv;
     return out;
 }
 
 fragment float4 fragmentShader(RasterizerData in [[stage_in]],
-                            constant PixelCBV& cbv[[buffer(0)]],
-                               constant CommonCB1& cb1[[buffer(1)]])
+                               constant CommonCB1& cb1[[buffer(0)]],
+                               texture2d<half> colorTexture [[ texture(0) ]])
 {
-    // Return the interpolated color.
-    float4 col = cbv._TmpColor;
-    col.x += cb1._DataArray[0].r;
-    return col;
+    constexpr sampler textureSampler (mag_filter::linear,
+                                      min_filter::linear);
+
+    // Sample the texture to obtain a color
+    const half4 colorSample = colorTexture.sample(textureSampler, in.uv);
+
+    // return the color of the texture
+    return float4(colorSample) * cb1._TmpColor;
 }
 

@@ -15,7 +15,9 @@
 
 #include <vector>
 
-#import <PlatformDependency/OnMetal/Mesh/MeshMetal.h>
+#include <Material.hpp>
+
+#import "MeshMetal.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -25,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(copy, nonatomic)NSString* name;
 
--(void)setMaterial:(MaterialMetal*)material props:(std::vector<MaterialSys::MaterialProp*>*)props tables:(std::vector<MaterialSys::MaterialTable*>*)tables;
+-(void)setMaterial:(MaterialSys::Material*)material;
 
 -(void)drawMesh:(MeshMetal*)meshObj;
 

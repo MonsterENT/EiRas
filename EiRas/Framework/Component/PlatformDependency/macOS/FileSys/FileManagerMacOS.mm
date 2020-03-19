@@ -12,7 +12,6 @@
 
 +(NSString*)getResourcePath:(NSString*)resName type:(NSString*)type
 {
-    NSLog(@"%@",[[NSBundle mainBundle]pathForResource:resName ofType:type]);
     return [[NSBundle mainBundle]pathForResource:resName ofType:type];
 }
 

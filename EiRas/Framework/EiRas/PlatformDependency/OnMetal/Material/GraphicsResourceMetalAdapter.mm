@@ -10,10 +10,19 @@
 #include <PlatformDependency/OnMetal/MetalMacro.h>
 #import "ConstantBufferMetal.h"
 #import "GraphicsResourceMetal.h"
+#import "ShaderResourceMetal.h"
 
 void* MaterialSys::createConstantBufferMetal(std::string name, int bufferSize, bool initResource)
 {
     ConstantBufferMetal* oc_obj = [[ConstantBufferMetal alloc]initWithBufferSize:bufferSize initResource:initResource];
+    [oc_obj setLabel:[NSString stringWithUTF8String:name.c_str()]];
+    PROCESS_OC_OBJ(oc_obj, bridgePtr)
+    return bridgePtr;
+}
+
+void* MaterialSys::createShaderResourceTexture(std::string name, _uint width, _uint height, void* texData, bool* buildStatusFlag)
+{
+    ShaderResourceMetal* oc_obj = [[ShaderResourceMetal alloc]initResource:width height:height texData:texData buildStatusFlag:buildStatusFlag];
     [oc_obj setLabel:[NSString stringWithUTF8String:name.c_str()]];
     PROCESS_OC_OBJ(oc_obj, bridgePtr)
     return bridgePtr;

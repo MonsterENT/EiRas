@@ -55,6 +55,8 @@ namespace Graphics {
         EiRasPlatformBridgeProtocol* PlatformBridge;
 
     private:
+
+#if GRAPHICS_DX
         void _DynamicFillHeap(MaterialSys::MaterialProp* prop);
 
         void _ReFillHeap();
@@ -67,6 +69,7 @@ namespace Graphics {
         
         _uint maxHeapSize;
         _uint lastRegdeMatCount;
+#endif
     };
 
 }

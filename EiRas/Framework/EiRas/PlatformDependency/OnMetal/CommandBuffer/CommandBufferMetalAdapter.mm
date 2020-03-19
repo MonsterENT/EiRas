@@ -10,6 +10,9 @@
 #import "CommandBufferMetal.h"
 #include <Global/PlatformDependency/EiRasPlatformBridgeProtocol.h>
 #include <PlatformDependency/OnMetal/MetalMacro.h>
+#include <Material/Material.hpp>
+
+using namespace MaterialSys;
 
 void* Graphics::createCommandBufferMetal(std::string name)
 {
@@ -19,10 +22,10 @@ void* Graphics::createCommandBufferMetal(std::string name)
     return bridgePtr;
 }
 
-void Graphics::setMaterialMetal(void* ptr, void* material_raw_obj, std::vector<MaterialSys::MaterialProp*>* props, std::vector<MaterialSys::MaterialTable*>* tables)
+void Graphics::setMaterialMetal(void* ptr, Material* material)
 {
     CommandBufferMetal* oc_obj = (__bridge CommandBufferMetal*)ptr;
-    [oc_obj setMaterial:(__bridge MaterialMetal*)material_raw_obj props:props tables:tables];
+    [oc_obj setMaterial:material];
 }
 
 void Graphics::drawMeshMetal(void* ptr, void* meshObj)

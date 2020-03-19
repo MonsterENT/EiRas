@@ -25,6 +25,8 @@ namespace MaterialSys {
         
         void InitAsConstantBuffer(_uint bufferSize);
         
+        void InitAsShaderResourceTexture(_uint width, _uint height, void* texData, bool* buildStatusFlag);
+        
         void InitAsDefault(_uint bufferSize);
         
         void SetResource(void* res);

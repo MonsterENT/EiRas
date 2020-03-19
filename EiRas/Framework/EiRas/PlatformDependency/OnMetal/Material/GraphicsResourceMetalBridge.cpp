@@ -25,6 +25,12 @@ void GraphicsResourceMetalBridge::InitAsConstantBuffer(_uint bufferSize)
     raw_obj = createConstantBufferMetal(name, bufferSize, shouldInitResource);
 }
 
+void GraphicsResourceMetalBridge::InitAsShaderResourceTexture(_uint width, _uint height, void* texData, bool* buildStatusFlag)
+{
+    type = GraphicsResourceType::SRV;
+    raw_obj = createShaderResourceTexture(name, width, height, texData, buildStatusFlag);
+}
+
 void GraphicsResourceMetalBridge::InitAsDefault(_uint bufferSize)
 {
     raw_obj = createDefaultBufferMetal(name, bufferSize, shouldInitResource);

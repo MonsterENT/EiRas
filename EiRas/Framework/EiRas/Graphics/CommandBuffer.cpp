@@ -36,11 +36,11 @@ CommandBuffer::CommandBuffer(std::string Name, _uint maxHeapSize)
 
 #if GRAPHICS_DX
     PlatformBridge = new CommandBufferDX12Bridge(Name);
-#endif
-
+    
     resourceHeap = new GraphicsResourceHeap(maxHeapSize);
     this->maxHeapSize = maxHeapSize;
     lastRegdeMatCount = 0;
+#endif
 }
 
 void CommandBuffer::SetMaterial(MaterialSys::Material* material)
@@ -103,6 +103,7 @@ void CommandBuffer::Commit(bool present)
 #endif
 }
 
+#if GRAPHICS_DX
 void CommandBuffer::_DynamicFillHeap(MaterialSys::MaterialProp* prop)
 {
     resourceHeap->DynamicFillHeap(prop);
@@ -146,3 +147,4 @@ void CommandBuffer::RemoveMaterial(MaterialSys::Material* material)
     MaterialMap.erase(material->Name);
     _ReFillHeap();
 }
+#endif

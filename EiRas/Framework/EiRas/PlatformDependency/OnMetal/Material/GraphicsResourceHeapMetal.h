@@ -13,7 +13,7 @@ using namespace MaterialSys;
 
 @interface GraphicsResourceHeapMetal : BaseMetalObject
 
--(instancetype)initWithPropCount:(_uint)propCount tableCount:(_uint) tableCount tableArray:(MaterialTable**) tableArray;
+-(instancetype)initWithPropCount:(_uint)propCount;
 
 @property(strong, nonatomic)id<MTLHeap> resourceHeap;
 

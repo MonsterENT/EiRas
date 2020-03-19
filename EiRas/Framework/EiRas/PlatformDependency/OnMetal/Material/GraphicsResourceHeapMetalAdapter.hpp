@@ -14,7 +14,7 @@
 namespace MaterialSys {
 
 class MaterialTable;
-void* createResourceHeapMetal(_uint propCount, _uint tableCount, MaterialTable** tableArray);
+void* createResourceHeapMetal(_uint propCount);
 
 }
 

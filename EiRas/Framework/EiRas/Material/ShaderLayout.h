@@ -22,6 +22,8 @@ namespace MaterialSys
     class ShaderProp : public ShaderSlot
     {
     public:
+        _uint RegisterIndex;
+        _uint RegisterSpace;
         std::string PropName;
         GraphicsResourceType PropType;
         GraphicsResourceVisibility Visibility;
@@ -38,6 +40,12 @@ namespace MaterialSys
             UpdateFreq = updateFreq;
             BufferSize = bufferSize;
         }
+        
+        void InitRegisterSettings(_uint registerIndex, _uint registerSpace = 0)
+        {
+            RegisterIndex = registerIndex;
+            RegisterSpace = registerSpace;
+        }
     };
 
     class ShaderPropRange
@@ -50,6 +58,10 @@ namespace MaterialSys
         std::vector<int> BufferSizeList;
         _uint PropNum;
 
+        _uint BaseRegisterIndex;
+        _uint BaseRegisterSpace;
+        bool RegisterSpaceLayoutMode;
+        
         ShaderPropRange(std::string basePropName, GraphicsResourceType propType, GraphicsResourceVisibility visibility, GraphicsResourceUpdateFreq updateFreq)
         {
             BasePropName = basePropName;
@@ -62,6 +74,13 @@ namespace MaterialSys
         {
             PropNum++;
             BufferSizeList.push_back(bufferSize);
+        }
+        
+        void InitBaseRegisterSettings(_uint baseRegisterIndex, bool regSpaceLayoutMode = false, _uint baseRegisterSpace = 0)
+        {
+            RegisterSpaceLayoutMode = regSpaceLayoutMode;
+            BaseRegisterIndex = baseRegisterIndex;
+            BaseRegisterIndex = baseRegisterSpace;
         }
     };
 

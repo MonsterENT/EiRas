@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 -(void)setResource:(void*)res;
 
 @property(strong, nonatomic)id<MTLBuffer> rawBuffer;
+@property(strong, nonatomic)id<MTLTexture> rawTexture;
 
 @property(assign, readonly, nonatomic)_uint bufferSize;
 

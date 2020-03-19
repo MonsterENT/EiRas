@@ -52,42 +52,49 @@ Material::Material(std::string Name, Shader* shader, Graphics::CommandBuffer* co
             {
                 ShaderProp* tmpProp = (ShaderProp*)shaderSlot;
                 tmpMatProp = new MaterialProp(tmpProp->PropName, tmpProp->PropType, tmpProp->Visibility, tmpProp->UpdateFreq, true, tmpProp->BufferSize);
+#if GRAPHICS_DX
                 tmpMatProp->SlotID = i;
+#elif GRAPHICS_METAL
+                tmpMatProp->SlotID = tmpProp->RegisterIndex;
+#endif
                 materialLayout->Slots[i] = tmpMatProp;
             }
             else if (shaderSlot->SlotType == ShaderSlotType::ShaderSlotType_Table)
             {
                 ShaderTable* shaderTable = (ShaderTable*)shaderSlot;
                 
-                _uint ranegNum = shaderTable->Ranges.size();
-
+                _uint ranegNum = (_uint)shaderTable->Ranges.size();
+                
                 std::vector<MaterialProp*> tmpMatProps;
                 for (_uint ranegIndex = 0; ranegIndex < ranegNum; ranegIndex++)
                 {
                     ShaderPropRange* tmpRange = &shaderTable->Ranges[ranegIndex];
-
+                    
                     for (_uint propIndex = 0; propIndex < tmpRange->PropNum; propIndex++)
                     {
-#if GRAPHICS_DX
                         if (tmpRange->PropType == GraphicsResourceType::SRV)
                         {
                             tmpMatProp = new MaterialProp(tmpRange->BasePropName, tmpRange->PropType, tmpRange->Visibility, tmpRange->UpdateFreq, false, -1);
                         }
-                        else
+                        else if (tmpRange->PropType == GraphicsResourceType::CBV)
                         {
-#pragma message("TODO")
                             tmpMatProp = new MaterialProp(tmpRange->BasePropName, tmpRange->PropType, tmpRange->Visibility, tmpRange->UpdateFreq, true, tmpRange->BufferSizeList[propIndex]);
                         }
-#elif GRAPHICS_METAL
-                        tmpMatProp = new MaterialProp(tmpProp->BasePropName, tmpProp->PropType, tmpProp->Visibility, false, tmpProp->BufferSize);
-#endif
+#if GRAPHICS_DX
                         tmpMatProp->SlotID = -1;
+#elif GRAPHICS_METAL
+                        tmpMatProp->SlotID = tmpRange->BaseRegisterIndex + propIndex;
+#endif
                         tmpMatProps.push_back(tmpMatProp);
                     }
                 }
-
-                MaterialTable* matTable = new MaterialTable(tmpMatProps.size(), tmpMatProps);
+                
+                MaterialTable* matTable = new MaterialTable((_uint)tmpMatProps.size(), tmpMatProps);
+#if GRAPHICS_DX
                 matTable->SlotID = i;
+#elif GRAPHICS_METAL
+                matTable->SlotID = -1;
+#endif
                 materialLayout->Slots[i] = matTable;
             }
         }
@@ -95,13 +102,15 @@ Material::Material(std::string Name, Shader* shader, Graphics::CommandBuffer* co
     
     //init platform pso
     FinishStateChange();
-
+    
     referenceCmdBuffer = commandBuffer;
-
+    
+#if GRAPHICS_DX
     if (commandBuffer == 0)
     {
         commandBuffer->RegMaterial(this);
     }
+#endif
 }
 
 inline MaterialProp* getMaterialProp(Material* mat, _uint slotIndex, _uint propIndex, bool &fromTable)
@@ -111,12 +120,12 @@ inline MaterialProp* getMaterialProp(Material* mat, _uint slotIndex, _uint propI
     {
         return 0;
     }
-
+    
     if (slotIndex >= mat->materialLayout->SlotNum)
     {
         return 0;
     }
-
+    
     MaterialProp* tProp = 0;
     MaterialSlot* tSlot = mat->materialLayout->Slots[slotIndex];
     if (tSlot->SlotType == MaterialSlotType::MaterialSlotType_Table)
@@ -126,7 +135,7 @@ inline MaterialProp* getMaterialProp(Material* mat, _uint slotIndex, _uint propI
         {
             return 0;
         }
-
+        
         tProp = tTable->Props[propIndex];
         fromTable = true;
     }
@@ -163,10 +172,13 @@ void Material::SetProperty(ImageSys::Image* image, _uint slotIndex, int propInde
         return;
     }
     tProp->Resource = image->PipelineResource;
+    
+#if GRAPHICS_DX
     if (fromTable)
     {
         referenceCmdBuffer->_DynamicFillHeap(tProp);
     }
+#endif
 }
 
 void Material::FinishStateChange()
@@ -183,8 +195,10 @@ void Material::FinishStateChange()
 
 Material::~Material()
 {
+#if GRAPHICS_DX
     if (referenceCmdBuffer)
     {
         referenceCmdBuffer->RemoveMaterial(this);
     }
+#endif
 }

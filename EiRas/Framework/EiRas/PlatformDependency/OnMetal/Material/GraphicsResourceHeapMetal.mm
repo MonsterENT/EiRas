@@ -17,7 +17,7 @@
 
 @implementation GraphicsResourceHeapMetal
 
--(instancetype)initWithPropCount:(_uint)propCount tableCount:(_uint) tableCount tableArray:(MaterialTable**) tableArray
+-(instancetype)initWithPropCount:(_uint)propCount
 {
     self = [super init];
     if(self)
@@ -29,27 +29,27 @@
         
         _resourceHeap = [[deviceObj getMetalDevice] newHeapWithDescriptor:desc];
         
-        int allocOffset = 0;
-        for(_uint i = 0; i < tableCount; i++)
-        {
-            MaterialTable* table = tableArray[i];
-            for(_uint propIndex = 0; propIndex < table->PropNum; propIndex++)
-            {
-                MaterialProp* prop = table->Props[propIndex];
-                id rawObj = (__bridge id)prop->Resource->PlatformBridge->raw_obj;
-                
-                if([rawObj isKindOfClass:[ConstantBufferMetal class]])
-                {
-                    ConstantBufferMetal* tmpCBObj = rawObj;
-                    if (@available(iOS 13.0, *)) {
-                        tmpCBObj.rawBuffer = [_resourceHeap newBufferWithLength:tmpCBObj.bufferSize options:MTLStorageModeShared offset:allocOffset];
-                    } else {
-                        [_resourceHeap newBufferWithLength:tmpCBObj.bufferSize options:MTLResourceStorageModeShared];
-                    }
-                    allocOffset += tmpCBObj.bufferSize;
-                }
-            }
-        }
+//        int allocOffset = 0;
+//        for(_uint i = 0; i < tableCount; i++)
+//        {
+//            MaterialTable* table = tableArray[i];
+//            for(_uint propIndex = 0; propIndex < table->PropNum; propIndex++)
+//            {
+//                MaterialProp* prop = table->Props[propIndex];
+//                id rawObj = (__bridge id)prop->Resource->PlatformBridge->raw_obj;
+//                
+//                if([rawObj isKindOfClass:[ConstantBufferMetal class]])
+//                {
+//                    ConstantBufferMetal* tmpCBObj = rawObj;
+//                    if (@available(iOS 13.0, *)) {
+//                        tmpCBObj.rawBuffer = [_resourceHeap newBufferWithLength:tmpCBObj.bufferSize options:MTLStorageModeShared offset:allocOffset];
+//                    } else {
+//                        [_resourceHeap newBufferWithLength:tmpCBObj.bufferSize options:MTLResourceStorageModeShared];
+//                    }
+//                    allocOffset += tmpCBObj.bufferSize;
+//                }
+//            }
+//        }
     }
     return self;
 }

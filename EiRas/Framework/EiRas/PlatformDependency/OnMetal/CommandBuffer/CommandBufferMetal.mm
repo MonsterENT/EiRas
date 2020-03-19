@@ -11,7 +11,7 @@
 #include <PlatformDependency/OnMetal/MetalMacro.h>
 #include <Global/EiRasGlobalManager.hpp>
 #include <Material/MaterialLayout.hpp>
-#include <PlatformDependency/OnMetal/Material/ConstantBufferMetal.h>
+#import "GraphicsResourceMetal.h"
 #import <PlatformDependency/OnMetal/Mesh/MeshMetal.h>
 
 using namespace MaterialSys;
@@ -44,30 +44,66 @@ using namespace MaterialSys;
     return _commandBuffer;
 }
 
--(void)setMaterial:(MaterialMetal*)material props:(std::vector<MaterialSys::MaterialProp*>*)props tables:(std::vector<MaterialSys::MaterialTable*>*)tables
+-(void)_BindProp:(MaterialProp*)prop
+{
+    if(!prop)
+    {
+        return;
+    }
+    GraphicsResourceMetal* rawResourceObj = (__bridge GraphicsResourceMetal*)prop->Resource->PlatformBridge->raw_obj;
+    if(prop->Resource->Behaviors.Visibility == GraphicsResourceVisibility::VISIBILITY_ALL || prop->Resource->Behaviors.Visibility == GraphicsResourceVisibility::VISIBILITY_VERTEX)
+    {
+        if(prop->Resource->Behaviors.ResourceType == GraphicsResourceType::CBV)
+        {
+            [_renderCommandEncoder setVertexBuffer:rawResourceObj.rawBuffer offset:0 atIndex:prop->SlotID];
+        }
+        else if(prop->Resource->Behaviors.ResourceType == GraphicsResourceType::SRV)
+        {
+            //for srv texture
+            [_renderCommandEncoder setVertexTexture:rawResourceObj.rawTexture atIndex:prop->SlotID];
+        }
+        
+    }
+    if(prop->Resource->Behaviors.Visibility == GraphicsResourceVisibility::VISIBILITY_ALL || prop->Resource->Behaviors.Visibility == GraphicsResourceVisibility::VISIBILITY_PIXEL)
+    {
+        if(prop->Resource->Behaviors.ResourceType == GraphicsResourceType::CBV)
+        {
+            [_renderCommandEncoder setFragmentBuffer:rawResourceObj.rawBuffer offset:0 atIndex:prop->SlotID];
+        }
+        else if(prop->Resource->Behaviors.ResourceType == GraphicsResourceType::SRV)
+        {
+            [_renderCommandEncoder setFragmentTexture:rawResourceObj.rawTexture atIndex:prop->SlotID];
+        }
+    }
+}
+
+-(void)setMaterial:(MaterialSys::Material*)material
 {
     if(_renderCommandEncoder)
     {
         [_renderCommandEncoder endEncoding];
     }
     GET_EIRAS_METAL(deviceObj)
-    _renderCommandEncoder = [_commandBuffer renderCommandEncoderWithDescriptor:[deviceObj getMTKView].currentRenderPassDescriptor];
-    [_renderCommandEncoder setLabel:[NSString stringWithFormat:@"Render Pass Set Material : %@",material.name]];
-    [_renderCommandEncoder setRenderPipelineState:material.pipelineState];
     
-    for(_uint i = 0; i < props->size(); i++)
+    MaterialMetal* matRawObj = (__bridge MaterialMetal*)material->PlatformBridge->raw_obj;
+    
+    _renderCommandEncoder = [_commandBuffer renderCommandEncoderWithDescriptor:[deviceObj getMTKView].currentRenderPassDescriptor];
+    [_renderCommandEncoder setLabel:[NSString stringWithFormat:@"Render Pass Set Material : %@", matRawObj.name]];
+    [_renderCommandEncoder setRenderPipelineState:matRawObj.pipelineState];
+    
+    for(int i = 0; i < material->materialLayout->SlotNum; i++)
     {
-        if((*props)[i]->PropType == GraphicsResourceType::CBV)
+        MaterialSlot* slot = material->materialLayout->Slots[i];
+        if(slot->SlotType == MaterialSlotType::MaterialSlotType_Prop)
         {
-            GraphicsResource* resource = (*props)[i]->Resource;
-            ConstantBufferMetal* cbObj = (__bridge ConstantBufferMetal*)(*props)[i]->Resource->PlatformBridge->raw_obj;
-            if(resource->Visibility == GraphicsResourceVisibility::VISIBILITY_ALL || resource->Visibility == GraphicsResourceVisibility::VISIBILITY_VERTEX)
+            [self _BindProp:(MaterialProp*)slot];
+        }
+        else if(slot->SlotType == MaterialSlotType::MaterialSlotType_Table)
+        {
+            MaterialTable* table = (MaterialTable*)slot;
+            for(int propIndex = 0; propIndex < table->PropNum; propIndex++)
             {
-                [_renderCommandEncoder setVertexBuffer:cbObj.rawBuffer offset:0 atIndex:(*props)[i]->SlotID];
-            }
-            if(resource->Visibility == GraphicsResourceVisibility::VISIBILITY_ALL || resource->Visibility == GraphicsResourceVisibility::VISIBILITY_PIXEL)
-            {
-                [_renderCommandEncoder setFragmentBuffer:cbObj.rawBuffer offset:0 atIndex:(*props)[i]->SlotID];
+                [self _BindProp:table->Props[propIndex]];
             }
         }
     }

@@ -49,6 +49,7 @@ void GraphicsResource::InitAsShaderResource(_uint width, _uint height, void* tex
 #if GRAPHICS_DX
     ((GraphicsResourceDX12Bridge*)PlatformBridge)->InitAsShaderResource(width, height, texData, &Behaviors, buildStatusFlag);
 #elif GRAPHICS_METAL
+    ((GraphicsResourceMetalBridge*)PlatformBridge)->InitAsShaderResourceTexture(width, height, texData, buildStatusFlag);
 #endif
 }
 

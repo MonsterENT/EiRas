@@ -10,7 +10,7 @@
 #include "GraphicsResourceHeapMetalAdapter.hpp"
 using namespace MaterialSys;
 
-GraphicsResourceHeapMetalBridge::GraphicsResourceHeapMetalBridge(_uint propCount, _uint tableCount, MaterialTable** tableArray)
+GraphicsResourceHeapMetalBridge::GraphicsResourceHeapMetalBridge(_uint propCount)
 {
-    raw_obj = createResourceHeapMetal(propCount, tableCount, tableArray);
+    raw_obj = createResourceHeapMetal(propCount);
 }

@@ -19,6 +19,10 @@ public:
     static FileManager* shareInstance();
     
     const char * GetResourcePath(std::string resName, std::string type);
+    
+    const char * GetTextureResourcePath(std::string resName, std::string type);
+    
+    const char * GetModelResourcePath(std::string resName, std::string type);
 };
 
 }

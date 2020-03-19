@@ -29,9 +29,11 @@ void Engine::m_initEngine()
     ShaderLayout* layout = new ShaderLayout(2);
 
     ShaderProp* commonCB0 = new ShaderProp("CommonCB0", GraphicsResourceType::CBV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_HIGH, sizeof(float4));
+    commonCB0->InitRegisterSettings(0);
 
     ShaderPropRange commonSR1("CommonSR1", GraphicsResourceType::SRV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_ONINIT);
     commonSR1.PropNum = 1;
+    commonSR1.InitBaseRegisterSettings(0);
 
     ShaderTable *table = new ShaderTable();
     table->AddRange(commonSR1);
@@ -64,7 +66,7 @@ void Engine::m_initEngine()
     tmpCol.w = 1;
     mat->SetProperty(&tmpCol, 0);
     mesh = 0;
-    std::string resPath = FileSys::FileManager::shareInstance()->GetResourcePath("qumian", "obj");
+    std::string resPath = FileSys::FileManager::shareInstance()->GetModelResourcePath("qumian", "obj");
     
     mesh = new Mesh("qumian");
     mesh->SubMeshCount = 1;
@@ -79,7 +81,9 @@ void Engine::m_initEngine()
     //    mesh->LoadDataFromFile(resPath);
     mesh->BuildBuffer();
 
-    std::string imagePath = FileSys::FileManager::shareInstance()->GetResourcePath("ground512", "png");
+    std::string imagePath = FileSys::FileManager::shareInstance()->GetTextureResourcePath("ground512", "png");
+    imageObj = new Image(imagePath);
+    
     //imageObj = new Image("ground512");
     //imageObj->LoadFromFile(imagePath);
 
