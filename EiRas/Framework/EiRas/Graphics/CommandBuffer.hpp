@@ -11,6 +11,7 @@
 
 #include <Global/PlatformDependency/EiRasPlatformBridgeProtocol.h>
 #include <Global/GlobalDefine.h>
+#include <Global/PlatformDefine.h>
 #include <string>
 #include <vector>
 #include <map>

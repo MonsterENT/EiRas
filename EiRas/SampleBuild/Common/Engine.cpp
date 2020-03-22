@@ -91,7 +91,7 @@ void Engine::m_initEngine()
     FontSys::Font* font = new Font(fontPath);
     font->GetText("ABC", 25);
     imageObj = new Image("Font");
-    imageObj->LoadFromBuffer(font->data, font->width, font->height);
+    //imageObj->LoadFromBuffer(font->data, font->width, font->height);
 
     mat->SetProperty(imageObj, 1, 0);
 }

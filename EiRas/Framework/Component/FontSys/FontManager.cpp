@@ -21,17 +21,23 @@ void _ScanToBuffer(unsigned char* dstBuffer, int dstBufferWidth, int dstBufferHe
 
 bool FontMap::StoreFontData(unsigned char* data, _uint width, _uint height, _uint offsetX, _uint offsetY, Math::rect_float &outUVRect)
 {
-    //check width
     if (_Left + width < FONT_MAP_WIDTH)
     {
         if (_Top + height < FONT_MAP_HEIGHT)
         {
-            //WriteBuffer
-            //_ScanToBuffer(refFontMap->data, FONT_MAP_WIDTH, FONT_MAP_HEIGHT, refFontMap->_Left, refFontMap->_Top, data, width, height);
+            _ScanToBuffer(data, FONT_MAP_WIDTH, FONT_MAP_HEIGHT, _Left, _Top, data, width, height);
+            outUVRect.left = _Left / FONT_MAP_WIDTH;
+            outUVRect.top = _Top / FONT_MAP_HEIGHT;
+            outUVRect.height = height / FONT_MAP_HEIGHT;
+            outUVRect.width = width / FONT_MAP_WIDTH;
+
+            _Left += width;
+            if (_UsedHeight < _Top + height)
+            {
+                _UsedHeight = _Top + height;
+            }
+            
             return true;
-        }
-        else
-        {
         }
     }
     else
@@ -41,11 +47,19 @@ bool FontMap::StoreFontData(unsigned char* data, _uint width, _uint height, _uin
             if (_UsedHeight + height < FONT_MAP_HEIGHT)
             {
                 //WriteBuffer
+                _Top = _UsedHeight;
+                _UsedHeight = _Top + height;
+
+                _ScanToBuffer(data, FONT_MAP_WIDTH, FONT_MAP_HEIGHT, 0, _Top, data, width, height);
+
+                outUVRect.left = _Left / FONT_MAP_WIDTH;
+                outUVRect.top = _Top / FONT_MAP_HEIGHT;
+                outUVRect.height = height / FONT_MAP_HEIGHT;
+                outUVRect.width = width / FONT_MAP_WIDTH;
+
+                _Left += width;
                 return true;
             }
-        }
-        else
-        {
         }
     }
     return false;
@@ -62,19 +76,22 @@ Font* FontManager::GetFont(std::string filePath)
     return 0;
 }
 
-void FontManager::_StoreFontData(unsigned char* data, _uint width, _uint height, _uint offsetX, _uint offsetY, Math::rect_float& outUVRect)
+_uint FontManager::_StoreFontData(unsigned char* data, _uint width, _uint height, _uint offsetX, _uint offsetY, Math::rect_float& outUVRect)
 {
+    _uint fontMapIndex = -1;
     FontMap* refFontMap = 0;
     if (fontDataList.size() > 0)
     {
         refFontMap = fontDataList[fontDataList.size() - 1];
         refFontMap = refFontMap->isFull ? 0 : refFontMap;
     }
+    fontMapIndex = fontDataList.size() - 1;
 
     if (refFontMap == 0)
     {
         refFontMap = new FontMap();
         fontDataList.push_back(refFontMap);
+        fontMapIndex++;
     }
 
     if (!refFontMap->StoreFontData(data, width, height, offsetX, offsetY, outUVRect))
@@ -83,4 +100,5 @@ void FontManager::_StoreFontData(unsigned char* data, _uint width, _uint height,
         refFontMap->StoreFontData(data, width, height, offsetX, offsetY, outUVRect);
         fontDataList.push_back(refFontMap);
     }
+    return fontMapIndex;
 }

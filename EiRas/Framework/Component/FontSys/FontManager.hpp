@@ -58,7 +58,7 @@ namespace FontSys
         static FontManager* g_Instance;
         std::vector<FontMap*> fontDataList;
 
-        void _StoreFontData(unsigned char* data, _uint width, _uint height, _uint offsetX, _uint offsetY, Math::rect_float& outUVRect);
+        _uint _StoreFontData(unsigned char* data, _uint width, _uint height, _uint offsetX, _uint offsetY, Math::rect_float& outUVRect);
     };
 }
 

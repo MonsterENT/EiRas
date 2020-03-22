@@ -25,12 +25,14 @@ static FileManager* _instance = 0;
 
 static char* g_ResPath = 0;
 
+#if GRAPHICS_METAL
 inline void GetPathOnMac(std::string resName, std::string type)
 {
     const char* tSource = getResourcePathMacOs(resName, type);
     size_t len = strlen(tSource) + 1;
     memcpy(g_ResPath, tSource, sizeof(char) * len);
 }
+#endif
 
 FileManager* FileManager::shareInstance()
 {
@@ -52,7 +54,6 @@ const char * FileManager::GetResourcePath(std::string resName, std::string type)
     std::string tmpPath = "";
     tmpPath += FileManagerWin::GetProjectBasePath();
     tmpPath += "Common\\Resource\\";
-    tmpPath += subPath;
     tmpPath += resName + "." + type;
     memcpy(g_ResPath, tmpPath.c_str(), COMMON_PATH_STR_LEN * sizeof(char));
 #endif
@@ -69,7 +70,6 @@ const char * FileManager::GetTextureResourcePath(std::string resName, std::strin
     std::string tmpPath = "";
     tmpPath += FileManagerWin::GetProjectBasePath();
     tmpPath += "Common\\Resource\\Texture\\";
-    tmpPath += subPath;
     tmpPath += resName + "." + type;
     memcpy(g_ResPath, tmpPath.c_str(), COMMON_PATH_STR_LEN * sizeof(char));
 #endif
@@ -86,7 +86,6 @@ const char * FileManager::GetModelResourcePath(std::string resName, std::string 
     std::string tmpPath = "";
     tmpPath += FileManagerWin::GetProjectBasePath();
     tmpPath += "Common\\Resource\\Model\\";
-    tmpPath += subPath;
     tmpPath += resName + "." + type;
     memcpy(g_ResPath, tmpPath.c_str(), COMMON_PATH_STR_LEN * sizeof(char));
 #endif
