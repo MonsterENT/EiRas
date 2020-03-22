@@ -64,8 +64,6 @@ void Font::GetText(std::string text, int fontSizeInPixel)
 
     int BufferWidth = 1024, BufferHeight = 1024, BufferSize = BufferWidth * BufferHeight * 4;
     
-    data = new unsigned char[BufferSize];
-    memset(data, 0, BufferSize);
     for (int i = 0; i < lens; i++)
     {
         FT_Set_Transform(face, 0, &vector);

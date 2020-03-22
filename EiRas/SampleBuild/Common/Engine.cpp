@@ -87,7 +87,8 @@ void Engine::m_initEngine()
     //imageObj = new Image("ground512");
     //imageObj->LoadFromFile(imagePath);
 
-    FontSys::Font* font = new Font("E:\\EiRasWorkspace\\EiRas\\EiRas\\SampleBuild\\Common\\Resource\\Font\\BELL.TTF");
+    std::string fontPath = FileSys::FileManager::shareInstance()->GetResourcePath("Font\\BELL", "TTF");
+    FontSys::Font* font = new Font(fontPath);
     font->GetText("ABC", 25);
     imageObj = new Image("Font");
     imageObj->LoadFromBuffer(font->data, font->width, font->height);
