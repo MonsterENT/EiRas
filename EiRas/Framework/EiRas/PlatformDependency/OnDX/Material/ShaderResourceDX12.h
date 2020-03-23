@@ -8,7 +8,7 @@ namespace MaterialSys
     class ShaderResourceDX12 : public GraphicsResourceDX12
     {
     public:
-        ShaderResourceDX12(GraphicsResourceBehaviors* behaviors, DXGI_FORMAT format, UINT width, UINT height, void* texData, bool* buildStatusFlag);
+        ShaderResourceDX12(GraphicsResourceBehaviors* behaviors, DXGI_FORMAT format, UINT width, UINT height, UINT channels, void* texData, bool* buildStatusFlag);
         ~ShaderResourceDX12();
 
         DXGI_FORMAT TexFormat;
@@ -26,6 +26,6 @@ namespace MaterialSys
         bool buildStatusFlag = false;
         void* texData = 0;
         ID3D12Resource* tmpResource = 0;
-        UINT width, height;
+        UINT width, height, channels;
     };
 }

@@ -28,9 +28,16 @@ void GraphicsResourceDX12Bridge::InitAsConstantBuffer(int bufferSize, GraphicsRe
     raw_obj = new ConstantBufferDX12(bufferSize, behaviors);
 }
 
-void GraphicsResourceDX12Bridge::InitAsShaderResource(int width, int height, void* texData, GraphicsResourceBehaviors* behaviors, bool* buildStatusFlag)
+void GraphicsResourceDX12Bridge::InitAsShaderResource(int width, int height, _uint channels, void* texData, GraphicsResourceBehaviors* behaviors, bool* buildStatusFlag)
 {
-    raw_obj = new ShaderResourceDX12(behaviors, DXGI_FORMAT_R8G8B8A8_UNORM, width, height, texData, buildStatusFlag);
+    if (channels == 1)
+    {
+        raw_obj = new ShaderResourceDX12(behaviors, DXGI_FORMAT_A8_UNORM, width, height, channels, texData, buildStatusFlag);
+    }
+    else //4
+    {
+        raw_obj = new ShaderResourceDX12(behaviors, DXGI_FORMAT_R8G8B8A8_UNORM, width, height, channels, texData, buildStatusFlag);
+    }
 }
 
 void GraphicsResourceDX12Bridge::ShaderResourceBuild(void* cmdList)

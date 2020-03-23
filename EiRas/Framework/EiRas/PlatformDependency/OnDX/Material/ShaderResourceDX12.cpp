@@ -7,7 +7,7 @@
 using namespace MaterialSys;
 using GraphicsAPI::EiRasDX12;
 
-ShaderResourceDX12::ShaderResourceDX12(GraphicsResourceBehaviors* behaviors, DXGI_FORMAT format, UINT width, UINT height, void* texData, bool* buildStatusFlag) : GraphicsResourceDX12(-1, behaviors, false)
+ShaderResourceDX12::ShaderResourceDX12(GraphicsResourceBehaviors* behaviors, DXGI_FORMAT format, UINT width, UINT height, UINT channels, void* texData, bool* buildStatusFlag) : GraphicsResourceDX12(-1, behaviors, false)
 {
     GET_EIRAS_DX12(deviceObj)
 
@@ -16,6 +16,7 @@ ShaderResourceDX12::ShaderResourceDX12(GraphicsResourceBehaviors* behaviors, DXG
 
     this->width = width;
     this->height = height;
+    this->channels = channels;
 
     D3D12_RESOURCE_DESC textureDesc = {};
     textureDesc.MipLevels = 1;
@@ -62,7 +63,7 @@ void ShaderResourceDX12::BuildTextureResource(void* cmdList)
     
     D3D12_SUBRESOURCE_DATA textureData = {};
     textureData.pData = texData;
-    textureData.RowPitch = width * 4;
+    textureData.RowPitch = width * channels;
     textureData.SlicePitch = textureData.RowPitch * height;
     
     UpdateSubresources(_cmdList, Resource, tmpResource, 0, 0, 1, &textureData);

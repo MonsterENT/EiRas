@@ -3,6 +3,7 @@
 
 #include <Global/PlatformDependency/EiRasPlatformBridgeProtocol.h>
 #include <string>
+#include <Global/GlobalDefine.h>
 
 namespace MaterialSys
 {
@@ -19,7 +20,7 @@ namespace MaterialSys
 
         void InitAsConstantBuffer(int bufferSize, GraphicsResourceBehaviors* behaviors);
 
-        void InitAsShaderResource(int width, int height, void* texData, GraphicsResourceBehaviors* behaviors, bool* buildStatusFlag);
+        void InitAsShaderResource(int width, int height, _uint channels, void* texData, GraphicsResourceBehaviors* behaviors, bool* buildStatusFlag);
         void ShaderResourceBuild(void* cmdList);
         void ShaderResourceFinishBuild();
     };

@@ -44,10 +44,10 @@ void GraphicsResource::InitAsDefault(_uint bufferSize)
 #endif
 }
 
-void GraphicsResource::InitAsShaderResource(_uint width, _uint height, void* texData, bool* buildStatusFlag)
+void GraphicsResource::InitAsShaderResource(_uint width, _uint height, _uint channels, void* texData, bool* buildStatusFlag)
 {
 #if GRAPHICS_DX
-    ((GraphicsResourceDX12Bridge*)PlatformBridge)->InitAsShaderResource(width, height, texData, &Behaviors, buildStatusFlag);
+    ((GraphicsResourceDX12Bridge*)PlatformBridge)->InitAsShaderResource(width, height, channels, texData, &Behaviors, buildStatusFlag);
 #elif GRAPHICS_METAL
     ((GraphicsResourceMetalBridge*)PlatformBridge)->InitAsShaderResourceTexture(width, height, texData, buildStatusFlag);
 #endif

@@ -59,5 +59,5 @@ void Image::buildResourceWithData(void* data)
         delete PipelineResource;
     }
     PipelineResource = new GraphicsResource(Name, GraphicsResourceType::SRV, GraphicsResourceVisibility::VISIBILITY_PIXEL, GraphicsResourceUpdateFreq::UPDATE_FREQ_ONINIT, false);
-    PipelineResource->InitAsShaderResource(Width, Height, data, &isFinishBuild);
+    PipelineResource->InitAsShaderResource(Width, Height, Channels, data, &isFinishBuild);
 }

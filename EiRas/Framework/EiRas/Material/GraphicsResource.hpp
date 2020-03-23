@@ -73,7 +73,7 @@ namespace MaterialSys
 
         void InitAsDefault(_uint bufferSize);
 
-        void InitAsShaderResource(_uint width, _uint height, void* texData, bool* buildStatusFlag);
+        void InitAsShaderResource(_uint width, _uint height, _uint channels, void* texData, bool* buildStatusFlag);
         void ShaderResourceBuild(void* cmdList);
         void ShaderResourceFinishBuild();
 

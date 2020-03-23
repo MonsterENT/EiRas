@@ -12,6 +12,7 @@
 #include <Basic/Image.hpp>
 
 #include <FontSys/FontSys.hpp>
+#include <FontSys/FontManager.hpp>
 
 using namespace MaterialSys;
 using namespace Graphics;
@@ -82,18 +83,16 @@ void Engine::m_initEngine()
     mesh->BuildBuffer();
 
     std::string imagePath = FileSys::FileManager::shareInstance()->GetTextureResourcePath("ground512", "png");
-    imageObj = new Image(imagePath);
-    
+
     //imageObj = new Image("ground512");
     //imageObj->LoadFromFile(imagePath);
 
     std::string fontPath = FileSys::FileManager::shareInstance()->GetResourcePath("Font\\BELL", "TTF");
     FontSys::Font* font = new Font(fontPath);
-    font->GetText("ABC", 25);
-    imageObj = new Image("Font");
-    //imageObj->LoadFromBuffer(font->data, font->width, font->height);
+    Text* text = font->GetText("A", 256);
+    FontManager::SharedInstance()->fontDataList[0]->RefreshFontImage();
 
-    mat->SetProperty(imageObj, 1, 0);
+    mat->SetProperty(FontManager::SharedInstance()->fontDataList[0]->_FontImage, 1, 0);
 }
 
 Engine::Engine()

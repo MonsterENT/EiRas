@@ -33,7 +33,7 @@ namespace FontSys
     public:
         Font(std::string filePath);
         ~Font();
-        Text* GetText(std::string text, int fontSizeInPixel = 16);
+        Text* GetText (std::string text, int fontSizeInPixel = 16);
 
     private:
         std::string filePath;

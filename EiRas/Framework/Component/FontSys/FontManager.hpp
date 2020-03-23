@@ -8,6 +8,11 @@
 #define FONT_MAP_HEIGHT 1024
 #define FONT_MAP_WIDTH 1024
 
+namespace ImageSys
+{
+    class Image;
+}
+
 namespace FontSys
 {
     class FontManager;
@@ -18,19 +23,14 @@ namespace FontSys
     public:
         bool isFull;
         unsigned char* data;
-        FontMap()
-        {
-            isFull = false;
-            _Left = 0;
-            _Top = 0;
-            _RC = 0;
-            _UsedHeight = 0;
-            data = new unsigned char[FONT_MAP_HEIGHT * FONT_MAP_WIDTH];
-            memset(data, 0, FONT_MAP_HEIGHT * FONT_MAP_WIDTH);
-        }
+
+        FontMap();
 
         bool StoreFontData(unsigned char* data, _uint width, _uint height, _uint offsetX, _uint offsetY, Math::rect_float &outUVRect);
 
+        void RefreshFontImage();
+
+        ImageSys::Image* _FontImage;
     private:
         _uint _RC;
         _uint _Left;
@@ -52,11 +52,10 @@ namespace FontSys
 
         FontManager();
 
-        Font* GetFont(std::string filePath);
+        std::vector<FontMap*> fontDataList;
 
     private:
         static FontManager* g_Instance;
-        std::vector<FontMap*> fontDataList;
 
         _uint _StoreFontData(unsigned char* data, _uint width, _uint height, _uint offsetX, _uint offsetY, Math::rect_float& outUVRect);
     };
