@@ -9,9 +9,9 @@ FontManager* FontManager::g_Instance = 0;
 
 void _ScanToBuffer(unsigned char* dstBuffer, int dstBufferWidth, int dstBufferHeight, int dstLeft, int dstTop, unsigned char* srcBuffer, int srcBufferWidth, int srcBufferHeight)
 {
-    for (int row = dstTop, src_row = 0; row < dstTop + srcBufferWidth; row++, src_row++)
+    for (int row = dstTop, src_row = 0; row < dstTop + srcBufferHeight; row++, src_row++)
     {
-        for (int col = dstLeft, dst_col = 0; col < dstLeft + srcBufferHeight; col++, dst_col++)
+        for (int col = dstLeft, dst_col = 0; col < dstLeft + srcBufferWidth; col++, dst_col++)
         {
             if (row > dstBufferHeight || col > dstBufferWidth)
             {

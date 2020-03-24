@@ -89,7 +89,7 @@ void Engine::m_initEngine()
 
     std::string fontPath = FileSys::FileManager::shareInstance()->GetResourcePath("Font\\BELL", "TTF");
     FontSys::Font* font = new Font(fontPath);
-    Text* text = font->GetText("A", 256);
+    Text* text = font->GetText("ABC", 12);
     FontManager::SharedInstance()->fontDataList[0]->RefreshFontImage();
 
     mat->SetProperty(FontManager::SharedInstance()->fontDataList[0]->_FontImage, 1, 0);

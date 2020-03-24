@@ -43,13 +43,19 @@ void Image::LoadFromBuffer(void* buffer, int width, int height, int channels)
 
 void Image::Build(void* cmdList)
 {
-    PipelineResource->ShaderResourceBuild(cmdList);
+    if (PipelineResource)
+    {
+        PipelineResource->ShaderResourceBuild(cmdList);
+    }
 }
 
 void Image::FinishBuild()
 {
-    PipelineResource->ShaderResourceFinishBuild();
+    if (PipelineResource)
+    {
+        PipelineResource->ShaderResourceFinishBuild();
 #pragma message("TOFIX remove from building list")
+    }
 }
 
 void Image::buildResourceWithData(void* data)
