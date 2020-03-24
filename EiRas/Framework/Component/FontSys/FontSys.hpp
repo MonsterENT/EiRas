@@ -16,7 +16,6 @@ namespace FontSys
     {
         friend Font;
     public:
-    private:
         void _AddFontData(_uint fontMapIndex, Math::rect_float uvRect)
         {
             _FontMapIndex.push_back(fontMapIndex);
