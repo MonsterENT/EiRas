@@ -21,6 +21,8 @@ namespace MaterialSys
         void BuildTextureResource(void* cmdList);
         void FinishBuild();
 
+        virtual void SetResource(void* res, bool noMoreUpdate);
+
     private:
         bool* outBuildStatusFlagPtr;
         bool buildStatusFlag = false;

@@ -77,3 +77,10 @@ void ShaderResourceDX12::FinishBuild()
 {
 #pragma message("TOFIX FinishBuild")
 }
+
+void ShaderResourceDX12::SetResource(void* res, bool noMoreUpdate)
+{
+    *outBuildStatusFlagPtr = false;
+    this->texData = res;
+    buildStatusFlag = false;
+}

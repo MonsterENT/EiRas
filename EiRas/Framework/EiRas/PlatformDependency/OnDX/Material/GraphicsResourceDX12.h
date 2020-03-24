@@ -20,7 +20,7 @@ namespace MaterialSys
 
         GraphicsResourceBehaviors* Behaviors;
 
-        void SetResource(void* res, bool noMoreUpdate);
+        virtual void SetResource(void* res, bool noMoreUpdate);
 
         int GetBufferSize();
 
