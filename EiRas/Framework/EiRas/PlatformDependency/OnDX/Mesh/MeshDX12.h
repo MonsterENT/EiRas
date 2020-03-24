@@ -1,7 +1,7 @@
 #pragma once
 
 #include <PlatformDependency/OnDX/Material/GraphicsResourceDX12.h>
-#include <Global/PlatformDefine.h>
+
 #include <Global/GlobalDefine.h>
 
 namespace MeshSys

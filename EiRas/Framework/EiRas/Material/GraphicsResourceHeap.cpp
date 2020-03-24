@@ -1,5 +1,5 @@
 #include "GraphicsResourceHeap.hpp"
-#include <Global/PlatformDefine.h>
+
 #include <Material/MaterialLayout.hpp>
 
 #if GRAPHICS_DX

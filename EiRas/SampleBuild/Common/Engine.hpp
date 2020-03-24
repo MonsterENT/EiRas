@@ -1,7 +1,7 @@
 #ifndef ENGINE_HPP
 #define ENGINE_HPP
 
-#include <Global/PlatformDefine.h>
+
 #include <Global/GlobalDefine.h>
 #if GRAPHICS_DX
 #include <Windows.h>

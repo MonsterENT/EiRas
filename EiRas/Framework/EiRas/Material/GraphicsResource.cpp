@@ -1,5 +1,5 @@
 #include <Material/GraphicsResource.hpp>
-#include <Global/PlatformDefine.h>
+
 
 #if GRAPHICS_DX
 #include <PlatformDependency/OnDX/Material/GraphicsResourceDX12Bridge.h>

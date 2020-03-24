@@ -108,7 +108,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;GRAPHICS_DX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
@@ -168,7 +168,6 @@
     <ClInclude Include="..\..\..\..\Framework\EiRas\Basic\TransformSys.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Global\EiRasGlobalManager.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Global\GlobalDefine.h" />
-    <ClInclude Include="..\..\..\..\Framework\EiRas\Global\PlatformDefine.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Global\PlatformDependency\EiRasPlatformBridgeProtocol.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\GraphicsAPI\EiRas.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Graphics\CommandBuffer.hpp" />

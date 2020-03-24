@@ -9,7 +9,7 @@
 #ifndef GraphicsVertexDescriptor_hpp
 #define GraphicsVertexDescriptor_hpp
 
-#include <Global/PlatformDefine.h>
+
 #include <Global/GlobalDefine.h>
 #include <string>
 

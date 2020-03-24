@@ -1,5 +1,4 @@
 #include "RenderTexture.hpp"
-#include <Global/PlatformDefine.h>
 
 #if GRAPHICS_DX
 #endif

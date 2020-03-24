@@ -1,5 +1,5 @@
 #pragma once
-#include <Global/PlatformDefine.h>
+
 #include <Global/PlatformDependency/EiRasPlatformBridgeProtocol.h>
 #include <Windows.h>
 

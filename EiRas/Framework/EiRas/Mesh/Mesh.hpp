@@ -9,7 +9,7 @@
 #ifndef Mesh_hpp
 #define Mesh_hpp
 
-#include <Global/PlatformDefine.h>
+
 #include <string>
 #include <Material/GraphicsResource.hpp>
 #include <Global/PlatformDependency/EiRasPlatformBridgeProtocol.h>

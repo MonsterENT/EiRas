@@ -8,7 +8,7 @@
 #ifndef EiRas_hpp
 #define EiRas_hpp
 
-#include <Global/PlatformDefine.h>
+
 #include "Protocols/EiRasProtocol.h"
 #include <Global/PlatformDependency/EiRasPlatformBridgeProtocol.h>
 

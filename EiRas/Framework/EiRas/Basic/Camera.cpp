@@ -7,7 +7,6 @@
 //
 
 #include "Camera.hpp"
-#include <Global/PlatformDefine.h>
 #include <math.h>
 
 using namespace BasicComponent;

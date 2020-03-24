@@ -11,7 +11,7 @@
 #include <Material/GraphicsResource.hpp>
 #include <Material/Material.hpp>
 #include <Graphics/GraphicsRenderState.hpp>
-#include <Global/PlatformDefine.h>
+
 
 #if GRAPHICS_METAL
 #include <PlatformDependency/OnMetal/CommandBuffer/CommandBufferMetalBridge.hpp>

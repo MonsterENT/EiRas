@@ -7,7 +7,6 @@
 //
 
 #include "FileManager.hpp"
-#include <EiRas/Global/PlatformDefine.h>
 
 #if GRAPHICS_METAL
 #include <Component/PlatformDependency/macOS/FileSys/FileManagerMacOSAdapter.h>

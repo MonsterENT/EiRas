@@ -11,7 +11,7 @@
 
 #include <string>
 #include <Global/PlatformDependency/EiRasPlatformBridgeProtocol.h>
-#include <Global/PlatformDefine.h>
+
 
 namespace Graphics {
 class GraphicsVertexDescriptor;

@@ -57,9 +57,6 @@
     <ClInclude Include="..\..\..\..\Framework\EiRas\Protocols\EiRasProtocol.h">
       <Filter>framework</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Framework\EiRas\Global\PlatformDefine.h">
-      <Filter>framework</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\d3dx12.h">
       <Filter>framework</Filter>
     </ClInclude>
