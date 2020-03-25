@@ -106,7 +106,7 @@ Material::Material(std::string Name, Shader* shader, Graphics::CommandBuffer* co
     referenceCmdBuffer = commandBuffer;
     
 #if GRAPHICS_DX
-    if (commandBuffer == 0)
+    if (commandBuffer != 0)
     {
         commandBuffer->RegMaterial(this);
     }

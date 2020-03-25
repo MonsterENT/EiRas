@@ -23,6 +23,15 @@ using namespace FontSys;
 
 Image* imageObj = 0;
 
+#define FILL_SUBMESH(submesh)\
+submesh->IndicesCount = 6;\
+submesh->VerticesCount = 4;\
+submesh->IndicesData = new _uint[6]{ 0, 1, 2, 2, 0, 3 };\
+submesh->UVData = new float2[4]{ {0, 0}, {1, 0}, {1, 1}, {0, 1} };\
+submesh->NormalData = new float3[4]{ {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0} };\
+
+
+
 void Engine::m_initEngine()
 {
     cmdBuffer = new CommandBuffer("main buffer");
@@ -45,9 +54,14 @@ void Engine::m_initEngine()
 #if GRAPHICS_METAL
     shader = new Shader("m_shader", "vertexShader", "fragmentShader");
 #elif GRAPHICS_DX
-    shader = new Shader("shaders.hlsl", "VSMain", "PSMain");
+    std::string fontShaderFilePath = FileSys::FileManager::shareInstance()->GetResourcePath("Shader\\DX\\CommonFont", "hlsl");
+    _CommonFontShader = new Shader(fontShaderFilePath, "VSMain", "PSMain");
+
+    std::string texShaderFilePath = FileSys::FileManager::shareInstance()->GetResourcePath("Shader\\DX\\CommonTex", "hlsl");
+    _CommonTexShader = new Shader(texShaderFilePath, "VSMain", "PSMain");
 #endif
-    shader->InitLayout(layout);
+    _CommonFontShader->InitLayout(layout);
+    _CommonTexShader->InitLayout(layout);
     
     GraphicsVertexDescriptor* m_vertexDesc = new GraphicsVertexDescriptor();
     
@@ -56,43 +70,65 @@ void Engine::m_initEngine()
     m_vertexDesc->AddBufferAttribute("NORMAL", GraphicsVertexAttributeFormat::VertexFormatFloat3, 0);
     m_vertexDesc->InitBufferLayout();
     
-    shader->InitVertexDescriptor(m_vertexDesc);
+    _CommonFontShader->InitVertexDescriptor(m_vertexDesc);
+    _CommonTexShader->InitVertexDescriptor(m_vertexDesc);
 
-    mat = new Material("material", shader, cmdBuffer);
+    _FontMat0 = new Material("_FontMat0", _CommonFontShader, cmdBuffer);
+    _FontMat1 = new Material("_FontMat1", _CommonFontShader, cmdBuffer);
+    _TexMat0 = new Material("_TexMat0", _CommonTexShader, cmdBuffer);
+
 
     static float4 tmpCol;
     tmpCol.x = 1;
     tmpCol.y = 1;
-    tmpCol.z = 0;
+    tmpCol.z = 1;
     tmpCol.w = 1;
-    mat->SetProperty(&tmpCol, 0);
-    mesh = 0;
-    std::string resPath = FileSys::FileManager::shareInstance()->GetModelResourcePath("qumian", "obj");
+    _FontMat0->SetProperty(&tmpCol, 0);
+    _FontMat1->SetProperty(&tmpCol, 0);    
+    _TexMat0->SetProperty(&tmpCol, 0);
+
+    //std::string resPath = FileSys::FileManager::shareInstance()->GetModelResourcePath("qumian", "obj");
     
-    mesh = new Mesh("qumian");
-    mesh->SubMeshCount = 1;
     SubMesh* subMesh = new SubMesh;
-    subMesh->IndicesCount = 6;
-    subMesh->VerticesCount = 4;
-    subMesh->IndicesData = new _uint[6] {0, 1, 2, 2, 0, 3};
-    subMesh->PositionData = new float3[4] {{-1, 1, 1}, {1, 1, 1}, {1, -1, 1}, {-1, -1, 1}};
-    subMesh->UVData = new float2[4] {{0, 0}, {1, 0}, {1, 1}, {0, 1}};
-    subMesh->NormalData = new float3[4] {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
-    mesh->SubMeshes = subMesh;
-    //    mesh->LoadDataFromFile(resPath);
-    mesh->BuildBuffer();
 
-    std::string imagePath = FileSys::FileManager::shareInstance()->GetTextureResourcePath("ground512", "png");
+    _FontMesh0 = new Mesh("_FontMesh0");
+    _FontMesh0->SubMeshCount = 1;
+    FILL_SUBMESH(subMesh)
+    subMesh->PositionData = new float3[4]{ {-1, 1, 1}, {0, 1, 1}, {0, 0, 1}, {-1, 0, 1} };
+    _FontMesh0->SubMeshes = subMesh;
+    _FontMesh0->BuildBuffer();
+    
+    subMesh = new SubMesh;
+    _FontMesh1 = new Mesh("_FontMesh1");
+    _FontMesh1->SubMeshCount = 1;
+    FILL_SUBMESH(subMesh)
+    subMesh->PositionData = new float3[4]{ {0, 1, 1}, {1, 1, 1}, {1, 0, 1}, {0, 0, 1} };
+    _FontMesh1->SubMeshes = subMesh;
+    _FontMesh1->BuildBuffer();
 
-    //imageObj = new Image("ground512");
-    //imageObj->LoadFromFile(imagePath);
+    subMesh = new SubMesh;
+    _TexMesh0 = new Mesh("_TexMesh0");
+    _TexMesh0->SubMeshCount = 1;
+    FILL_SUBMESH(subMesh)
+    subMesh->PositionData = new float3[4]{ {0, 0, 1}, {1, 0, 1}, {1, -1, 1}, {0, -1, 1} };
+    _TexMesh0->SubMeshes = subMesh;
+    _TexMesh0->BuildBuffer();
+
 
     std::string fontPath = FileSys::FileManager::shareInstance()->GetResourcePath("Font\\BELL", "TTF");
     FontSys::Font* font = new Font(fontPath);
-    Text* text = font->GetText("ABC", 12);
+    Text* text = font->GetText("ABC", 1024);
     FontManager::SharedInstance()->fontDataList[0]->RefreshFontImage();
+    FontManager::SharedInstance()->fontDataList[1]->RefreshFontImage();
 
-    mat->SetProperty(FontManager::SharedInstance()->fontDataList[0]->_FontImage, 1, 0);
+    _FontMat0->SetProperty(FontManager::SharedInstance()->fontDataList[0]->_FontImage, 1, 0);
+    _FontMat1->SetProperty(FontManager::SharedInstance()->fontDataList[1]->_FontImage, 1, 0);
+
+    std::string imagePath = FileSys::FileManager::shareInstance()->GetTextureResourcePath("ground512", "png");
+    imageObj = new Image("ground512");
+    imageObj->LoadFromFile(imagePath);
+    _TexMat0->SetProperty(imageObj, 1, 0);
+
 }
 
 Engine::Engine()
@@ -124,8 +160,13 @@ void Engine::Update()
     cmdBuffer->BeginFrame();
     cmdBuffer->Reset();
 
-    cmdBuffer->SetMaterial(mat);
-    if(mesh)
-        cmdBuffer->DrawMesh(mesh);
+    cmdBuffer->SetMaterial(_FontMat0);
+    cmdBuffer->DrawMesh(_FontMesh0);
+
+    cmdBuffer->SetMaterial(_FontMat1);
+    cmdBuffer->DrawMesh(_FontMesh1);
+
+    cmdBuffer->SetMaterial(_TexMat0);
+    cmdBuffer->DrawMesh(_TexMesh0);
     cmdBuffer->Commit(true);
 }
