@@ -28,7 +28,8 @@ using namespace ImageSys;
 Material::Material(std::string Name, Shader* shader, Graphics::CommandBuffer* commandBuffer)
 {
     this->Name = Name;
-    this->RenderState = new GraphicsRenderState();
+
+    this->RenderState = new Graphics::GraphicsRenderState();
     
 #if GRAPHICS_METAL
     this->PlatformBridge = new MaterialMetalBridge(Name);

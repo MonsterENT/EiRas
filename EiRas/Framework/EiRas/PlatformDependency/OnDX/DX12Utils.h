@@ -32,29 +32,4 @@ namespace DX12Utils
         swprintf(tmp_ws, 128, L"%hs", filePath);
         return SUCCEEDED(D3DCompileFromFile(tmp_ws, 0, 0, fnName, target, 0, 0, &shader, 0));
     }
-
-    static HRESULT g_createPSO(ID3D12Device* device, MaterialSys::ShaderDX12* shaderObj, ID3D12PipelineState*& pso)
-    {
-        CD3DX12_RASTERIZER_DESC rasterizerStateDesc(D3D12_DEFAULT);
-        rasterizerStateDesc.CullMode = D3D12_CULL_MODE_NONE;
-
-        D3D12_GRAPHICS_PIPELINE_STATE_DESC psoDesc = {};
-        psoDesc.InputLayout = { shaderObj->VertexDescriptor, shaderObj->VertexAttributesCount };
-        psoDesc.pRootSignature = shaderObj->RootSignature;
-        psoDesc.VS = CD3DX12_SHADER_BYTECODE(shaderObj->VertexFunc);
-        psoDesc.PS = CD3DX12_SHADER_BYTECODE(shaderObj->PixelFunc);
-        psoDesc.RasterizerState = rasterizerStateDesc;
-        psoDesc.BlendState = CD3DX12_BLEND_DESC(D3D12_DEFAULT);
-        psoDesc.DepthStencilState = CD3DX12_DEPTH_STENCIL_DESC(D3D12_DEFAULT);
-        psoDesc.DepthStencilState.DepthEnable = true;
-        psoDesc.DepthStencilState.StencilEnable = true;
-        psoDesc.SampleMask = UINT_MAX;
-        psoDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
-        psoDesc.NumRenderTargets = 1;
-        psoDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM;
-        psoDesc.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
-        psoDesc.SampleDesc.Count = 1;
-        psoDesc.SampleDesc.Quality = 0;
-        return device->CreateGraphicsPipelineState(&psoDesc, IID_PPV_ARGS(&pso));
-    }
 }

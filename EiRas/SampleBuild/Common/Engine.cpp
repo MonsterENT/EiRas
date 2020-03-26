@@ -7,6 +7,7 @@
 #include <Material/Shader.hpp>
 #include <Mesh/Mesh.hpp>
 #include <Graphics/VertexDataType.h>
+#include <Graphics/GraphicsRenderState.hpp>
 #include <Component/FileSys/FileManager.hpp>
 
 #include <Basic/Image.hpp>
@@ -74,7 +75,15 @@ void Engine::m_initEngine()
     _CommonTexShader->InitVertexDescriptor(m_vertexDesc);
 
     _FontMat0 = new Material("_FontMat0", _CommonFontShader, cmdBuffer);
+    _FontMat0->RenderState->_BlendSrcRGBFactor = BlendFactor::BlendRGBFactorSourceAlpha;
+    _FontMat0->RenderState->_BlendDstRGBFactor = BlendFactor::BlendRGBFactorOneMinusSourceAlpha;
+    _FontMat0->FinishStateChange();
+
     _FontMat1 = new Material("_FontMat1", _CommonFontShader, cmdBuffer);
+    _FontMat1->RenderState->_BlendSrcRGBFactor = BlendFactor::BlendRGBFactorSourceAlpha;
+    _FontMat1->RenderState->_BlendDstRGBFactor = BlendFactor::BlendRGBFactorOneMinusSourceAlpha;
+    _FontMat1->FinishStateChange();
+
     _TexMat0 = new Material("_TexMat0", _CommonTexShader, cmdBuffer);
 
 
@@ -110,7 +119,7 @@ void Engine::m_initEngine()
     _TexMesh0 = new Mesh("_TexMesh0");
     _TexMesh0->SubMeshCount = 1;
     FILL_SUBMESH(subMesh)
-    subMesh->PositionData = new float3[4]{ {0, 0, 1}, {1, 0, 1}, {1, -1, 1}, {0, -1, 1} };
+    subMesh->PositionData = new float3[4]{ {-0.5, 0.5, 1}, {0.5, 0.5, 1}, {0.5, -0.5, 1}, {-0.5, -0.5, 1} };
     _TexMesh0->SubMeshes = subMesh;
     _TexMesh0->BuildBuffer();
 
@@ -160,13 +169,14 @@ void Engine::Update()
     cmdBuffer->BeginFrame();
     cmdBuffer->Reset();
 
+    cmdBuffer->SetMaterial(_TexMat0);
+    cmdBuffer->DrawMesh(_TexMesh0);
+
     cmdBuffer->SetMaterial(_FontMat0);
     cmdBuffer->DrawMesh(_FontMesh0);
 
     cmdBuffer->SetMaterial(_FontMat1);
     cmdBuffer->DrawMesh(_FontMesh1);
 
-    cmdBuffer->SetMaterial(_TexMat0);
-    cmdBuffer->DrawMesh(_TexMesh0);
     cmdBuffer->Commit(true);
 }

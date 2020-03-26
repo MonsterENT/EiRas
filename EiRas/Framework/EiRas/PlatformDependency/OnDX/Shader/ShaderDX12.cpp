@@ -5,6 +5,7 @@
 #include <PlatformDependency/OnDX/DXMacro.h>
 #include <Graphics/GraphicsVertexDescriptor.hpp>
 #include <Material/GraphicsResource.hpp>
+#include <Graphics/GraphicsRenderState.hpp>
 
 using namespace MaterialSys;
 using namespace Graphics;
@@ -46,6 +47,69 @@ void ShaderDX12::InitVertexDescriptor(Graphics::GraphicsVertexDescriptor* desc)
         VertexDescriptor[i].AlignedByteOffset = att.Offset;
         VertexDescriptor[i].InputSlotClass = D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA;
         VertexDescriptor[i].InstanceDataStepRate = 0;
+    }
+}
+
+ID3D12PipelineState* ShaderDX12::_GetPSO(Graphics::GraphicsRenderState* renderState)
+{
+    _uint hashCode = renderState->GetHashCode();
+    PSOCache_MAP::iterator cachedObj = _PSOCache.find(hashCode);
+    if (cachedObj != _PSOCache.end())
+    {
+        return cachedObj->second;
+    }
+    else
+    {
+        D3D12_GRAPHICS_PIPELINE_STATE_DESC psoDesc = {};
+        psoDesc.InputLayout = { this->VertexDescriptor, this->VertexAttributesCount };
+        psoDesc.pRootSignature = this->RootSignature;
+        psoDesc.VS = CD3DX12_SHADER_BYTECODE(this->VertexFunc);
+        psoDesc.PS = CD3DX12_SHADER_BYTECODE(this->PixelFunc);
+
+        CD3DX12_RASTERIZER_DESC rasterizerStateDesc(D3D12_DEFAULT);
+        rasterizerStateDesc.CullMode = (D3D12_CULL_MODE)renderState->_CullMode;
+        rasterizerStateDesc.FillMode = (D3D12_FILL_MODE)renderState->_FillMode;
+        psoDesc.RasterizerState = rasterizerStateDesc;
+
+        D3D12_BLEND_DESC blendDesc;
+        blendDesc.AlphaToCoverageEnable = false;
+        blendDesc.IndependentBlendEnable = false;
+        D3D12_RENDER_TARGET_BLEND_DESC rt_blend_desc;
+        rt_blend_desc.LogicOpEnable = false;
+        rt_blend_desc.LogicOp = D3D12_LOGIC_OP_NOOP;
+        rt_blend_desc.BlendEnable = ((renderState->_BlendSrcRGBFactor == BlendFactor::BlendRGBFactorOne) && (renderState->_BlendDstRGBFactor == BlendFactor::BlendRGBFactorZero) &&
+            (renderState->_BlendSrcAlphaFactor == BlendFactor::BlendRGBFactorOne) && (renderState->_BlendDstAlphaFactor == BlendFactor::BlendRGBFactorZero)) ? false : true;
+        rt_blend_desc.BlendOp = (D3D12_BLEND_OP)renderState->_BlendOp_RGB;
+        rt_blend_desc.BlendOpAlpha = (D3D12_BLEND_OP)renderState->_BlendOp_ALPHA;
+        rt_blend_desc.SrcBlend = (D3D12_BLEND)Graphics::BlendFactorConvertDX12(renderState->_BlendSrcRGBFactor);
+        rt_blend_desc.DestBlend = (D3D12_BLEND)Graphics::BlendFactorConvertDX12(renderState->_BlendDstRGBFactor);
+        rt_blend_desc.SrcBlendAlpha = (D3D12_BLEND)Graphics::BlendFactorConvertDX12(renderState->_BlendSrcAlphaFactor);
+        rt_blend_desc.DestBlendAlpha = (D3D12_BLEND)Graphics::BlendFactorConvertDX12(renderState->_BlendDstAlphaFactor);
+        rt_blend_desc.RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
+        for (UINT i = 0; i < D3D12_SIMULTANEOUS_RENDER_TARGET_COUNT; ++i)
+            blendDesc.RenderTarget[i] = rt_blend_desc;
+        psoDesc.BlendState = blendDesc;
+
+        psoDesc.DepthStencilState = CD3DX12_DEPTH_STENCIL_DESC(D3D12_DEFAULT);
+        psoDesc.DepthStencilState.DepthEnable = true;
+        psoDesc.DepthStencilState.StencilEnable = true;
+        psoDesc.SampleMask = UINT_MAX;
+        psoDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+        psoDesc.NumRenderTargets = 1;
+        psoDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM;
+        psoDesc.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
+        psoDesc.SampleDesc.Count = 1;
+        psoDesc.SampleDesc.Quality = 0;
+
+        ID3D12PipelineState* pso = 0;
+        GET_EIRAS_DX12(deviceObj)
+            deviceObj->device->CreateGraphicsPipelineState(&psoDesc, IID_PPV_ARGS(&pso));
+
+        if (pso)
+        {
+            _PSOCache.insert(PSOCache_PAIR(hashCode, pso));
+        }
+        return pso;
     }
 }
 

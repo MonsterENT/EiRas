@@ -31,7 +31,7 @@ namespace MeshSys
 
 namespace Graphics {
 
-    class GraphicsRenderSate;
+    class GraphicsRenderState;
 
     class CommandBuffer
     {
