@@ -29,18 +29,15 @@ using namespace Graphics;
 Mesh::Mesh(std::string name)
 {
     this->Name = name;
-#if GRAPHICS_DX
+#ifdef GRAPHICS_DX
     PlatformBridge = new MeshDX12Bridge();
 #endif
     
-#if GRAPHICS_METAL
+#ifdef GRAPHICS_METAL
     PlatformBridge = new MeshMetalBridge();
 #endif
     
     SubMeshCount = 0;
-    VerticesCount = 0;
-    IndicesCount = 0;
-
 }
 
 void Mesh::LoadDataFromFile(std::string fileName)
@@ -54,68 +51,37 @@ void Mesh::BuildBuffer()
     for(_uint i = 0; i < SubMeshCount; i++)
     {
         SubMesh* subMesh = &SubMeshes[i];
-        
-        VerticesCount += subMesh->VerticesCount;
-        IndicesCount += subMesh->IndicesCount;
-    }
-    
-    TriangleData = new VertexData3D[VerticesCount];
-    TriangleDataSize = sizeof(VertexData3D) * VerticesCount;
-    
-    IndexData = new _uint[IndicesCount];
-    IndexDataSize = sizeof(_uint) * IndicesCount;
-    
-    _uint curMeshDataIndex = 0;
-    _uint curIndexDataIndex = 0;
-    for(_uint i = 0; i < SubMeshCount; i++)
-    {
-        SubMesh* subMesh = &SubMeshes[i];
+
+        subMesh->TriangleData = new VertexData3D[subMesh->VerticesCount];
+        subMesh->TriangleDataSize = sizeof(VertexData3D) * subMesh->VerticesCount;
+
+        subMesh->IndexDataSize = sizeof(_uint) * subMesh->IndicesCount;
+
         for(_uint j = 0; j < subMesh->VerticesCount; j++)
         {
-            VertexData3D* tmpData = (VertexData3D*)TriangleData + curMeshDataIndex;
+            VertexData3D* tmpData = (VertexData3D*)subMesh->TriangleData + j;
             tmpData->Position = float3(subMesh->PositionData[j].x, subMesh->PositionData[j].y, subMesh->PositionData[j].z);
             tmpData->UV = float2(subMesh->UVData[j].x, subMesh->UVData[j].y);
             tmpData->Normal = float3(subMesh->NormalData[j].x, subMesh->NormalData[j].y, subMesh->NormalData[j].z);
-            curMeshDataIndex++;
         }
         
-        memcpy((_uint*)IndexData + curIndexDataIndex, subMesh->IndicesData, subMesh->IndicesCount * sizeof(_uint));
-        curIndexDataIndex += subMesh->IndicesCount;
+        subMesh->VertexBuffer = new GraphicsResource(Name, GraphicsResourceType::Default, GraphicsResourceVisibility::VISIBILITY_VERTEX, GraphicsResourceUpdateFreq::UPDATE_FREQ_LOW, true);
+        subMesh->VertexBuffer->InitAsDefault(subMesh->TriangleDataSize);
+        subMesh->VertexBuffer->SetResource(subMesh->TriangleData, true);
+
+        subMesh->IndexBuffer = new GraphicsResource(Name, GraphicsResourceType::Default, GraphicsResourceVisibility::VISIBILITY_VERTEX, GraphicsResourceUpdateFreq::UPDATE_FREQ_LOW, true);
+        subMesh->IndexBuffer->InitAsDefault(subMesh->IndexDataSize);
+        subMesh->IndexBuffer->SetResource(subMesh->IndicesData, true);
+
+#ifdef GRAPHICS_DX
+        ((MeshDX12Bridge*)PlatformBridge)->BuildBufferView(subMesh->VertexBuffer->PlatformBridge, subMesh->TriangleDataSize, subMesh->VerticesCount, 
+            subMesh->IndexBuffer->PlatformBridge, subMesh->IndexDataSize);
+#endif
     }
 
-    VertexBuffer = new GraphicsResource(Name, GraphicsResourceType::Default, GraphicsResourceVisibility::VISIBILITY_VERTEX, GraphicsResourceUpdateFreq::UPDATE_FREQ_LOW, true);
-    VertexBuffer->InitAsDefault(GetTriangleDataSize());
-    VertexBuffer->SetResource(GetTriangleData(), true);
-    
-    IndexBuffer = new GraphicsResource(Name, GraphicsResourceType::Default, GraphicsResourceVisibility::VISIBILITY_VERTEX, GraphicsResourceUpdateFreq::UPDATE_FREQ_LOW, true);
-    IndexBuffer->InitAsDefault(GetIndexDataSize());
-    IndexBuffer->SetResource(GetIndexData(), true);
-
-#if GRAPHICS_DX
-    ((MeshDX12Bridge*)PlatformBridge)->BuildBuffer(VertexBuffer->PlatformBridge, IndexBuffer->PlatformBridge, VerticesCount, IndicesCount);
-#endif
-
-#if GRAPHICS_METAL
+#ifdef GRAPHICS_METAL
     ((MeshMetalBridge*)PlatformBridge)->BuildBuffer(VertexBuffer->PlatformBridge, IndexBuffer->PlatformBridge, VerticesCount, IndicesCount, 0, 0);
 #endif
-}
 
-void* Mesh::GetTriangleData()
-{
-    return TriangleData;
-}
 
-_uint Mesh::GetTriangleDataSize()
-{
-    return TriangleDataSize;
-}
-
-void* Mesh::GetIndexData()
-{
-    return IndexData;
-}
-
-_uint Mesh::GetIndexDataSize()
-{
-    return IndexDataSize;
 }

@@ -9,14 +9,12 @@ namespace MaterialSys
     class GraphicsResourceHeapDX12;
     class MaterialDX12;
     class MaterialLayout;
-    
-    class MeshDX12;
     class GraphicsResourceDX12;
 }
 
 namespace MeshSys
 {
-    class MeshDX12;
+    class Mesh;
 }
 
 namespace Graphics {
@@ -32,7 +30,7 @@ namespace Graphics {
         void Reset(MaterialSys::GraphicsResourceHeapDX12* heapObj);
         void Commit(bool present);
 
-        void DrawMesh(MeshSys::MeshDX12* mesh);
+        void DrawMesh(MeshSys::Mesh* mesh);
 
         void SetMaterial(MaterialSys::MaterialDX12* mat, MaterialSys::MaterialLayout* layout);
 

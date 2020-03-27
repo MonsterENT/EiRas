@@ -21,35 +21,48 @@ void TransformSys::Init(Math::float3 _forward, Math::float3 _right, Math::float3
 
 Matrix4X4* TransformSys::GetLocalToWorldMatrix()
 {
-    if(!_finishBuildMat)
-    {
-        _finishBuildMat = true;
-        
-        _localToWorldMat.m14 = Position.x;
-        _localToWorldMat.m24 = Position.y;
-        _localToWorldMat.m34 = Position.z;
-        
-        //
-        _localToWorldMat.m11 = Right.x;
-        _localToWorldMat.m21 = Right.y;
-        _localToWorldMat.m31 = Right.z;
-        
-        _localToWorldMat.m12 = Up.x;
-        _localToWorldMat.m22 = Up.y;
-        _localToWorldMat.m32 = Up.z;
-        
-        _localToWorldMat.m13 = Forward.x;
-        _localToWorldMat.m23 = Forward.y;
-        _localToWorldMat.m33 = Forward.z;
-        
-        //
-        _localToWorldMat.m11 *= LocalScale.x;
-        _localToWorldMat.m22 *= LocalScale.y;
-        _localToWorldMat.m33 *= LocalScale.z;
-        
+    _localToWorldMat.m14 = Position.x;
+    _localToWorldMat.m24 = Position.y;
+    _localToWorldMat.m34 = Position.z;
+
+    //
+    _localToWorldMat.m11 = Right.x;
+    _localToWorldMat.m21 = Right.y;
+    _localToWorldMat.m31 = Right.z;
+
+    _worldToLocalMat.m11 = Right.x;
+    _worldToLocalMat.m21 = Right.y;
+    _worldToLocalMat.m31 = Right.z;
+
+
+    _localToWorldMat.m12 = Up.x;
+    _localToWorldMat.m22 = Up.y;
+    _localToWorldMat.m32 = Up.z;
+
+    _worldToLocalMat.m12 = Up.x;
+    _worldToLocalMat.m22 = Up.y;
+    _worldToLocalMat.m32 = Up.z;
+
+    _localToWorldMat.m13 = Forward.x;
+    _localToWorldMat.m23 = Forward.y;
+    _localToWorldMat.m33 = Forward.z;
+
+    _worldToLocalMat.m13 = Forward.x;
+    _worldToLocalMat.m23 = Forward.y;
+    _worldToLocalMat.m33 = Forward.z;
+
+    //
+    _localToWorldMat.m11 *= LocalScale.x;
+    _localToWorldMat.m22 *= LocalScale.y;
+    _localToWorldMat.m33 *= LocalScale.z;
+
 #if GRAPHICS_DX
-        _localToWorldMat.transpose();
+    _localToWorldMat.transpose();
 #endif
-    }
     return &_localToWorldMat;
+}
+
+Math::Matrix4X4* TransformSys::GetWorldToLocalMatrix()
+{
+    return &_worldToLocalMat;
 }

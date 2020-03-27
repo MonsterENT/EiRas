@@ -67,7 +67,7 @@ ID3D12PipelineState* ShaderDX12::_GetPSO(Graphics::GraphicsRenderState* renderSt
         psoDesc.PS = CD3DX12_SHADER_BYTECODE(this->PixelFunc);
 
         CD3DX12_RASTERIZER_DESC rasterizerStateDesc(D3D12_DEFAULT);
-        rasterizerStateDesc.CullMode = (D3D12_CULL_MODE)renderState->_CullMode;
+        rasterizerStateDesc.CullMode = (D3D12_CULL_MODE)(4 - (int)renderState->_CullMode);
         rasterizerStateDesc.FillMode = (D3D12_FILL_MODE)renderState->_FillMode;
         psoDesc.RasterizerState = rasterizerStateDesc;
 
@@ -91,8 +91,9 @@ ID3D12PipelineState* ShaderDX12::_GetPSO(Graphics::GraphicsRenderState* renderSt
         psoDesc.BlendState = blendDesc;
 
         psoDesc.DepthStencilState = CD3DX12_DEPTH_STENCIL_DESC(D3D12_DEFAULT);
+        psoDesc.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_LESS;
         psoDesc.DepthStencilState.DepthEnable = true;
-        psoDesc.DepthStencilState.StencilEnable = true;
+
         psoDesc.SampleMask = UINT_MAX;
         psoDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
         psoDesc.NumRenderTargets = 1;
@@ -147,7 +148,8 @@ ID3D12RootSignature* createRootSig(ShaderLayout* shaderLayout)
             
             _uint rangeNum = table->Ranges.size();
 
-            CD3DX12_DESCRIPTOR_RANGE1* ranges = new CD3DX12_DESCRIPTOR_RANGE1[rangeNum];
+#pragma message("TOFIX")
+            CD3DX12_DESCRIPTOR_RANGE1 ranges[100];
             for (_uint j = 0; j < rangeNum; j++)
             {
                 ShaderPropRange* range = &table->Ranges[j];
@@ -177,13 +179,6 @@ ID3D12RootSignature* createRootSig(ShaderLayout* shaderLayout)
     GET_EIRAS_DX12(deviceObj)
     deviceObj->device->CreateRootSignature(0, signature->GetBufferPointer(), signature->GetBufferSize(), IID_PPV_ARGS(&rootSig));
 
-    for (_uint i = 0; i < slotNum; i++)
-    {
-        if (rootParameters[i].DescriptorTable.NumDescriptorRanges > 0)
-        {
-            delete rootParameters[i].DescriptorTable.pDescriptorRanges;
-        }
-    }
     delete[] rootParameters;
     return rootSig;
 }

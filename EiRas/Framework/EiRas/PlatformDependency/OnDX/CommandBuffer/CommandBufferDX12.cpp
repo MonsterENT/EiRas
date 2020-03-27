@@ -6,19 +6,21 @@
 #include <Material/MaterialLayout.hpp>
 #include <PlatformDependency/OnDX/Material/GraphicsResourceDX12.h>
 #include <PlatformDependency/OnDX/Material/GraphicsResourceHeapDX12.h>
+#include <Mesh/Mesh.hpp>
 #include <PlatformDependency/OnDX/Mesh/MeshDX12.h>
 #include <Basic/Image.hpp>
 
 using Graphics::CommandBufferDX12;
 using GraphicsAPI::EiRasDX12;
 using namespace MaterialSys;
+using namespace MeshSys;
 using ImageSys::ImageSysBuildingList;
 
 CommandBufferDX12::CommandBufferDX12(std::string Name)
 {
     GET_EIRAS_DX12(deviceObj)
-        deviceObj->device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&cmdAllocator));
-    deviceObj->device->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, cmdAllocator, 0, IID_PPV_ARGS(&cmdList));
+    HRESULT hr = deviceObj->device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&cmdAllocator));
+    hr = deviceObj->device->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, cmdAllocator, 0, IID_PPV_ARGS(&cmdList));
     wchar_t tmp_ws[16];
     swprintf(tmp_ws, 16, L"%hs", Name.c_str());
     cmdList->SetName(tmp_ws);
@@ -63,7 +65,7 @@ void CommandBufferDX12::BeginFrame()
     const float clearColor[] = { 0.2f, 0.2f, 0.2f, 1.0f };
     cmdList->ClearRenderTargetView(rtvHandle, clearColor, 0, nullptr);
     cmdList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
-    cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+    cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 #pragma endregion
 }
 
@@ -95,11 +97,16 @@ void CommandBufferDX12::Commit(bool present)
     }
 }
 
-void CommandBufferDX12::DrawMesh(MeshSys::MeshDX12* mesh)
+void CommandBufferDX12::DrawMesh(MeshSys::Mesh* mesh)
 {
-    cmdList->IASetVertexBuffers(0, 1, &mesh->VertexBufferView);
-    cmdList->IASetIndexBuffer(&mesh->IndexBufferView);
-    cmdList->DrawIndexedInstanced(mesh->IndexCount, 1, 0, 0, 0);
+    for (int i = 0; i < mesh->SubMeshCount; i++)
+    {
+        MeshDX12* rawMeshObj = (MeshDX12*)mesh->PlatformBridge->raw_obj;
+
+        cmdList->IASetVertexBuffers(0, 1, &rawMeshObj->VertexBufferViews[i]);
+        cmdList->IASetIndexBuffer(&rawMeshObj->IndexBufferViews[i]);
+        cmdList->DrawIndexedInstanced(mesh->SubMeshes[i].IndicesCount, 1, 0, 0, 0);
+    }
 }
 
 

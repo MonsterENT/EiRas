@@ -21,7 +21,7 @@ class TransformSys
 public:
     TransformSys()
     {
-        _finishBuildMat = false;
+        LocalScale = Math::float3(1, 1, 1);
     }
     
     Math::float3 Forward;
@@ -36,14 +36,12 @@ public:
     Math::float3 Up,
     Math::float3 Position);
     Math::Matrix4X4* GetLocalToWorldMatrix();
-    
+    Math::Matrix4X4* GetWorldToLocalMatrix();
+
 protected:
-    bool _finishBuildMat;
-    
 private:
-    Math::Matrix4X4 _rotateMat;
-    Math::Matrix4X4 _scaleMat;
     Math::Matrix4X4 _localToWorldMat;
+    Math::Matrix4X4 _worldToLocalMat;
 };
 
 }

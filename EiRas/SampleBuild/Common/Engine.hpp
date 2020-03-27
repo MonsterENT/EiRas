@@ -43,8 +43,9 @@ public:
 #endif
 
     void Update();
-
     ~Engine();
+
+    void KeyPressed(_uint param);
 
 private:
     void m_initEngine();
@@ -56,5 +57,7 @@ private:
 
     Graphics::CommandBuffer* cmdBuffer;
     MeshSys::Mesh* _FontMesh0, *_FontMesh1, *_TexMesh0;
+
+    MeshSys::Mesh* _SF90Mesh;
 };
 #endif

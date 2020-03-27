@@ -29,6 +29,8 @@ class float4;
 
 namespace MeshSys {
 
+    class Mesh;
+
 class SubMesh
 {
 public:
@@ -40,6 +42,14 @@ public:
     Math::float3* NormalData;
     Math::float2* UVData;
     Math::float4* ColorData;
+
+    MaterialSys::GraphicsResource* VertexBuffer;
+    MaterialSys::GraphicsResource* IndexBuffer;
+
+    void* TriangleData;
+    _uint TriangleDataSize;
+
+    _uint IndexDataSize;
 };
 
 class Mesh
@@ -50,12 +60,6 @@ public:
     void LoadDataFromFile(std::string fileName);
 
     std::string Name;
-    
-    void* GetTriangleData();
-    _uint GetTriangleDataSize();
-    
-    void* GetIndexData();
-    _uint GetIndexDataSize();
 
     void BuildBuffer();
 
@@ -65,17 +69,7 @@ public:
     SubMesh* SubMeshes;
     
 private:
-    MaterialSys::GraphicsResource* VertexBuffer;
-    MaterialSys::GraphicsResource* IndexBuffer;
-    
-    void* TriangleData;
-    _uint TriangleDataSize;
-    
-    void* IndexData;
-    _uint IndexDataSize;
-    
-    _uint VerticesCount;
-    _uint IndicesCount;
+   
 };
 
 }

@@ -11,19 +11,22 @@ MeshDX12::MeshDX12()
 {
 }
 
-void MeshDX12::BuildBuffer(void* vertexRes, void* indexRes, _uint vertexCount, _uint indexCount)
+void MeshDX12::BuildBufferView(void* rawVertexResObj, _uint vertexBufferSize, _uint vertexCount,
+    void* rawIndexResObj, _uint indexBufferSize)
 {
-    VertexCount = vertexCount;
-    IndexCount = indexCount;
+    GraphicsResourceDX12* _rawVertexResObj = (GraphicsResourceDX12*)rawVertexResObj;
+    GraphicsResourceDX12* _rawIndexResObj = (GraphicsResourceDX12*)rawIndexResObj;
 
-    GraphicsResourceDX12* rawVertexResObj = (GraphicsResourceDX12*)vertexRes;
-    GraphicsResourceDX12* rawIndexResObj = (GraphicsResourceDX12*)indexRes;
+    D3D12_VERTEX_BUFFER_VIEW vertexBufferView;
+    vertexBufferView.BufferLocation = _rawVertexResObj->Resource->GetGPUVirtualAddress();
+    vertexBufferView.StrideInBytes = vertexBufferSize / vertexCount;
+    vertexBufferView.SizeInBytes = vertexBufferSize;
 
-    VertexBufferView.BufferLocation = rawVertexResObj->Resource->GetGPUVirtualAddress();
-    VertexBufferView.StrideInBytes = rawVertexResObj->GetBufferSize() / VertexCount;
-    VertexBufferView.SizeInBytes = rawVertexResObj->GetBufferSize();
+    D3D12_INDEX_BUFFER_VIEW indexBufferView;
+    indexBufferView.BufferLocation = _rawIndexResObj->Resource->GetGPUVirtualAddress();
+    indexBufferView.SizeInBytes = indexBufferSize;
+    indexBufferView.Format = DXGI_FORMAT_R32_UINT;
 
-    IndexBufferView.BufferLocation = rawIndexResObj->Resource->GetGPUVirtualAddress();
-    IndexBufferView.SizeInBytes = rawIndexResObj->GetBufferSize();
-    IndexBufferView.Format = DXGI_FORMAT_R32_UINT;
+    VertexBufferViews.push_back(vertexBufferView);
+    IndexBufferViews.push_back(indexBufferView);
 }

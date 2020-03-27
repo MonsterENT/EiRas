@@ -2,6 +2,7 @@
 
 #include <Global/PlatformDependency/EiRasPlatformBridgeProtocol.h>
 #include <Windows.h>
+#include <Global/GlobalDefine.h>
 
 namespace MeshSys
 {
@@ -9,6 +10,8 @@ namespace MeshSys
     {
     public:
         MeshDX12Bridge();
-        void BuildBuffer(EiRasPlatformBridgeProtocol* vertexResBridge, EiRasPlatformBridgeProtocol* indexResBridgem, UINT vertexCount, UINT indexCount);
+
+        void BuildBufferView(void* vertexResObjPB, _uint vertexBufferSize, _uint vertexCount,
+            void* indexResObjPB, _uint indexBufferSize);
     };
 }

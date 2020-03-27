@@ -1,5 +1,6 @@
 #include "MeshDX12Bridge.h"
 #include "MeshDX12.h"
+#include <Global/PlatformDependency/EiRasPlatformBridgeProtocol.h>
 
 using namespace MeshSys;
 
@@ -8,12 +9,9 @@ MeshDX12Bridge::MeshDX12Bridge()
     raw_obj = new MeshDX12();
 }
 
-void MeshDX12Bridge::BuildBuffer(EiRasPlatformBridgeProtocol* vertexResBridge, EiRasPlatformBridgeProtocol* indexResBridge, UINT vertexCount, UINT indexCount)
+void MeshDX12Bridge::BuildBufferView(void* vertexResObjPB, _uint vertexBufferSize, _uint vertexCount,
+    void* indexResObjPB, _uint indexBufferSize)
 {
-    void* indexRawObj = 0;
-    if (indexResBridge)
-    {
-        indexRawObj = indexResBridge->raw_obj;
-    }
-    ((MeshDX12*)raw_obj)->BuildBuffer(vertexResBridge->raw_obj, indexRawObj, vertexCount, indexCount);
+    ((MeshDX12*)raw_obj)->BuildBufferView(((EiRasPlatformBridgeProtocol*)vertexResObjPB)->raw_obj, vertexBufferSize, vertexCount,
+        ((EiRasPlatformBridgeProtocol*)indexResObjPB)->raw_obj, indexBufferSize);
 }

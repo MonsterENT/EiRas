@@ -19,7 +19,6 @@ public:
     
     Camera()
     {
-        _finishBuildViewMat = false;
     }
     
     TransformSys Transform;
@@ -35,9 +34,6 @@ private:
     Math::Matrix4X4 _projectionMat;
     
     float _fov, _aspect, _ZNear, _ZFar;
-    
-    bool _finishBuildViewMat;
-    bool _finishBuildProjectionMat;
 };
 
 }

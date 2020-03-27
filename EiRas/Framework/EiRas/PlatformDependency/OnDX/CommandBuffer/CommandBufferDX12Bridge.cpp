@@ -46,5 +46,5 @@ void CommandBufferDX12Bridge::SetMaterial(Material* mat)
 void CommandBufferDX12Bridge::DrawMesh(Mesh* mesh)
 {
     CommandBufferDX12* obj = (CommandBufferDX12*)raw_obj;
-    obj->DrawMesh((MeshSys::MeshDX12*)mesh->PlatformBridge->raw_obj);
+    obj->DrawMesh(mesh);
 }
