@@ -1,14 +1,14 @@
 
 cbuffer CommonCB0 : register(b0)
 {
-    float4x4 _WorldToViewMatrix;
-    float4x4 _ProjectionMatrix;
+    row_major float4x4 _WorldToViewMatrix;
+    row_major float4x4 _ProjectionMatrix;
 };
 
 cbuffer CommonCB1 : register(b1)
 {
-    float4x4 _LocalToWorldMatrix;
-    float4x4 _WorldToLocalMatrix;
+    row_major float4x4 _LocalToWorldMatrix;
+    row_major float4x4 _WorldToLocalMatrix;
 };
 
 cbuffer CustomCB : register(b2)
@@ -50,5 +50,5 @@ PSInput VSMain(VSInput v)
 
 float4 PSMain(PSInput i) : SV_TARGET
 {
-    return dot(i.normal, float3(0, 1, 0));
+    return float4(dot(i.normal, float3(0, 1, 0)).xxx, 1);
 }

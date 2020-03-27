@@ -296,6 +296,14 @@ void Engine::KeyPressed(_uint param)
     {
         postion.z += 0.1;
     }
+    else if (param == 'A')
+    {
+        postion.x -= 0.1;
+    }
+    else if (param == 'D')
+    {
+        postion.x += 0.1;
+    }
     else if (param == 'W')
     {
         FOV += 0.1;

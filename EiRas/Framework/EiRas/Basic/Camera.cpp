@@ -35,10 +35,6 @@ void perspectiveFov(Math::Matrix4X4& mat, const float fov, const float aspect, c
     mat.m42 = 0;
     mat.m43 = 1;
     mat.m44 = 0;
-
-#if GRAPHICS_DX
-    mat.transpose();
-#endif
 }
 
 void Camera::SetProjection(float fov, float aspect, float ZNear, float ZFar)
@@ -66,9 +62,6 @@ const Math::Matrix4X4* Camera::GetViewMatrix()
     _viewMat.m33 = Transform.Forward.z;
     _viewMat.m34 = -Transform.Position.z;
 
-#if GRAPHICS_DX
-    _viewMat.transpose();
-#endif
     return &_viewMat;
 }
 
