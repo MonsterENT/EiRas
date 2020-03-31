@@ -11,7 +11,7 @@
 #include <Material/GraphicsResource.hpp>
 #include <Material/Material.hpp>
 #include <Graphics/GraphicsRenderState.hpp>
-
+#include <Graphics/RenderTexture.hpp>
 
 #if GRAPHICS_METAL
 #include <PlatformDependency/OnMetal/CommandBuffer/CommandBufferMetalBridge.hpp>
@@ -24,7 +24,7 @@
 #include <Mesh/Mesh.hpp>
 
 using namespace MaterialSys;
-using Graphics::CommandBuffer;
+using namespace Graphics;
 
 CommandBuffer::CommandBuffer(std::string Name, _uint maxHeapSize)
 {
@@ -111,6 +111,13 @@ void CommandBuffer::SetViewPort(float topLeftX, float topLeftY, float width, flo
 
 #if GRAPHICS_DX
     ((CommandBufferDX12Bridge*)PlatformBridge)->SetViewPort(topLeftX, topLeftY, width, height, minDepth, maxDepth);
+#endif
+}
+
+void CommandBuffer::SetRenderTexture(Graphics::RenderTexture* renderTexture)
+{
+#if GRAPHICS_DX
+    ((CommandBufferDX12Bridge*)PlatformBridge)->SetRenderTexture(renderTexture->PlatformBridge);
 #endif
 }
 

@@ -42,6 +42,11 @@ void CommandBufferDX12Bridge::SetViewPort(float topLeftX, float topLeftY, float 
     ((CommandBufferDX12*)raw_obj)->SetViewPort(topLeftX, topLeftY, width, height, minDepth, maxDepth);
 }
 
+void CommandBufferDX12Bridge::SetRenderTexture(EiRasPlatformBridgeProtocol* renderTexturePB)
+{
+    ((CommandBufferDX12*)raw_obj)->SetRenderTexture(renderTexturePB->raw_obj);
+}
+
 void CommandBufferDX12Bridge::SetMaterial(Material* mat)
 {
     CommandBufferDX12* obj = (CommandBufferDX12*)raw_obj;

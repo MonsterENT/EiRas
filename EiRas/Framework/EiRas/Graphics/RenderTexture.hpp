@@ -105,9 +105,7 @@ namespace Graphics
     class RenderTexture
     {
     public:
-
         RenderTexture(std::string name, RenderBufferFormat colorFormat, bool useStencil, _uint width, _uint height);
-        
         EiRasPlatformBridgeProtocol* PlatformBridge;
     private:
     };

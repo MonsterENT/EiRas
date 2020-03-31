@@ -26,6 +26,7 @@ namespace GraphicsAPI
     protected:
         void _BeginFrame(ID3D12GraphicsCommandList* cmdList);
         void _Present(bool swapChainFlip, ID3D12GraphicsCommandList* cmdList);
+        void _SetBackBufferState(bool toRenderTarget, ID3D12GraphicsCommandList* cmdList);
 
     private:
         void WaitForPreviousFrame();

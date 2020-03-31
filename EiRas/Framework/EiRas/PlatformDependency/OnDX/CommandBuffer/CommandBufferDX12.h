@@ -38,6 +38,8 @@ namespace Graphics {
 
         void SetMaterial(MaterialSys::MaterialDX12* mat, MaterialSys::MaterialLayout* layout);
 
+        void SetRenderTexture(void* rawRenderTexture);
+
         ID3D12CommandAllocator* cmdAllocator = 0;
         ID3D12GraphicsCommandList* cmdList = 0;
         MaterialSys::GraphicsResourceHeapDX12* CurrentUseingHeap;

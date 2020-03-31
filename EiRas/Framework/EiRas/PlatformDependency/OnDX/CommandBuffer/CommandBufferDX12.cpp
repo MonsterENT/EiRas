@@ -20,7 +20,7 @@ CommandBufferDX12::CommandBufferDX12(std::string Name)
 {
     _CurrentRenderTexture = 0;
     GET_EIRAS_DX12(deviceObj)
-    HRESULT hr = deviceObj->device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&cmdAllocator));
+        HRESULT hr = deviceObj->device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&cmdAllocator));
     hr = deviceObj->device->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, cmdAllocator, 0, IID_PPV_ARGS(&cmdList));
     wchar_t tmp_ws[16];
     swprintf(tmp_ws, 16, L"%hs", Name.c_str());
@@ -38,7 +38,7 @@ void CommandBufferDX12::BeginFrame()
 {
     GET_EIRAS_DX12(deviceObj)
 
-    cmdAllocator->Reset();
+        cmdAllocator->Reset();
     cmdList->Reset(cmdAllocator, NULL);
     for (int i = 0; i < ImageSysBuildingList.size(); i++)
     {
@@ -67,10 +67,10 @@ void CommandBufferDX12::Reset(MaterialSys::GraphicsResourceHeapDX12* heapObj)
 void CommandBufferDX12::Commit(bool present)
 {
     GET_EIRAS_DX12(deviceObj)
-    if (present)
-    {
-        deviceObj->_Present(false, cmdList);
-    }
+        if (present)
+        {
+            deviceObj->_Present(false, cmdList);
+        }
     assert(SUCCEEDED(cmdList->Close()));
     ID3D12CommandList* ppCommandLists[] = { cmdList };
     deviceObj->cmdQueue->ExecuteCommandLists(1, ppCommandLists);
@@ -140,6 +140,49 @@ void CommandBufferDX12::SetMaterial(MaterialSys::MaterialDX12* mat, MaterialSys:
         }
     }
 }
+
+void CommandBufferDX12::SetRenderTexture(void* rawRenderTexture)
+{
+#pragma message("TO DO")
+    if (_CurrentRenderTexture)
+    {
+        cmdList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(_CurrentRenderTexture->ColorBuffer, D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE));
+    }
+    else
+    {
+        GET_EIRAS_DX12(deviceObj)
+        deviceObj->_SetBackBufferState(false, cmdList);
+    }
+    _CurrentRenderTexture = NULL;
+
+    if (rawRenderTexture)
+    {
+        _CurrentRenderTexture = (Graphics::RenderTextureDX12*)rawRenderTexture;
+        cmdList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(_CurrentRenderTexture->ColorBuffer, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, D3D12_RESOURCE_STATE_RENDER_TARGET));
+        CD3DX12_CPU_DESCRIPTOR_HANDLE rtvHandle(_CurrentRenderTexture->RtvHeap->GetCPUDescriptorHandleForHeapStart());
+
+        const float clearColor[] = { 0.2f, 0.2f, 0.2f, 1.0f };
+        if (_CurrentRenderTexture->DsvHeap)
+        {
+            CD3DX12_CPU_DESCRIPTOR_HANDLE dsvHandle(_CurrentRenderTexture->DsvHeap->GetCPUDescriptorHandleForHeapStart());
+            cmdList->OMSetRenderTargets(1, &rtvHandle, FALSE, &dsvHandle);
+            cmdList->ClearRenderTargetView(rtvHandle, clearColor, 0, nullptr);
+            cmdList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
+            cmdList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_STENCIL, 1.0f, 0, 0, nullptr);
+        }
+        else
+        {
+            cmdList->OMSetRenderTargets(1, &rtvHandle, FALSE, NULL);
+            cmdList->ClearRenderTargetView(rtvHandle, clearColor, 0, nullptr);
+        }
+    }
+    else
+    {
+        GET_EIRAS_DX12(deviceObj)
+        deviceObj->_SetBackBufferState(true, cmdList);
+    }
+}
+
 
 void CommandBufferDX12::GetCurrentRenderTextureInfo(_uint* numRT, DXGI_FORMAT* rtFormats, DXGI_FORMAT* depthFormat)
 {

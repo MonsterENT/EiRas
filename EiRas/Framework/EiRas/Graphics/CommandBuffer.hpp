@@ -31,6 +31,7 @@ namespace MeshSys
 
 namespace Graphics {
 
+    class RenderTexture;
     class GraphicsRenderState;
 
     class CommandBuffer
@@ -54,6 +55,8 @@ namespace Graphics {
         void Commit(bool present);
 
         void SetViewPort(float topLeftX, float topLeftY, float width, float height, float minDepth = 0, float maxDepth = 1);
+
+        void SetRenderTexture(Graphics::RenderTexture* renderTexture);
 
         EiRasPlatformBridgeProtocol* PlatformBridge;
 
