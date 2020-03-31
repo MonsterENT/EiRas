@@ -37,6 +37,11 @@ void CommandBufferDX12Bridge::Commit(bool present)
     ((CommandBufferDX12*)raw_obj)->Commit(present);
 }
 
+void CommandBufferDX12Bridge::SetViewPort(float topLeftX, float topLeftY, float width, float height, float minDepth, float maxDepth)
+{
+    ((CommandBufferDX12*)raw_obj)->SetViewPort(topLeftX, topLeftY, width, height, minDepth, maxDepth);
+}
+
 void CommandBufferDX12Bridge::SetMaterial(Material* mat)
 {
     CommandBufferDX12* obj = (CommandBufferDX12*)raw_obj;

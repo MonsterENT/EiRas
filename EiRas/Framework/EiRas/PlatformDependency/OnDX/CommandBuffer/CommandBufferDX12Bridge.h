@@ -28,5 +28,7 @@ namespace Graphics {
         void Reset(EiRasPlatformBridgeProtocol* heapBridge);
 
         void Commit(bool present);
+
+        void SetViewPort(float topLeftX, float topLeftY, float width, float height, float minDepth, float maxDepth);
     };
 }

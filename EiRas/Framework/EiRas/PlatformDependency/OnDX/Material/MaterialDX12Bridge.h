@@ -20,6 +20,6 @@ namespace MaterialSys
 
         void SetProperty(MaterialProp* prop, void* res);
 
-        void UpdateRenderState(Graphics::GraphicsRenderState* renderState, EiRasPlatformBridgeProtocol* shaderObj);
+        void UpdateRenderState(Graphics::GraphicsRenderState* renderState, EiRasPlatformBridgeProtocol* shaderObj, EiRasPlatformBridgeProtocol* cmdBufferPB);
     };
 }

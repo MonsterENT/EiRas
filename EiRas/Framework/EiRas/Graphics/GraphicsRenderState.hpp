@@ -143,7 +143,7 @@ public:
         hashCode = 23 * hashCode + (_uint)_BlendDstRGBFactor;
         hashCode = 23 * hashCode + (_uint)_BlendSrcAlphaFactor;
         hashCode = 23 * hashCode + (_uint)_BlendDstAlphaFactor;
-        hashCode = 256 * hashCode + (_uint)_StencilRefValue;
+        hashCode = 23 * hashCode + (_uint)_StencilRefValue;
         return hashCode;
     }
 };

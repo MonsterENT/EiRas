@@ -30,7 +30,7 @@ namespace MaterialSys
         _uint VertexAttributesCount;
         D3D12_INPUT_ELEMENT_DESC* VertexDescriptor;
 
-        ID3D12PipelineState* _GetPSO(Graphics::GraphicsRenderState* renderState);
+        ID3D12PipelineState* _GetPSO(Graphics::GraphicsRenderState* renderState, _uint numRT, DXGI_FORMAT* rtFormats, DXGI_FORMAT depthFormat);
 
     private:
 

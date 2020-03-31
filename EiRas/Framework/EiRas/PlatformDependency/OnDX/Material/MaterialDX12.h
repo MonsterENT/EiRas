@@ -24,7 +24,7 @@ namespace MaterialSys
 
         void SetProperty(MaterialProp* prop, void* res);
 
-        void UpdateRenderState(Graphics::GraphicsRenderState* renderState, ShaderDX12* shaderObj);
+        void UpdateRenderState(Graphics::GraphicsRenderState* renderState, ShaderDX12* shaderObj, void* rawCmdBuffer);
 
         ShaderDX12* RawShaderObj;
 

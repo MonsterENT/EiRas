@@ -9,16 +9,13 @@ HANDLE fenceEvent;
 ID3D12Fence* fence = 0;
 UINT64 fenceValue = 0;
 
-EiRasDX12::EiRasDX12(HWND hwnd, int frameWidth, int frameHeight)
+EiRasDX12::EiRasDX12(HWND hwnd, int screenWidth, int screenHeight)
 {
-    frameCount = 2;
     curFrameIndex = -1;
     this->hwnd = hwnd;
-    this->frameWidth = frameWidth;
-    this->frameHeight = frameHeight;
+    this->screenWidth = screenWidth;
+    this->screenHeight = screenHeight;
     this->device = nullptr;
-    viewPort = CD3DX12_VIEWPORT(0.0f, 0.0f, static_cast<float>(frameWidth), static_cast<float>(frameHeight));
-    scissorRect = CD3DX12_RECT(0, 0, static_cast<LONG>(frameWidth), static_cast<LONG>(frameHeight));
 }
 
 void EiRasDX12::InitDevice()
@@ -54,22 +51,18 @@ void EiRasDX12::InitDevice()
     D3D12_COMMAND_QUEUE_DESC cmdQueueDesc = {};
     cmdQueueDesc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE;
     cmdQueueDesc.Type = D3D12_COMMAND_LIST_TYPE_DIRECT;
-
     device->CreateCommandQueue(&cmdQueueDesc, IID_PPV_ARGS(&cmdQueue));
-    /////////////////
 
-    // Describe and create the swap chain.///////////////
     DXGI_SWAP_CHAIN_DESC1 swapChainDesc = {};
-    swapChainDesc.BufferCount = frameCount;
-    swapChainDesc.Width = frameWidth;
-    swapChainDesc.Height = frameHeight;
+    swapChainDesc.BufferCount = 2;
+    swapChainDesc.Width = screenWidth;
+    swapChainDesc.Height = screenHeight;
     swapChainDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
     swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
     swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
     swapChainDesc.SampleDesc.Count = 1;
 
     IDXGISwapChain1* swapChain = 0;
-
     assert(SUCCEEDED(factory->CreateSwapChainForHwnd(cmdQueue, hwnd, &swapChainDesc, 0, 0, &swapChain)));
     swapChain3 = (IDXGISwapChain3*)swapChain;
     /////////////////
@@ -81,7 +74,7 @@ void EiRasDX12::InitDevice()
     {
         // Describe and create a render target view (RTV) descriptor heap.
         D3D12_DESCRIPTOR_HEAP_DESC rtvHeapDesc = {};
-        rtvHeapDesc.NumDescriptors = frameCount;
+        rtvHeapDesc.NumDescriptors = 2;
         rtvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
         rtvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
 
@@ -94,7 +87,7 @@ void EiRasDX12::InitDevice()
     CD3DX12_CPU_DESCRIPTOR_HANDLE rtvHandle(rtvHeap->GetCPUDescriptorHandleForHeapStart());
 
     // Create a RTV for each frame.
-    for (UINT n = 0; n < frameCount; n++)
+    for (UINT n = 0; n < 2; n++)
     {
         swapChain3->GetBuffer(n, IID_PPV_ARGS(&renderTargets[n]));
         device->CreateRenderTargetView(renderTargets[n], nullptr, rtvHandle);
@@ -123,7 +116,7 @@ void EiRasDX12::InitDevice()
         HRESULT hcf = device->CreateCommittedResource(
             &CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT),
             D3D12_HEAP_FLAG_NONE,
-            &CD3DX12_RESOURCE_DESC::Tex2D(DXGI_FORMAT_D24_UNORM_S8_UINT, frameWidth, frameHeight, 1, 0, 1, 0, D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL),
+            &CD3DX12_RESOURCE_DESC::Tex2D(DXGI_FORMAT_D24_UNORM_S8_UINT, screenWidth, screenHeight, 1, 0, 1, 0, D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL),
             D3D12_RESOURCE_STATE_DEPTH_WRITE,
             &depthOptimizedClearValue,
             IID_PPV_ARGS(&depthStencil));
@@ -139,6 +132,33 @@ void EiRasDX12::InitDevice()
     // Create an event handle to use for frame synchronization.
     fenceEvent = CreateEvent(nullptr, FALSE, FALSE, nullptr);
     assert(fenceEvent != nullptr);
+}
+
+void EiRasDX12::_BeginFrame(ID3D12GraphicsCommandList* cmdList)
+{
+    cmdList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(renderTargets[curFrameIndex], D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET));
+    CD3DX12_CPU_DESCRIPTOR_HANDLE rtvHandle(rtvHeap->GetCPUDescriptorHandleForHeapStart(), curFrameIndex, rtvDescriptorSize);
+    CD3DX12_CPU_DESCRIPTOR_HANDLE dsvHandle(dsvHeap->GetCPUDescriptorHandleForHeapStart());
+    cmdList->OMSetRenderTargets(1, &rtvHandle, FALSE, &dsvHandle);
+
+    const float clearColor[] = { 0.2f, 0.2f, 0.2f, 1.0f };
+    cmdList->ClearRenderTargetView(rtvHandle, clearColor, 0, nullptr);
+    cmdList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
+    cmdList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_STENCIL, 1.0f, 0, 0, nullptr);
+}
+
+void EiRasDX12::_Present(bool swapChainFlip, ID3D12GraphicsCommandList* cmdList)
+{
+    if (swapChainFlip)
+    {
+        swapChain3->Present(1, 0);
+#pragma message("TOFIX")
+        WaitForPreviousFrame();
+    }
+    else
+    {
+        cmdList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(renderTargets[curFrameIndex], D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PRESENT));
+    }
 }
 
 void EiRasDX12::WaitForPreviousFrame()

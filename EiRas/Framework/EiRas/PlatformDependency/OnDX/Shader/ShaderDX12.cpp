@@ -50,9 +50,18 @@ void ShaderDX12::InitVertexDescriptor(Graphics::GraphicsVertexDescriptor* desc)
     }
 }
 
-ID3D12PipelineState* ShaderDX12::_GetPSO(Graphics::GraphicsRenderState* renderState)
+ID3D12PipelineState* ShaderDX12::_GetPSO(Graphics::GraphicsRenderState* renderState, _uint numRT, DXGI_FORMAT* rtFormats, DXGI_FORMAT depthFormat)
 {
     _uint hashCode = renderState->GetHashCode();
+    {
+        hashCode = hashCode * 23 + numRT;
+        hashCode = hashCode * 23 + (_uint)depthFormat;
+        for (int i = 0; i < numRT; i++)
+        {
+            hashCode = 23 * hashCode + (_uint)rtFormats[i];
+        }
+    }
+
     PSOCache_MAP::iterator cachedObj = _PSOCache.find(hashCode);
     if (cachedObj != _PSOCache.end())
     {
@@ -71,6 +80,8 @@ ID3D12PipelineState* ShaderDX12::_GetPSO(Graphics::GraphicsRenderState* renderSt
         rasterizerStateDesc.FillMode = (D3D12_FILL_MODE)renderState->_FillMode;
         psoDesc.RasterizerState = rasterizerStateDesc;
 
+
+#pragma message("TO DO multi rt blend desc")
         D3D12_BLEND_DESC blendDesc;
         blendDesc.AlphaToCoverageEnable = false;
         blendDesc.IndependentBlendEnable = false;
@@ -96,15 +107,21 @@ ID3D12PipelineState* ShaderDX12::_GetPSO(Graphics::GraphicsRenderState* renderSt
 
         psoDesc.SampleMask = UINT_MAX;
         psoDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
-        psoDesc.NumRenderTargets = 1;
-        psoDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM;
-        psoDesc.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
+
+
+        psoDesc.NumRenderTargets = numRT;
+        for (int i = 0; i < numRT; i++)
+        {
+            psoDesc.RTVFormats[i] = rtFormats[i];
+        }
+        psoDesc.DSVFormat = depthFormat;
+
         psoDesc.SampleDesc.Count = 1;
         psoDesc.SampleDesc.Quality = 0;
 
         ID3D12PipelineState* pso = 0;
         GET_EIRAS_DX12(deviceObj)
-            deviceObj->device->CreateGraphicsPipelineState(&psoDesc, IID_PPV_ARGS(&pso));
+        deviceObj->device->CreateGraphicsPipelineState(&psoDesc, IID_PPV_ARGS(&pso));
 
         if (pso)
         {
@@ -116,6 +133,9 @@ ID3D12PipelineState* ShaderDX12::_GetPSO(Graphics::GraphicsRenderState* renderSt
 
 ID3D12RootSignature* createRootSig(ShaderLayout* shaderLayout)
 {
+#pragma message("TOFIX")
+    CD3DX12_DESCRIPTOR_RANGE1 ranges[100];
+
     _uint slotNum = shaderLayout->SlotNum;
 
     UINT _BASE_CB_REGISTER = 0;
@@ -147,9 +167,6 @@ ID3D12RootSignature* createRootSig(ShaderLayout* shaderLayout)
             ShaderTable* table = (ShaderTable*)slot;
             
             _uint rangeNum = table->Ranges.size();
-
-#pragma message("TOFIX")
-            CD3DX12_DESCRIPTOR_RANGE1 ranges[100];
             for (_uint j = 0; j < rangeNum; j++)
             {
                 ShaderPropRange* range = &table->Ranges[j];

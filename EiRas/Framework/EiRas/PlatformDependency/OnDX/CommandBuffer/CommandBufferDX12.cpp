@@ -18,6 +18,7 @@ using ImageSys::ImageSysBuildingList;
 
 CommandBufferDX12::CommandBufferDX12(std::string Name)
 {
+    _CurrentRenderTexture = 0;
     GET_EIRAS_DX12(deviceObj)
     HRESULT hr = deviceObj->device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&cmdAllocator));
     hr = deviceObj->device->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, cmdAllocator, 0, IID_PPV_ARGS(&cmdList));
@@ -51,23 +52,7 @@ void CommandBufferDX12::BeginFrame()
         }
     }
 
-#pragma region tmp
-    cmdList->RSSetViewports(1, &deviceObj->viewPort);
-    cmdList->RSSetScissorRects(1, &deviceObj->scissorRect);
-
-    // Indicate that the back buffer will be used as a render target.
-    cmdList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(deviceObj->renderTargets[deviceObj->curFrameIndex], D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET));
-    CD3DX12_CPU_DESCRIPTOR_HANDLE rtvHandle(deviceObj->rtvHeap->GetCPUDescriptorHandleForHeapStart(), deviceObj->curFrameIndex, deviceObj->rtvDescriptorSize);
-    CD3DX12_CPU_DESCRIPTOR_HANDLE dsvHandle(deviceObj->dsvHeap->GetCPUDescriptorHandleForHeapStart());
-    cmdList->OMSetRenderTargets(1, &rtvHandle, FALSE, &dsvHandle);
-
-    // Record commands.
-    const float clearColor[] = { 0.2f, 0.2f, 0.2f, 1.0f };
-    cmdList->ClearRenderTargetView(rtvHandle, clearColor, 0, nullptr);
-    cmdList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
-    cmdList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_STENCIL, 1.0f, 0, 0, nullptr);
-    cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-#pragma endregion
+    deviceObj->_BeginFrame(cmdList);
 }
 
 void CommandBufferDX12::Reset(MaterialSys::GraphicsResourceHeapDX12* heapObj)
@@ -82,25 +67,32 @@ void CommandBufferDX12::Reset(MaterialSys::GraphicsResourceHeapDX12* heapObj)
 void CommandBufferDX12::Commit(bool present)
 {
     GET_EIRAS_DX12(deviceObj)
-        if (present)
-        {
-            cmdList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(deviceObj->renderTargets[deviceObj->curFrameIndex], D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PRESENT));
-        }
+    if (present)
+    {
+        deviceObj->_Present(false, cmdList);
+    }
     assert(SUCCEEDED(cmdList->Close()));
     ID3D12CommandList* ppCommandLists[] = { cmdList };
     deviceObj->cmdQueue->ExecuteCommandLists(1, ppCommandLists);
 
     if (present)
     {
-        assert(SUCCEEDED(deviceObj->swapChain3->Present(1, 0)));
-#pragma message("TOFIX")
-        deviceObj->WaitForPreviousFrame();
+        deviceObj->_Present(true, cmdList);
     }
+}
+
+void CommandBufferDX12::SetViewPort(float topLeftX, float topLeftY, float width, float height, float minDepth, float maxDepth)
+{
+    CD3DX12_VIEWPORT viewPort = CD3DX12_VIEWPORT(topLeftX, topLeftY, width, height, minDepth, maxDepth);
+    CD3DX12_RECT scissorRect = CD3DX12_RECT((LONG)topLeftX, (LONG)topLeftY, (LONG)topLeftX + (LONG)width, (LONG)topLeftY + (LONG)height);
+    cmdList->RSSetViewports(1, &viewPort);
+    cmdList->RSSetScissorRects(1, &scissorRect);
 }
 
 void CommandBufferDX12::DrawMesh(MeshSys::Mesh* mesh)
 {
-    for (int i = 0; i < mesh->SubMeshCount; i++)
+    cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+    for (_uint i = 0; i < mesh->SubMeshCount; i++)
     {
         MeshDX12* rawMeshObj = (MeshDX12*)mesh->PlatformBridge->raw_obj;
 
@@ -116,7 +108,7 @@ void CommandBufferDX12::SetMaterial(MaterialSys::MaterialDX12* mat, MaterialSys:
     cmdList->SetGraphicsRootSignature(mat->RawShaderObj->RootSignature);
     cmdList->SetPipelineState(mat->PipelineState);
 
-    for (int i = 0; i < layout->SlotNum; i++)
+    for (_uint i = 0; i < layout->SlotNum; i++)
     {
         MaterialSlot* slot = layout->Slots[i];
         if (slot->SlotType == MaterialSlotType::MaterialSlotType_Table)
@@ -146,5 +138,21 @@ void CommandBufferDX12::SetMaterial(MaterialSys::MaterialDX12* mat, MaterialSys:
                 cmdList->SetGraphicsRootUnorderedAccessView(rootParamIndex, ADDR);
             }
         }
+    }
+}
+
+void CommandBufferDX12::GetCurrentRenderTextureInfo(_uint* numRT, DXGI_FORMAT* rtFormats, DXGI_FORMAT* depthFormat)
+{
+    if (_CurrentRenderTexture == NULL)
+    {
+        *numRT = 1;
+        rtFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM;
+        *depthFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
+    }
+    else
+    {
+        *numRT = 1;
+        rtFormats[0] = (DXGI_FORMAT)_CurrentRenderTexture->ColorFormat;
+        *depthFormat = (DXGI_FORMAT)_CurrentRenderTexture->DepthStencilFormat;
     }
 }

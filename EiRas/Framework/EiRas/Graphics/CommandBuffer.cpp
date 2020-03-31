@@ -103,6 +103,17 @@ void CommandBuffer::Commit(bool present)
 #endif
 }
 
+void CommandBuffer::SetViewPort(float topLeftX, float topLeftY, float width, float height, float minDepth, float maxDepth)
+{
+#if GRAPHICS_METAL
+    ((CommandBufferMetalBridge*)PlatformBridge)->Commit(present);
+#endif
+
+#if GRAPHICS_DX
+    ((CommandBufferDX12Bridge*)PlatformBridge)->SetViewPort(topLeftX, topLeftY, width, height, minDepth, maxDepth);
+#endif
+}
+
 #if GRAPHICS_DX
 void CommandBuffer::_DynamicFillHeap(MaterialSys::MaterialProp* prop)
 {

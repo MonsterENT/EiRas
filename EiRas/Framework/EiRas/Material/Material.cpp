@@ -189,7 +189,7 @@ void Material::FinishStateChange()
 #endif
     
 #if GRAPHICS_DX
-    ((MaterialDX12Bridge*)this->PlatformBridge)->UpdateRenderState(RenderState, shader->PlatformBridge);
+    ((MaterialDX12Bridge*)this->PlatformBridge)->UpdateRenderState(RenderState, shader->PlatformBridge, referenceCmdBuffer->PlatformBridge);
 #endif
     
 }

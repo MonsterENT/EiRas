@@ -68,8 +68,9 @@ void Engine::m_initEngine()
     _Transform.LocalScale = float3(1, 1, 1);
     _CommonCB1.LocalToWorldMatrix = *_Transform.GetLocalToWorldMatrix();
     _CommonCB1.WorldToLocalMatrix = *_Transform.GetWorldToLocalMatrix();
-    cmdBuffer = new CommandBuffer("main buffer");
     
+    cmdBuffer = new CommandBuffer("main buffer");
+    cmdBuffer->SetViewPort(0, 0, 2560, 1440);
 #pragma region CustomShaderLayout
     ShaderLayout* customLayout = new ShaderLayout(2);
     {
