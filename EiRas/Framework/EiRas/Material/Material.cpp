@@ -183,7 +183,7 @@ void Material::SetProperty(ImageSys::Image* image, _uint slotIndex, int propInde
 #endif
 }
 
-void Material::SetProperty(MaterialSys::GraphicsResource* srv, _uint slotIndex, int propIndex = -1)
+void Material::SetProperty(MaterialSys::GraphicsResource* srv, _uint slotIndex, int propIndex)
 {
     bool fromTable = false;
     MaterialProp* tProp = getMaterialProp(this, slotIndex, propIndex, fromTable);
