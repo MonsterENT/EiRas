@@ -189,6 +189,9 @@
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\RenderTexture\RenderTextureDX12.hpp">
       <Filter>framework</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\Framework\EiRas\Effect\CommonBlur\CommonBlur.hpp">
+      <Filter>framework</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EiRasDX12Build.cpp">
@@ -333,6 +336,9 @@
       <Filter>framework</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\RenderTexture\RenderTextureDX12.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Framework\EiRas\Effect\CommonBlur\CommonBlur.cpp">
       <Filter>framework</Filter>
     </ClCompile>
   </ItemGroup>

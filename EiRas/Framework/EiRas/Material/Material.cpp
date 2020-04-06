@@ -30,18 +30,18 @@ Material::Material(std::string Name, Shader* shader, Graphics::CommandBuffer* co
     this->Name = Name;
 
     this->RenderState = new Graphics::GraphicsRenderState();
-    
+
 #if GRAPHICS_METAL
     this->PlatformBridge = new MaterialMetalBridge(Name);
 #endif
-    
+
 #if GRAPHICS_DX
     this->PlatformBridge = new MaterialDX12Bridge(Name, shader->PlatformBridge);
 #endif
-    
+
     this->shader = shader;
-    
-    if(shader->Layout != 0)
+
+    if (shader->Layout != 0)
     {
         _uint slotNum = shader->Layout->SlotNum;
         materialLayout = new MaterialLayout(slotNum);
@@ -63,14 +63,14 @@ Material::Material(std::string Name, Shader* shader, Graphics::CommandBuffer* co
             else if (shaderSlot->SlotType == ShaderSlotType::ShaderSlotType_Table)
             {
                 ShaderTable* shaderTable = (ShaderTable*)shaderSlot;
-                
+
                 _uint ranegNum = (_uint)shaderTable->Ranges.size();
-                
+
                 std::vector<MaterialProp*> tmpMatProps;
                 for (_uint ranegIndex = 0; ranegIndex < ranegNum; ranegIndex++)
                 {
                     ShaderPropRange* tmpRange = &shaderTable->Ranges[ranegIndex];
-                    
+
                     for (_uint propIndex = 0; propIndex < tmpRange->PropNum; propIndex++)
                     {
                         if (tmpRange->PropType == GraphicsResourceType::SRV)
@@ -89,7 +89,7 @@ Material::Material(std::string Name, Shader* shader, Graphics::CommandBuffer* co
                         tmpMatProps.push_back(tmpMatProp);
                     }
                 }
-                
+
                 MaterialTable* matTable = new MaterialTable((_uint)tmpMatProps.size(), tmpMatProps);
 #if GRAPHICS_DX
                 matTable->SlotID = i;
@@ -100,7 +100,7 @@ Material::Material(std::string Name, Shader* shader, Graphics::CommandBuffer* co
             }
         }
     }
-    
+
     referenceCmdBuffer = commandBuffer;
     //init platform pso
     FinishStateChange();
@@ -113,19 +113,19 @@ Material::Material(std::string Name, Shader* shader, Graphics::CommandBuffer* co
 #endif
 }
 
-inline MaterialProp* getMaterialProp(Material* mat, _uint slotIndex, _uint propIndex, bool &fromTable)
+inline MaterialProp* getMaterialProp(Material* mat, _uint slotIndex, _uint propIndex, bool& fromTable)
 {
     fromTable = false;
     if (!mat->materialLayout)
     {
         return 0;
     }
-    
+
     if (slotIndex >= mat->materialLayout->SlotNum)
     {
         return 0;
     }
-    
+
     MaterialProp* tProp = 0;
     MaterialSlot* tSlot = mat->materialLayout->Slots[slotIndex];
     if (tSlot->SlotType == MaterialSlotType::MaterialSlotType_Table)
@@ -135,7 +135,7 @@ inline MaterialProp* getMaterialProp(Material* mat, _uint slotIndex, _uint propI
         {
             return 0;
         }
-        
+
         tProp = tTable->Props[propIndex];
         fromTable = true;
     }
@@ -157,7 +157,7 @@ void Material::SetProperty(void* res, _uint slotIndex, int propIndex)
 #if GRAPHICS_DX
     ((MaterialDX12Bridge*)PlatformBridge)->SetProperty(tProp, res);
 #endif
-    
+
 #if GRAPHICS_METAL
     ((MaterialMetalBridge*)PlatformBridge)->SetProperty(tProp, res);
 #endif
@@ -172,7 +172,7 @@ void Material::SetProperty(ImageSys::Image* image, _uint slotIndex, int propInde
         return;
     }
     tProp->Resource = image->PipelineResource;
-    
+
 #if GRAPHICS_DX
     if (fromTable)
     {
@@ -181,16 +181,37 @@ void Material::SetProperty(ImageSys::Image* image, _uint slotIndex, int propInde
 #endif
 }
 
+void Material::SetProperty(MaterialSys::GraphicsResource* srv, _uint slotIndex, int propIndex = -1)
+{
+    bool fromTable = false;
+    MaterialProp* tProp = getMaterialProp(this, slotIndex, propIndex, fromTable);
+    if (tProp == 0)
+    {
+        return;
+    }
+
+    if (srv->Behaviors.ResourceType == GraphicsResourceType::SRV)
+    {
+        tProp->Resource = srv;
+#if GRAPHICS_DX
+        if (fromTable)
+        {
+            referenceCmdBuffer->_DynamicFillHeap(tProp);
+        }
+#endif
+        }
+    }
+
 void Material::FinishStateChange()
 {
 #if GRAPHICS_METAL
     ((MaterialMetalBridge*)this->PlatformBridge)->UpdateRenderState(RenderState, shader);
 #endif
-    
+
 #if GRAPHICS_DX
     ((MaterialDX12Bridge*)this->PlatformBridge)->UpdateRenderState(RenderState, shader->PlatformBridge, referenceCmdBuffer->PlatformBridge);
 #endif
-    
+
 }
 
 Material::~Material()

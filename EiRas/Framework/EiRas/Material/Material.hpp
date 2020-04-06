@@ -30,6 +30,7 @@ namespace MaterialSys {
     class MaterialLayout;
     class MaterialProp;
     class MaterialTable;
+    class GraphicsResource;
 
     class Material
     {
@@ -44,6 +45,7 @@ namespace MaterialSys {
 
         void SetProperty(void* res, _uint slotIndex, int propIndex = -1);
         void SetProperty(ImageSys::Image* image, _uint slotIndex, int propIndex = -1);
+        void SetProperty(MaterialSys::GraphicsResource* srv, _uint slotIndex, int propIndex = -1);
 
         Shader* shader;
         MaterialLayout* materialLayout;
