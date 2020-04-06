@@ -2,6 +2,7 @@
 #define GUI_BASE_HPP
 
 #include <string>
+#include <Math/Math.hpp>
 
 namespace GUISys
 {
@@ -13,6 +14,9 @@ namespace GUISys
         virtual ~GUIBase()
         {
         }
+
+        Math::rect_float frame;
+
     protected:
         void* _Mesh;
     };

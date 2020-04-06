@@ -113,5 +113,7 @@ _uint FontManager::_StoreFontData(unsigned char* data, _uint width, _uint height
         refFontMap->StoreFontData(data, width, height, offsetX, offsetY, outUVRect);
         fontDataList.push_back(refFontMap);
     }
+
+    fontDataList[fontMapIndex]->RefreshFontImage();
     return fontMapIndex;
 }

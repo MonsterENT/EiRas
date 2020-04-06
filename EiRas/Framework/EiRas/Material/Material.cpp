@@ -27,6 +27,8 @@ using namespace ImageSys;
 
 Material::Material(std::string Name, Shader* shader, Graphics::CommandBuffer* commandBuffer)
 {
+    this->referenceCmdBuffer = commandBuffer;
+
     this->Name = Name;
 
     this->RenderState = new Graphics::GraphicsRenderState();
@@ -103,8 +105,7 @@ Material::Material(std::string Name, Shader* shader, Graphics::CommandBuffer* co
     
     //init platform pso
     FinishStateChange();
-    
-    referenceCmdBuffer = commandBuffer;
+
     
 #if GRAPHICS_DX
     if (commandBuffer != 0)

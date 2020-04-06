@@ -18,19 +18,25 @@ void Label::SetText(FontSys::Text* text)
 
 void Label::_BuildTextMesh()
 {
-    //Mesh* mesh = (Mesh*)_Mesh;
-    //mesh->SubMeshCount = _Text->_FontMapIndex.size();
-    //SubMesh** subMeshes = new SubMesh * [mesh->SubMeshCount];
-    //for (int i = 0; i < _Text->_FontMapIndex.size(); i++)
-    //{
-    //    Math::rect_float uvRect = _Text->_MappingRect[i];
-    //    SubMesh* subMesh = new SubMesh();
-    //    subMesh->IndicesCount = 6;
-    //    subMesh->VerticesCount = 4;
-    //    subMesh->IndicesData = new _uint[6]{ 0, 1, 2, 2, 0, 3 };
-    //    subMesh->PositionData = new float3[4]{ {-1, 1, 1}, {1, 1, 1}, {1, -1, 1}, {-1, -1, 1} };
-    //    subMesh->UVData = new float2[4]{ {0, 0}, {1, 0}, {1, 1}, {0, 1} };
-    //    subMesh->NormalData = new float3[4]{ {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0} };
-    //    mesh->SubMeshes = subMesh;
-    //}
+    _uint charCount = _Text->_FontMapIndex.size();
+    float subMeshWidth = frame.width / (float)charCount;
+    float subMeshHeight = frame.height;
+    float posTop = frame.top;
+    float posLeft = frame.left;
+
+    Mesh* mesh = (Mesh*)_Mesh;
+    mesh->SubMeshCount = charCount;
+    mesh->SubMeshes = new SubMesh[charCount];
+    for (int i = 0; i < charCount; i++)
+    {
+        rect_float uvRect = _Text->_MappingRect[i];
+
+        SubMesh* subMesh = &(mesh->SubMeshes[i]);
+        subMesh->IndicesCount = 6;
+        subMesh->VerticesCount = 4;
+        subMesh->IndicesData = new _uint[6]{ 0, 1, 2, 1, 2, 3 };
+        subMesh->PositionData = new float3[4]{ {posLeft, posTop, 1}, {posLeft + subMeshWidth, posTop, 1}, {posLeft, posTop - subMeshHeight, 1}, {posLeft + subMeshWidth, posTop - subMeshHeight, 1} };
+        subMesh->UVData = new float2[4]{ {uvRect.left, uvRect.top}, {uvRect.left + uvRect.width, uvRect.top}, {uvRect.left, uvRect.top + uvRect.height}, {uvRect.left + uvRect.width, uvRect.top + uvRect.height} };
+        subMesh->NormalData = new float3[4]{ {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0} };
+    }
 }

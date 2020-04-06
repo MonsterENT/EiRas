@@ -70,7 +70,7 @@ void Engine::m_initEngine()
     _CommonCB1.WorldToLocalMatrix = *_Transform.GetWorldToLocalMatrix();
     
     cmdBuffer = new CommandBuffer("main buffer");
-    cmdBuffer->SetViewPort(0, 0, 2560, 1440);
+
 #pragma region CustomShaderLayout
     ShaderLayout* customLayout = new ShaderLayout(2);
     {
@@ -186,8 +186,8 @@ void Engine::m_initEngine()
     std::string fontPath = FileSys::FileManager::shareInstance()->GetResourcePath("Font\\BELL", "TTF");
     FontSys::Font* font = new Font(fontPath);
     Text* text = font->GetText("SF90", 900);
-    FontManager::SharedInstance()->fontDataList[0]->RefreshFontImage();
-    FontManager::SharedInstance()->fontDataList[1]->RefreshFontImage();
+    //FontManager::SharedInstance()->fontDataList[0]->RefreshFontImage();
+    //FontManager::SharedInstance()->fontDataList[1]->RefreshFontImage();
 
     _FontMat0->SetProperty(FontManager::SharedInstance()->fontDataList[0]->_FontImage, 1, 0);
     _FontMat1->SetProperty(FontManager::SharedInstance()->fontDataList[1]->_FontImage, 1, 0);
@@ -232,6 +232,7 @@ void Engine::Update()
 {
     cmdBuffer->BeginFrame();
     cmdBuffer->Reset();
+    cmdBuffer->SetViewPort(0, 0, 2560, 1440);
 
     _TexMat0->SetProperty(&_CommonCB0, 0);
     _TexMat0->SetProperty(&_CommonCB1, 1);
