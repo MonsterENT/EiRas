@@ -166,6 +166,7 @@
     <ClInclude Include="..\..\..\..\Framework\EiRas\Basic\Camera.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Basic\Image.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Basic\TransformSys.hpp" />
+    <ClInclude Include="..\..\..\..\Framework\EiRas\Effect\CommonBlur\CommonBlur.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Global\EiRasGlobalManager.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Global\GlobalDefine.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Global\PlatformDependency\EiRasPlatformBridgeProtocol.h" />
@@ -225,6 +226,7 @@
     <ClCompile Include="..\..\..\..\Framework\EiRas\Basic\Camera.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\Basic\Image.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\Basic\TransformSys.cpp" />
+    <ClCompile Include="..\..\..\..\Framework\EiRas\Effect\CommonBlur\CommonBlur.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\Global\EiRasGlobalManager.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\GraphicsAPI\EiRas.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\Graphics\CommandBuffer.cpp" />

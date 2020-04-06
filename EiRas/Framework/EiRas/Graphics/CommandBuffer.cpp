@@ -117,7 +117,8 @@ void CommandBuffer::SetViewPort(float topLeftX, float topLeftY, float width, flo
 void CommandBuffer::SetRenderTexture(Graphics::RenderTexture* renderTexture)
 {
 #if GRAPHICS_DX
-    ((CommandBufferDX12Bridge*)PlatformBridge)->SetRenderTexture(renderTexture->PlatformBridge);
+    EiRasPlatformBridgeProtocol* pb = renderTexture == 0 ? 0 : renderTexture->PlatformBridge;
+    ((CommandBufferDX12Bridge*)PlatformBridge)->SetRenderTexture(pb);
 #endif
 }
 

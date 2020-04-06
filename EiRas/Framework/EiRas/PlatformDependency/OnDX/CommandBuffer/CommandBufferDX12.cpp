@@ -143,6 +143,10 @@ void CommandBufferDX12::SetMaterial(MaterialSys::MaterialDX12* mat, MaterialSys:
 
 void CommandBufferDX12::SetRenderTexture(void* rawRenderTexture)
 {
+    if (rawRenderTexture == 0 && _CurrentRenderTexture == 0)
+    {
+        return;
+    }
 #pragma message("TO DO")
     if (_CurrentRenderTexture)
     {
