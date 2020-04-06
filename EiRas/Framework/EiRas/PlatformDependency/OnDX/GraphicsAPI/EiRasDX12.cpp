@@ -166,6 +166,9 @@ void EiRasDX12::_SetBackBufferState(bool toRenderTarget, ID3D12GraphicsCommandLi
     if (toRenderTarget)
     {
         cmdList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(renderTargets[curFrameIndex], D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, D3D12_RESOURCE_STATE_RENDER_TARGET));
+        CD3DX12_CPU_DESCRIPTOR_HANDLE rtvHandle(rtvHeap->GetCPUDescriptorHandleForHeapStart(), curFrameIndex, rtvDescriptorSize);
+        CD3DX12_CPU_DESCRIPTOR_HANDLE dsvHandle(dsvHeap->GetCPUDescriptorHandleForHeapStart());
+        cmdList->OMSetRenderTargets(1, &rtvHandle, FALSE, &dsvHandle);
     }
     else
     {

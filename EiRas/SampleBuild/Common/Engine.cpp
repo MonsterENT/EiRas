@@ -16,6 +16,7 @@
 
 #include <Basic/Camera.hpp>
 #include <Basic/TransformSys.hpp>
+#include <Graphics/RenderTexture.hpp>
 
 #pragma message("TO FIX. TMP")
 #include <DirectXMath.h>
@@ -57,8 +58,12 @@ CommonCB1 _CommonCB1;
 Camera _Camera;
 TransformSys _Transform;
 
+RenderTexture* _SceneRenderTexture;
+
 void Engine::m_initEngine()
 {
+    _SceneRenderTexture = new RenderTexture("Scene RT", RenderBufferFormat::R8G8B8A8_UNORM, true, 2560, 1440);
+
     _Camera.SetProjection(45, 2560.0 / 1440.0, 0.01, 1000);
     _Camera.Transform.Init(float3(0, 0, 1), float3(1, 0, 0), float3(0, 1, 0), float3(0, 0, 0));
     _CommonCB0.WorldToViewMatrix = *_Camera.GetViewMatrix();
@@ -70,7 +75,7 @@ void Engine::m_initEngine()
     _CommonCB1.WorldToLocalMatrix = *_Transform.GetWorldToLocalMatrix();
     
     cmdBuffer = new CommandBuffer("main buffer");
-    cmdBuffer->SetViewPort(0, 0, 2560, 1440);
+
 #pragma region CustomShaderLayout
     ShaderLayout* customLayout = new ShaderLayout(2);
     {
@@ -232,6 +237,8 @@ void Engine::Update()
 {
     cmdBuffer->BeginFrame();
     cmdBuffer->Reset();
+    cmdBuffer->SetViewPort(0, 0, 2560, 1440);
+    cmdBuffer->SetRenderTexture(_SceneRenderTexture);
 
     _TexMat0->SetProperty(&_CommonCB0, 0);
     _TexMat0->SetProperty(&_CommonCB1, 1);
@@ -243,7 +250,7 @@ void Engine::Update()
     cmdBuffer->SetMaterial(_TexMat0);
     cmdBuffer->DrawMesh(_SF90Mesh);
 
-
+    cmdBuffer->SetRenderTexture(0);
     _FontMat0->RenderState->_CullMode = CullMode::CullModeNone;
     _FontMat0->FinishStateChange();
     cmdBuffer->SetMaterial(_FontMat0);

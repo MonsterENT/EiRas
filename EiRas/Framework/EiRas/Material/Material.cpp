@@ -101,11 +101,10 @@ Material::Material(std::string Name, Shader* shader, Graphics::CommandBuffer* co
         }
     }
     
+    referenceCmdBuffer = commandBuffer;
     //init platform pso
     FinishStateChange();
-    
-    referenceCmdBuffer = commandBuffer;
-    
+
 #if GRAPHICS_DX
     if (commandBuffer != 0)
     {
