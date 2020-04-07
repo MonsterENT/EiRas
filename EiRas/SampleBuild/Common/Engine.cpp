@@ -18,10 +18,12 @@
 #include <Basic/TransformSys.hpp>
 #include <Graphics/RenderTexture.hpp>
 
+#include <Effect/CommonBlur/CommonBlur.hpp>
+
 #pragma message("TO FIX. TMP")
 #include <DirectXMath.h>
 using namespace DirectX;
-
+using namespace Effect;
 using namespace BasicComponent;
 using namespace MaterialSys;
 using namespace Graphics;
@@ -32,6 +34,8 @@ using namespace FontSys;
 using namespace Math;
 
 Image* imageObj = 0;
+
+CommonBlur* _CommonBlur;
 
 #define FILL_SUBMESH(submesh)\
 submesh->IndicesCount = 6;\
@@ -76,6 +80,8 @@ void Engine::m_initEngine()
     
     cmdBuffer = new CommandBuffer("main buffer");
 
+
+    
 #pragma region CustomShaderLayout
     ShaderLayout* customLayout = new ShaderLayout(2);
     {
@@ -127,19 +133,28 @@ void Engine::m_initEngine()
 
     std::string texShaderFilePath = FileSys::FileManager::shareInstance()->GetResourcePath("Shader\\DX\\BasicBRDF", "hlsl");
     _CommonTexShader = new Shader(texShaderFilePath, "VSMain", "PSMain");
+
+    std::string tex2DShaderFilePath = FileSys::FileManager::shareInstance()->GetResourcePath("Shader\\DX\\CommonTex2D", "hlsl");
+    _CommonTex2DShader = new Shader(tex2DShaderFilePath, "VSMain", "PSMain");
 #endif
     _CommonFontShader->InitLayout(customLayout);
     _CommonTexShader->InitLayout(defaultlayout);
-    
+    _CommonTex2DShader->InitLayout(customLayout);
+
     GraphicsVertexDescriptor* m_vertexDesc = new GraphicsVertexDescriptor();
-    
     m_vertexDesc->AddBufferAttribute("POSITION", GraphicsVertexAttributeFormat::VertexFormatFloat3, 0);
     m_vertexDesc->AddBufferAttribute("TEXCOORD", GraphicsVertexAttributeFormat::VertexFormatFloat2, 0);
     m_vertexDesc->AddBufferAttribute("NORMAL", GraphicsVertexAttributeFormat::VertexFormatFloat3, 0);
     m_vertexDesc->InitBufferLayout();
+
+    GraphicsVertexDescriptor* m_vertexDesc2D = new GraphicsVertexDescriptor();
+    m_vertexDesc2D->AddBufferAttribute("POSITION", GraphicsVertexAttributeFormat::VertexFormatFloat3, 0);
+    m_vertexDesc2D->AddBufferAttribute("TEXCOORD", GraphicsVertexAttributeFormat::VertexFormatFloat2, 0);
+    m_vertexDesc2D->InitBufferLayout();
     
     _CommonFontShader->InitVertexDescriptor(m_vertexDesc);
     _CommonTexShader->InitVertexDescriptor(m_vertexDesc);
+    _CommonTex2DShader->InitVertexDescriptor(m_vertexDesc2D);
 
     _FontMat0 = new Material("_FontMat0", _CommonFontShader, cmdBuffer);
     _FontMat0->RenderState->_BlendSrcRGBFactor = BlendFactor::BlendRGBFactorSourceAlpha;
@@ -153,6 +168,7 @@ void Engine::m_initEngine()
 
     _TexMat0 = new Material("_TexMat0", _CommonTexShader, cmdBuffer);
 
+    _Tex2DMat0 = new Material("_Tex2DMat0 NEW", _CommonTex2DShader, cmdBuffer);
 
     static float4 tmpCol;
     tmpCol.x = 1;
@@ -161,7 +177,8 @@ void Engine::m_initEngine()
     tmpCol.w = 1;
     _FontMat0->SetProperty(&tmpCol, 0);
     _FontMat1->SetProperty(&tmpCol, 0);    
-    
+    _Tex2DMat0->SetProperty(&tmpCol, 0);
+
     SubMesh* subMesh = new SubMesh;
 
     _FontMesh0 = new Mesh("_FontMesh0");
@@ -207,6 +224,8 @@ void Engine::m_initEngine()
     _SF90Mesh = new Mesh("SF90");
     _SF90Mesh->LoadDataFromFile(sf90ModelPath);
     _SF90Mesh->BuildBuffer();
+
+    _CommonBlur = new CommonBlur(2560 / 2, 1440 / 2, cmdBuffer);
 }
 
 Engine::Engine()
@@ -250,11 +269,18 @@ void Engine::Update()
     cmdBuffer->SetMaterial(_TexMat0);
     cmdBuffer->DrawMesh(_SF90Mesh);
 
+    //_CommonBlur->ProcessWithSource(_SceneRenderTexture, 0, 0.9);
     cmdBuffer->SetRenderTexture(0);
-    _FontMat0->RenderState->_CullMode = CullMode::CullModeNone;
-    _FontMat0->FinishStateChange();
-    cmdBuffer->SetMaterial(_FontMat0);
+    _Tex2DMat0->SetProperty(_SceneRenderTexture, 1, 0);
+    _Tex2DMat0->RenderState->_CullMode = CullMode::CullModeNone;
+    _Tex2DMat0->FinishStateChange();
+    cmdBuffer->SetMaterial(_Tex2DMat0);
     cmdBuffer->DrawMesh(_FontMesh0);
+
+    //_FontMat0->RenderState->_CullMode = CullMode::CullModeNone;
+    //_FontMat0->FinishStateChange();
+    //cmdBuffer->SetMaterial(_FontMat0);
+    //cmdBuffer->DrawMesh(_FontMesh0);
 
     _FontMat1->RenderState->_CullMode = CullMode::CullModeNone;
     _FontMat1->FinishStateChange();

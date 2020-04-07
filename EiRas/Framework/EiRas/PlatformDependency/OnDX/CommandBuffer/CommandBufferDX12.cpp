@@ -19,8 +19,8 @@ using ImageSys::ImageSysBuildingList;
 CommandBufferDX12::CommandBufferDX12(std::string Name)
 {
     _CurrentRenderTexture = 0;
-    GET_EIRAS_DX12(deviceObj)
-        HRESULT hr = deviceObj->device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&cmdAllocator));
+    GET_EIRAS_DX12(deviceObj);;
+    HRESULT hr = deviceObj->device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&cmdAllocator));
     hr = deviceObj->device->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, cmdAllocator, 0, IID_PPV_ARGS(&cmdList));
     wchar_t tmp_ws[16];
     swprintf(tmp_ws, 16, L"%hs", Name.c_str());
@@ -36,9 +36,8 @@ CommandBufferDX12::~CommandBufferDX12()
 
 void CommandBufferDX12::BeginFrame()
 {
-    GET_EIRAS_DX12(deviceObj)
-
-        cmdAllocator->Reset();
+    GET_EIRAS_DX12(deviceObj);;
+    cmdAllocator->Reset();
     cmdList->Reset(cmdAllocator, NULL);
     for (int i = 0; i < ImageSysBuildingList.size(); i++)
     {
@@ -66,11 +65,11 @@ void CommandBufferDX12::Reset(MaterialSys::GraphicsResourceHeapDX12* heapObj)
 
 void CommandBufferDX12::Commit(bool present)
 {
-    GET_EIRAS_DX12(deviceObj)
-        if (present)
-        {
-            deviceObj->_Present(false, cmdList);
-        }
+    GET_EIRAS_DX12(deviceObj);;
+    if (present)
+    {
+        deviceObj->_Present(false, cmdList);
+    }
     assert(SUCCEEDED(cmdList->Close()));
     ID3D12CommandList* ppCommandLists[] = { cmdList };
     deviceObj->cmdQueue->ExecuteCommandLists(1, ppCommandLists);
@@ -108,13 +107,18 @@ void CommandBufferDX12::SetMaterial(MaterialSys::MaterialDX12* mat, MaterialSys:
     cmdList->SetGraphicsRootSignature(mat->RawShaderObj->RootSignature);
     cmdList->SetPipelineState(mat->PipelineState);
 
+    GET_EIRAS_DX12(deviceObj);;
+    _uint offset = deviceObj->device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+
     for (_uint i = 0; i < layout->SlotNum; i++)
     {
         MaterialSlot* slot = layout->Slots[i];
         if (slot->SlotType == MaterialSlotType::MaterialSlotType_Table)
         {
             MaterialTable* table = (MaterialTable*)slot;
-            cmdList->SetGraphicsRootDescriptorTable(table->SlotID, ((GraphicsResourceDX12*)table->Props[0]->Resource->PlatformBridge->raw_obj)->GpuHandle);
+            CD3DX12_GPU_DESCRIPTOR_HANDLE gpuHandle(CurrentUseingHeap->heap->GetGPUDescriptorHandleForHeapStart());
+            gpuHandle.Offset(table->Props[0]->_heapOffset, offset);
+            cmdList->SetGraphicsRootDescriptorTable(table->SlotID, gpuHandle);
         }
         else
         {
@@ -154,7 +158,7 @@ void CommandBufferDX12::SetRenderTexture(void* rawRenderTexture)
     }
     else
     {
-        GET_EIRAS_DX12(deviceObj)
+        GET_EIRAS_DX12(deviceObj);;
         deviceObj->_SetBackBufferState(false, cmdList);
     }
     _CurrentRenderTexture = NULL;
@@ -182,7 +186,7 @@ void CommandBufferDX12::SetRenderTexture(void* rawRenderTexture)
     }
     else
     {
-        GET_EIRAS_DX12(deviceObj)
+        GET_EIRAS_DX12(deviceObj);;
         deviceObj->_SetBackBufferState(true, cmdList);
     }
 }

@@ -1,9 +1,10 @@
 #include "EiRasDX12.h"
-
+#include <PlatformDependency/OnDX/ResourceHeapManager/ResourceHeapManager.hpp>
 #pragma comment (lib, "D3D12.lib")
 #pragma comment (lib, "DXGI.lib")
 
 using GraphicsAPI::EiRasDX12;
+using MaterialSys::ResourceHeapManager;
 
 HANDLE fenceEvent;
 ID3D12Fence* fence = 0;
@@ -91,6 +92,7 @@ void EiRasDX12::InitDevice()
     {
         swapChain3->GetBuffer(n, IID_PPV_ARGS(&renderTargets[n]));
         device->CreateRenderTargetView(renderTargets[n], nullptr, rtvHandle);
+        ResourceHeapManager::ShareInstance()->HeapPool[0]->DynamicFillHeapWithOuterResource(n, renderTargets[n], &swapChainDesc.Format);
         rtvHandle.Offset(1, rtvDescriptorSize);
     }
 

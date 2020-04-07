@@ -17,3 +17,8 @@ void GraphicsResourceHeapDX12Bridge::DynamicFillHeap(MaterialSys::MaterialProp* 
 {
     ((GraphicsResourceHeapDX12*)raw_obj)->DynamicFillHeap(prop);
 }
+
+void GraphicsResourceHeapDX12Bridge::DynamicFillHeapWithOuterResource(_uint heapOffset, void* outerRes, void* format)
+{
+    ((GraphicsResourceHeapDX12*)raw_obj)->DynamicFillHeapWithOuterResource(heapOffset, outerRes, format);
+}

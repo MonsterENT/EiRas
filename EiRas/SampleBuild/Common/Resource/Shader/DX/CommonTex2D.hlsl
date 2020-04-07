@@ -1,7 +1,7 @@
 
 cbuffer CommonCB0 : register(b0)
 {
-    float4 _TmpColor;
+    float4 _MainColor;
 };
 
 Texture2D _MainTex : register(t0);
@@ -13,7 +13,6 @@ struct VSInput
 {
     float3 pos : POSITION;
     float2 uv : TEXCOORD;
-    float3 normal : NORMAL;
 };
 
 struct PSInput
@@ -21,7 +20,6 @@ struct PSInput
     float4 pos : SV_POSITION;
     float2 uv : TEXCOORD;
 };
-
 
 PSInput VSMain(VSInput v)
 {
@@ -34,6 +32,6 @@ PSInput VSMain(VSInput v)
 
 float4 PSMain(PSInput i) : SV_TARGET
 {
-    return _MainTex.Sample(_DefaultSampler, i.uv) * _TmpColor;
+    return _MainTex.Sample(_DefaultSampler, i.uv) * _MainColor;
 }
-//CommonTex
+//CommonTex2D

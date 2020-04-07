@@ -21,12 +21,16 @@
 #include <PlatformDependency/OnDX/CommandBuffer/CommandBufferDX12Bridge.h>
 #endif
 
+#ifdef GRAPHICS_DX
+#include <PlatformDependency/OnDX/ResourceHeapManager/ResourceHeapManager.hpp>
+#endif
+
 #include <Mesh/Mesh.hpp>
 
 using namespace MaterialSys;
 using namespace Graphics;
 
-CommandBuffer::CommandBuffer(std::string Name, _uint maxHeapSize)
+CommandBuffer::CommandBuffer(std::string Name)
 {
     this->Name = Name;
 
@@ -37,9 +41,7 @@ CommandBuffer::CommandBuffer(std::string Name, _uint maxHeapSize)
 #if GRAPHICS_DX
     PlatformBridge = new CommandBufferDX12Bridge(Name);
     
-    resourceHeap = new GraphicsResourceHeap(maxHeapSize);
-    this->maxHeapSize = maxHeapSize;
-    lastRegdeMatCount = 0;
+    resourceHeap = ResourceHeapManager::ShareInstance()->HeapPool[0];
 #endif
 }
 
@@ -123,11 +125,6 @@ void CommandBuffer::SetRenderTexture(Graphics::RenderTexture* renderTexture)
 }
 
 #if GRAPHICS_DX
-void CommandBuffer::_DynamicFillHeap(MaterialSys::MaterialProp* prop)
-{
-    resourceHeap->DynamicFillHeap(prop);
-}
-
 void CommandBuffer::_ReFillHeap()
 {
     _uint materialPropCount = 0;
@@ -149,7 +146,7 @@ void CommandBuffer::_ReFillHeap()
     }
 
 #pragma message("TOFIX")
-    if (tmpMaterialTableArray.size() > 0 && materialPropCount <= maxHeapSize)
+    if (tmpMaterialTableArray.size() > 0)
     {
         resourceHeap->FillHeap((_uint)tmpMaterialTableArray.size(), &tmpMaterialTableArray[0]);
     }

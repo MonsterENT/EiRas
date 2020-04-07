@@ -42,7 +42,7 @@ namespace Graphics {
     public:
         std::string Name;
 
-        CommandBuffer(std::string Name, _uint maxHeapSize = 100);
+        CommandBuffer(std::string Name);
 
         void SetMaterial(MaterialSys::Material* material);
 
@@ -63,8 +63,6 @@ namespace Graphics {
     private:
 
 #if GRAPHICS_DX
-        void _DynamicFillHeap(MaterialSys::MaterialProp* prop);
-
         void _ReFillHeap();
 
         MaterialSys::GraphicsResourceHeap* resourceHeap;
@@ -72,9 +70,6 @@ namespace Graphics {
         void RemoveMaterial(MaterialSys::Material* material);
         std::vector<MaterialSys::MaterialTable*> tmpMaterialTableArray;
         std::map<std::string, MaterialSys::Material*> MaterialMap;
-        
-        _uint maxHeapSize;
-        _uint lastRegdeMatCount;
 #endif
     };
 

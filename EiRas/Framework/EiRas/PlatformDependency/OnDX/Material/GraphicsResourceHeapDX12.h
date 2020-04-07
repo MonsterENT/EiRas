@@ -17,6 +17,7 @@ namespace MaterialSys
 
         void FillHeap(_uint tableCount, MaterialTable** tableArray);
         void DynamicFillHeap(MaterialSys::MaterialProp*);
+        void DynamicFillHeapWithOuterResource(_uint, void*, void*);
 
     private:
         _uint Offset;

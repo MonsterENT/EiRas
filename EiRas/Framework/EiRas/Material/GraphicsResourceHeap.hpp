@@ -16,6 +16,7 @@ namespace MaterialSys
         void FillHeap(_uint tableCount, MaterialTable** tableArray);
 
         void DynamicFillHeap(MaterialSys::MaterialProp*);
+        void DynamicFillHeapWithOuterResource(_uint heapOffset, void*, void*);
 
         EiRasPlatformBridgeProtocol* PlatformBridge;
     };

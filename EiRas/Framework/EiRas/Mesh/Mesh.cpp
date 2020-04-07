@@ -60,9 +60,12 @@ void Mesh::BuildBuffer()
         for(_uint j = 0; j < subMesh->VerticesCount; j++)
         {
             VertexData3D* tmpData = (VertexData3D*)subMesh->TriangleData + j;
-            tmpData->Position = float3(subMesh->PositionData[j].x, subMesh->PositionData[j].y, subMesh->PositionData[j].z);
-            tmpData->UV = float2(subMesh->UVData[j].x, subMesh->UVData[j].y);
-            tmpData->Normal = float3(subMesh->NormalData[j].x, subMesh->NormalData[j].y, subMesh->NormalData[j].z);
+            if (subMesh->PositionData)
+                tmpData->Position = float3(subMesh->PositionData[j].x, subMesh->PositionData[j].y, subMesh->PositionData[j].z);
+            if (subMesh->UVData)
+                tmpData->UV = float2(subMesh->UVData[j].x, subMesh->UVData[j].y);
+            if (subMesh->NormalData)
+                tmpData->Normal = float3(subMesh->NormalData[j].x, subMesh->NormalData[j].y, subMesh->NormalData[j].z);
         }
         
         subMesh->VertexBuffer = new GraphicsResource(Name, GraphicsResourceType::Default, GraphicsResourceVisibility::VISIBILITY_VERTEX, GraphicsResourceUpdateFreq::UPDATE_FREQ_LOW, true);

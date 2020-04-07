@@ -14,7 +14,7 @@ GraphicsResourceDX12::GraphicsResourceDX12(int bufferSize, GraphicsResourceBehav
 
     if (initResource)
     {
-        GET_EIRAS_DX12(deviceObj)
+        GET_EIRAS_DX12(deviceObj);
             deviceObj->device->CreateCommittedResource(&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD),
                 D3D12_HEAP_FLAG_NONE,
                 &CD3DX12_RESOURCE_DESC::Buffer(bufferSize),

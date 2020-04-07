@@ -8,6 +8,7 @@ using namespace Graphics;
 
 RenderTexture::RenderTexture(std::string name, RenderBufferFormat colorFormat, bool useStencil, _uint width, _uint height)
 {
+    Name = name;
 #ifdef GRAPHICS_DX
     PlatformBridge = new RenderTextureDX12Bridge(name, colorFormat, useStencil, width, height);
 #endif

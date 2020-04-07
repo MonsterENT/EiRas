@@ -12,6 +12,8 @@ using std::vector;
 using GraphicsAPI::EiRasDX12;
 using namespace MaterialSys;
 
+#define HEAP_HEADER_OFFSET 10
+
 GraphicsResourceHeapDX12::GraphicsResourceHeapDX12(_uint propCount)
 {
     this->propCount = propCount;
@@ -20,7 +22,7 @@ GraphicsResourceHeapDX12::GraphicsResourceHeapDX12(_uint propCount)
     heapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
     heapDesc.NumDescriptors = propCount;
 
-    GET_EIRAS_DX12(deviceObj)
+    GET_EIRAS_DX12(deviceObj);
 
         deviceObj->device->CreateDescriptorHeap(&heapDesc, IID_PPV_ARGS(&heap));
 
@@ -35,10 +37,8 @@ GraphicsResourceHeapDX12::~GraphicsResourceHeapDX12()
 
 inline void _FillHeapWithProp(CD3DX12_CPU_DESCRIPTOR_HANDLE cpuHandle, CD3DX12_GPU_DESCRIPTOR_HANDLE gpuHandle, MaterialProp* prop)
 {
-    GET_EIRAS_DX12(deviceObj)
+    GET_EIRAS_DX12(deviceObj);
     GraphicsResourceDX12* resObj = (GraphicsResourceDX12*)prop->Resource->PlatformBridge->raw_obj;
-    resObj->CpuHandle = cpuHandle;
-    resObj->GpuHandle = gpuHandle;
 
     if (prop->Resource->Behaviors.ResourceType == GraphicsResourceType::SRV)
     {
@@ -71,14 +71,31 @@ void GraphicsResourceHeapDX12::DynamicFillHeap(MaterialSys::MaterialProp* prop)
     _FillHeapWithProp(cpuHandle, gpuHandle, prop);
 }
 
+void GraphicsResourceHeapDX12::DynamicFillHeapWithOuterResource(_uint heapOffset, void* outerRes, void* format)
+{
+    GET_EIRAS_DX12(deviceObj);
+    CD3DX12_CPU_DESCRIPTOR_HANDLE cpuHandle(heap->GetCPUDescriptorHandleForHeapStart());
+    CD3DX12_GPU_DESCRIPTOR_HANDLE gpuHandle(heap->GetGPUDescriptorHandleForHeapStart());
+
+    cpuHandle.Offset(heapOffset, Offset);
+    gpuHandle.Offset(heapOffset, Offset);
+
+    D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
+    srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+    srvDesc.Format = *((DXGI_FORMAT*)format);
+    srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
+    srvDesc.Texture2D.MipLevels = 1;
+    deviceObj->device->CreateShaderResourceView((ID3D12Resource*)outerRes, &srvDesc, cpuHandle);
+}
+
 void GraphicsResourceHeapDX12::FillHeap(_uint tableCount, MaterialTable** tableArray)
 {
-    GET_EIRAS_DX12(deviceObj)
+    GET_EIRAS_DX12(deviceObj);
     
     CD3DX12_CPU_DESCRIPTOR_HANDLE cpuHandle(heap->GetCPUDescriptorHandleForHeapStart());
     CD3DX12_GPU_DESCRIPTOR_HANDLE gpuHandle(heap->GetGPUDescriptorHandleForHeapStart());
 
-    _uint heapOffset = 0;
+    _uint heapOffset = HEAP_HEADER_OFFSET;
 
     for (_uint tableIndex = 0; tableIndex < tableCount; tableIndex++)
     {

@@ -48,16 +48,27 @@ namespace DX12Utils
             _FullScreenTriangle->SubMeshCount = 1;
             MeshSys::SubMesh* subMesh = new MeshSys::SubMesh();
             _FullScreenTriangle->SubMeshes = subMesh;
-            subMesh->IndicesCount = 3;
-            subMesh->VerticesCount = 3;
-            subMesh->IndicesData = new _uint[3]{ 0, 1, 2 };
-            subMesh->PositionData = new Math::float3[3]{ {-1, -1, 0}, {-1, 3, 0}, {3, -1, 0} };
+            subMesh->IndicesCount = 6;
+            subMesh->VerticesCount = 4;
+            subMesh->IndicesData = new _uint[6]{ 0, 1, 2, 2, 0, 3 };
+            subMesh->UVData = new Math::float2[4]{ {0, 0}, {1, 0}, {1, 1}, {0, 1} };
+            subMesh->NormalData = new Math::float3[4]{ {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0} };
+            subMesh->PositionData = new Math::float3[4]{ {-1, 1, 0.5}, {0, 1, 0.5}, {0, 0, 0.5}, {-1, 0, 0.5} };
             _FullScreenTriangle->BuildBuffer();
         }
         return _FullScreenTriangle;
     }
 
     static void BlitFullScreen(MaterialSys::GraphicsResource* src, Graphics::RenderTexture* dest, Graphics::CommandBuffer* cmdBuffer, MaterialSys::Material* mat)
+    {
+        cmdBuffer->SetRenderTexture(dest);
+        mat->SetProperty(src, 0, 0);
+        mat->FinishStateChange();
+        cmdBuffer->SetMaterial(mat);
+        cmdBuffer->DrawMesh(FullScreenTriangle());
+    }
+
+    static void BlitFullScreen(Graphics::RenderTexture* src, Graphics::RenderTexture* dest, Graphics::CommandBuffer* cmdBuffer, MaterialSys::Material* mat)
     {
         cmdBuffer->SetRenderTexture(dest);
         mat->SetProperty(src, 0, 0);

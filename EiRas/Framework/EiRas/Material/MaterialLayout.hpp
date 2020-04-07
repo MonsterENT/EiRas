@@ -56,7 +56,7 @@ namespace MaterialSys
             this->Props = new MaterialProp*[PropNum];
             for (_uint i = 0; i < PropNum; i++)
             {
-                this->Props[i] = matProps[0];
+                this->Props[i] = matProps[i];
             }
             this->SlotType = MaterialSlotType::MaterialSlotType_Table;
         }

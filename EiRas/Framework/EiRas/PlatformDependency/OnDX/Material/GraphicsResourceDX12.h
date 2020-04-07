@@ -15,9 +15,6 @@ namespace MaterialSys
 
         ID3D12Resource* Resource;
 
-        CD3DX12_CPU_DESCRIPTOR_HANDLE CpuHandle;
-        CD3DX12_GPU_DESCRIPTOR_HANDLE GpuHandle;
-
         GraphicsResourceBehaviors* Behaviors;
 
         virtual void SetResource(void* res, bool noMoreUpdate);

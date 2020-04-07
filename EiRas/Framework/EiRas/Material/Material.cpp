@@ -12,13 +12,15 @@
 #include <Graphics/GraphicsRenderState.hpp>
 #include <Graphics/CommandBuffer.hpp>
 #include <Basic/Image.hpp>
-
+#include <Graphics/RenderTexture.hpp>
 #if GRAPHICS_METAL
 #include <PlatformDependency/OnMetal/Material/MaterialMetalBridge.hpp>
 #endif
 
 #if GRAPHICS_DX
 #include <PlatformDependency/OnDX/Material/MaterialDX12Bridge.h>
+#include <PlatformDependency/OnDX/RenderTexture/RenderTextureDX12.hpp>
+#include <PlatformDependency/OnDX/ResourceHeapManager/ResourceHeapManager.hpp>
 #endif
 
 using namespace Graphics;
@@ -99,6 +101,9 @@ Material::Material(std::string Name, Shader* shader, Graphics::CommandBuffer* co
                 matTable->SlotID = -1;
 #endif
                 materialLayout->Slots[i] = matTable;
+                MaterialProp* pss = matTable->Props[0];
+                MaterialProp* pss1 = matTable->Props[1];
+                MaterialProp* pss2 = matTable->Props[2];
             }
         }
     }
@@ -178,7 +183,7 @@ void Material::SetProperty(ImageSys::Image* image, _uint slotIndex, int propInde
 #if GRAPHICS_DX
     if (fromTable)
     {
-        referenceCmdBuffer->_DynamicFillHeap(tProp);
+        ResourceHeapManager::ShareInstance()->HeapPool[0]->DynamicFillHeap(tProp);
     }
 #endif
 }
@@ -198,11 +203,30 @@ void Material::SetProperty(MaterialSys::GraphicsResource* srv, _uint slotIndex, 
 #if GRAPHICS_DX
         if (fromTable)
         {
-            referenceCmdBuffer->_DynamicFillHeap(tProp);
+            ResourceHeapManager::ShareInstance()->HeapPool[0]->DynamicFillHeap(tProp);
         }
 #endif
-        }
     }
+}
+
+_uint Material::SetProperty(Graphics::RenderTexture* rt, _uint slotIndex, int propIndex)
+{
+    bool fromTable = false;
+    MaterialProp* tProp = getMaterialProp(this, slotIndex, propIndex, fromTable);
+    if (tProp == 0)
+    {
+        return -1;
+    }
+
+#if GRAPHICS_DX
+    if (fromTable)
+    {
+        RenderTextureDX12* rt_rawObj = (RenderTextureDX12*)rt->PlatformBridge->raw_obj;
+        ResourceHeapManager::ShareInstance()->HeapPool[0]->DynamicFillHeapWithOuterResource(tProp->_heapOffset, rt_rawObj->ColorBuffer, &rt_rawObj->ColorFormat);
+    }
+#endif
+    return tProp->_heapOffset;
+}
 
 void Material::FinishStateChange()
 {

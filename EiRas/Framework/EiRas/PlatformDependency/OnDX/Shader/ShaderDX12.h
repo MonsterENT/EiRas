@@ -17,6 +17,7 @@ namespace MaterialSys
     class ShaderDX12
     {
     public:
+        std::string Name;
         ShaderDX12(LPCSTR fileName, LPCSTR vertexFuncName, LPCSTR pixelFuncName);
         ID3DBlob* VertexFunc;
         ID3DBlob* PixelFunc;

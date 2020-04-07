@@ -76,7 +76,7 @@ namespace MaterialSys
             BufferSizeList.push_back(bufferSize);
         }
         
-        void InitBaseRegisterSettings(_uint baseRegisterIndex, bool regSpaceLayoutMode = false, _uint baseRegisterSpace = 0)
+        void InitBaseRegisterSettings(_uint baseRegisterIndex, _uint baseRegisterSpace = 0, bool regSpaceLayoutMode = false)
         {
             RegisterSpaceLayoutMode = regSpaceLayoutMode;
             BaseRegisterIndex = baseRegisterIndex;

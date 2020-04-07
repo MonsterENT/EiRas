@@ -9,7 +9,7 @@ using GraphicsAPI::EiRasDX12;
 
 ShaderResourceDX12::ShaderResourceDX12(GraphicsResourceBehaviors* behaviors, DXGI_FORMAT format, UINT width, UINT height, UINT channels, void* texData, bool* buildStatusFlag) : GraphicsResourceDX12(-1, behaviors, false)
 {
-    GET_EIRAS_DX12(deviceObj)
+    GET_EIRAS_DX12(deviceObj);
 
     this->texData = texData;
     TexFormat = format;

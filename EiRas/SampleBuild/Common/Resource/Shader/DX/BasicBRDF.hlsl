@@ -52,3 +52,4 @@ float4 PSMain(PSInput i) : SV_TARGET
 {
     return float4(dot(i.normal, float3(0, 1, 0)).xxx, 1);
 }
+//BasicBRDF

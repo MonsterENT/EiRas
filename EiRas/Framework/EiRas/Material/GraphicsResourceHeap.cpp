@@ -31,6 +31,12 @@ void GraphicsResourceHeap::DynamicFillHeap(MaterialSys::MaterialProp* prop)
 {
 #if GRAPHICS_DX
     ((GraphicsResourceHeapDX12Bridge*)PlatformBridge)->DynamicFillHeap(prop);
-#elif GRAPHICS_METAL
+#endif
+}
+
+void GraphicsResourceHeap::DynamicFillHeapWithOuterResource(_uint heapOffset, void* outerRes, void* format)
+{
+#if GRAPHICS_DX
+    ((GraphicsResourceHeapDX12Bridge*)PlatformBridge)->DynamicFillHeapWithOuterResource(heapOffset, outerRes, format);
 #endif
 }

@@ -15,6 +15,7 @@ ID3D12RootSignature* createRootSig(ShaderLayout* shaderLayout);
 
 ShaderDX12::ShaderDX12(LPCSTR fileName, LPCSTR vertexFuncName, LPCSTR pixelFuncName)
 {
+    this->Name = fileName;
     this->VertexFunc = 0;
     this->PixelFunc = 0;
     DX12Utils::g_compileShader(fileName, vertexFuncName, "vs_5_1", this->VertexFunc);
@@ -120,9 +121,8 @@ ID3D12PipelineState* ShaderDX12::_GetPSO(Graphics::GraphicsRenderState* renderSt
         psoDesc.SampleDesc.Quality = 0;
 
         ID3D12PipelineState* pso = 0;
-        GET_EIRAS_DX12(deviceObj)
+        GET_EIRAS_DX12(deviceObj);
         deviceObj->device->CreateGraphicsPipelineState(&psoDesc, IID_PPV_ARGS(&pso));
-
         if (pso)
         {
             _PSOCache.insert(PSOCache_PAIR(hashCode, pso));
@@ -193,7 +193,7 @@ ID3D12RootSignature* createRootSig(ShaderLayout* shaderLayout)
     ID3DBlob* signature;
     ID3DBlob* error;
     D3DX12SerializeVersionedRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1_1, &signature, &error);
-    GET_EIRAS_DX12(deviceObj)
+    GET_EIRAS_DX12(deviceObj);
     deviceObj->device->CreateRootSignature(0, signature->GetBufferPointer(), signature->GetBufferSize(), IID_PPV_ARGS(&rootSig));
 
     delete[] rootParameters;
