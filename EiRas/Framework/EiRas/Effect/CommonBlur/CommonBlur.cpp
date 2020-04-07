@@ -28,10 +28,10 @@ CommonBlur::CommonBlur(_uint width, _uint height, Graphics::CommandBuffer* refCm
 #pragma region Init
     ShaderLayout* shaderLayout = new ShaderLayout(2);
     {
-        ShaderProp* commonCB0 = new ShaderProp("CommonCB0", GraphicsResourceType::CBV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_HIGH, sizeof(CommonCB));
+        ShaderProp* commonCB0 = new ShaderProp("BlurCB", GraphicsResourceType::CBV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_HIGH, sizeof(CommonCB));
         commonCB0->InitRegisterSettings(0);
 
-        ShaderPropRange commonSR0("CommonSR0", GraphicsResourceType::SRV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_ONINIT);
+        ShaderPropRange commonSR0("BlurSR", GraphicsResourceType::SRV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_ONINIT);
         commonSR0.PropNum = 1;
         commonSR0.InitBaseRegisterSettings(0);
 

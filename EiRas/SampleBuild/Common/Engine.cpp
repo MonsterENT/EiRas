@@ -219,7 +219,6 @@ void Engine::m_initEngine()
     imageObj->LoadFromFile(imagePath);
     _TexMat0->SetProperty(imageObj, 3, 0);
 
-
     std::string sf90ModelPath = FileSys::FileManager::shareInstance()->GetModelResourcePath("SF90_TMP", "FBX");
     _SF90Mesh = new Mesh("SF90");
     _SF90Mesh->LoadDataFromFile(sf90ModelPath);

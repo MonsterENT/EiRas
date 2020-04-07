@@ -92,9 +92,6 @@ void GraphicsResourceHeapDX12::FillHeap(_uint tableCount, MaterialTable** tableA
 {
     GET_EIRAS_DX12(deviceObj);
     
-    CD3DX12_CPU_DESCRIPTOR_HANDLE cpuHandle(heap->GetCPUDescriptorHandleForHeapStart());
-    CD3DX12_GPU_DESCRIPTOR_HANDLE gpuHandle(heap->GetGPUDescriptorHandleForHeapStart());
-
     _uint heapOffset = HEAP_HEADER_OFFSET;
 
     for (_uint tableIndex = 0; tableIndex < tableCount; tableIndex++)
@@ -106,6 +103,11 @@ void GraphicsResourceHeapDX12::FillHeap(_uint tableCount, MaterialTable** tableA
             MaterialProp* prop = table->Props[propIndex];
             prop->_heapOffset = heapOffset;
 
+            CD3DX12_CPU_DESCRIPTOR_HANDLE cpuHandle(heap->GetCPUDescriptorHandleForHeapStart());
+            CD3DX12_GPU_DESCRIPTOR_HANDLE gpuHandle(heap->GetGPUDescriptorHandleForHeapStart());
+            cpuHandle.Offset(heapOffset, Offset);
+            gpuHandle.Offset(heapOffset, Offset);
+
             if (prop->Resource == 0)
             {
                 //unbound SRV slot will be dynamic filled to heap
@@ -115,8 +117,7 @@ void GraphicsResourceHeapDX12::FillHeap(_uint tableCount, MaterialTable** tableA
                 _FillHeapWithProp(cpuHandle, gpuHandle, prop);
             }
             heapOffset++;
-            cpuHandle.Offset(1, Offset);
-            gpuHandle.Offset(1, Offset);
+
         }
     }
 }
