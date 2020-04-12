@@ -135,6 +135,7 @@ ID3D12RootSignature* createRootSig(ShaderLayout* shaderLayout)
 {
 #pragma message("TOFIX")
     CD3DX12_DESCRIPTOR_RANGE1 ranges[100];
+    _uint rangeOffset = 0;
 
     _uint slotNum = shaderLayout->SlotNum;
 
@@ -172,16 +173,18 @@ ID3D12RootSignature* createRootSig(ShaderLayout* shaderLayout)
                 ShaderPropRange* range = &table->Ranges[j];
                 if (range->PropType == GraphicsResourceType::SRV)
                 {
-                    ranges[j].Init((D3D12_DESCRIPTOR_RANGE_TYPE)range->PropType, range->PropNum, _BASE_SR_REGISTER, _BASE_SPACE);
+                    ranges[j + rangeOffset].Init((D3D12_DESCRIPTOR_RANGE_TYPE)range->PropType, range->PropNum, _BASE_SR_REGISTER, _BASE_SPACE);
                     _BASE_SR_REGISTER += range->PropNum;
                 }
                 else if (range->PropType == GraphicsResourceType::CBV)
                 {
-                    ranges[j].Init((D3D12_DESCRIPTOR_RANGE_TYPE)range->PropType, range->PropNum, _BASE_CB_REGISTER, _BASE_SPACE);
+                    ranges[j + rangeOffset].Init((D3D12_DESCRIPTOR_RANGE_TYPE)range->PropType, range->PropNum, _BASE_CB_REGISTER, _BASE_SPACE);
                     _BASE_CB_REGISTER += range->PropNum;
+                    
                 }
             }
-            rootParameters[i].InitAsDescriptorTable(rangeNum, ranges, (D3D12_SHADER_VISIBILITY)MaterialSys::GraphicsResourceVisibilityToDX12(table->Ranges[0].Visibility));
+            rootParameters[i].InitAsDescriptorTable(rangeNum, ranges + rangeOffset, (D3D12_SHADER_VISIBILITY)MaterialSys::GraphicsResourceVisibilityToDX12(table->Ranges[0].Visibility));
+            rangeOffset += rangeNum;
         }
     }
 

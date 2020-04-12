@@ -34,6 +34,6 @@ PSInput VSMain(VSInput v)
 
 float4 PSMain(PSInput i) : SV_TARGET
 {
-    return _MainTex.Sample(_DefaultSampler, i.uv).rgba * _TmpColor;
+    return _MainTex.Sample(_DefaultSampler, i.uv).aaaa * _TmpColor;
 }
 //CommonFont

@@ -12,10 +12,11 @@ using std::vector;
 using GraphicsAPI::EiRasDX12;
 using namespace MaterialSys;
 
-#define HEAP_HEADER_OFFSET 10
+#define HEAP_HEADER_OFFSET 30
 
 GraphicsResourceHeapDX12::GraphicsResourceHeapDX12(_uint propCount)
 {
+    g_HeapOffset = 0;
     this->propCount = propCount;
     D3D12_DESCRIPTOR_HEAP_DESC heapDesc = {};
     heapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
@@ -71,14 +72,14 @@ void GraphicsResourceHeapDX12::DynamicFillHeap(MaterialSys::MaterialProp* prop)
     _FillHeapWithProp(cpuHandle, gpuHandle, prop);
 }
 
-void GraphicsResourceHeapDX12::DynamicFillHeapWithOuterResource(_uint heapOffset, void* outerRes, void* format)
+_uint GraphicsResourceHeapDX12::DynamicFillHeapWithGlobalResource(void* outerRes, void* format)
 {
     GET_EIRAS_DX12(deviceObj);
     CD3DX12_CPU_DESCRIPTOR_HANDLE cpuHandle(heap->GetCPUDescriptorHandleForHeapStart());
     CD3DX12_GPU_DESCRIPTOR_HANDLE gpuHandle(heap->GetGPUDescriptorHandleForHeapStart());
 
-    cpuHandle.Offset(heapOffset, Offset);
-    gpuHandle.Offset(heapOffset, Offset);
+    cpuHandle.Offset(g_HeapOffset, Offset);
+    gpuHandle.Offset(g_HeapOffset, Offset);
 
     D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
     srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
@@ -86,6 +87,8 @@ void GraphicsResourceHeapDX12::DynamicFillHeapWithOuterResource(_uint heapOffset
     srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
     srvDesc.Texture2D.MipLevels = 1;
     deviceObj->device->CreateShaderResourceView((ID3D12Resource*)outerRes, &srvDesc, cpuHandle);
+
+    return g_HeapOffset++;
 }
 
 void GraphicsResourceHeapDX12::FillHeap(_uint tableCount, MaterialTable** tableArray)

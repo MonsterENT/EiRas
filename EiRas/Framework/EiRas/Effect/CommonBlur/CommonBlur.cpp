@@ -28,24 +28,30 @@ CommonBlur::CommonBlur(_uint width, _uint height, Graphics::CommandBuffer* refCm
 #pragma region Init
     ShaderLayout* shaderLayout = new ShaderLayout(2);
     {
-        ShaderProp* commonCB0 = new ShaderProp("BlurCB", GraphicsResourceType::CBV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_HIGH, sizeof(CommonCB));
-        commonCB0->InitRegisterSettings(0);
+        //ShaderProp* commonCB0 = new ShaderProp("BlurCB", GraphicsResourceType::CBV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_HIGH, sizeof(CommonCB));
+        //commonCB0->InitRegisterSettings(0);
+
+        ShaderPropRange commonCB0("BlurCR", GraphicsResourceType::CBV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_HIGH);
+        commonCB0.AddProp(sizeof(CommonCB));
+        commonCB0.InitBaseRegisterSettings(0);
 
         ShaderPropRange commonSR0("BlurSR", GraphicsResourceType::SRV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_ONINIT);
         commonSR0.PropNum = 1;
         commonSR0.InitBaseRegisterSettings(0);
 
-        ShaderTable* table = new ShaderTable();
-        table->AddRange(commonSR0);
+        ShaderTable* table0 = new ShaderTable();
+        table0->AddRange(commonSR0);
 
-        shaderLayout->Slots[0] = table;
-        shaderLayout->Slots[1] = commonCB0;
+        ShaderTable* table1 = new ShaderTable();
+        table1->AddRange(commonCB0);
+
+        shaderLayout->Slots[0] = table0;
+        shaderLayout->Slots[1] = table1;
     }
 
     GraphicsVertexDescriptor* m_vertexDesc = new GraphicsVertexDescriptor();
 
     m_vertexDesc->AddBufferAttribute("POSITION", GraphicsVertexAttributeFormat::VertexFormatFloat3, 0);
-    m_vertexDesc->AddBufferAttribute("TEXCOORD", GraphicsVertexAttributeFormat::VertexFormatFloat2, 0);
     m_vertexDesc->InitBufferLayout();
 
     std::string shaderFilePath = FileSys::FileManager::shareInstance()->GetResourcePath("Shader\\DX\\CommonBlur", "hlsl");
@@ -81,13 +87,13 @@ CommonBlur::CommonBlur(_uint width, _uint height, Graphics::CommandBuffer* refCm
 void CommonBlur::ProcessWithSource(Graphics::RenderTexture* src, _uint blitTimes, float blurCoef)
 {
     g_tmpCB.BlurSettings.x = blurCoef;
-    _Material->SetProperty(&g_tmpCB, 1);
+    _Material->SetProperty(&g_tmpCB, 1, 0);
     BlitFullScreen(src, _TmpBluredRT, _RefCmdBuffer, _Material); 
         RenderTexture* t_src = _TmpBluredRT, * t_dest = BluredRT; 
         blitTimes += blitTimes % 2 > 0 ? 0 : 1; 
         for (int i = 0; i < blitTimes; i++)
         {
-            //BlitFullScreen(t_src, t_dest, _RefCmdBuffer, _Material); 
+            BlitFullScreen(t_src, t_dest, _RefCmdBuffer, _Material); 
             RenderTexture* t = t_dest; 
             t_dest = t_src; 
             t_src = t; 

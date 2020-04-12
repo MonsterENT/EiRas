@@ -80,7 +80,7 @@ void Engine::m_initEngine()
     
     cmdBuffer = new CommandBuffer("main buffer");
 
-
+    _CommonBlur = new CommonBlur(2560 / 2, 1440 / 2, cmdBuffer);
     
 #pragma region CustomShaderLayout
     ShaderLayout* customLayout = new ShaderLayout(2);
@@ -224,7 +224,6 @@ void Engine::m_initEngine()
     _SF90Mesh->LoadDataFromFile(sf90ModelPath);
     _SF90Mesh->BuildBuffer();
 
-    _CommonBlur = new CommonBlur(2560 / 2, 1440 / 2, cmdBuffer);
 }
 
 Engine::Engine()
@@ -268,9 +267,9 @@ void Engine::Update()
     cmdBuffer->SetMaterial(_TexMat0);
     cmdBuffer->DrawMesh(_SF90Mesh);
 
-    //_CommonBlur->ProcessWithSource(_SceneRenderTexture, 0, 0.9);
+    _CommonBlur->ProcessWithSource(_SceneRenderTexture, 2, 0.5);
     cmdBuffer->SetRenderTexture(0);
-    _Tex2DMat0->SetProperty(_SceneRenderTexture, 1, 0);
+    _Tex2DMat0->SetProperty(_CommonBlur->_TmpBluredRT, 1, 0);
     _Tex2DMat0->RenderState->_CullMode = CullMode::CullModeNone;
     _Tex2DMat0->FinishStateChange();
     cmdBuffer->SetMaterial(_Tex2DMat0);

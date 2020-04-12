@@ -26,6 +26,8 @@ namespace Graphics
 
         RenderBufferFormat ColorFormat;
         RenderBufferFormat DepthStencilFormat;
+
+        _uint SrvHeapOffset;
     };
 }
 

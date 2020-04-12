@@ -12,7 +12,6 @@ SamplerState _DefaultSampler : register(s0);
 struct VSInput
 {
     float3 pos : POSITION;
-    float2 uv : TEXCOORD;
 };
 
 struct PSInput
@@ -26,8 +25,8 @@ PSInput VSMain(VSInput v)
 {
     PSInput o = (PSInput)0;
     o.pos = float4(v.pos, 1);
-    o.ss_uv = v.uv;
-    //o.ss_uv.y = 1 - o.ss_uv.y;
+    o.ss_uv = o.pos.xy;
+    o.ss_uv.y = 1 - o.ss_uv.y;
     return o;
 };
 

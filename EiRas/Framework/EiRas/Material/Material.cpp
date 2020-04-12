@@ -77,14 +77,8 @@ Material::Material(std::string Name, Shader* shader, Graphics::CommandBuffer* co
 
                     for (_uint propIndex = 0; propIndex < tmpRange->PropNum; propIndex++)
                     {
-                        if (tmpRange->PropType == GraphicsResourceType::SRV)
-                        {
-                            tmpMatProp = new MaterialProp(tmpRange->BasePropName, tmpRange->PropType, tmpRange->Visibility, tmpRange->UpdateFreq, false, -1);
-                        }
-                        else if (tmpRange->PropType == GraphicsResourceType::CBV)
-                        {
-                            tmpMatProp = new MaterialProp(tmpRange->BasePropName, tmpRange->PropType, tmpRange->Visibility, tmpRange->UpdateFreq, true, tmpRange->BufferSizeList[propIndex]);
-                        }
+                        tmpMatProp = new MaterialProp(tmpRange->BasePropName, tmpRange->PropType, tmpRange->Visibility, tmpRange->UpdateFreq, true, 
+                            tmpRange->BufferSizeList.size() > propIndex ? tmpRange->BufferSizeList[propIndex] : -1);
 #if GRAPHICS_DX
                         tmpMatProp->SlotID = -1;
 #elif GRAPHICS_METAL
@@ -101,9 +95,6 @@ Material::Material(std::string Name, Shader* shader, Graphics::CommandBuffer* co
                 matTable->SlotID = -1;
 #endif
                 materialLayout->Slots[i] = matTable;
-                MaterialProp* pss = matTable->Props[0];
-                MaterialProp* pss1 = matTable->Props[1];
-                MaterialProp* pss2 = matTable->Props[2];
             }
         }
     }
@@ -209,23 +200,21 @@ void Material::SetProperty(MaterialSys::GraphicsResource* srv, _uint slotIndex, 
     }
 }
 
-_uint Material::SetProperty(Graphics::RenderTexture* rt, _uint slotIndex, int propIndex)
+void Material::SetProperty(Graphics::RenderTexture* rt, _uint slotIndex, int propIndex)
 {
     bool fromTable = false;
     MaterialProp* tProp = getMaterialProp(this, slotIndex, propIndex, fromTable);
     if (tProp == 0)
     {
-        return -1;
+        return;
     }
 
 #if GRAPHICS_DX
     if (fromTable)
     {
-        RenderTextureDX12* rt_rawObj = (RenderTextureDX12*)rt->PlatformBridge->raw_obj;
-        ResourceHeapManager::ShareInstance()->HeapPool[0]->DynamicFillHeapWithOuterResource(tProp->_heapOffset, rt_rawObj->ColorBuffer, &rt_rawObj->ColorFormat);
+        tProp->_heapOffset = ((RenderTextureDX12*)rt->PlatformBridge->raw_obj)->SrvHeapOffset;
     }
 #endif
-    return tProp->_heapOffset;
 }
 
 void Material::FinishStateChange()

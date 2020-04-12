@@ -47,7 +47,7 @@ namespace MaterialSys {
         void SetProperty(void* res, _uint slotIndex, int propIndex = -1);
         void SetProperty(ImageSys::Image* image, _uint slotIndex, int propIndex = -1);
         void SetProperty(MaterialSys::GraphicsResource* srv, _uint slotIndex, int propIndex = -1);
-        _uint SetProperty(Graphics::RenderTexture* rt, _uint slotIndex, int propIndex = -1);
+        void SetProperty(Graphics::RenderTexture* rt, _uint slotIndex, int propIndex = -1);
 
         Shader* shader;
         MaterialLayout* materialLayout;

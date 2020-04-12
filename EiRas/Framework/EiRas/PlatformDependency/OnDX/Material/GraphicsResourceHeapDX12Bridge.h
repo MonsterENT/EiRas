@@ -13,6 +13,6 @@ namespace MaterialSys
         GraphicsResourceHeapDX12Bridge(_uint propCount);
         void FillHeap(_uint tableCount, MaterialTable** tableArray);
         void DynamicFillHeap(MaterialSys::MaterialProp*);
-        void DynamicFillHeapWithOuterResource(_uint, void*, void*);
+        _uint DynamicFillHeapWithGlobalResource(void*, void*);
     };
 }

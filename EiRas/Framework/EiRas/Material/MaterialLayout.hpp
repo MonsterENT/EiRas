@@ -30,13 +30,13 @@ namespace MaterialSys
         MaterialProp(std::string name, GraphicsResourceType propType, GraphicsResourceVisibility visible, GraphicsResourceUpdateFreq updateFreq, bool initResource, _uint bufferSize)
         {
             Name = name;
-            Resource = new GraphicsResource(name, propType, visible, updateFreq, initResource);
             if (propType == GraphicsResourceType::SRV)
             {
                 Resource = NULL;
             }
             else
             {
+                Resource = new GraphicsResource(name, propType, visible, updateFreq, initResource);
                 Resource->InitAsConstantBuffer(bufferSize);
             }
             this->SlotType = MaterialSlotType::MaterialSlotType_Prop;

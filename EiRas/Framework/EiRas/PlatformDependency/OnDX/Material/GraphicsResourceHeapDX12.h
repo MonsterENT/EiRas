@@ -17,11 +17,12 @@ namespace MaterialSys
 
         void FillHeap(_uint tableCount, MaterialTable** tableArray);
         void DynamicFillHeap(MaterialSys::MaterialProp*);
-        void DynamicFillHeapWithOuterResource(_uint, void*, void*);
+        _uint DynamicFillHeapWithGlobalResource(void*, void*);
 
     private:
         _uint Offset;
         _uint propCount;
+        _uint g_HeapOffset;
     };
 
 }
