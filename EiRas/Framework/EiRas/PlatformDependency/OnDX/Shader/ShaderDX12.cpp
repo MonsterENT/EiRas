@@ -16,14 +16,72 @@ ID3D12RootSignature* createRootSig(ShaderLayout* shaderLayout);
 ShaderDX12::ShaderDX12(LPCSTR fileName, LPCSTR vertexFuncName, LPCSTR pixelFuncName)
 {
     this->Name = fileName;
-    this->VertexFunc = 0;
-    this->PixelFunc = 0;
-    DX12Utils::g_compileShader(fileName, vertexFuncName, "vs_5_1", this->VertexFunc);
-    DX12Utils::g_compileShader(fileName, pixelFuncName, "ps_5_1", this->PixelFunc);
+    ID3DBlob* vertexFuncBlob = 0, *pixelFuncBlob = 0;
+    DX12Utils::g_compileShader(fileName, vertexFuncName, "vs_5_1", vertexFuncBlob);
+    DX12Utils::g_compileShader(fileName, pixelFuncName, "ps_5_1", pixelFuncBlob);
+    if (vertexFuncBlob)
+    {
+        VertexFuncList.push_back(vertexFuncBlob);
+    }
+
+    if (pixelFuncBlob)
+    {
+        PixelFuncList.push_back(pixelFuncBlob);
+    }
+
+    m_ShaderPassData.push_back(ShaderPassData(0, 0));
     RootSignature = 0;
     VertexDescriptor = 0;
     VertexAttributesCount = 0;
-}       
+}
+
+ShaderDX12::ShaderDX12(LPCSTR fileName)
+{
+    Name = fileName;
+    RootSignature = 0;
+    VertexDescriptor = 0;
+    VertexAttributesCount = 0;
+}
+
+void ShaderDX12::AddVertexFuncToPass(LPCSTR vertexFuncName, _uint pass)
+{
+    ID3DBlob* vertexFuncBlob = 0;
+    DX12Utils::g_compileShader(Name, vertexFuncName, "vs_5_1", vertexFuncBlob);
+    if (!vertexFuncBlob)
+    {
+        return;
+    }
+
+    VertexFuncList.push_back(vertexFuncBlob);
+    if (m_ShaderPassData.size() <= pass)
+    {
+        m_ShaderPassData.push_back(ShaderPassData(VertexFuncList.size() - 1, -1));
+    }
+    else
+    {
+        m_ShaderPassData[pass].VertexFuncIndex = VertexFuncList.size() - 1;
+    }
+}
+void ShaderDX12::AddPixelFuncToPass(LPCSTR pixelFuncName, _uint pass)
+{
+    ID3DBlob* pixelFuncBlob = 0;
+    DX12Utils::g_compileShader(Name, pixelFuncName, "ps_5_1", pixelFuncBlob);
+
+    if (!pixelFuncBlob)
+    {
+        return;
+    }
+
+    PixelFuncList.push_back(pixelFuncBlob);
+    if (m_ShaderPassData.size() <= pass)
+    {
+        m_ShaderPassData.push_back(ShaderPassData(-1, PixelFuncList.size() - 1));
+    }
+    else
+    {
+        m_ShaderPassData[pass].PixelFuncIndex = PixelFuncList.size() - 1;
+    }
+}
 
 void ShaderDX12::InitRootSignature(ShaderLayout* shaderLayout)
 {
@@ -51,12 +109,17 @@ void ShaderDX12::InitVertexDescriptor(Graphics::GraphicsVertexDescriptor* desc)
     }
 }
 
-ID3D12PipelineState* ShaderDX12::_GetPSO(Graphics::GraphicsRenderState* renderState, _uint numRT, DXGI_FORMAT* rtFormats, DXGI_FORMAT depthFormat)
+ID3D12PipelineState* ShaderDX12::_GetPSO(Graphics::GraphicsRenderState* renderState, _uint numRT, DXGI_FORMAT* rtFormats, DXGI_FORMAT depthFormat, _uint pass)
 {
+    if (pass >= m_ShaderPassData.size())
+    {
+        pass = 0;
+    }
     _uint hashCode = renderState->GetHashCode();
     {
         hashCode = hashCode * 23 + numRT;
         hashCode = hashCode * 23 + (_uint)depthFormat;
+        hashCode = hashCode * 23 + pass;
         for (int i = 0; i < numRT; i++)
         {
             hashCode = 23 * hashCode + (_uint)rtFormats[i];
@@ -73,8 +136,8 @@ ID3D12PipelineState* ShaderDX12::_GetPSO(Graphics::GraphicsRenderState* renderSt
         D3D12_GRAPHICS_PIPELINE_STATE_DESC psoDesc = {};
         psoDesc.InputLayout = { this->VertexDescriptor, this->VertexAttributesCount };
         psoDesc.pRootSignature = this->RootSignature;
-        psoDesc.VS = CD3DX12_SHADER_BYTECODE(this->VertexFunc);
-        psoDesc.PS = CD3DX12_SHADER_BYTECODE(this->PixelFunc);
+        psoDesc.VS = CD3DX12_SHADER_BYTECODE(VertexFuncList[m_ShaderPassData[pass].VertexFuncIndex]);
+        psoDesc.PS = CD3DX12_SHADER_BYTECODE(PixelFuncList[m_ShaderPassData[pass].PixelFuncIndex]);
 
         CD3DX12_RASTERIZER_DESC rasterizerStateDesc(D3D12_DEFAULT);
         rasterizerStateDesc.CullMode = (D3D12_CULL_MODE)(4 - (int)renderState->_CullMode);

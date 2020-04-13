@@ -3,6 +3,7 @@
 #include <PlatformDependency/OnDX/GraphicsAPI/EiRasDX12.h>
 #include <Global/GlobalDefine.h>
 #include <map>
+#include <vector>
 
 namespace Graphics
 {
@@ -14,13 +15,35 @@ namespace MaterialSys
 {
     class ShaderLayout;
 
+    typedef struct ShaderPassData
+    {
+        _uint VertexFuncIndex;
+        _uint PixelFuncIndex;
+        ShaderPassData()
+        {
+            VertexFuncIndex = 0;
+            PixelFuncIndex = 0;
+        }
+        ShaderPassData(_uint vIndex, _uint pIndex)
+        {
+            VertexFuncIndex = vIndex;
+            PixelFuncIndex = pIndex;
+        }
+    } ShaderPassData;
+
     class ShaderDX12
     {
     public:
-        std::string Name;
+        LPCSTR Name;
         ShaderDX12(LPCSTR fileName, LPCSTR vertexFuncName, LPCSTR pixelFuncName);
-        ID3DBlob* VertexFunc;
-        ID3DBlob* PixelFunc;
+        ShaderDX12(LPCSTR fileName);
+
+        void AddVertexFuncToPass(LPCSTR vertexFuncName, _uint pass);
+        void AddPixelFuncToPass(LPCSTR pixelFuncName, _uint pass);
+
+        std::vector<ID3DBlob*> VertexFuncList;
+        std::vector<ID3DBlob*> PixelFuncList;
+        std::vector<ShaderPassData> m_ShaderPassData;
 
         void InitRootSignature(ShaderLayout* RefShaderLayout);
 
@@ -31,7 +54,7 @@ namespace MaterialSys
         _uint VertexAttributesCount;
         D3D12_INPUT_ELEMENT_DESC* VertexDescriptor;
 
-        ID3D12PipelineState* _GetPSO(Graphics::GraphicsRenderState* renderState, _uint numRT, DXGI_FORMAT* rtFormats, DXGI_FORMAT depthFormat);
+        ID3D12PipelineState* _GetPSO(Graphics::GraphicsRenderState* renderState, _uint numRT, DXGI_FORMAT* rtFormats, DXGI_FORMAT depthFormat, _uint pass = 0);
 
     private:
 

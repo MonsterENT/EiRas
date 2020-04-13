@@ -38,6 +38,14 @@ Shader::Shader(std::string fileName, std::string vertexFuncName, std::string pix
     Layout = 0;
 }
 
+Shader::Shader(std::string fileName)
+{
+#if GRAPHICS_DX
+    PlatformBridge = new ShaderDX12Bridge(fileName.c_str());
+#endif
+    Layout = 0;
+}
+
 void Shader::InitLayout(ShaderLayout* layout)
 {
     Layout = layout;

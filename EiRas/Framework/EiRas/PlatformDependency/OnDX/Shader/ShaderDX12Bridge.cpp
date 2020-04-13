@@ -10,6 +10,11 @@ ShaderDX12Bridge::ShaderDX12Bridge(LPCSTR fileName, LPCSTR vertexFuncName, LPCST
     raw_obj = new ShaderDX12(fileName, vertexFuncName, pixelFuncName);
 }
 
+ShaderDX12Bridge::ShaderDX12Bridge(LPCSTR fileName)
+{
+    raw_obj = new ShaderDX12(fileName);
+}
+
 void ShaderDX12Bridge::InitRootSignature(ShaderLayout* shaderLayout)
 {
     ShaderDX12* obj = (ShaderDX12*)raw_obj;

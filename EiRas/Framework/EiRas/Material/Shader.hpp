@@ -25,6 +25,8 @@ namespace MaterialSys {
     {
     public:
         Shader(std::string fileName, std::string vertexFuncName, std::string pixelFuncName);
+        Shader(std::string fileName);
+        
         Shader()
         {
             this->PlatformBridge = 0;

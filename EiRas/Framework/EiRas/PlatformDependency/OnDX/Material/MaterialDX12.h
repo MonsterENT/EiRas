@@ -3,6 +3,8 @@
 #include <Windows.h>
 #include <string>
 #include <d3d12.h>
+#include <vector>
+#include <Global/GlobalDefine.h>
 
 namespace Graphics
 {
@@ -24,10 +26,10 @@ namespace MaterialSys
 
         void SetProperty(MaterialProp* prop, void* res);
 
-        void UpdateRenderState(Graphics::GraphicsRenderState* renderState, ShaderDX12* shaderObj, void* rawCmdBuffer);
+        void UpdateRenderState(Graphics::GraphicsRenderState* renderState, ShaderDX12* shaderObj, void* rawCmdBuffer, _uint pass = 0);
 
         ShaderDX12* RawShaderObj;
 
-        ID3D12PipelineState* PipelineState;
+        std::vector<ID3D12PipelineState*> PassedPipelineState;
     };
 }

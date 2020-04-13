@@ -16,7 +16,8 @@ namespace MaterialSys
     {
     public:
         ShaderDX12Bridge(LPCSTR fileName, LPCSTR vertexFuncName, LPCSTR pixelFuncName);
-        
+        ShaderDX12Bridge(LPCSTR fileName);
+
         void InitRootSignature(ShaderLayout* shaderLayout);
         
         void InitVertexDescriptor(Graphics::GraphicsVertexDescriptor* desc);

@@ -18,7 +18,6 @@ MaterialDX12::MaterialDX12(std::string Name, ShaderDX12* shaderObj)
 {
     this->Name = Name;
     RawShaderObj = shaderObj;
-    PipelineState = 0;
 }
 
 void MaterialDX12::SetProperty(MaterialProp* prop, void* res)
@@ -29,7 +28,7 @@ void MaterialDX12::SetProperty(MaterialProp* prop, void* res)
     }
 }
 
-void MaterialDX12::UpdateRenderState(Graphics::GraphicsRenderState* renderState, ShaderDX12* shaderObj, void* rawCmdBuffer)
+void MaterialDX12::UpdateRenderState(Graphics::GraphicsRenderState* renderState, ShaderDX12* shaderObj, void* rawCmdBuffer, _uint pass)
 {
     CommandBufferDX12* cmdBuffer = (CommandBufferDX12*)rawCmdBuffer;
     
@@ -37,5 +36,12 @@ void MaterialDX12::UpdateRenderState(Graphics::GraphicsRenderState* renderState,
     DXGI_FORMAT rtFormats[8];
     DXGI_FORMAT depthFormat;
     cmdBuffer->GetCurrentRenderTextureInfo(&numRT, rtFormats, &depthFormat);
-    PipelineState = RawShaderObj->_GetPSO(renderState, numRT, rtFormats, depthFormat);
+    if (pass >= PassedPipelineState.size())
+    {
+        PassedPipelineState.push_back(RawShaderObj->_GetPSO(renderState, numRT, rtFormats, depthFormat, pass));
+    }
+    else
+    {
+        PassedPipelineState[pass] = RawShaderObj->_GetPSO(renderState, numRT, rtFormats, depthFormat, pass);
+    }
 }

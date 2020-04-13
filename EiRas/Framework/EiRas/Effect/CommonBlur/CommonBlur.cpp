@@ -17,7 +17,7 @@ using namespace DX12Utils;
 
 typedef struct CommonCB
 {
-    float4 BlurSettings;//x Blur Coef
+    float4 BlurSettings;//x width, y height, z BlurCoef
 } CommonCB;
 
 static CommonCB g_tmpCB;
@@ -55,7 +55,7 @@ CommonBlur::CommonBlur(_uint width, _uint height, Graphics::CommandBuffer* refCm
     m_vertexDesc->InitBufferLayout();
 
     std::string shaderFilePath = FileSys::FileManager::shareInstance()->GetResourcePath("Shader\\DX\\CommonBlur", "hlsl");
-    _Shader = new Shader(shaderFilePath, "VSMain", "PSMain");
+    _Shader = new Shader(shaderFilePath, "VSMain", "PSMainH");
     _Shader->InitVertexDescriptor(m_vertexDesc);
     _Shader->InitLayout(shaderLayout);
 
@@ -86,23 +86,29 @@ CommonBlur::CommonBlur(_uint width, _uint height, Graphics::CommandBuffer* refCm
 
 void CommonBlur::ProcessWithSource(Graphics::RenderTexture* src, _uint blitTimes, float blurCoef)
 {
-    g_tmpCB.BlurSettings.x = blurCoef;
+    g_tmpCB.BlurSettings.x = Width;
+    g_tmpCB.BlurSettings.y = Height;
+    g_tmpCB.BlurSettings.z = blurCoef;
     _Material->SetProperty(&g_tmpCB, 1, 0);
-    BlitFullScreen(src, _TmpBluredRT, _RefCmdBuffer, _Material); 
-        RenderTexture* t_src = _TmpBluredRT, * t_dest = BluredRT; 
-        blitTimes += blitTimes % 2 > 0 ? 0 : 1; 
-        for (int i = 0; i < blitTimes; i++)
-        {
-            BlitFullScreen(t_src, t_dest, _RefCmdBuffer, _Material); 
-            RenderTexture* t = t_dest; 
-            t_dest = t_src; 
-            t_src = t; 
-        }
+
+    BlitFullScreen(src, _TmpBluredRT, _RefCmdBuffer, _Material);
+    BlitFullScreen(_TmpBluredRT, BluredRT, _RefCmdBuffer, _Material);
+    RenderTexture* t_src = BluredRT, * t_dest = _TmpBluredRT;
+    blitTimes += blitTimes % 2 > 0 ? 0 : 1;
+    for (int i = 0; i < blitTimes; i++)
+    {
+        BlitFullScreen(t_src, t_dest, _RefCmdBuffer, _Material);
+        RenderTexture* t = t_dest;
+        t_dest = t_src;
+        t_src = t;
+    }
 }
 
 void CommonBlur::ProcessWithSource(MaterialSys::GraphicsResource* src, _uint blitTimes, float blurCoef)
 {
-    g_tmpCB.BlurSettings.x = blurCoef;
-    _Material->SetProperty(&g_tmpCB, 0, 1);
-    PROCESS
+    //g_tmpCB.BlurSettings.x = Width;
+    //g_tmpCB.BlurSettings.y = Height;
+    //g_tmpCB.BlurSettings.z = blurCoef;
+    //_Material->SetProperty(&g_tmpCB, 0, 1);
+    //PROCESS
 }
