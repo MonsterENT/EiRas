@@ -1,5 +1,6 @@
 #pragma once
 #include <Global/PlatformDependency/EiRasPlatformBridgeProtocol.h>
+#include <Global/GlobalDefine.h>
 #include <string>
 
 namespace MaterialSys
@@ -19,7 +20,7 @@ namespace Graphics {
     public:
         CommandBufferDX12Bridge(std::string Name);
 
-        void SetMaterial(MaterialSys::Material* mat);
+        void SetMaterial(MaterialSys::Material* mat, _uint pass = 0);
 
         void DrawMesh(MeshSys::Mesh* mesh);
 

@@ -56,6 +56,8 @@ CommonBlur::CommonBlur(_uint width, _uint height, Graphics::CommandBuffer* refCm
 
     std::string shaderFilePath = FileSys::FileManager::shareInstance()->GetResourcePath("Shader\\DX\\CommonBlur", "hlsl");
     _Shader = new Shader(shaderFilePath, "VSMain", "PSMainH");
+    _Shader->AddPixelFuncToPass("PSMainV", 1);
+    _Shader->SetVertexFuncToPass(0, 1);
     _Shader->InitVertexDescriptor(m_vertexDesc);
     _Shader->InitLayout(shaderLayout);
 
@@ -91,13 +93,14 @@ void CommonBlur::ProcessWithSource(Graphics::RenderTexture* src, _uint blitTimes
     g_tmpCB.BlurSettings.z = blurCoef;
     _Material->SetProperty(&g_tmpCB, 1, 0);
 
-    BlitFullScreen(src, _TmpBluredRT, _RefCmdBuffer, _Material);
-    BlitFullScreen(_TmpBluredRT, BluredRT, _RefCmdBuffer, _Material);
+    BlitFullScreen(src, _TmpBluredRT, _RefCmdBuffer, _Material, 0);
+    BlitFullScreen(_TmpBluredRT, BluredRT, _RefCmdBuffer, _Material, 1);
     RenderTexture* t_src = BluredRT, * t_dest = _TmpBluredRT;
     blitTimes += blitTimes % 2 > 0 ? 0 : 1;
     for (int i = 0; i < blitTimes; i++)
     {
-        BlitFullScreen(t_src, t_dest, _RefCmdBuffer, _Material);
+        BlitFullScreen(t_src, t_dest, _RefCmdBuffer, _Material, 0);
+        BlitFullScreen(t_dest, t_src, _RefCmdBuffer, _Material, 1);
         RenderTexture* t = t_dest;
         t_dest = t_src;
         t_src = t;

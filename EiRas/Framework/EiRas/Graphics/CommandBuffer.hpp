@@ -44,7 +44,7 @@ namespace Graphics {
 
         CommandBuffer(std::string Name);
 
-        void SetMaterial(MaterialSys::Material* material);
+        void SetMaterial(MaterialSys::Material* material, _uint pass = 0);
 
         void DrawMesh(MeshSys::Mesh* mesh);
 

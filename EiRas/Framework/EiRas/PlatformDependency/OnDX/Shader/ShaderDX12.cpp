@@ -46,7 +46,7 @@ ShaderDX12::ShaderDX12(LPCSTR fileName)
 void ShaderDX12::AddVertexFuncToPass(LPCSTR vertexFuncName, _uint pass)
 {
     ID3DBlob* vertexFuncBlob = 0;
-    DX12Utils::g_compileShader(Name, vertexFuncName, "vs_5_1", vertexFuncBlob);
+    DX12Utils::g_compileShader(Name.c_str(), vertexFuncName, "vs_5_1", vertexFuncBlob);
     if (!vertexFuncBlob)
     {
         return;
@@ -65,7 +65,7 @@ void ShaderDX12::AddVertexFuncToPass(LPCSTR vertexFuncName, _uint pass)
 void ShaderDX12::AddPixelFuncToPass(LPCSTR pixelFuncName, _uint pass)
 {
     ID3DBlob* pixelFuncBlob = 0;
-    DX12Utils::g_compileShader(Name, pixelFuncName, "ps_5_1", pixelFuncBlob);
+    DX12Utils::g_compileShader(Name.c_str(), pixelFuncName, "ps_5_1", pixelFuncBlob);
 
     if (!pixelFuncBlob)
     {
@@ -82,6 +82,31 @@ void ShaderDX12::AddPixelFuncToPass(LPCSTR pixelFuncName, _uint pass)
         m_ShaderPassData[pass].PixelFuncIndex = PixelFuncList.size() - 1;
     }
 }
+
+void ShaderDX12::SetVertexFuncToPass(_uint index, _uint pass)
+{
+    if (m_ShaderPassData.size() <= pass)
+    {
+        m_ShaderPassData.push_back(ShaderPassData(index, -1));
+    }
+    else
+    {
+        m_ShaderPassData[pass].VertexFuncIndex = index;
+    }
+}
+
+void ShaderDX12::SetPixelFuncToPass(_uint index, _uint pass)
+{
+    if (m_ShaderPassData.size() <= pass)
+    {
+        m_ShaderPassData.push_back(ShaderPassData(-1, index));
+    }
+    else
+    {
+        m_ShaderPassData[pass].PixelFuncIndex = index;
+    }
+}
+
 
 void ShaderDX12::InitRootSignature(ShaderLayout* shaderLayout)
 {

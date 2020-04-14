@@ -36,7 +36,7 @@ namespace Graphics {
 
         void DrawMesh(MeshSys::Mesh* mesh);
 
-        void SetMaterial(MaterialSys::MaterialDX12* mat, MaterialSys::MaterialLayout* layout);
+        void SetMaterial(MaterialSys::MaterialDX12* mat, MaterialSys::MaterialLayout* layout, _uint pass = 0);
 
         void SetRenderTexture(void* rawRenderTexture);
 

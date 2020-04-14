@@ -59,21 +59,21 @@ namespace DX12Utils
         return _FullScreenTriangle;
     }
 
-    static void BlitFullScreen(MaterialSys::GraphicsResource* src, Graphics::RenderTexture* dest, Graphics::CommandBuffer* cmdBuffer, MaterialSys::Material* mat)
+    static void BlitFullScreen(MaterialSys::GraphicsResource* src, Graphics::RenderTexture* dest, Graphics::CommandBuffer* cmdBuffer, MaterialSys::Material* mat, _uint pass = 0)
     {
         cmdBuffer->SetRenderTexture(dest);
         mat->SetProperty(src, 0, 0);
         mat->FinishStateChange();
-        cmdBuffer->SetMaterial(mat);
+        cmdBuffer->SetMaterial(mat, pass);
         cmdBuffer->DrawMesh(FullScreenTriangle());
     }
 
-    static void BlitFullScreen(Graphics::RenderTexture* src, Graphics::RenderTexture* dest, Graphics::CommandBuffer* cmdBuffer, MaterialSys::Material* mat)
+    static void BlitFullScreen(Graphics::RenderTexture* src, Graphics::RenderTexture* dest, Graphics::CommandBuffer* cmdBuffer, MaterialSys::Material* mat, _uint pass = 0)
     {
         cmdBuffer->SetRenderTexture(dest);
         mat->SetProperty(src, 0, 0);
-        mat->FinishStateChange();
-        cmdBuffer->SetMaterial(mat);
+        mat->FinishStateChange(pass);
+        cmdBuffer->SetMaterial(mat, pass);
         cmdBuffer->DrawMesh(FullScreenTriangle());
     }
 }

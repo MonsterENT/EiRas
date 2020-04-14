@@ -2,6 +2,7 @@
 
 #include <Global/PlatformDependency/EiRasPlatformBridgeProtocol.h>
 #include <Windows.h>
+#include <Global/GlobalDefine.h>
 
 namespace Graphics
 {
@@ -17,6 +18,12 @@ namespace MaterialSys
     public:
         ShaderDX12Bridge(LPCSTR fileName, LPCSTR vertexFuncName, LPCSTR pixelFuncName);
         ShaderDX12Bridge(LPCSTR fileName);
+
+        void AddVertexFuncToPass(LPCSTR vertexFuncName, _uint pass);
+        void AddPixelFuncToPass(LPCSTR pixelFuncName, _uint pass);
+
+        void SetVertexFuncToPass(_uint index, _uint pass);
+        void SetPixelFuncToPass(_uint index, _uint pass);
 
         void InitRootSignature(ShaderLayout* shaderLayout);
         

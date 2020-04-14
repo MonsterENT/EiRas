@@ -217,14 +217,14 @@ void Material::SetProperty(Graphics::RenderTexture* rt, _uint slotIndex, int pro
 #endif
 }
 
-void Material::FinishStateChange()
+void Material::FinishStateChange(_uint pass)
 {
 #if GRAPHICS_METAL
     ((MaterialMetalBridge*)this->PlatformBridge)->UpdateRenderState(RenderState, shader);
 #endif
 
 #if GRAPHICS_DX
-    ((MaterialDX12Bridge*)this->PlatformBridge)->UpdateRenderState(RenderState, shader->PlatformBridge, referenceCmdBuffer->PlatformBridge);
+    ((MaterialDX12Bridge*)this->PlatformBridge)->UpdateRenderState(RenderState, shader->PlatformBridge, referenceCmdBuffer->PlatformBridge, pass);
 #endif
 
 }

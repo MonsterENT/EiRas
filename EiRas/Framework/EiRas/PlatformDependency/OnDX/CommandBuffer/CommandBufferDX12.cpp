@@ -102,10 +102,10 @@ void CommandBufferDX12::DrawMesh(MeshSys::Mesh* mesh)
 }
 
 
-void CommandBufferDX12::SetMaterial(MaterialSys::MaterialDX12* mat, MaterialSys::MaterialLayout* layout)
+void CommandBufferDX12::SetMaterial(MaterialSys::MaterialDX12* mat, MaterialSys::MaterialLayout* layout, _uint pass)
 {
     cmdList->SetGraphicsRootSignature(mat->RawShaderObj->RootSignature);
-    cmdList->SetPipelineState(mat->PassedPipelineState[0]);
+    cmdList->SetPipelineState(mat->PassedPipelineState[pass]);
 
     GET_EIRAS_DX12(deviceObj);;
     _uint offset = deviceObj->device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);

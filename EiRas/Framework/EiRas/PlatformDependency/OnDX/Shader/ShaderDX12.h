@@ -34,12 +34,16 @@ namespace MaterialSys
     class ShaderDX12
     {
     public:
-        LPCSTR Name;
+        std::string Name;
         ShaderDX12(LPCSTR fileName, LPCSTR vertexFuncName, LPCSTR pixelFuncName);
         ShaderDX12(LPCSTR fileName);
 
         void AddVertexFuncToPass(LPCSTR vertexFuncName, _uint pass);
         void AddPixelFuncToPass(LPCSTR pixelFuncName, _uint pass);
+
+        void SetVertexFuncToPass(_uint index, _uint pass);
+        void SetPixelFuncToPass(_uint index, _uint pass);
+
 
         std::vector<ID3DBlob*> VertexFuncList;
         std::vector<ID3DBlob*> PixelFuncList;

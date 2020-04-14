@@ -46,6 +46,26 @@ Shader::Shader(std::string fileName)
     Layout = 0;
 }
 
+void Shader::AddVertexFuncToPass(std::string vertexFuncName, _uint pass)
+{
+    ((ShaderDX12Bridge*)PlatformBridge)->AddVertexFuncToPass(vertexFuncName.c_str(), pass);
+}
+
+void Shader::AddPixelFuncToPass(std::string pixelFuncName, _uint pass)
+{
+    ((ShaderDX12Bridge*)PlatformBridge)->AddPixelFuncToPass(pixelFuncName.c_str(), pass);
+}
+
+void Shader::SetVertexFuncToPass(_uint index, _uint pass)
+{
+    ((ShaderDX12Bridge*)PlatformBridge)->SetVertexFuncToPass(index, pass);
+}
+
+void Shader::SetPixelFuncToPass(_uint index, _uint pass)
+{
+    ((ShaderDX12Bridge*)PlatformBridge)->SetPixelFuncToPass(index, pass);
+}
+
 void Shader::InitLayout(ShaderLayout* layout)
 {
     Layout = layout;

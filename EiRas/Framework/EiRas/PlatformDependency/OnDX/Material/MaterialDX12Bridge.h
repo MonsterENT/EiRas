@@ -3,6 +3,7 @@
 #include <Global/PlatformDependency/EiRasPlatformBridgeProtocol.h>
 #include <Windows.h>
 #include <string>
+#include <Global/GlobalDefine.h>
 
 namespace Graphics
 {
@@ -20,6 +21,6 @@ namespace MaterialSys
 
         void SetProperty(MaterialProp* prop, void* res);
 
-        void UpdateRenderState(Graphics::GraphicsRenderState* renderState, EiRasPlatformBridgeProtocol* shaderObj, EiRasPlatformBridgeProtocol* cmdBufferPB);
+        void UpdateRenderState(Graphics::GraphicsRenderState* renderState, EiRasPlatformBridgeProtocol* shaderObj, EiRasPlatformBridgeProtocol* cmdBufferPB, _uint pass = 0);
     };
 }

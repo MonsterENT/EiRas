@@ -48,10 +48,10 @@ void CommandBufferDX12Bridge::SetRenderTexture(EiRasPlatformBridgeProtocol* rend
     ((CommandBufferDX12*)raw_obj)->SetRenderTexture(rawObj);
 }
 
-void CommandBufferDX12Bridge::SetMaterial(Material* mat)
+void CommandBufferDX12Bridge::SetMaterial(Material* mat, _uint pass)
 {
     CommandBufferDX12* obj = (CommandBufferDX12*)raw_obj;
-    obj->SetMaterial((MaterialDX12*)mat->PlatformBridge->raw_obj, mat->materialLayout);
+    obj->SetMaterial((MaterialDX12*)mat->PlatformBridge->raw_obj, mat->materialLayout, pass);
 }
 
 void CommandBufferDX12Bridge::DrawMesh(Mesh* mesh)

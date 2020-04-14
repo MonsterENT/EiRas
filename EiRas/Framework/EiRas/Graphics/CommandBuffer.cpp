@@ -45,14 +45,14 @@ CommandBuffer::CommandBuffer(std::string Name)
 #endif
 }
 
-void CommandBuffer::SetMaterial(MaterialSys::Material* material)
+void CommandBuffer::SetMaterial(MaterialSys::Material* material, _uint pass)
 {
 #if GRAPHICS_METAL
     ((CommandBufferMetalBridge*)PlatformBridge)->SetMaterial(material);
 #endif
 
 #if GRAPHICS_DX
-    ((CommandBufferDX12Bridge*)PlatformBridge)->SetMaterial(material);
+    ((CommandBufferDX12Bridge*)PlatformBridge)->SetMaterial(material, pass);
 #endif
 }
 

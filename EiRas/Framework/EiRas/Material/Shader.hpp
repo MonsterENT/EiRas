@@ -11,7 +11,7 @@
 
 #include <string>
 #include <Global/PlatformDependency/EiRasPlatformBridgeProtocol.h>
-
+#include <Global/GlobalDefine.h>
 
 namespace Graphics {
 class GraphicsVertexDescriptor;
@@ -26,6 +26,12 @@ namespace MaterialSys {
     public:
         Shader(std::string fileName, std::string vertexFuncName, std::string pixelFuncName);
         Shader(std::string fileName);
+
+        void AddVertexFuncToPass(std::string vertexFuncName, _uint pass);
+        void AddPixelFuncToPass(std::string pixelFuncName, _uint pass);
+
+        void SetVertexFuncToPass(_uint index, _uint pass);
+        void SetPixelFuncToPass(_uint index, _uint pass);
         
         Shader()
         {

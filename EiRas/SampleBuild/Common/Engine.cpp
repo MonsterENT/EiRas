@@ -267,7 +267,7 @@ void Engine::Update()
     cmdBuffer->SetMaterial(_TexMat0);
     cmdBuffer->DrawMesh(_SF90Mesh);
 
-    _CommonBlur->ProcessWithSource(_SceneRenderTexture, 2, 0.5);
+    _CommonBlur->ProcessWithSource(_SceneRenderTexture, 4, 1.5);
     cmdBuffer->SetRenderTexture(0);
     _Tex2DMat0->SetProperty(_CommonBlur->_TmpBluredRT, 1, 0);
     _Tex2DMat0->RenderState->_CullMode = CullMode::CullModeNone;

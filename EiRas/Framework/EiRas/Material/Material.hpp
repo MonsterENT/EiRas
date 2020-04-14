@@ -41,7 +41,7 @@ namespace MaterialSys {
         ~Material();
         Graphics::GraphicsRenderState* RenderState;
 
-        void FinishStateChange();
+        void FinishStateChange(_uint pass = 0);
         EiRasPlatformBridgeProtocol* PlatformBridge;
 
         void SetProperty(void* res, _uint slotIndex, int propIndex = -1);

@@ -15,8 +15,8 @@ void MaterialDX12Bridge::SetProperty(MaterialProp* prop, void* res)
     ((MaterialDX12*)raw_obj)->SetProperty(prop, res);
 }
 
-void MaterialDX12Bridge::UpdateRenderState(Graphics::GraphicsRenderState* renderState, EiRasPlatformBridgeProtocol* shaderObj, EiRasPlatformBridgeProtocol* cmdBufferPB)
+void MaterialDX12Bridge::UpdateRenderState(Graphics::GraphicsRenderState* renderState, EiRasPlatformBridgeProtocol* shaderObj, EiRasPlatformBridgeProtocol* cmdBufferPB, _uint pass)
 {
     MaterialDX12* obj = (MaterialDX12*)raw_obj;
-    obj->UpdateRenderState(renderState, (ShaderDX12*)shaderObj->raw_obj, cmdBufferPB->raw_obj);
+    obj->UpdateRenderState(renderState, (ShaderDX12*)shaderObj->raw_obj, cmdBufferPB->raw_obj, pass);
 }
