@@ -14,17 +14,18 @@ Label::Label()
 void Label::SetText(FontSys::Text* text)
 {
     _Text = text;
+    _BuildTextMesh();
 }
 
 void Label::_BuildTextMesh()
 {
     _uint charCount = _Text->_FontMapIndex.size();
-    float subMeshWidth = frame.width / (float)charCount;
-    float subMeshHeight = frame.height;
-    float posTop = frame.top;
-    float posLeft = frame.left;
+    float subMeshWidth = _Frame.width / (float)charCount;
+    float subMeshHeight = _Frame.height;
+    float posTop = _Frame.top;
+    float posLeft = _Frame.left;
 
-    Mesh* mesh = (Mesh*)_Mesh;
+    /*Mesh* mesh = (Mesh*)_Mesh;
     mesh->SubMeshCount = charCount;
     mesh->SubMeshes = new SubMesh[charCount];
     for (int i = 0; i < charCount; i++)
@@ -38,5 +39,5 @@ void Label::_BuildTextMesh()
         subMesh->PositionData = new float3[4]{ {posLeft, posTop, 1}, {posLeft + subMeshWidth, posTop, 1}, {posLeft, posTop - subMeshHeight, 1}, {posLeft + subMeshWidth, posTop - subMeshHeight, 1} };
         subMesh->UVData = new float2[4]{ {uvRect.left, uvRect.top}, {uvRect.left + uvRect.width, uvRect.top}, {uvRect.left, uvRect.top + uvRect.height}, {uvRect.left + uvRect.width, uvRect.top + uvRect.height} };
         subMesh->NormalData = new float3[4]{ {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0} };
-    }
+    }*/
 }

@@ -42,6 +42,14 @@ public:
 
     rect_float()
     {}
+
+    rect_float(float _top, float _left, float _width, float _height)
+    {
+        top = _top;
+        left = _left;
+        width = _width;
+        height = _height;
+    }
 };
 
 class int2

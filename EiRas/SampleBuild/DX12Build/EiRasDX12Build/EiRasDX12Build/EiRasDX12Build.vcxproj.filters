@@ -195,6 +195,21 @@
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\ResourceHeapManager\ResourceHeapManager.hpp">
       <Filter>framework</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\Framework\EiRas\GUI\GUISystem.hpp">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\GUI\GUISystemDX12Bridge.hpp">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\GUI\GUISystemDX12.hpp">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Framework\EiRas\GUI\Button.hpp">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Framework\EiRas\GUI\View.hpp">
+      <Filter>framework</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EiRasDX12Build.cpp">
@@ -345,6 +360,21 @@
       <Filter>framework</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\ResourceHeapManager\ResourceHeapManager.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Framework\EiRas\GUI\GUISystem.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\GUI\GUISystemDX12Bridge.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\GUI\GUISystemDX12.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Framework\EiRas\GUI\Button.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Framework\EiRas\GUI\View.cpp">
       <Filter>framework</Filter>
     </ClCompile>
   </ItemGroup>

@@ -4,7 +4,11 @@
 #include "framework.h"
 #include "EiRasDX12Build.h"
 #include <Engine.hpp>
+#include <GUI/GUISystem.hpp>
+#include <GUI/Button.hpp>
+#include <GUI/Label.hpp>
 
+using namespace GUISys;
 #define MAX_LOADSTRING 100
 
 // 全局变量:
@@ -55,6 +59,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         }
 
         engine->Update();
+        GUISys::GUISystem::SharedInstance()->RunLoopInvoke(&msg);
+        
     }
 
     return (int) msg.wParam;
@@ -113,6 +119,10 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 #pragma region EiRas Init
    engine = new Engine();
    engine->InitEngine(hWnd, 1980, 1080);
+
+   Button* mBtn = new Button();
+   GUIBase* f = mBtn;
+   f->SetFrame(Math::rect_float(0, 0, 1, 1));
 #pragma endregion
 
    ShowWindow(hWnd, nCmdShow);

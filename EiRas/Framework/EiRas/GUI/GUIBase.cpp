@@ -1,10 +1,13 @@
 #include "GUIBase.hpp"
-#include <Mesh/Mesh.hpp>
-
-using namespace MeshSys;
+#include "GUISystem.hpp"
 using namespace GUISys;
 
 GUIBase::GUIBase()
 {
-    _Mesh = new MeshSys::Mesh("GUI Mesh");
+}
+
+void GUIBase::SetFrame(Math::rect_float frame)
+{
+    _Frame = frame;
+    GUISystem::SharedInstance()->FrameToNDC(_Frame, _NDC);
 }

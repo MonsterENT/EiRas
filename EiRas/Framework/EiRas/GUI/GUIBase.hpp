@@ -6,19 +6,21 @@
 
 namespace GUISys
 {
+    class View;
     class GUIBase
     {
+        friend View;
     public:
         GUIBase();
-
         virtual ~GUIBase()
         {
         }
 
-        Math::rect_float frame;
+        virtual void SetFrame(Math::rect_float frame);
 
     protected:
-        void* _Mesh;
+        Math::rect_float _Frame;
+        Math::rect_float _NDC;
     };
 }
 
