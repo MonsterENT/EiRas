@@ -125,6 +125,10 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    f->SetFrame(Math::rect_float(0, 0, 1, 1));
 #pragma endregion
 
+   RECT windowRect;
+   GetWindowRect(hWnd, &windowRect);
+   GUISys::GUISystem::CreateSystem(windowRect.right - windowRect.left, windowRect.bottom - windowRect.top, engine->cmdBuffer);
+
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
 

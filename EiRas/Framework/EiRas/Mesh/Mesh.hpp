@@ -29,6 +29,11 @@ class float4;
 
 namespace MeshSys {
 
+    enum class MeshType
+    {
+        VertexInput3D = 0,
+        VertexInput2D = 1,
+    };
     class Mesh;
 
 class SubMesh
@@ -61,7 +66,7 @@ public:
 
     std::string Name;
 
-    void BuildBuffer();
+    void BuildBuffer(MeshType inputType = MeshType::VertexInput3D);
 
     EiRasPlatformBridgeProtocol* PlatformBridge;
 

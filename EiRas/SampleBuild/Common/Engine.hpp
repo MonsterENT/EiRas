@@ -46,7 +46,7 @@ public:
     ~Engine();
 
     void KeyPressed(_uint param);
-
+    Graphics::CommandBuffer* cmdBuffer;
 private:
     void m_initEngine();
     GraphicsAPI::EiRas* device;
@@ -56,7 +56,7 @@ private:
     MaterialSys::Shader* _CommonTexShader;
     MaterialSys::Shader* _CommonTex2DShader;
 
-    Graphics::CommandBuffer* cmdBuffer;
+
     MeshSys::Mesh* _FontMesh0, *_FontMesh1, *_TexMesh0;
 
     MeshSys::Mesh* _SF90Mesh;
