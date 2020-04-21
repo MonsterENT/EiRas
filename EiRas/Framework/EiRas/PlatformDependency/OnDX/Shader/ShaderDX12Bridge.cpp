@@ -41,8 +41,8 @@ void ShaderDX12Bridge::InitRootSignature(ShaderLayout* shaderLayout)
     obj->InitRootSignature(shaderLayout);
 }
 
-void ShaderDX12Bridge::InitVertexDescriptor(Graphics::GraphicsVertexDescriptor* desc)
+void ShaderDX12Bridge::InitVertexDescriptor(Graphics::GraphicsVertexDescriptor* desc, _uint pass)
 {
     ShaderDX12* obj = (ShaderDX12*)raw_obj;
-    obj->InitVertexDescriptor(desc);
+    obj->InitVertexDescriptor(desc, pass);
 }

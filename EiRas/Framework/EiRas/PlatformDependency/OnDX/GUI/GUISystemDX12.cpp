@@ -17,10 +17,17 @@ void GUISystemDX12::RunLoopInvoke(void* msg)
         break;
     case WM_LBUTTONDOWN:
     {
-        RECT windowRect;
-        GetWindowRect(m_msg->hwnd, &windowRect);
-        _MouseUVPos.x = (m_msg->pt.x - windowRect.left) / (float)(windowRect.right - windowRect.left);
-        _MouseUVPos.y = (m_msg->pt.y - windowRect.top) / (float)(windowRect.bottom - windowRect.top);
+        RECT clientRect;
+        GetClientRect(m_msg->hwnd, &clientRect);
+        POINT pt;
+        GetCursorPos(&pt);
+        ScreenToClient(m_msg->hwnd, &pt);
+        _EventCommonData.MouseClickNDCPos.x = pt.x / (float)(clientRect.right) * 2.0f - 1.0f;
+        _EventCommonData.MouseClickNDCPos.y = 1.0f - pt.y / (float)(clientRect.bottom) * 2.0f;
+        if (_EventResponse)
+        {
+            _EventResponse->InvokeWithData(&_EventCommonData);
+        }
     }
     break;
     default:

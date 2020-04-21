@@ -1,6 +1,7 @@
 #ifndef GUI_SYSTEM_DX12_HPP
 #define GUI_SYSTEM_DX12_HPP
 #include <Math/Math.hpp>
+#include <GUI/Response.hpp>
 
 namespace GUISys
 {
@@ -8,11 +9,16 @@ namespace GUISys
     {
     public:
         void RunLoopInvoke(void* msg);
-
-    private:
-        Math::float2 _MouseUVPos;
+        void SetEventResponse(Response* response)
+        {
+            _EventResponse = response;
+        }
 
     protected:
+
+    private:
+        ResponseDataEvent _EventCommonData;
+        Response* _EventResponse;
     };
 }
 

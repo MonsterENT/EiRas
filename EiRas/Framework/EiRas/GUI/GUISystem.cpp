@@ -7,20 +7,37 @@
 #include <Graphics/GraphicsVertexDescriptor.hpp>
 #include <FileSys/FileManager.hpp>
 #include <Graphics/CommandBuffer.hpp>
+#include <Graphics/GraphicsRenderState.hpp>
 
 #ifdef GRAPHICS_DX
 #include <PlatformDependency/OnDX/GUI/GUISystemDX12Bridge.hpp>
 #endif
 
+using namespace Math;
 using namespace FileSys;
 using namespace GUISys;
 using namespace MaterialSys;
 using namespace Graphics;
+using std::vector;
 
 static GUISystem* g_guiSystem = 0;
 
 Material* GUISystem::SharedMaterial = NULL;
 Shader* GUISystem::DefaultShader = NULL;
+
+void OnEventCallBack(void* eventData)
+{
+    ResponseDataEvent* data = (ResponseDataEvent*)eventData;
+
+    vector<GUIBase*>* regedGUIComp = (vector<GUIBase*>*)data->UserData;
+    for (int i = 0; i < regedGUIComp->size(); i++)
+    {
+        if ((*regedGUIComp)[i]->CheckNDCRay(data->MouseClickNDCPos))
+        {
+            (*regedGUIComp)[i]->OnEvent((ResponseDataBase*)eventData);
+        }
+    }
+}
 
 GUISystem* GUISystem::CreateSystem(_uint width, _uint height, Graphics::CommandBuffer* cmdBuffer)
 {
@@ -46,11 +63,14 @@ GUISystem* GUISystem::CreateSystem(_uint width, _uint height, Graphics::CommandB
     shaderLayout->Slots[0] = table;
 
     std::string shaderFilePath = FileSys::FileManager::shareInstance()->GetResourcePath("Shader\\DX\\GUI\\GUIDefault", "hlsl");
-    DefaultShader = new Shader(shaderFilePath, "VSMain", "PSMain");
+    DefaultShader = new Shader(shaderFilePath, "VSMain", "PSMainBaseColor");
     DefaultShader->InitVertexDescriptor(vertexDesc);
     DefaultShader->InitLayout(shaderLayout);
 
     SharedMaterial = new Material("UI Default", DefaultShader, cmdBuffer);
+    SharedMaterial->RenderState->_CullMode = CullMode::CullModeNone;
+    SharedMaterial->RenderState->_ZWrite = false;
+    SharedMaterial->RenderState->_ZTest = CompareFunction::CompareFunctionAlways;
 #pragma endregion
 
     g_guiSystem = new GUISystem(width, height, cmdBuffer);
@@ -69,8 +89,10 @@ GUISystem::GUISystem(_uint width, _uint height, Graphics::CommandBuffer* cmdBuff
     _CmdBuffer = cmdBuffer;
 #ifdef GRAPHICS_DX
     PlatformBridge = new GUISystemDX12Bridge();
+    
+    Response* response = new Response(OnEventCallBack, &_RegedGUIComp);
+    ((GUISystemDX12Bridge*)PlatformBridge)->SetEventResponse(response);
 #endif
-
 }
 
 void GUISystem::RunLoopInvoke(void* msg)
@@ -93,7 +115,7 @@ void GUISystem::FrameToNDC(Math::rect_float frame, Math::rect_float& NDC)
     NDC.height = frame.height / (float)_Height * 2.0f;
 
     NDC.left = frame.left / (float)_Width * 2.0f - 1.0f;
-    NDC.top = frame.top / (float)_Height * 2.0f - 1.0f;
+    NDC.top = 1.0f - frame.top / (float)_Height * 2.0f;
 }
 
 void GUISystem::RegGUIComponent(GUIBase* comp)

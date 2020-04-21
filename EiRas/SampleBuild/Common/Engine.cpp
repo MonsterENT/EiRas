@@ -13,7 +13,7 @@
 #include <FontSys/FontSys.hpp>
 #include <FontSys/FontManager.hpp>
 #include <Math/Math.hpp>
-
+#include <GUI/GUISystem.hpp>
 #include <Basic/Camera.hpp>
 #include <Basic/TransformSys.hpp>
 #include <Graphics/RenderTexture.hpp>
@@ -32,6 +32,7 @@ using namespace MeshSys;
 using namespace ImageSys;
 using namespace FontSys;
 using namespace Math;
+using namespace GUISys;
 
 Image* imageObj = 0;
 
@@ -250,7 +251,7 @@ void Engine::InitEngine()
 }
 #endif
 
-void Engine::Update()
+void Engine::Update(void* data)
 {
     cmdBuffer->BeginFrame();
     cmdBuffer->Reset();
@@ -285,6 +286,7 @@ void Engine::Update()
     cmdBuffer->SetMaterial(_FontMat1);
     cmdBuffer->DrawMesh(_FontMesh1);
 
+    GUISys::GUISystem::SharedInstance()->RunLoopInvoke(data);
     cmdBuffer->Commit(true);
 }
 

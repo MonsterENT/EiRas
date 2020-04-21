@@ -1,12 +1,12 @@
 #ifndef LABEL_HPP
 #define LABEL_HPP
 
-#include "GUIBase.hpp"
+#include "View.hpp"
 #include <FontSys/FontSys.hpp>
 
 namespace GUISys
 {
-    class Label : public GUIBase
+    class Label : public View
     {
     public:
         Label();

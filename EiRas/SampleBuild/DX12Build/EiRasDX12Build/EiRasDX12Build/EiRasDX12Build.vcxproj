@@ -179,6 +179,7 @@
     <ClInclude Include="..\..\..\..\Framework\EiRas\GUI\GUIBase.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\GUI\GUISystem.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\GUI\Label.hpp" />
+    <ClInclude Include="..\..\..\..\Framework\EiRas\GUI\Response.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\GUI\View.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Material\GraphicsResource.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Material\GraphicsResourceHeap.hpp" />
@@ -243,6 +244,7 @@
     <ClCompile Include="..\..\..\..\Framework\EiRas\GUI\GUIBase.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\GUI\GUISystem.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\GUI\Label.cpp" />
+    <ClCompile Include="..\..\..\..\Framework\EiRas\GUI\Response.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\GUI\View.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\Material\GraphicsResource.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\Material\GraphicsResourceHeap.cpp" />

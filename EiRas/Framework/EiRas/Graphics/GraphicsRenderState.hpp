@@ -35,6 +35,18 @@ typedef enum class BlendOp
     BlendOpMax = 5
 } BlendOp;
 
+typedef enum class CompareFunction
+{
+    CompareFunctionNever = 1,
+    CompareFunctionLess = 2,
+    CompareFunctionEqual = 3,
+    CompareFunctionLessEqual = 4,
+    CompareFunctionGreater = 5,
+    CompareFunctionNotEqual = 6,
+    CompareFunctionGreaterEqual = 7,
+    CompareFunctionAlways = 8
+} 	CompareFunction;
+
 typedef enum class BlendFactor
 {
     BlendRGBFactorZero = 1,
@@ -121,6 +133,9 @@ public:
     FillMode _FillMode;
     CullMode _CullMode;
     
+    CompareFunction _ZTest;
+    bool _ZWrite;
+
     BlendOp _BlendOp_RGB;
     BlendOp _BlendOp_ALPHA;
     BlendFactor _BlendSrcRGBFactor;
@@ -129,7 +144,7 @@ public:
     BlendFactor _BlendDstAlphaFactor;
     
     int _StencilRefValue;
-    
+
     GraphicsRenderState();
 
     _uint GetHashCode()
@@ -137,6 +152,8 @@ public:
         _uint hashCode = 5;
         hashCode = 23 * hashCode + (_uint)_FillMode;
         hashCode = 23 * hashCode + (_uint)_CullMode;
+        hashCode = 23 * hashCode + (_uint)_ZTest;
+        hashCode = 23 * hashCode + (_uint)_ZWrite;
         hashCode = 23 * hashCode + (_uint)_BlendOp_RGB;
         hashCode = 23 * hashCode + (_uint)_BlendOp_ALPHA;
         hashCode = 23 * hashCode + (_uint)_BlendSrcRGBFactor;

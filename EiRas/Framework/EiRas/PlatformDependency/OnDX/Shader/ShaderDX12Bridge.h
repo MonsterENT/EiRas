@@ -27,7 +27,7 @@ namespace MaterialSys
 
         void InitRootSignature(ShaderLayout* shaderLayout);
         
-        void InitVertexDescriptor(Graphics::GraphicsVertexDescriptor* desc);
+        void InitVertexDescriptor(Graphics::GraphicsVertexDescriptor* desc, _uint pass);
 
         virtual ~ShaderDX12Bridge()
         {

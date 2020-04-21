@@ -7,14 +7,18 @@
 #include <GUI/GUISystem.hpp>
 #include <GUI/Button.hpp>
 #include <GUI/Label.hpp>
+#include <GUI/View.hpp>
+#include <Math/Math.hpp>
 
 using namespace GUISys;
+using namespace Math;
 #define MAX_LOADSTRING 100
 
 // 全局变量:
 HINSTANCE hInst;                                // 当前实例
 WCHAR szTitle[MAX_LOADSTRING];                  // 标题栏文本
 WCHAR szWindowClass[MAX_LOADSTRING];            // 主窗口类名
+HWND g_hwnd;
 
 Engine* engine = 0;
 
@@ -57,12 +61,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             TranslateMessage(&msg);
             DispatchMessage(&msg);
         }
-
-        engine->Update();
-        GUISys::GUISystem::SharedInstance()->RunLoopInvoke(&msg);
-        
+        engine->Update(&msg);
     }
-
     return (int) msg.wParam;
 }
 
@@ -104,13 +104,18 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 //        在此函数中，我们在全局变量中保存实例句柄并
 //        创建和显示主程序窗口。
 //
+void OnClick(void* data)
+{
+    MessageBoxA(g_hwnd, "EiRasDX12Build", "OnClick", MB_OK);
+}
+
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // 将实例句柄存储在全局变量中
 
    HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
       CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
-
+   g_hwnd = hWnd;
    if (!hWnd)
    {
       return FALSE;
@@ -119,15 +124,15 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 #pragma region EiRas Init
    engine = new Engine();
    engine->InitEngine(hWnd, 1980, 1080);
-
-   Button* mBtn = new Button();
-   GUIBase* f = mBtn;
-   f->SetFrame(Math::rect_float(0, 0, 1, 1));
 #pragma endregion
 
    RECT windowRect;
    GetWindowRect(hWnd, &windowRect);
    GUISys::GUISystem::CreateSystem(windowRect.right - windowRect.left, windowRect.bottom - windowRect.top, engine->cmdBuffer);
+
+   Button* btn = new Button();
+   btn->SetFrame(rect_float(0, 0, 100, 100));
+   btn->m_Response = new Response(OnClick, NULL);
 
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);

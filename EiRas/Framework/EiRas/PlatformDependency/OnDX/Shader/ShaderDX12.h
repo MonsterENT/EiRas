@@ -51,12 +51,12 @@ namespace MaterialSys
 
         void InitRootSignature(ShaderLayout* RefShaderLayout);
 
-        void InitVertexDescriptor(Graphics::GraphicsVertexDescriptor* desc);
+        void InitVertexDescriptor(Graphics::GraphicsVertexDescriptor* desc, _uint pass);
 
         ID3D12RootSignature* RootSignature;
 
-        _uint VertexAttributesCount;
-        D3D12_INPUT_ELEMENT_DESC* VertexDescriptor;
+        std::vector<_uint> VertexAttributesCountList;
+        std::vector<D3D12_INPUT_ELEMENT_DESC*> VertexDescriptorList;
 
         ID3D12PipelineState* _GetPSO(Graphics::GraphicsRenderState* renderState, _uint numRT, DXGI_FORMAT* rtFormats, DXGI_FORMAT depthFormat, _uint pass = 0);
 

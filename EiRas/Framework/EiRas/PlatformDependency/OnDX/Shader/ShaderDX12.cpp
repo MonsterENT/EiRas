@@ -30,17 +30,11 @@ ShaderDX12::ShaderDX12(LPCSTR fileName, LPCSTR vertexFuncName, LPCSTR pixelFuncN
     }
 
     m_ShaderPassData.push_back(ShaderPassData(0, 0));
-    RootSignature = 0;
-    VertexDescriptor = 0;
-    VertexAttributesCount = 0;
 }
 
 ShaderDX12::ShaderDX12(LPCSTR fileName)
 {
     Name = fileName;
-    RootSignature = 0;
-    VertexDescriptor = 0;
-    VertexAttributesCount = 0;
 }
 
 void ShaderDX12::AddVertexFuncToPass(LPCSTR vertexFuncName, _uint pass)
@@ -107,20 +101,37 @@ void ShaderDX12::SetPixelFuncToPass(_uint index, _uint pass)
     }
 }
 
-
 void ShaderDX12::InitRootSignature(ShaderLayout* shaderLayout)
 {
-    this->RootSignature = createRootSig(shaderLayout);
+    RootSignature = createRootSig(shaderLayout);
 }
 
-void ShaderDX12::InitVertexDescriptor(Graphics::GraphicsVertexDescriptor* desc)
+void ShaderDX12::InitVertexDescriptor(Graphics::GraphicsVertexDescriptor* desc, _uint pass)
 {
     if (desc->_AttributeIndex < 1)
     {
         return;
     }
-    VertexAttributesCount = desc->_AttributeIndex;
-    VertexDescriptor = new D3D12_INPUT_ELEMENT_DESC[VertexAttributesCount];
+
+    if (pass >= VertexAttributesCountList.size())
+    {
+        VertexAttributesCountList.push_back(desc->_AttributeIndex);
+    }
+    else
+    {
+        VertexAttributesCountList[pass] = desc->_AttributeIndex;
+    }
+
+    D3D12_INPUT_ELEMENT_DESC* VertexDescriptor = new D3D12_INPUT_ELEMENT_DESC[desc->_AttributeIndex];
+    if (pass >= VertexDescriptorList.size())
+    {
+        VertexDescriptorList.push_back(VertexDescriptor);
+    }
+    else
+    {
+        VertexDescriptorList[pass] = VertexDescriptor;
+    }
+
     for (_uint i = 0; i < desc->_AttributeIndex; i++)
     {
         Graphics::GraphiceVertexAttribute& att = desc->Attributes[i];
@@ -159,7 +170,9 @@ ID3D12PipelineState* ShaderDX12::_GetPSO(Graphics::GraphicsRenderState* renderSt
     else
     {
         D3D12_GRAPHICS_PIPELINE_STATE_DESC psoDesc = {};
-        psoDesc.InputLayout = { this->VertexDescriptor, this->VertexAttributesCount };
+        D3D12_INPUT_ELEMENT_DESC* inputElement = pass >= VertexDescriptorList.size() ? VertexDescriptorList[0] : VertexDescriptorList[pass];
+        _uint vertexAttributesCount = pass >= VertexAttributesCountList.size() ? VertexAttributesCountList[0] : VertexAttributesCountList[pass];
+        psoDesc.InputLayout = { inputElement, vertexAttributesCount };
         psoDesc.pRootSignature = this->RootSignature;
         psoDesc.VS = CD3DX12_SHADER_BYTECODE(VertexFuncList[m_ShaderPassData[pass].VertexFuncIndex]);
         psoDesc.PS = CD3DX12_SHADER_BYTECODE(PixelFuncList[m_ShaderPassData[pass].PixelFuncIndex]);
@@ -191,7 +204,9 @@ ID3D12PipelineState* ShaderDX12::_GetPSO(Graphics::GraphicsRenderState* renderSt
         psoDesc.BlendState = blendDesc;
 
         psoDesc.DepthStencilState = CD3DX12_DEPTH_STENCIL_DESC(D3D12_DEFAULT);
-        psoDesc.DepthStencilState.DepthEnable = true;
+        psoDesc.DepthStencilState.DepthEnable = (renderState->_ZTest == CompareFunction::CompareFunctionAlways && !renderState->_ZWrite) ? false : true;
+        psoDesc.DepthStencilState.DepthWriteMask = renderState->_ZWrite ? D3D12_DEPTH_WRITE_MASK_ALL : D3D12_DEPTH_WRITE_MASK_ZERO;
+        psoDesc.DepthStencilState.DepthFunc = (D3D12_COMPARISON_FUNC) renderState->_ZTest;
         psoDesc.DepthStencilState.StencilEnable = true;
 
         psoDesc.SampleMask = UINT_MAX;

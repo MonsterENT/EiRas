@@ -13,7 +13,9 @@ GraphicsRenderState::GraphicsRenderState()
 {
     _FillMode = FillMode::FillMode_SOLID;
     _CullMode = CullMode::CullModeBack;
-    
+    _ZTest = CompareFunction::CompareFunctionLess;
+    _ZWrite = true;
+
     _BlendOp_RGB = BlendOp::BlendOpAdd;
     _BlendOp_ALPHA = BlendOp::BlendOpAdd;
     _BlendSrcRGBFactor = BlendFactor::BlendRGBFactorOne;

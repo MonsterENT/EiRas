@@ -42,7 +42,7 @@ public:
     void InitEngine();
 #endif
 
-    void Update();
+    void Update(void* data);
     ~Engine();
 
     void KeyPressed(_uint param);

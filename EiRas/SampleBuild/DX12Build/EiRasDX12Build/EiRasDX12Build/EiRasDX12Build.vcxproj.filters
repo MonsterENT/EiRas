@@ -210,6 +210,9 @@
     <ClInclude Include="..\..\..\..\Framework\EiRas\GUI\View.hpp">
       <Filter>framework</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\Framework\EiRas\GUI\Response.hpp">
+      <Filter>framework</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EiRasDX12Build.cpp">
@@ -375,6 +378,9 @@
       <Filter>framework</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\Framework\EiRas\GUI\View.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Framework\EiRas\GUI\Response.cpp">
       <Filter>framework</Filter>
     </ClCompile>
   </ItemGroup>

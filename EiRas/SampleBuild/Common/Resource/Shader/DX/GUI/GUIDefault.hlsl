@@ -30,7 +30,12 @@ PSInput VSMain(VSInput v)
     return o;
 };
 
-float4 PSMain(PSInput i) : SV_TARGET
+float4 PSMainBaseColor(PSInput i) : SV_TARGET
+{
+    return _MainColor;
+}
+
+float4 PSMainUseTex(PSInput i) : SV_TARGET
 {
     return _MainTex.Sample(_DefaultSampler, i.uv) * _MainColor;
 }
