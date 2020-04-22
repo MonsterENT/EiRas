@@ -13,12 +13,16 @@
 #include <FontSys/FontSys.hpp>
 #include <FontSys/FontManager.hpp>
 #include <Math/Math.hpp>
-#include <GUI/GUISystem.hpp>
 #include <Basic/Camera.hpp>
 #include <Basic/TransformSys.hpp>
 #include <Graphics/RenderTexture.hpp>
-
 #include <Effect/CommonBlur/CommonBlur.hpp>
+
+#pragma region GUI Include
+#include <GUI/Button.hpp>
+#include <GUI/GUISystem.hpp>
+#include <GUI/Label.hpp>
+#pragma endregion
 
 #pragma message("TO FIX. TMP")
 #include <DirectXMath.h>
@@ -64,6 +68,11 @@ Camera _Camera;
 TransformSys _Transform;
 
 RenderTexture* _SceneRenderTexture;
+
+void OnClick(void* data)
+{
+
+}
 
 void Engine::m_initEngine()
 {
@@ -208,12 +217,9 @@ void Engine::m_initEngine()
 
     std::string fontPath = FileSys::FileManager::shareInstance()->GetResourcePath("Font\\BELL", "TTF");
     FontSys::Font* font = new Font(fontPath);
-    Text* text = font->GetText("SF90", 900);
-    //FontManager::SharedInstance()->fontDataList[0]->RefreshFontImage();
-    //FontManager::SharedInstance()->fontDataList[1]->RefreshFontImage();
-
-    _FontMat0->SetProperty(FontManager::SharedInstance()->fontDataList[0]->_FontImage, 1, 0);
-    _FontMat1->SetProperty(FontManager::SharedInstance()->fontDataList[1]->_FontImage, 1, 0);
+    Text* text = font->GetText("SF90", 1024);
+    //_FontMat0->SetProperty(FontManager::SharedInstance()->fontDataList[0]->_FontImage, 1, 0);
+    //_FontMat1->SetProperty(FontManager::SharedInstance()->fontDataList[1]->_FontImage, 1, 0);
 
     std::string imagePath = FileSys::FileManager::shareInstance()->GetTextureResourcePath("ground512", "png");
     imageObj = new Image("ground512");
@@ -225,6 +231,18 @@ void Engine::m_initEngine()
     _SF90Mesh->LoadDataFromFile(sf90ModelPath);
     _SF90Mesh->BuildBuffer();
 
+
+    GUISys::GUISystem::CreateSystem(_ClientHW.x, _ClientHW.y, cmdBuffer);
+
+    Button* btn = new Button();
+    btn->SetFrame(rect_float(600, 0, 100, 100));
+    btn->m_Response = new Response(OnClick, NULL);
+
+    Label* label = new Label();
+    label->SetFrame(rect_float(100, 100, 400, 100));
+    label->SetTextColor(float4(1, 0, 0, 1));
+    label->SetBackgroundColor(float4(0, 0, 0, 0));
+    label->SetText(text);
 }
 
 Engine::Engine()
@@ -238,6 +256,8 @@ Engine::~Engine()
 #if GRAPHICS_DX
 void Engine::InitEngine(HWND hWnd, _uint width, _uint height)
 {
+    _ClientHW.x = width;
+    _ClientHW.y = height;
     device = EiRas::Create(hWnd, 2560, 1440);
     m_initEngine();
 }

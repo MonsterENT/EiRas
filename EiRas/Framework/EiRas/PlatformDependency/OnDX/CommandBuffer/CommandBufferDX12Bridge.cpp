@@ -59,3 +59,9 @@ void CommandBufferDX12Bridge::DrawMesh(Mesh* mesh)
     CommandBufferDX12* obj = (CommandBufferDX12*)raw_obj;
     obj->DrawMesh(mesh);
 }
+
+void CommandBufferDX12Bridge::DrawRenderData(RenderData* render)
+{
+    CommandBufferDX12* obj = (CommandBufferDX12*)raw_obj;
+    obj->DrawRenderData(render);
+}

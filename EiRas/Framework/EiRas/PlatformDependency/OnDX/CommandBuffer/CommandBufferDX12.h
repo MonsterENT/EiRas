@@ -21,6 +21,8 @@ namespace MeshSys
 
 namespace Graphics {
     
+    class RenderData;
+    
     class CommandBufferDX12
     {
     public:
@@ -35,6 +37,7 @@ namespace Graphics {
         void SetViewPort(float topLeftX, float topLeftY, float width, float height, float minDepth, float maxDepth);
 
         void DrawMesh(MeshSys::Mesh* mesh);
+        void DrawRenderData(RenderData* render);
 
         void SetMaterial(MaterialSys::MaterialDX12* mat, MaterialSys::MaterialLayout* layout, _uint pass = 0);
 

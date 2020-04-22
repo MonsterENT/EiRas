@@ -16,6 +16,7 @@ namespace FontSys
     {
         friend Font;
     public:
+        std::string RefTextStr;
         void _AddFontData(_uint fontMapIndex, Math::rect_float uvRect)
         {
             _FontMapIndex.push_back(fontMapIndex);

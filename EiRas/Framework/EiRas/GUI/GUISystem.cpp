@@ -22,9 +22,6 @@ using std::vector;
 
 static GUISystem* g_guiSystem = 0;
 
-Material* GUISystem::SharedMaterial = NULL;
-Shader* GUISystem::DefaultShader = NULL;
-
 void OnEventCallBack(void* eventData)
 {
     ResponseDataEvent* data = (ResponseDataEvent*)eventData;
@@ -41,38 +38,6 @@ void OnEventCallBack(void* eventData)
 
 GUISystem* GUISystem::CreateSystem(_uint width, _uint height, Graphics::CommandBuffer* cmdBuffer)
 {
-#pragma region init Default Material
-    GraphicsVertexDescriptor* vertexDesc = new GraphicsVertexDescriptor();
-    vertexDesc->AddBufferAttribute("POSITION", GraphicsVertexAttributeFormat::VertexFormatFloat2, 0);
-    vertexDesc->AddBufferAttribute("TEXCOORD", GraphicsVertexAttributeFormat::VertexFormatFloat2, 0);
-    vertexDesc->InitBufferLayout();
-
-    ShaderLayout* shaderLayout = new ShaderLayout(1);
-
-    ShaderPropRange commonCB("CommonCB", GraphicsResourceType::CBV, GraphicsResourceVisibility::VISIBILITY_PIXEL, GraphicsResourceUpdateFreq::UPDATE_FREQ_HIGH);
-    commonCB.AddProp(sizeof(float) * 4);
-    commonCB.InitBaseRegisterSettings(0, 0);
-
-    ShaderPropRange MainTexSlot("MainTexSlot", GraphicsResourceType::SRV, GraphicsResourceVisibility::VISIBILITY_PIXEL, GraphicsResourceUpdateFreq::UPDATE_FREQ_ONINIT);
-    MainTexSlot.PropNum = 1;
-    MainTexSlot.InitBaseRegisterSettings(0, 0);
-
-    ShaderTable* table = new ShaderTable();
-    table->AddRange(commonCB);
-    table->AddRange(MainTexSlot);
-    shaderLayout->Slots[0] = table;
-
-    std::string shaderFilePath = FileSys::FileManager::shareInstance()->GetResourcePath("Shader\\DX\\GUI\\GUIDefault", "hlsl");
-    DefaultShader = new Shader(shaderFilePath, "VSMain", "PSMainBaseColor");
-    DefaultShader->InitVertexDescriptor(vertexDesc);
-    DefaultShader->InitLayout(shaderLayout);
-
-    SharedMaterial = new Material("UI Default", DefaultShader, cmdBuffer);
-    SharedMaterial->RenderState->_CullMode = CullMode::CullModeNone;
-    SharedMaterial->RenderState->_ZWrite = false;
-    SharedMaterial->RenderState->_ZTest = CompareFunction::CompareFunctionAlways;
-#pragma endregion
-
     g_guiSystem = new GUISystem(width, height, cmdBuffer);
     return g_guiSystem;
 }

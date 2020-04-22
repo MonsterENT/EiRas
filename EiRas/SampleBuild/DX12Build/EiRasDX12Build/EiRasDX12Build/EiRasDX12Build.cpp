@@ -104,10 +104,6 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 //        在此函数中，我们在全局变量中保存实例句柄并
 //        创建和显示主程序窗口。
 //
-void OnClick(void* data)
-{
-    MessageBoxA(g_hwnd, "EiRasDX12Build", "OnClick", MB_OK);
-}
 
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
@@ -123,16 +119,11 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
 #pragma region EiRas Init
    engine = new Engine();
-   engine->InitEngine(hWnd, 1980, 1080);
+
+   RECT rect;
+   GetClientRect(hWnd, &rect);
+   engine->InitEngine(hWnd, rect.right, rect.bottom);
 #pragma endregion
-
-   RECT windowRect;
-   GetWindowRect(hWnd, &windowRect);
-   GUISys::GUISystem::CreateSystem(windowRect.right - windowRect.left, windowRect.bottom - windowRect.top, engine->cmdBuffer);
-
-   Button* btn = new Button();
-   btn->SetFrame(rect_float(0, 0, 100, 100));
-   btn->m_Response = new Response(OnClick, NULL);
 
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);

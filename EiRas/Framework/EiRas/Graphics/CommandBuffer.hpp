@@ -33,12 +33,11 @@ namespace Graphics {
 
     class RenderTexture;
     class GraphicsRenderState;
+    class RenderData;
 
     class CommandBuffer
     {
         friend MaterialSys::Material;
-        typedef std::map<std::string, MaterialSys::Material*> MaterialCache_MAP;
-        typedef std::pair<std::string, MaterialSys::Material*> MaterialCache_PAIR;
     public:
         std::string Name;
 
@@ -47,6 +46,7 @@ namespace Graphics {
         void SetMaterial(MaterialSys::Material* material, _uint pass = 0);
 
         void DrawMesh(MeshSys::Mesh* mesh);
+        void DrawRenderData(RenderData* render);
 
         void BeginFrame();
 
@@ -69,7 +69,7 @@ namespace Graphics {
         void RegMaterial(MaterialSys::Material* material);
         void RemoveMaterial(MaterialSys::Material* material);
         std::vector<MaterialSys::MaterialTable*> tmpMaterialTableArray;
-        std::map<std::string, MaterialSys::Material*> MaterialMap;
+        std::vector<MaterialSys::Material*> MaterialArray;
 #endif
     };
 

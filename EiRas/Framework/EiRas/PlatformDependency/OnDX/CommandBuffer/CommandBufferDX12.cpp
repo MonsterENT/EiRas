@@ -1,6 +1,7 @@
 #include "CommandBufferDX12.h"
 #include <PlatformDependency/OnDX/GraphicsAPI/EiRasDX12.h>
 #include <PlatformDependency/OnDX/DXMacro.h>
+#include <Material/Material.hpp>
 #include <PlatformDependency/OnDX/Material/MaterialDX12.h>
 #include <PlatformDependency/OnDX/Shader/ShaderDX12.h>
 #include <Material/MaterialLayout.hpp>
@@ -9,8 +10,9 @@
 #include <Mesh/Mesh.hpp>
 #include <PlatformDependency/OnDX/Mesh/MeshDX12.h>
 #include <Basic/Image.hpp>
+#include <Graphics/RenderData.hpp>
 
-using Graphics::CommandBufferDX12;
+using namespace Graphics;
 using GraphicsAPI::EiRasDX12;
 using namespace MaterialSys;
 using namespace MeshSys;
@@ -98,6 +100,39 @@ void CommandBufferDX12::DrawMesh(MeshSys::Mesh* mesh)
         cmdList->IASetVertexBuffers(0, 1, &rawMeshObj->VertexBufferViews[i]);
         cmdList->IASetIndexBuffer(&rawMeshObj->IndexBufferViews[i]);
         cmdList->DrawIndexedInstanced(mesh->SubMeshes[i].IndicesCount, 1, 0, 0, 0);
+    }
+}
+
+void CommandBufferDX12::DrawRenderData(RenderData* render)
+{
+    if (render->_MaterialList.size() <= 0)
+    {
+        return;
+    }
+    cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+    for (_uint i = 0; i < render->m_Mesh->SubMeshCount; i++)
+    {
+        RenderMaterialPassData* mpd = 0;
+        if (i >= render->_MaterialList.size())
+        {
+            mpd = &render->_MaterialList[0];
+        }
+        else
+        {
+            mpd = &render->_MaterialList[i];
+        }
+        if (mpd == 0)
+        {
+            continue;
+        }
+        Material* mat = mpd->m_Material;
+        mat->FinishStateChange(mpd->Pass);
+        SetMaterial((MaterialDX12*)mat->PlatformBridge->raw_obj, mat->materialLayout, mpd->Pass);
+
+        MeshDX12* rawMeshObj = (MeshDX12*)render->m_Mesh->PlatformBridge->raw_obj;
+        cmdList->IASetVertexBuffers(0, 1, &rawMeshObj->VertexBufferViews[i]);
+        cmdList->IASetIndexBuffer(&rawMeshObj->IndexBufferViews[i]);
+        cmdList->DrawIndexedInstanced(render->m_Mesh->SubMeshes[i].IndicesCount, 1, 0, 0, 0);
     }
 }
 

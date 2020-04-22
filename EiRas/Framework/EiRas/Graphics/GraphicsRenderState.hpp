@@ -163,6 +163,24 @@ public:
         hashCode = 23 * hashCode + (_uint)_StencilRefValue;
         return hashCode;
     }
+
+    void EnableCommonBlend(bool enable)
+    {
+        if (enable)
+        {
+            _BlendSrcRGBFactor = BlendFactor::BlendRGBFactorSourceAlpha;
+            _BlendSrcAlphaFactor = BlendFactor::BlendRGBFactorSourceAlpha;
+            _BlendDstRGBFactor = BlendFactor::BlendRGBFactorOneMinusSourceAlpha;
+            _BlendDstAlphaFactor = BlendFactor::BlendRGBFactorOneMinusSourceAlpha;
+        }
+        else
+        {
+            _BlendSrcRGBFactor = BlendFactor::BlendRGBFactorOne;
+            _BlendDstRGBFactor = BlendFactor::BlendRGBFactorZero;
+            _BlendSrcAlphaFactor = BlendFactor::BlendRGBFactorOne;
+            _BlendDstAlphaFactor = BlendFactor::BlendRGBFactorZero;
+        }
+    }
 };
 
 }//namespace GraphicsRenderState

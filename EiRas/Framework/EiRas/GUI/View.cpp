@@ -3,6 +3,8 @@
 #include <Graphics/CommandBuffer.hpp>
 #include <GUI/GUISystem.hpp>
 #include <Material/Material.hpp>
+#include "RuntimeUtilities.hpp"
+#include <Graphics/GraphicsRenderState.hpp>
 
 using namespace MeshSys;
 using namespace GUISys;
@@ -14,7 +16,7 @@ View::View()
 {
     GUISystem::SharedInstance()->RegGUIComponent(this);
     _Mesh = new MeshSys::Mesh("GUI Mesh");
-    _Material = GUISystem::SharedMaterial;
+    _Material = RuntimeUtilities::CreateGUIDefaultMaterial("GUI View", GUISystem::SharedInstance()->_CmdBuffer);
     SetBackgroundColor(float4(1, 1, 1, 1));
 }
 
@@ -43,6 +45,7 @@ void View::SetFrame(Math::rect_float frame)
 
 void View::DrawView(Graphics::CommandBuffer* cmdBuffer)
 {
+    _Material->RenderState->EnableCommonBlend(_BackgroundColor.w - 0.999f < 0);
     _Material->SetProperty(&_BackgroundColor, 0, 0);
     _Material->FinishStateChange();
     cmdBuffer->SetMaterial(_Material);

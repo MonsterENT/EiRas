@@ -61,6 +61,7 @@ bool FontMap::StoreFontData(unsigned char* data, _uint width, _uint height, _uin
         {
             if (_UsedHeight + height < FONT_MAP_HEIGHT)
             {
+                _Left = 0;
                 //WriteBuffer
                 _Top = _UsedHeight;
                 _UsedHeight = _Top + height;
@@ -91,7 +92,7 @@ FontManager::FontManager()
 
 _uint FontManager::_StoreFontData(unsigned char* data, _uint width, _uint height, _uint offsetX, _uint offsetY, Math::rect_float& outUVRect)
 {
-    _uint fontMapIndex = -1;
+    int fontMapIndex = -1;
     FontMap* refFontMap = 0;
     if (fontDataList.size() > 0)
     {
@@ -112,6 +113,7 @@ _uint FontManager::_StoreFontData(unsigned char* data, _uint width, _uint height
         refFontMap = new FontMap();
         refFontMap->StoreFontData(data, width, height, offsetX, offsetY, outUVRect);
         fontDataList.push_back(refFontMap);
+        fontMapIndex++;
     }
 
     fontDataList[fontMapIndex]->RefreshFontImage();

@@ -7,6 +7,7 @@
 #include <Windows.h>
 #endif
 #include <string>
+#include <Math/Math.hpp>
 
 namespace Graphics
 {
@@ -60,5 +61,7 @@ private:
     MeshSys::Mesh* _FontMesh0, *_FontMesh1, *_TexMesh0;
 
     MeshSys::Mesh* _SF90Mesh;
+
+    Math::int2 _ClientHW;
 };
 #endif

@@ -213,6 +213,12 @@
     <ClInclude Include="..\..\..\..\Framework\EiRas\GUI\Response.hpp">
       <Filter>framework</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\Framework\EiRas\Graphics\RenderData.hpp">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Framework\EiRas\GUI\RuntimeUtilities.hpp">
+      <Filter>framework</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EiRasDX12Build.cpp">
@@ -381,6 +387,12 @@
       <Filter>framework</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\Framework\EiRas\GUI\Response.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Framework\EiRas\Graphics\RenderData.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Framework\EiRas\GUI\RuntimeUtilities.cpp">
       <Filter>framework</Filter>
     </ClCompile>
   </ItemGroup>

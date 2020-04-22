@@ -15,6 +15,8 @@ namespace MeshSys
 }
 
 namespace Graphics {
+    class RenderData;
+
     class CommandBufferDX12Bridge : public EiRasPlatformBridgeProtocol
     {
     public:
@@ -23,6 +25,7 @@ namespace Graphics {
         void SetMaterial(MaterialSys::Material* mat, _uint pass = 0);
 
         void DrawMesh(MeshSys::Mesh* mesh);
+        void DrawRenderData(RenderData* render);
 
         void BeginFrame();
 

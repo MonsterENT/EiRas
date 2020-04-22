@@ -37,6 +37,7 @@ Font::~Font()
 Text* Font::GetText(std::string text, int fontSizeInPixel)
 {
     Text* textObj = new Text();
+    textObj->RefTextStr = text;
 
     FT_Library library;
 

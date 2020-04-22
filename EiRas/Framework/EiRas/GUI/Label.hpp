@@ -2,7 +2,9 @@
 #define LABEL_HPP
 
 #include "View.hpp"
+#include <Math/Math.hpp>
 #include <FontSys/FontSys.hpp>
+#include <Graphics/RenderData.hpp>
 
 namespace GUISys
 {
@@ -12,10 +14,18 @@ namespace GUISys
         Label();
 
         void SetText(FontSys::Text* text);
+        void DrawView(Graphics::CommandBuffer* cmdBuffer);
+
+        void SetTextColor(Math::float4 textColor)
+        {
+            _TextColor = textColor;
+        }
     private:
         FontSys::Text* _Text;
-
         void _BuildTextMesh();
+
+        Graphics::RenderData* _Render;
+        Math::float4 _TextColor;
     };
 }
 

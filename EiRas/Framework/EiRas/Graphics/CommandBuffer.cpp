@@ -67,6 +67,11 @@ void CommandBuffer::DrawMesh(MeshSys::Mesh* mesh)
 #endif
 }
 
+void CommandBuffer::DrawRenderData(RenderData* render)
+{
+    ((CommandBufferDX12Bridge*)PlatformBridge)->DrawRenderData(render);
+}
+
 void CommandBuffer::BeginFrame()
 {
 #if GRAPHICS_DX
@@ -127,19 +132,17 @@ void CommandBuffer::SetRenderTexture(Graphics::RenderTexture* renderTexture)
 #if GRAPHICS_DX
 void CommandBuffer::_ReFillHeap()
 {
-    _uint materialPropCount = 0;
     tmpMaterialTableArray.clear();
-    MaterialCache_MAP::iterator it = MaterialMap.begin();
-    while (it != MaterialMap.end())
+    std::vector<Material*>::iterator it = MaterialArray.begin();
+    while (it != MaterialArray.end())
     {
-        Material* mat = it->second;
+        Material* mat = *it;
         for (_uint slotIndex = 0; slotIndex < mat->materialLayout->SlotNum; slotIndex++)
         {
             MaterialSlot* slot = mat->materialLayout->Slots[slotIndex];
             if (slot->SlotType == MaterialSlotType::MaterialSlotType_Table)
             {
                 tmpMaterialTableArray.push_back((MaterialTable*)slot);
-                materialPropCount += ((MaterialTable*)slot)->PropNum;
             }
         }
         it++;
@@ -154,13 +157,22 @@ void CommandBuffer::_ReFillHeap()
 
 void CommandBuffer::RegMaterial(MaterialSys::Material* material)
 {
-    MaterialMap.insert(MaterialCache_PAIR(material->Name, material));
+    MaterialArray.push_back(material);
     _ReFillHeap();
 }
 
 void CommandBuffer::RemoveMaterial(MaterialSys::Material* material)
 {
-    MaterialMap.erase(material->Name);
+    std::vector<Material*>::iterator it = MaterialArray.begin();
+    while (it != MaterialArray.end())
+    {
+        if (material == *it)
+        {
+            MaterialArray.erase(it);
+            break;
+        }
+        it++;
+    }
     _ReFillHeap();
 }
 #endif

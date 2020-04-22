@@ -21,10 +21,12 @@ namespace GUISys
 {
     class GUIBase;
     class View;
+    class Label;
     class GUISystem
     {
         friend GUIBase;
         friend View;
+        friend Label;
     public:
         static GUISystem* CreateSystem(_uint width, _uint height, Graphics::CommandBuffer* cmdBuffer);
         static GUISystem* SharedInstance();
@@ -41,8 +43,6 @@ namespace GUISys
         void RegGUIComponent(GUIBase* comp);
 
         std::vector<GUIBase*> _RegedGUIComp;
-        static MaterialSys::Material* SharedMaterial;
-        static MaterialSys::Shader* DefaultShader;
     };
 }
 
