@@ -30,6 +30,15 @@ PSInput VSMain(VSInput v)
     return o;
 };
 
+PSInput VSMainSSUV(VSInput v)
+{
+    PSInput o = (PSInput)0;
+    o.pos = float4(v.pos, 1, 1);
+    o.uv = o.pos.xy * 0.5 + 0.5;
+    o.uv.y = 1 - o.uv.y;
+    return o;
+};
+
 float4 PSMainBaseColor(PSInput i) : SV_TARGET
 {
     return _MainColor;

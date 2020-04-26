@@ -1,4 +1,5 @@
 #include "RenderTextureDX12.hpp"
+#include <Material/GraphicsResource.hpp>
 #include <PlatformDependency/OnDX/ResourceHeapManager/ResourceHeapManager.hpp>
 
 using namespace Graphics;
@@ -7,6 +8,7 @@ using namespace MaterialSys;
 
 RenderTextureDX12::RenderTextureDX12(std::string name, RenderBufferFormat colorFormat, bool useStencil, _uint width, _uint height)
 {
+    Name = name;
     Width = width;
     Height = height;
     ColorFormat = colorFormat;
@@ -59,4 +61,16 @@ RenderTextureDX12::RenderTextureDX12(std::string name, RenderBufferFormat colorF
     device->device->CreateDescriptorHeap(&dsvHeapDesc, IID_PPV_ARGS(&DsvHeap));
     device->device->CreateDepthStencilView(DepthStencilBuffer, &depthStencilDesc, DsvHeap->GetCPUDescriptorHandleForHeapStart());
 #pragma endregion
+
+    _GraphicsResourceInstance = NULL;
+}
+
+void* RenderTextureDX12::GetGraphicsResource()
+{
+    if (_GraphicsResourceInstance == 0)
+    {
+        _GraphicsResourceInstance = new GraphicsResource(Name, GraphicsResourceType::SRV_RT, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_ONINIT, false);
+        ((GraphicsResource*)_GraphicsResourceInstance)->InitAsRT(&ColorFormat, ColorBuffer);
+    }
+    return _GraphicsResourceInstance;
 }

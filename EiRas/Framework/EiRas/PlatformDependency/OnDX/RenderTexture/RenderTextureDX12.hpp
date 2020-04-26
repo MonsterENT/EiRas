@@ -13,6 +13,7 @@ namespace Graphics
     class RenderTextureDX12
     {
     public:
+        std::string Name;
         RenderTextureDX12(std::string name, RenderBufferFormat colorFormat, bool useStencil, _uint width, _uint height);
         
         ID3D12Resource* ColorBuffer;
@@ -27,7 +28,11 @@ namespace Graphics
         RenderBufferFormat ColorFormat;
         RenderBufferFormat DepthStencilFormat;
 
+        void* GetGraphicsResource();
         _uint SrvHeapOffset;
+
+    private:
+        void* _GraphicsResourceInstance;
     };
 }
 

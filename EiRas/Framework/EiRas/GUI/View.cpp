@@ -18,6 +18,13 @@ View::View()
     _Mesh = new MeshSys::Mesh("GUI Mesh");
     _Material = RuntimeUtilities::CreateGUIDefaultMaterial("GUI View", GUISystem::SharedInstance()->_CmdBuffer);
     SetBackgroundColor(float4(1, 1, 1, 1));
+    _UseShaderPass = 0;
+}
+
+void View::SetBackgroundImage(Graphics::RenderTexture* rt)
+{
+    _Material->SetProperty(rt, 1, 0);
+    _UseShaderPass = 1;
 }
 
 void View::SetBackgroundColor(Math::float4 color)
@@ -47,7 +54,7 @@ void View::DrawView(Graphics::CommandBuffer* cmdBuffer)
 {
     _Material->RenderState->EnableCommonBlend(_BackgroundColor.w - 0.999f < 0);
     _Material->SetProperty(&_BackgroundColor, 0, 0);
-    _Material->FinishStateChange();
-    cmdBuffer->SetMaterial(_Material);
+    _Material->FinishStateChange(_UseShaderPass);
+    cmdBuffer->SetMaterial(_Material, _UseShaderPass);
     cmdBuffer->DrawMesh((Mesh*)_Mesh);
 }

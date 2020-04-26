@@ -16,7 +16,7 @@ ShaderLayout* RuntimeUtilities::GetDefaultShaderLayout()
 {
     if (_DefaultShaderLayout == 0)
     {
-        _DefaultShaderLayout = new ShaderLayout(1);
+        _DefaultShaderLayout = new ShaderLayout(2);
 
         ShaderPropRange commonCB("CommonCB", GraphicsResourceType::CBV, GraphicsResourceVisibility::VISIBILITY_PIXEL, GraphicsResourceUpdateFreq::UPDATE_FREQ_HIGH);
         commonCB.AddProp(sizeof(float) * 4);
@@ -26,10 +26,12 @@ ShaderLayout* RuntimeUtilities::GetDefaultShaderLayout()
         MainTexSlot.PropNum = 1;
         MainTexSlot.InitBaseRegisterSettings(0, 0);
 
-        ShaderTable* table = new ShaderTable();
-        table->AddRange(commonCB);
-        table->AddRange(MainTexSlot);
-        _DefaultShaderLayout->Slots[0] = table;
+        ShaderTable* table0 = new ShaderTable();
+        table0->AddRange(commonCB);
+        ShaderTable* table1 = new ShaderTable();
+        table1->AddRange(MainTexSlot);
+        _DefaultShaderLayout->Slots[0] = table0;
+        _DefaultShaderLayout->Slots[1] = table1;
     }
     return _DefaultShaderLayout;
 }
@@ -63,6 +65,10 @@ Shader* RuntimeUtilities::GetGUIDefaultShader()
     {
         std::string shaderFilePath = FileSys::FileManager::shareInstance()->GetResourcePath("Shader\\DX\\GUI\\GUIDefault", "hlsl");
         _GUIDefaultShader = new Shader(shaderFilePath, "VSMain", "PSMainBaseColor");
+        #pragma region Pass1
+            _GUIDefaultShader->AddVertexFuncToPass("VSMainSSUV", 1);
+            _GUIDefaultShader->AddPixelFuncToPass("PSMainUseTex", 1);
+        #pragma endregion
         _GUIDefaultShader->InitVertexDescriptor(GetDefaultVertexDesc());
         _GUIDefaultShader->InitLayout(GetDefaultShaderLayout());
     }

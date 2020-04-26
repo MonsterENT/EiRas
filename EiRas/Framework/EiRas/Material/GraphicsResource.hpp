@@ -14,7 +14,8 @@ namespace MaterialSys
         UAV = (SRV + 1),
         CBV = (UAV + 1),
         SAMPLER = (CBV + 1),
-        Default = (SAMPLER + 1)
+        Default = (SAMPLER + 1),
+        SRV_RT = (Default + 1)
     } GraphicsResourceType;
 
     typedef enum class GraphicsResourceVisibility
@@ -72,6 +73,8 @@ namespace MaterialSys
         void InitAsConstantBuffer(_uint bufferSize);
 
         void InitAsDefault(_uint bufferSize);
+
+        void InitAsRT(void* renderBufferFormat, void* rawResourceObj);
 
         void InitAsShaderResource(_uint width, _uint height, _uint channels, void* texData, bool* buildStatusFlag);
         void ShaderResourceBuild(void* cmdList);

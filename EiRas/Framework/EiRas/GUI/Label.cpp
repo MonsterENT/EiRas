@@ -29,7 +29,6 @@ void Label::SetText(FontSys::Text* text)
 void Label::DrawView(Graphics::CommandBuffer* cmdBuffer)
 {
     View::DrawView(cmdBuffer);
-
     cmdBuffer->DrawRenderData(_Render);
 }
 
@@ -54,7 +53,7 @@ void Label::_BuildTextMesh()
     for (int i = 0; i < charCount; i++)
     {
         Material* mat = RuntimeUtilities::CreateFontMaterial(matKey + std::to_string(i), GUISystem::SharedInstance()->_CmdBuffer);
-        mat->SetProperty(FontManager::SharedInstance()->fontDataList[_Text->_FontMapIndex[i]]->_FontImage, 0, 1);
+        mat->SetProperty(FontManager::SharedInstance()->fontDataList[_Text->_FontMapIndex[i]]->_FontImage, 1, 0);
         mat->SetProperty(&_TextColor, 0, 0);
         _Render->AddMaterial(mat, 0);
 

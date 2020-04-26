@@ -69,6 +69,8 @@ TransformSys _Transform;
 
 RenderTexture* _SceneRenderTexture;
 
+Label* label;
+
 void OnClick(void* data)
 {
 
@@ -138,18 +140,10 @@ void Engine::m_initEngine()
 #if GRAPHICS_METAL
     shader = new Shader("m_shader", "vertexShader", "fragmentShader");
 #elif GRAPHICS_DX
-    std::string fontShaderFilePath = FileSys::FileManager::shareInstance()->GetResourcePath("Shader\\DX\\CommonFont", "hlsl");
-    _CommonFontShader = new Shader(fontShaderFilePath, "VSMain", "PSMain");
-
-    std::string texShaderFilePath = FileSys::FileManager::shareInstance()->GetResourcePath("Shader\\DX\\BasicBRDF", "hlsl");
-    _CommonTexShader = new Shader(texShaderFilePath, "VSMain", "PSMain");
-
-    std::string tex2DShaderFilePath = FileSys::FileManager::shareInstance()->GetResourcePath("Shader\\DX\\CommonTex2D", "hlsl");
-    _CommonTex2DShader = new Shader(tex2DShaderFilePath, "VSMain", "PSMain");
+    std::string shaderPath = FileSys::FileManager::shareInstance()->GetResourcePath("Shader\\DX\\BasicBRDF", "hlsl");
+    _BasicBRDFShader = new Shader(shaderPath, "VSMain", "PSMain");
 #endif
-    _CommonFontShader->InitLayout(customLayout);
-    _CommonTexShader->InitLayout(defaultlayout);
-    _CommonTex2DShader->InitLayout(customLayout);
+    _BasicBRDFShader->InitLayout(defaultlayout);
 
     GraphicsVertexDescriptor* m_vertexDesc = new GraphicsVertexDescriptor();
     m_vertexDesc->AddBufferAttribute("POSITION", GraphicsVertexAttributeFormat::VertexFormatFloat3, 0);
@@ -157,74 +151,15 @@ void Engine::m_initEngine()
     m_vertexDesc->AddBufferAttribute("NORMAL", GraphicsVertexAttributeFormat::VertexFormatFloat3, 0);
     m_vertexDesc->InitBufferLayout();
 
-    GraphicsVertexDescriptor* m_vertexDesc2D = new GraphicsVertexDescriptor();
-    m_vertexDesc2D->AddBufferAttribute("POSITION", GraphicsVertexAttributeFormat::VertexFormatFloat3, 0);
-    m_vertexDesc2D->AddBufferAttribute("TEXCOORD", GraphicsVertexAttributeFormat::VertexFormatFloat2, 0);
-    m_vertexDesc2D->InitBufferLayout();
-    
-    _CommonFontShader->InitVertexDescriptor(m_vertexDesc);
-    _CommonTexShader->InitVertexDescriptor(m_vertexDesc);
-    _CommonTex2DShader->InitVertexDescriptor(m_vertexDesc2D);
-
-    _FontMat0 = new Material("_FontMat0", _CommonFontShader, cmdBuffer);
-    _FontMat0->RenderState->_BlendSrcRGBFactor = BlendFactor::BlendRGBFactorSourceAlpha;
-    _FontMat0->RenderState->_BlendDstRGBFactor = BlendFactor::BlendRGBFactorOneMinusSourceAlpha;
-    _FontMat0->FinishStateChange();
-
-    _FontMat1 = new Material("_FontMat1", _CommonFontShader, cmdBuffer);
-    _FontMat1->RenderState->_BlendSrcRGBFactor = BlendFactor::BlendRGBFactorSourceAlpha;
-    _FontMat1->RenderState->_BlendDstRGBFactor = BlendFactor::BlendRGBFactorOneMinusSourceAlpha;
-    _FontMat1->FinishStateChange();
-
-    _TexMat0 = new Material("_TexMat0", _CommonTexShader, cmdBuffer);
-
-    _Tex2DMat0 = new Material("_Tex2DMat0 NEW", _CommonTex2DShader, cmdBuffer);
+    _BasicBRDFShader->InitVertexDescriptor(m_vertexDesc);
+    _Mat0 = new Material("SF90", _BasicBRDFShader, cmdBuffer);
 
     static float4 tmpCol;
     tmpCol.x = 1;
     tmpCol.y = 1;
     tmpCol.z = 1;
     tmpCol.w = 1;
-    _FontMat0->SetProperty(&tmpCol, 0);
-    _FontMat1->SetProperty(&tmpCol, 0);    
-    _Tex2DMat0->SetProperty(&tmpCol, 0);
-
-    SubMesh* subMesh = new SubMesh;
-
-    _FontMesh0 = new Mesh("_FontMesh0");
-    _FontMesh0->SubMeshCount = 1;
-    FILL_SUBMESH(subMesh)
-    subMesh->PositionData = new float3[4]{ {-1, 1, 0.5}, {0, 1, 0.5}, {0, 0, 0.5}, {-1, 0, 0.5} };
-    _FontMesh0->SubMeshes = subMesh;
-    _FontMesh0->BuildBuffer();
-    
-    subMesh = new SubMesh;
-    _FontMesh1 = new Mesh("_FontMesh1");
-    _FontMesh1->SubMeshCount = 1;
-    FILL_SUBMESH(subMesh)
-    subMesh->PositionData = new float3[4]{ {0, 1, 0.5}, {1, 1, 0.5}, {1, 0, 0.5}, {0, 0, 0.5} };
-    _FontMesh1->SubMeshes = subMesh;
-    _FontMesh1->BuildBuffer();
-
-    subMesh = new SubMesh;
-    _TexMesh0 = new Mesh("_TexMesh0");
-    _TexMesh0->SubMeshCount = 1;
-    FILL_SUBMESH(subMesh)
-    subMesh->PositionData = new float3[4]{ {-0.5, 0.5, 1}, {0.5, 0.5, 1}, {0.5, -0.5, 1}, {-0.5, -0.5, 1} };
-    _TexMesh0->SubMeshes = subMesh;
-    _TexMesh0->BuildBuffer();
-
-
-    std::string fontPath = FileSys::FileManager::shareInstance()->GetResourcePath("Font\\BELL", "TTF");
-    FontSys::Font* font = new Font(fontPath);
-    Text* text = font->GetText("SF90", 1024);
-    //_FontMat0->SetProperty(FontManager::SharedInstance()->fontDataList[0]->_FontImage, 1, 0);
-    //_FontMat1->SetProperty(FontManager::SharedInstance()->fontDataList[1]->_FontImage, 1, 0);
-
-    std::string imagePath = FileSys::FileManager::shareInstance()->GetTextureResourcePath("ground512", "png");
-    imageObj = new Image("ground512");
-    imageObj->LoadFromFile(imagePath);
-    _TexMat0->SetProperty(imageObj, 3, 0);
+    _Mat0->SetProperty(&tmpCol, 0);
 
     std::string sf90ModelPath = FileSys::FileManager::shareInstance()->GetModelResourcePath("SF90_TMP", "FBX");
     _SF90Mesh = new Mesh("SF90");
@@ -238,10 +173,14 @@ void Engine::m_initEngine()
     btn->SetFrame(rect_float(600, 0, 100, 100));
     btn->m_Response = new Response(OnClick, NULL);
 
-    Label* label = new Label();
-    label->SetFrame(rect_float(100, 100, 400, 100));
+    std::string fontPath = FileSys::FileManager::shareInstance()->GetResourcePath("Font\\BELL", "TTF");
+    FontSys::Font* font = new Font(fontPath);
+    Text* text = font->GetText("SF90", 1024);
+
+    label = new Label();
+    label->SetFrame(rect_float(450, 480, 400, 100));
     label->SetTextColor(float4(1, 0, 0, 1));
-    label->SetBackgroundColor(float4(0, 0, 0, 0));
+    label->SetBackgroundColor(float4(1, 1, 1, 1));
     label->SetText(text);
 }
 
@@ -278,34 +217,23 @@ void Engine::Update(void* data)
     cmdBuffer->SetViewPort(0, 0, 2560, 1440);
     cmdBuffer->SetRenderTexture(_SceneRenderTexture);
 
-    _TexMat0->SetProperty(&_CommonCB0, 0);
-    _TexMat0->SetProperty(&_CommonCB1, 1);
+    _Mat0->SetProperty(&_CommonCB0, 0);
+    _Mat0->SetProperty(&_CommonCB1, 1);
     static float4 tmpCol = float4(1, 1, 1, 1);
-    _TexMat0->SetProperty(&tmpCol, 2);
+    _Mat0->SetProperty(&tmpCol, 2);
 
-    _TexMat0->RenderState->_CullMode = CullMode::CullModeNone;
-    _TexMat0->FinishStateChange();
-    cmdBuffer->SetMaterial(_TexMat0);
+    _Mat0->RenderState->_CullMode = CullMode::CullModeNone;
+    _Mat0->FinishStateChange();
+    cmdBuffer->SetMaterial(_Mat0);
     cmdBuffer->DrawMesh(_SF90Mesh);
 
-    _CommonBlur->ProcessWithSource(_SceneRenderTexture, 4, 1.5);
+    _CommonBlur->ProcessWithSource(_SceneRenderTexture, 4, 1);
     cmdBuffer->SetRenderTexture(0);
-    _Tex2DMat0->SetProperty(_CommonBlur->_TmpBluredRT, 1, 0);
-    _Tex2DMat0->RenderState->_CullMode = CullMode::CullModeNone;
-    _Tex2DMat0->FinishStateChange();
-    cmdBuffer->SetMaterial(_Tex2DMat0);
-    cmdBuffer->DrawMesh(_FontMesh0);
 
-    //_FontMat0->RenderState->_CullMode = CullMode::CullModeNone;
-    //_FontMat0->FinishStateChange();
-    //cmdBuffer->SetMaterial(_FontMat0);
-    //cmdBuffer->DrawMesh(_FontMesh0);
+    cmdBuffer->SetMaterial(_Mat0);
+    cmdBuffer->DrawMesh(_SF90Mesh);
 
-    _FontMat1->RenderState->_CullMode = CullMode::CullModeNone;
-    _FontMat1->FinishStateChange();
-    cmdBuffer->SetMaterial(_FontMat1);
-    cmdBuffer->DrawMesh(_FontMesh1);
-
+    label->SetBackgroundImage(_CommonBlur->BluredRT);
     GUISys::GUISystem::SharedInstance()->RunLoopInvoke(data);
     cmdBuffer->Commit(true);
 }

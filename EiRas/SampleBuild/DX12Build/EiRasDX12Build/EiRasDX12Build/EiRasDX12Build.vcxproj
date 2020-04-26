@@ -209,6 +209,7 @@
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\MaterialDX12.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\MaterialDX12Bridge.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\ShaderResourceDX12.h" />
+    <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\ShaderResourceRTDX12.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Mesh\MeshDX12.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Mesh\MeshDX12Bridge.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\RenderTexture\RenderTextureDX12.hpp" />
@@ -274,6 +275,7 @@
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\MaterialDX12.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\MaterialDX12Bridge.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\ShaderResourceDX12.cpp" />
+    <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\ShaderResourceRTDX12.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Mesh\MeshDX12.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Mesh\MeshDX12Bridge.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\RenderTexture\RenderTextureDX12.cpp" />

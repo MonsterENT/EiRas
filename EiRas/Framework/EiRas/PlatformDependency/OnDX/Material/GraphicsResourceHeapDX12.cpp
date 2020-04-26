@@ -2,6 +2,7 @@
 #include <Material/GraphicsResource.hpp>
 #include <PlatformDependency/OnDX/Material/ConstantBufferDX12.h>
 #include <PlatformDependency/OnDX/Material/ShaderResourceDX12.h>
+#include <PlatformDependency/OnDX/Material/ShaderResourceRTDX12.hpp>
 #include <PlatformDependency/OnDX/Material/GraphicsResourceDX12.h>
 #include <PlatformDependency/OnDX/GraphicsAPI/EiRasDX12.h>
 #include <PlatformDependency/OnDX/DXMacro.h>
@@ -58,6 +59,16 @@ inline void _FillHeapWithProp(CD3DX12_CPU_DESCRIPTOR_HANDLE cpuHandle, CD3DX12_G
         viewDesc.BufferLocation = resCb->Resource->GetGPUVirtualAddress();
         viewDesc.SizeInBytes = (resCb->GetBufferSize() + 255) & ~255;
         deviceObj->device->CreateConstantBufferView(&viewDesc, cpuHandle);
+    }
+    else if (prop->Resource->Behaviors.ResourceType == GraphicsResourceType::SRV_RT)
+    {
+        ShaderResourceRTDX12* resRT = (ShaderResourceRTDX12*)(resObj);
+        D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
+        srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+        srvDesc.Format = (DXGI_FORMAT)resRT->Format;
+        srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
+        srvDesc.Texture2D.MipLevels = 1;
+        deviceObj->device->CreateShaderResourceView(resRT->Resource, &srvDesc, cpuHandle);
     }
 }
 

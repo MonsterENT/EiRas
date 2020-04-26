@@ -51,14 +51,8 @@ public:
 private:
     void m_initEngine();
     GraphicsAPI::EiRas* device;
-    MaterialSys::Material* _FontMat0, *_FontMat1, *_TexMat0, *_Tex2DMat0;
-
-    MaterialSys::Shader* _CommonFontShader;
-    MaterialSys::Shader* _CommonTexShader;
-    MaterialSys::Shader* _CommonTex2DShader;
-
-
-    MeshSys::Mesh* _FontMesh0, *_FontMesh1, *_TexMesh0;
+    MaterialSys::Material* _Mat0;
+    MaterialSys::Shader* _BasicBRDFShader;
 
     MeshSys::Mesh* _SF90Mesh;
 

@@ -18,6 +18,8 @@ namespace MaterialSys
 
         void InitAsDefault(int bufferSize, GraphicsResourceBehaviors* behaviors);
 
+        void InitAsRT(void* renderBufferFormat, void* rawResourceObj);
+
         void InitAsConstantBuffer(int bufferSize, GraphicsResourceBehaviors* behaviors);
 
         void InitAsShaderResource(int width, int height, _uint channels, void* texData, GraphicsResourceBehaviors* behaviors, bool* buildStatusFlag);

@@ -142,7 +142,7 @@ void CommandBufferDX12::SetMaterial(MaterialSys::MaterialDX12* mat, MaterialSys:
     cmdList->SetGraphicsRootSignature(mat->RawShaderObj->RootSignature);
     cmdList->SetPipelineState(mat->PassedPipelineState[pass]);
 
-    GET_EIRAS_DX12(deviceObj);;
+    GET_EIRAS_DX12(deviceObj);
     _uint offset = deviceObj->device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
     for (_uint i = 0; i < layout->SlotNum; i++)

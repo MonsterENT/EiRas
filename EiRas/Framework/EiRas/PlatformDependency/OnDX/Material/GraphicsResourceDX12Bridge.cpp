@@ -5,6 +5,7 @@
 #include <PlatformDependency/OnDX/Material/GraphicsResourceDX12.h>
 #include <PlatformDependency/OnDX/Material/ShaderResourceDX12.h>
 #include <PlatformDependency/OnDX/Material/ConstantBufferDX12.h>
+#include <PlatformDependency/OnDX/Material/ShaderResourceRTDX12.hpp>
 
 using namespace MaterialSys;
 
@@ -21,6 +22,11 @@ void GraphicsResourceDX12Bridge::SetResource(void* res, bool noMoreUpdate)
 void GraphicsResourceDX12Bridge::InitAsDefault(int bufferSize, GraphicsResourceBehaviors* behaviors)
 {
     raw_obj = new GraphicsResourceDX12(bufferSize, behaviors, true);
+}
+
+void GraphicsResourceDX12Bridge::InitAsRT(void* renderBufferFormat, void* rawResourceObj)
+{
+    raw_obj = new ShaderResourceRTDX12(renderBufferFormat, rawResourceObj);
 }
 
 void GraphicsResourceDX12Bridge::InitAsConstantBuffer(int bufferSize, GraphicsResourceBehaviors* behaviors)

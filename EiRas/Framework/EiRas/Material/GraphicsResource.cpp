@@ -44,6 +44,13 @@ void GraphicsResource::InitAsDefault(_uint bufferSize)
 #endif
 }
 
+void GraphicsResource::InitAsRT(void* renderBufferFormat, void* rawResourceObj)
+{
+#if GRAPHICS_DX
+    ((GraphicsResourceDX12Bridge*)PlatformBridge)->InitAsRT(renderBufferFormat, rawResourceObj);
+#endif
+}
+
 void GraphicsResource::InitAsShaderResource(_uint width, _uint height, _uint channels, void* texData, bool* buildStatusFlag)
 {
 #if GRAPHICS_DX
