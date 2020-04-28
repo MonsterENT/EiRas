@@ -42,7 +42,20 @@ namespace MaterialSys
             this->SlotType = MaterialSlotType::MaterialSlotType_Prop;
         }
 
+        void InitHeapOffset(_uint offset)
+        {
+            _oriHeapOffset = offset;
+            _heapOffset = offset;
+        }
+
+        void RevertHeapOffset()
+        {
+            _heapOffset = _oriHeapOffset;
+        }
+
         _uint _heapOffset;
+    private:
+        _uint _oriHeapOffset;
     };
 
     class MaterialTable : public MaterialSlot

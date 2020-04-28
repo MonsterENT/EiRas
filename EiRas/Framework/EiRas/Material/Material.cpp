@@ -174,6 +174,7 @@ void Material::SetProperty(ImageSys::Image* image, _uint slotIndex, int propInde
 #if GRAPHICS_DX
     if (fromTable)
     {
+        tProp->RevertHeapOffset();
         ResourceHeapManager::ShareInstance()->HeapPool[0]->DynamicFillHeap(tProp);
     }
 #endif
@@ -194,6 +195,7 @@ void Material::SetProperty(MaterialSys::GraphicsResource* srv, _uint slotIndex, 
 #if GRAPHICS_DX
         if (fromTable)
         {
+            tProp->RevertHeapOffset();
             ResourceHeapManager::ShareInstance()->HeapPool[0]->DynamicFillHeap(tProp);
         }
 #endif

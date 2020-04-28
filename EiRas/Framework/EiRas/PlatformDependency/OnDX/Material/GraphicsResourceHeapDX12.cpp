@@ -115,7 +115,7 @@ void GraphicsResourceHeapDX12::FillHeap(_uint tableCount, MaterialTable** tableA
         for (_uint propIndex = 0; propIndex < table->PropNum; propIndex++)
         {
             MaterialProp* prop = table->Props[propIndex];
-            prop->_heapOffset = heapOffset;
+            prop->InitHeapOffset(heapOffset);
 
             CD3DX12_CPU_DESCRIPTOR_HANDLE cpuHandle(heap->GetCPUDescriptorHandleForHeapStart());
             CD3DX12_GPU_DESCRIPTOR_HANDLE gpuHandle(heap->GetGPUDescriptorHandleForHeapStart());
