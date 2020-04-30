@@ -175,7 +175,7 @@ void Engine::m_initEngine()
 
     std::string fontPath = FileSys::FileManager::shareInstance()->GetResourcePath("Font\\BELL", "TTF");
     FontSys::Font* font = new Font(fontPath);
-    Text* text = font->GetText("SF90", 1024);
+    Text* text = font->GetText("SF90GGWP", 1024);
 
     label = new Label();
     label->SetFrame(rect_float(450, 480, 400, 100));
