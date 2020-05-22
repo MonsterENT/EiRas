@@ -20,11 +20,13 @@ namespace Graphics
 namespace GUISys
 {
     class GUIBase;
+    class EventBase;
     class View;
     class Label;
     class GUISystem
     {
         friend GUIBase;
+        friend EventBase;
         friend View;
         friend Label;
     public:
@@ -41,8 +43,9 @@ namespace GUISys
         Graphics::CommandBuffer* _CmdBuffer;
         void FrameToNDC(Math::rect_float frame, Math::rect_float& NDC);
         void RegGUIComponent(GUIBase* comp);
-
+        void RegEventComponent(EventBase* comp);
         std::vector<GUIBase*> _RegedGUIComp;
+        std::vector<EventBase*> _RegedEventComp;
     };
 }
 

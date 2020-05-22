@@ -177,6 +177,9 @@
     <ClInclude Include="..\..\..\..\Framework\EiRas\Graphics\RenderData.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Graphics\RenderTexture.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\GUI\Button.hpp" />
+    <ClInclude Include="..\..\..\..\Framework\EiRas\GUI\EventBase.hpp" />
+    <ClInclude Include="..\..\..\..\Framework\EiRas\GUI\Ex\Inspector.hpp" />
+    <ClInclude Include="..\..\..\..\Framework\EiRas\GUI\Ex\InspectorTransform.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\GUI\GUIBase.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\GUI\GUISystem.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\GUI\Label.hpp" />
@@ -245,6 +248,9 @@
     <ClCompile Include="..\..\..\..\Framework\EiRas\Graphics\RenderData.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\Graphics\RenderTexture.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\GUI\Button.cpp" />
+    <ClCompile Include="..\..\..\..\Framework\EiRas\GUI\EventBase.cpp" />
+    <ClCompile Include="..\..\..\..\Framework\EiRas\GUI\Ex\Inspector.cpp" />
+    <ClCompile Include="..\..\..\..\Framework\EiRas\GUI\Ex\InspectorTransform.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\GUI\GUIBase.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\GUI\GUISystem.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\GUI\Label.cpp" />

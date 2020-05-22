@@ -1,29 +1,23 @@
 #include "FontSys.hpp"
 #include "FontManager.hpp"
 #include <ft2build.h>
+#include <FileSys/FileManager.hpp>
 #include FT_FREETYPE_H
 
 #pragma comment( lib,"freetype.lib" )
 
 using namespace FontSys;
 
-//void scanToBuffer(unsigned char* dstBuffer, int dstBufferWidth, int dstBufferHeight, FT_Bitmap bitmap, int x, int y)
-//{
-//    for (int row = y, src_row = 0; row < y + bitmap.rows; row++, src_row++)
-//    {
-//        for (int col = x, dst_col = 0; col < x + bitmap.width; col++, dst_col ++)
-//        {
-//            if (row > dstBufferHeight || col * 4 + 3 > dstBufferWidth || col * 4 + 2 > dstBufferWidth || col * 4 + 1 > dstBufferWidth || col * 4 > dstBufferWidth)
-//            {
-//                continue;
-//            }
-//            dstBuffer[row * dstBufferWidth * 4 + col * 4] = bitmap.buffer[src_row * bitmap.width + dst_col];
-//            dstBuffer[row * dstBufferWidth * 4 + col * 4 + 1] = bitmap.buffer[src_row * bitmap.width + dst_col];
-//            dstBuffer[row * dstBufferWidth * 4 + col * 4 + 2] = bitmap.buffer[src_row * bitmap.width + dst_col];
-//            dstBuffer[row * dstBufferWidth * 4 + col * 4 + 3] = bitmap.buffer[src_row * bitmap.width + dst_col];
-//        }
-//    }
-//}
+static Font* g_DefaultFont = 0;
+
+Font* Font::GetDefaultFont()
+{
+    if (g_DefaultFont == 0)
+    {
+        g_DefaultFont = new Font(FileSys::FileManager::shareInstance()->GetResourcePath("Font\\BELL", "TTF"));
+    }
+    return g_DefaultFont;
+}
 
 Font::Font(std::string filePath)
 {
@@ -34,9 +28,8 @@ Font::~Font()
 {
 }
 
-Text* Font::GetText(std::string text, int fontSizeInPixel)
+bool Font::GetText(std::string text, Text* textObj, int fontSizeInPixel)
 {
-    Text* textObj = new Text();
     textObj->RefTextStr = text;
 
     FT_Library library;
@@ -46,7 +39,7 @@ Text* Font::GetText(std::string text, int fontSizeInPixel)
 
     if (ft_error)
     {
-        return 0;
+        return false;
     }
 
     FT_Face face;
@@ -54,7 +47,7 @@ Text* Font::GetText(std::string text, int fontSizeInPixel)
 
     if (ft_error == FT_Err_Cannot_Open_Resource)
     {
-        return 0;
+        return false;
     }
 
     FT_Set_Pixel_Sizes(face, 0, fontSizeInPixel);
@@ -81,7 +74,7 @@ Text* Font::GetText(std::string text, int fontSizeInPixel)
         vector.y += face->glyph->advance.y;
     }
 
-    return textObj;
+    return true;
     //FT_Done_FreeType(library);
     //FT_Done_Face(face);
 }

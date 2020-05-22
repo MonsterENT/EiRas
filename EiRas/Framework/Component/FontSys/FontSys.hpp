@@ -33,8 +33,9 @@ namespace FontSys
     public:
         Font(std::string filePath);
         ~Font();
-        Text* GetText (std::string text, int fontSizeInPixel = 16);
+        bool GetText (std::string text, Text* textObj, int fontSizeInPixel = 16);
 
+        static Font* GetDefaultFont();
     private:
         std::string filePath;
     };

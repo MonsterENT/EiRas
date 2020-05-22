@@ -35,6 +35,7 @@ public:
     Math::float3 Right,
     Math::float3 Up,
     Math::float3 Position);
+
     Math::Matrix4X4* GetLocalToWorldMatrix();
     Math::Matrix4X4* GetWorldToLocalMatrix();
 

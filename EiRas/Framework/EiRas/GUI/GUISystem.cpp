@@ -1,5 +1,6 @@
 #include "GUISystem.hpp"
 #include "GUIBase.hpp"
+#include "EventBase.hpp"
 
 #include <Material/Material.hpp>
 #include <Material/Shader.hpp>
@@ -72,6 +73,11 @@ void GUISystem::RunLoopInvoke(void* msg)
     {
         _RegedGUIComp[i]->DrawView(_CmdBuffer);
     }
+
+    for (int i = 0; i < _RegedEventComp.size(); i++)
+    {
+        _RegedEventComp[i]->Invoke();
+    }
 }
 
 void GUISystem::FrameToNDC(Math::rect_float frame, Math::rect_float& NDC)
@@ -86,4 +92,9 @@ void GUISystem::FrameToNDC(Math::rect_float frame, Math::rect_float& NDC)
 void GUISystem::RegGUIComponent(GUIBase* comp)
 {
     _RegedGUIComp.push_back(comp);
+}
+
+void GUISystem::RegEventComponent(EventBase* comp)
+{
+    _RegedEventComp.push_back(comp);
 }
