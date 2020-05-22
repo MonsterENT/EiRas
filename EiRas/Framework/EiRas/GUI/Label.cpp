@@ -49,7 +49,7 @@ void Label::_BuildTextMesh()
     _Render->ClearMesh(true);
     _Render->ClearMaterials(true);
 
-    _uint charCount = _Text->_FontMapIndex.size();
+    _uint charCount = _Text->CharDataList.size();
     float subMeshWidth = _NDC.width / (float)charCount;
     float subMeshHeight = _NDC.height;
     float posTop = _NDC.top;
@@ -61,8 +61,8 @@ void Label::_BuildTextMesh()
 
     for (int i = 0; i < charCount; i++)
     {
-        rect_float uvRect = _Text->_MappingRect[i];
-        _uint refMapIndex = _Text->_FontMapIndex[i];
+        rect_float uvRect = _Text->CharDataList[i].MappingRect;
+        _uint refMapIndex = _Text->CharDataList[i].FontMapIndex;
 
         float3 pos0 = float3(posLeft, posTop, 1), pos1 = float3(posLeft + subMeshWidth, posTop, 1);
         float3 pos2 = float3(posLeft, posTop - subMeshHeight, 1), pos3 = float3(posLeft + subMeshWidth, posTop - subMeshHeight, 1);

@@ -175,11 +175,12 @@ void Engine::m_initEngine()
 
     std::string fontPath = FileSys::FileManager::shareInstance()->GetResourcePath("Font\\BELL", "TTF");
     FontSys::Font* font = new Font(fontPath);
+    
     Text* text = new Text();
     font->GetText("SF90GGWP", text, 1024);
 
     label = new Label();
-    label->SetFrame(rect_float(450, 480, 400, 100));
+    label->SetFrame(rect_float(600, 600, 400, 100));
     label->SetTextColor(float4(1, 0, 0, 1));
     label->SetBackgroundColor(float4(1, 1, 1, 1));
     label->SetText(text);

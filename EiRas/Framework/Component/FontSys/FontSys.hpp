@@ -5,6 +5,7 @@
 #include <Math/Math.hpp>
 #include <Global/GlobalDefine.h>
 #include <vector>
+#include <map>
 
 namespace FontSys
 {
@@ -12,18 +13,31 @@ namespace FontSys
     class FontMap;
     class Font;
 
+    typedef struct CharData
+    {
+        Math::rect_float MappingRect;
+        _uint FontMapIndex;
+        CharData()
+        {
+        }
+
+        CharData(Math::rect_float rect, _uint mapIndex)
+        {
+            MappingRect = rect;
+            FontMapIndex = mapIndex;
+        }
+    } CharData;
+
     class Text
     {
         friend Font;
     public:
         std::string RefTextStr;
-        void _AddFontData(_uint fontMapIndex, Math::rect_float uvRect)
+        void _AddFontData(const CharData* data)
         {
-            _FontMapIndex.push_back(fontMapIndex);
-            _MappingRect.push_back(uvRect);
+            CharDataList.push_back(CharData(data->MappingRect, data->FontMapIndex));
         }
-        std::vector<_uint> _FontMapIndex;
-        std::vector<Math::rect_float> _MappingRect;
+        std::vector<CharData> CharDataList;
     };
 
     class Font
@@ -38,6 +52,8 @@ namespace FontSys
         static Font* GetDefaultFont();
     private:
         std::string filePath;
+
+        std::map<char, CharData> _CachedCharData;
     };
 }
 
