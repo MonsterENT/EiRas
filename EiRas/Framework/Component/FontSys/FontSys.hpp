@@ -37,6 +37,11 @@ namespace FontSys
         {
             CharDataList.push_back(CharData(data->MappingRect, data->FontMapIndex));
         }
+
+        void _ClearData()
+        {
+            CharDataList.clear();
+        }
         std::vector<CharData> CharDataList;
     };
 

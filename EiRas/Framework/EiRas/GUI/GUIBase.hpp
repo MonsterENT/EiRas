@@ -4,6 +4,7 @@
 #include <string>
 #include <Math/Math.hpp>
 #include "Response.hpp"
+#include <vector>
 
 namespace Graphics
 {
@@ -24,8 +25,15 @@ namespace GUISys
         {
         }
 
+        virtual void AddSubNode(GUIBase* subNode)
+        {
+            _SubNodes.push_back(subNode);
+            subNode->_ParentNode = this;
+        }
         virtual void SetFrame(Math::rect_float frame);
         
+        virtual void NeedLayout();
+
         Math::rect_float GetFrame()
         {
             return _Frame;
@@ -55,8 +63,12 @@ namespace GUISys
         virtual void DrawView(Graphics::CommandBuffer* cmdBuffer)
         {
         }
+        Math::rect_float _RelativeFrame;
         Math::rect_float _Frame;
         Math::rect_float _NDC;
+
+        std::vector<GUIBase*> _SubNodes;
+        GUIBase* _ParentNode;
     };
 }
 

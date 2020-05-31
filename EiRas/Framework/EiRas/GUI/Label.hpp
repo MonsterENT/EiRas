@@ -13,6 +13,8 @@ namespace GUISys
     public:
         Label();
 
+        virtual void NeedLayout();
+
         void SetText(FontSys::Text* text);
         void DrawView(Graphics::CommandBuffer* cmdBuffer);
 

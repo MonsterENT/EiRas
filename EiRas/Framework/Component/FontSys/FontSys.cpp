@@ -33,7 +33,7 @@ Font::~Font()
 bool Font::GetText(std::string text, Text* textObj, int fontSizeInPixel)
 {
     textObj->RefTextStr = text;
-
+    textObj->_ClearData();
     FT_Library library;
 
     FT_Error ft_error;

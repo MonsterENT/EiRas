@@ -8,17 +8,19 @@ using namespace BasicComponent;
 
 InspectorTransform::InspectorTransform(BasicComponent::TransformSys* transform)
 {
-    Inspector::Inspector();
     _TransformObj = transform;
 
     _PosX = new Label();
-    _PosX->SetFrame(Math::rect_float(0, 0, 100, 100));
-
+    _PosX->SetFrame(Math::rect_float(0, 0, 500, 100));
 }
 
 void InspectorTransform::Invoke()
 {
-    if (Font::GetDefaultFont()->GetText(std::to_string(_TransformObj->Position.x), &_PosXTextObj))
+    
+    //std::string t_str = std::to_string(_TransformObj->Position.x);
+    char r_str[20];
+    sprintf(r_str, "Position %.0f %.0f %.0f", _TransformObj->Position.x, _TransformObj->Position.y, _TransformObj->Position.z);
+    if (Font::GetDefaultFont()->GetText(r_str, &_PosXTextObj, 100))
     {
         _PosX->SetText(&_PosXTextObj);
     }

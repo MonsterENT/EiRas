@@ -22,6 +22,7 @@
 #include <GUI/Button.hpp>
 #include <GUI/GUISystem.hpp>
 #include <GUI/Label.hpp>
+#include <GUI/Ex/InspectorTransform.hpp>
 #pragma endregion
 
 #pragma message("TO FIX. TMP")
@@ -70,6 +71,8 @@ TransformSys _Transform;
 RenderTexture* _SceneRenderTexture;
 
 Label* label;
+
+InspectorTransform* inspector = NULL;
 
 void OnClick(void* data)
 {
@@ -184,6 +187,8 @@ void Engine::m_initEngine()
     label->SetTextColor(float4(1, 0, 0, 1));
     label->SetBackgroundColor(float4(1, 1, 1, 1));
     label->SetText(text);
+
+    inspector = new InspectorTransform(&_Transform);
 }
 
 Engine::Engine()

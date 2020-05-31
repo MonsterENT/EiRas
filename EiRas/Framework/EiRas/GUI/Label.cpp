@@ -38,6 +38,12 @@ void Label::SetText(FontSys::Text* text)
     _BuildTextMesh();
 }
 
+void Label::NeedLayout()
+{
+    View::NeedLayout();
+    _BuildTextMesh();
+}
+
 void Label::DrawView(Graphics::CommandBuffer* cmdBuffer)
 {
     View::DrawView(cmdBuffer);

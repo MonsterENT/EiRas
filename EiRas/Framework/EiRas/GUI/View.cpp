@@ -35,7 +35,11 @@ void View::SetBackgroundColor(Math::float4 color)
 void View::SetFrame(Math::rect_float frame)
 {
     GUIBase::SetFrame(frame);
+}
 
+void View::NeedLayout()
+{
+    GUIBase::NeedLayout();
     Mesh* mesh = (Mesh*)_Mesh;
     mesh->SubMeshCount = 1;
     mesh->SubMeshes = new SubMesh[1];

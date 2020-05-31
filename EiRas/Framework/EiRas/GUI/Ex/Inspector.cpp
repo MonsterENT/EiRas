@@ -3,5 +3,4 @@ using namespace GUISys;
 
 Inspector::Inspector()
 {
-    EventBase::EventBase();
 }

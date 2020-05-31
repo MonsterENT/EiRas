@@ -5,6 +5,7 @@
 #include <Math/Math.hpp>
 #include "Response.hpp"
 #include <Global/GlobalDefine.h>
+#include <vector>
 
 namespace MaterialSys
 {
@@ -27,7 +28,10 @@ namespace GUISys
         virtual void SetBackgroundImage(Graphics::RenderTexture* rt);
         virtual void SetBackgroundColor(Math::float4 color);
         virtual void SetFrame(Math::rect_float frame);
+        virtual void NeedLayout();
+
         virtual void DrawView(Graphics::CommandBuffer* cmdBuffer);
+
 
         virtual void OnEvent(ResponseDataBase* data)
         {
