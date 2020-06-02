@@ -180,7 +180,7 @@ void Engine::m_initEngine()
     FontSys::Font* font = new Font(fontPath);
     
     Text* text = new Text();
-    font->GetText("SF90GGWP", text, 1024);
+    font->GetText("SF90GGWP", text, 512);
 
     label = new Label();
     label->SetFrame(rect_float(600, 600, 400, 100));

@@ -52,26 +52,35 @@ void Label::DrawView(Graphics::CommandBuffer* cmdBuffer)
 
 void Label::_BuildTextMesh()
 {
+    if (_Text == 0)
+    {
+        return;
+    }
+
     _Render->ClearMesh(true);
     _Render->ClearMaterials(true);
 
     _uint charCount = _Text->CharDataList.size();
-    float subMeshWidth = _NDC.width / (float)charCount;
-    float subMeshHeight = _NDC.height;
     float posTop = _NDC.top;
     float posLeft = _NDC.left;
 
     //Batch
     map<_uint, BatchedFontMeshData> BatchedData;
-
+    float charMeshHeight = 0, charMeshWidth = 0;
 
     for (int i = 0; i < charCount; i++)
     {
         rect_float uvRect = _Text->CharDataList[i].MappingRect;
         _uint refMapIndex = _Text->CharDataList[i].FontMapIndex;
 
-        float3 pos0 = float3(posLeft, posTop, 1), pos1 = float3(posLeft + subMeshWidth, posTop, 1);
-        float3 pos2 = float3(posLeft, posTop - subMeshHeight, 1), pos3 = float3(posLeft + subMeshWidth, posTop - subMeshHeight, 1);
+        _uint height, width;
+        GUISystem::SharedInstance()->GetFrameSize(width, height);
+        //pixel Size
+        charMeshHeight = uvRect.height * FONT_MAP_HEIGHT / (float)height;
+        charMeshWidth = uvRect.width * FONT_MAP_WIDTH / (float)width;
+
+        float3 pos0 = float3(posLeft, posTop, 1), pos1 = float3(posLeft + charMeshWidth, posTop, 1);
+        float3 pos2 = float3(posLeft, posTop - charMeshHeight, 1), pos3 = float3(posLeft + charMeshWidth, posTop - charMeshHeight, 1);
 
         float2 uv0 = float2(uvRect.left, uvRect.top), uv1 = float2(uvRect.left + uvRect.width, uvRect.top);
         float2 uv2 = float2(uvRect.left, uvRect.top + uvRect.height), uv3 = float2(uvRect.left + uvRect.width, uvRect.top + uvRect.height);
@@ -105,7 +114,7 @@ void Label::_BuildTextMesh()
             batchedDataIt->second.UV.push_back(uv2);
             batchedDataIt->second.UV.push_back(uv3);
         }
-        posLeft += subMeshWidth;
+        posLeft += charMeshWidth;
     }
 
     Mesh* textMesh = new Mesh("TextMesh");

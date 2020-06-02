@@ -37,6 +37,12 @@ namespace GUISys
 
         EiRasPlatformBridgeProtocol* PlatformBridge;
 
+        void GetFrameSize(_uint& width, _uint& height)
+        {
+            width = _Width;
+            height = _Height;
+        }
+
     protected:
         _uint _Height, _Width;
 
