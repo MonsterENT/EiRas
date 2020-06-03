@@ -19,7 +19,7 @@ void InspectorTransform::Invoke()
     
     //std::string t_str = std::to_string(_TransformObj->Position.x);
     char r_str[20];
-    sprintf(r_str, "Position %.0f %.0f %.0f", _TransformObj->Position.x, _TransformObj->Position.y, _TransformObj->Position.z);
+    sprintf(r_str, "Position%.0f%.0f%.0f", _TransformObj->Position.x, _TransformObj->Position.y, _TransformObj->Position.z);
     if (Font::GetDefaultFont()->GetText(r_str, &_PosXTextObj, 100))
     {
         _PosX->SetText(&_PosXTextObj);

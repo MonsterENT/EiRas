@@ -63,24 +63,51 @@ void Label::_BuildTextMesh()
     _uint charCount = _Text->CharDataList.size();
     float posTop = _NDC.top;
     float posLeft = _NDC.left;
+    float posButtom = _NDC.top - _NDC.height;
+    float posMid = (posTop - posButtom) / 2.0f + posButtom;
 
     //Batch
     map<_uint, BatchedFontMeshData> BatchedData;
-    float charMeshHeight = 0, charMeshWidth = 0;
+    float charMeshHeightMax = 0, hCharMeshHeightMax = 0;
+
+    for (int i = 0; i < charCount; i++)
+    {
+        rect_float uvRect = _Text->CharDataList[i].MappingRect;
+        _uint height, width;
+        GUISystem::SharedInstance()->GetFrameSize(width, height);
+        //pixel Size
+        float tHeight = uvRect.height * FONT_MAP_HEIGHT / (float)height;
+        charMeshHeightMax = tHeight > charMeshHeightMax ? tHeight : charMeshHeightMax;
+    }
+    hCharMeshHeightMax = charMeshHeightMax / 2.0f;
+    posButtom = posMid - hCharMeshHeightMax;
 
     for (int i = 0; i < charCount; i++)
     {
         rect_float uvRect = _Text->CharDataList[i].MappingRect;
         _uint refMapIndex = _Text->CharDataList[i].FontMapIndex;
+        bool alignmentMid = _Text->CharDataList[i].AlignmentMid;
 
         _uint height, width;
         GUISystem::SharedInstance()->GetFrameSize(width, height);
         //pixel Size
-        charMeshHeight = uvRect.height * FONT_MAP_HEIGHT / (float)height;
-        charMeshWidth = uvRect.width * FONT_MAP_WIDTH / (float)width;
+        float charMeshHeight = uvRect.height * FONT_MAP_HEIGHT / (float)height;
+        float charMeshWidth = uvRect.width * FONT_MAP_WIDTH / (float)width;
 
-        float3 pos0 = float3(posLeft, posTop, 1), pos1 = float3(posLeft + charMeshWidth, posTop, 1);
-        float3 pos2 = float3(posLeft, posTop - charMeshHeight, 1), pos3 = float3(posLeft + charMeshWidth, posTop - charMeshHeight, 1);
+        float3 pos0, pos1;
+        float3 pos2, pos3;
+
+        if (alignmentMid)
+        {
+            float hCharMeshHeight = charMeshHeight / 2.0f;
+            pos0 = float3(posLeft, posMid + hCharMeshHeight, 1), pos1 = float3(posLeft + charMeshWidth, posMid + hCharMeshHeight, 1);
+            pos2 = float3(posLeft, posMid - hCharMeshHeight, 1), pos3 = float3(posLeft + charMeshWidth, posMid - hCharMeshHeight, 1);
+        }
+        else
+        {
+            pos0 = float3(posLeft, posButtom + charMeshHeight, 1); pos1 = float3(posLeft + charMeshWidth, posButtom + charMeshHeight, 1);
+            pos2 = float3(posLeft, posButtom, 1); pos3 = float3(posLeft + charMeshWidth, posButtom, 1);
+        }
 
         float2 uv0 = float2(uvRect.left, uvRect.top), uv1 = float2(uvRect.left + uvRect.width, uvRect.top);
         float2 uv2 = float2(uvRect.left, uvRect.top + uvRect.height), uv3 = float2(uvRect.left + uvRect.width, uvRect.top + uvRect.height);

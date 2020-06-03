@@ -79,7 +79,14 @@ bool Font::GetText(std::string text, Text* textObj, int fontSizeInPixel)
         Math::rect_float outUVRect;
         _uint fontMapIndex = FontManager::SharedInstance()->_StoreFontData(bitmap.buffer, bitmap.width, bitmap.rows, face->glyph->bitmap_left, face->glyph->bitmap_top, outUVRect);
 
-        CharData data = CharData(outUVRect, fontMapIndex);
+        bool alignmentMid = false;
+#pragma message("TODO")
+        if ((t < 'a' || t > 'z') && (t < 'A' || t > 'Z') && (t < '0' || t > '9'))
+        {
+            alignmentMid = true;
+        }
+
+        CharData data = CharData(outUVRect, fontMapIndex, alignmentMid);
         _CachedCharData.insert(pair<char, CharData>(t, data));
         textObj->_AddFontData(&data);
 

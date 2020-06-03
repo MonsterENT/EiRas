@@ -17,12 +17,15 @@ namespace FontSys
     {
         Math::rect_float MappingRect;
         _uint FontMapIndex;
+        bool AlignmentMid;
+
         CharData()
         {
         }
 
-        CharData(Math::rect_float rect, _uint mapIndex)
+        CharData(Math::rect_float rect, _uint mapIndex, bool alignmentMid = false)
         {
+            AlignmentMid = alignmentMid;
             MappingRect = rect;
             FontMapIndex = mapIndex;
         }
@@ -35,7 +38,7 @@ namespace FontSys
         std::string RefTextStr;
         void _AddFontData(const CharData* data)
         {
-            CharDataList.push_back(CharData(data->MappingRect, data->FontMapIndex));
+            CharDataList.push_back(CharData(data->MappingRect, data->FontMapIndex, data->AlignmentMid));
         }
 
         void _ClearData()
