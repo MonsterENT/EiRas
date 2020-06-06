@@ -25,6 +25,7 @@ namespace GUISys
     private:
         FontSys::Text* _Text;
         void _BuildTextMesh();
+        MeshSys::Mesh* _TextMesh;
 
         Graphics::RenderData* _Render;
         Math::float4 _TextColor;

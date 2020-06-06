@@ -26,6 +26,17 @@ using namespace MeshSys;
 using namespace MaterialSys;
 using namespace Graphics;
 
+
+static MeshBufferManager* g_MeshBfferManager = 0;
+MeshBufferManager* MeshBufferManager::GetManager()
+{
+    if (g_MeshBfferManager == 0)
+    {
+        g_MeshBfferManager = new MeshBufferManager();
+    }
+    return g_MeshBfferManager;
+}
+
 Mesh::Mesh(std::string name)
 {
     this->Name = name;
@@ -51,53 +62,23 @@ void Mesh::BuildBuffer(MeshType inputType)
     for (_uint i = 0; i < SubMeshCount; i++)
     {
         SubMesh* subMesh = &SubMeshes[i];
+        subMesh->PackData(inputType);
 
-        if (inputType == MeshType::VertexInput3D)
-        {
-            subMesh->TriangleData = new VertexData3D[subMesh->VerticesCount];
-            subMesh->TriangleDataSize = sizeof(VertexData3D) * subMesh->VerticesCount;
-        }
-        else
-        {
-            subMesh->TriangleData = new VertexData2D[subMesh->VerticesCount];
-            subMesh->TriangleDataSize = sizeof(VertexData2D) * subMesh->VerticesCount;
-        }
-        subMesh->IndexDataSize = sizeof(_uint) * subMesh->IndicesCount;
+        MeshBuffer* vertexBuffer = MeshBufferManager::GetManager()->GetValideVertexBufferWithSize(subMesh->_PackedData->VertexDataSize, subMesh->_PackedData->VertexDataStride);
+        MeshBuffer* indexBuffer = MeshBufferManager::GetManager()->GetValideIndexBufferWithSize(subMesh->_PackedData->IndexDataSize, subMesh->_PackedData->IndexDataStride);
 
-        for (_uint j = 0; j < subMesh->VerticesCount; j++)
-        {
-            if (inputType == MeshType::VertexInput3D)
-            {
-                VertexData3D* tmpData = (VertexData3D*)subMesh->TriangleData + j;
-                if (subMesh->PositionData)
-                    tmpData->Position = float3(subMesh->PositionData[j].x, subMesh->PositionData[j].y, subMesh->PositionData[j].z);
-                if (subMesh->UVData)
-                    tmpData->UV = float2(subMesh->UVData[j].x, subMesh->UVData[j].y);
-                if (subMesh->NormalData)
-                    tmpData->Normal = float3(subMesh->NormalData[j].x, subMesh->NormalData[j].y, subMesh->NormalData[j].z);
-            }
-            else
-            {
-                VertexData2D* tmpData = (VertexData2D*)subMesh->TriangleData + j;
-                if (subMesh->PositionData)
-                    tmpData->Position = float2(subMesh->PositionData[j].x, subMesh->PositionData[j].y);
-                if (subMesh->UVData)
-                    tmpData->UV = float2(subMesh->UVData[j].x, subMesh->UVData[j].y);
-            }
-        }
-
-        subMesh->VertexBuffer = new GraphicsResource(Name, GraphicsResourceType::Default, GraphicsResourceVisibility::VISIBILITY_VERTEX, GraphicsResourceUpdateFreq::UPDATE_FREQ_LOW, true);
-        subMesh->VertexBuffer->InitAsDefault(subMesh->TriangleDataSize);
-        subMesh->VertexBuffer->SetResource(subMesh->TriangleData, true);
-
-        subMesh->IndexBuffer = new GraphicsResource(Name, GraphicsResourceType::Default, GraphicsResourceVisibility::VISIBILITY_VERTEX, GraphicsResourceUpdateFreq::UPDATE_FREQ_LOW, true);
-        subMesh->IndexBuffer->InitAsDefault(subMesh->IndexDataSize);
-        subMesh->IndexBuffer->SetResource(subMesh->IndicesData, true);
-
-#ifdef GRAPHICS_DX
-        ((MeshDX12Bridge*)PlatformBridge)->BuildBufferView(subMesh->VertexBuffer->PlatformBridge, subMesh->TriangleDataSize, subMesh->VerticesCount,
-            subMesh->IndexBuffer->PlatformBridge, subMesh->IndexDataSize);
-#endif
+//        subMesh->VertexBuffer = new GraphicsResource(Name, GraphicsResourceType::Default, GraphicsResourceVisibility::VISIBILITY_VERTEX, GraphicsResourceUpdateFreq::UPDATE_FREQ_LOW, true);
+//        subMesh->VertexBuffer->InitAsDefault(subMesh->TriangleDataSize);
+//        subMesh->VertexBuffer->SetResource(subMesh->TriangleData, true);
+//
+//        subMesh->IndexBuffer = new GraphicsResource(Name, GraphicsResourceType::Default, GraphicsResourceVisibility::VISIBILITY_VERTEX, GraphicsResourceUpdateFreq::UPDATE_FREQ_LOW, true);
+//        subMesh->IndexBuffer->InitAsDefault(subMesh->IndexDataSize);
+//        subMesh->IndexBuffer->SetResource(subMesh->IndicesData, true);
+//
+//#ifdef GRAPHICS_DX
+//        ((MeshDX12Bridge*)PlatformBridge)->BuildBufferView(subMesh->VertexBuffer->PlatformBridge, subMesh->TriangleDataSize, subMesh->VertexCount,
+//            subMesh->IndexBuffer->PlatformBridge, subMesh->IndexDataSize);
+//#endif
     }
 
 #ifdef GRAPHICS_METAL

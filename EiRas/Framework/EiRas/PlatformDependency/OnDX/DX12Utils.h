@@ -50,8 +50,8 @@ namespace DX12Utils
             _FullScreenTriangle->SubMeshes = subMesh;
             subMesh->UVData = new Math::float2[3]{ {0, 0}, {0, 0}, {0, 0}};
             subMesh->NormalData = new Math::float3[3]{ {0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
-            subMesh->IndicesCount = 3;
-            subMesh->VerticesCount = 3;
+            subMesh->IndexCount = 3;
+            subMesh->VertexCount = 3;
             subMesh->IndicesData = new _uint[3]{ 0, 1, 2 };
             subMesh->PositionData = new Math::float3[3]{ {-1, -1, 0}, {-1, 3, 0}, {3, -1, 0} };
             _FullScreenTriangle->BuildBuffer();

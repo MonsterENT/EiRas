@@ -45,8 +45,8 @@ void View::NeedLayout()
     mesh->SubMeshes = new SubMesh[1];
 
     SubMesh* subMesh = &(mesh->SubMeshes[0]);
-    subMesh->IndicesCount = 6;
-    subMesh->VerticesCount = 4;
+    subMesh->IndexCount = 6;
+    subMesh->VertexCount = 4;
     subMesh->IndicesData = new _uint[6]{ 0, 1, 2, 1, 2, 3 };
     subMesh->PositionData = new float3[4]{ {_NDC.left, _NDC.top, 1}, {_NDC.left + _NDC.width, _NDC.top, 1}, {_NDC.left, _NDC.top - _NDC.height, 1}, {_NDC.left + _NDC.width, _NDC.top - _NDC.height, 1} };
     subMesh->UVData = new float2[4]{ {0, 0}, {1, 0}, {0, 1}, {1, 1} };

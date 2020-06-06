@@ -165,11 +165,11 @@ void Label::_BuildTextMesh()
         vector<float2>* tUV = &(data->UV);
 
         SubMesh* subMesh = &(textMesh->SubMeshes[subMeshIndex++]);
-        subMesh->IndicesCount = tPos->size() / 4 * 6;
-        subMesh->VerticesCount = tPos->size();
-        subMesh->IndicesData = new _uint[subMesh->IndicesCount];
+        subMesh->IndexCount = tPos->size() / 4 * 6;
+        subMesh->VertexCount = tPos->size();
+        subMesh->IndicesData = new _uint[subMesh->IndexCount];
 
-        for (int j = 0, vertexIndex = 0; j < subMesh->IndicesCount; j += 6, vertexIndex += 4)
+        for (int j = 0, vertexIndex = 0; j < subMesh->IndexCount; j += 6, vertexIndex += 4)
         {
             subMesh->IndicesData[j + 0] = vertexIndex;
             subMesh->IndicesData[j + 1] = vertexIndex + 1;
@@ -179,10 +179,10 @@ void Label::_BuildTextMesh()
             subMesh->IndicesData[j + 5] = vertexIndex + 3;
         }
 
-        subMesh->PositionData = new float3[subMesh->VerticesCount];
-        memcpy(subMesh->PositionData, &(*tPos)[0], sizeof(float3) * subMesh->VerticesCount);
-        subMesh->UVData = new float2[subMesh->VerticesCount];
-        memcpy(subMesh->UVData, &(*tUV)[0], sizeof(float2) * subMesh->VerticesCount);
+        subMesh->PositionData = new float3[subMesh->VertexCount];
+        memcpy(subMesh->PositionData, &(*tPos)[0], sizeof(float3) * subMesh->VertexCount);
+        subMesh->UVData = new float2[subMesh->VertexCount];
+        memcpy(subMesh->UVData, &(*tUV)[0], sizeof(float2) * subMesh->VertexCount);
         batchedDataIt++;
     }
     textMesh->BuildBuffer(MeshType::VertexInput2D);

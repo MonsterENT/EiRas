@@ -99,7 +99,7 @@ void CommandBufferDX12::DrawMesh(MeshSys::Mesh* mesh)
 
         cmdList->IASetVertexBuffers(0, 1, &rawMeshObj->VertexBufferViews[i]);
         cmdList->IASetIndexBuffer(&rawMeshObj->IndexBufferViews[i]);
-        cmdList->DrawIndexedInstanced(mesh->SubMeshes[i].IndicesCount, 1, 0, 0, 0);
+        cmdList->DrawIndexedInstanced(mesh->SubMeshes[i].IndexCount, 1, 0, 0, 0);
     }
 }
 
@@ -132,7 +132,7 @@ void CommandBufferDX12::DrawRenderData(RenderData* render)
         MeshDX12* rawMeshObj = (MeshDX12*)render->m_Mesh->PlatformBridge->raw_obj;
         cmdList->IASetVertexBuffers(0, 1, &rawMeshObj->VertexBufferViews[i]);
         cmdList->IASetIndexBuffer(&rawMeshObj->IndexBufferViews[i]);
-        cmdList->DrawIndexedInstanced(render->m_Mesh->SubMeshes[i].IndicesCount, 1, 0, 0, 0);
+        cmdList->DrawIndexedInstanced(render->m_Mesh->SubMeshes[i].IndexCount, 1, 0, 0, 0);
     }
 }
 

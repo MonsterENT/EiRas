@@ -40,11 +40,11 @@ void MeshSys::LoadMeshFromFile(std::string fileName, Mesh* meshObj)
     {
         aiMesh* pmesh = pscene->mMeshes[i];
         SubMesh* submesh = &meshObj->SubMeshes[i];
-        submesh->VerticesCount = pmesh->mNumVertices;
-        submesh->PositionData = new float3[submesh->VerticesCount];
-        submesh->NormalData = new float3[submesh->VerticesCount];
-        submesh->UVData = new float2[submesh->VerticesCount];
-        submesh->ColorData = new float4[submesh->VerticesCount];
+        submesh->VertexCount = pmesh->mNumVertices;
+        submesh->PositionData = new float3[submesh->VertexCount];
+        submesh->NormalData = new float3[submesh->VertexCount];
+        submesh->UVData = new float2[submesh->VertexCount];
+        submesh->ColorData = new float4[submesh->VertexCount];
         
         for (_uint j = 0; j < pmesh->mNumVertices; j++)
         {
@@ -56,8 +56,8 @@ void MeshSys::LoadMeshFromFile(std::string fileName, Mesh* meshObj)
             }
         }
 
-        submesh->IndicesCount = pmesh->mNumFaces * 3;
-        submesh->IndicesData = new _uint[submesh->IndicesCount];
+        submesh->IndexCount = pmesh->mNumFaces * 3;
+        submesh->IndicesData = new _uint[submesh->IndexCount];
         _uint curIndex = 0;
         for (_uint k = 0; k < pmesh->mNumFaces; k++)
         {
