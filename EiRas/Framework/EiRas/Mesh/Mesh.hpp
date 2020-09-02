@@ -26,6 +26,8 @@ namespace Math {
     class float2;
     class float3;
     class float4;
+    class VertexData3D;
+    class VertexData2D;
 }
 
 namespace MeshSys {
@@ -99,7 +101,7 @@ namespace MeshSys {
 
     class Mesh;
 
-    class SubMeshPackedData
+    class MeshPackedData
     {
         friend Mesh;
     public:
@@ -111,7 +113,7 @@ namespace MeshSys {
         _uint IndexDataSize;
         _uint IndexDataStride;
 
-        ~SubMeshPackedData()
+        ~MeshPackedData()
         {
             delete[] VertexData;
             delete[] IndexData;
@@ -120,66 +122,10 @@ namespace MeshSys {
 
     class SubMesh
     {
-        friend Mesh;
     public:
         _uint IndexCount;
-        _uint VertexCount;
-        Math::float3* PositionData;
-        Math::float3* NormalData;
-        Math::float2* UVData;
-        Math::float4* ColorData;
-
-        _uint VertexBufferRefIndex;
-        _uint IndexBufferRefIndex;
-
-        _uint IndexBufferStartLocation;
-
-
+        _uint IndexBufferStartIdx;
     private:
-        SubMeshPackedData* _PackedData;
-
-        void PackData(MeshType inputType)
-        {
-            if (_PackedData == 0)
-            {
-                _PackedData = new SubMeshPackedData();
-                if (inputType == MeshType::VertexInput3D)
-                {
-                    _PackedData->VertexData = new VertexData3D[VertexCount];
-                    _PackedData->VertexDataStride = sizeof(VertexData3D);
-                }
-                else
-                {
-                    _PackedData->VertexData = new VertexData2D[VertexCount];
-                    _PackedData->VertexDataStride = sizeof(VertexData2D);
-                }
-                _PackedData->VertexDataSize = _PackedData->VertexDataStride * VertexCount;
-                _PackedData->IndexDataStride = sizeof(_uint);
-                _PackedData->IndexDataSize = sizeof(_uint) * IndexCount;
-            }
-
-            for (_uint i = 0; i < VertexCount; i++)
-            {
-                if (inputType == MeshType::VertexInput3D)
-                {
-                    VertexData3D* tmpData = (VertexData3D*)_PackedData->VertexData + i;
-                    if (PositionData)
-                        tmpData->Position = float3(PositionData[i].x, PositionData[i].y, PositionData[i].z);
-                    if (UVData)
-                        tmpData->UV = float2(UVData[i].x, UVData[i].y);
-                    if (NormalData)
-                        tmpData->Normal = float3(NormalData[i].x, NormalData[i].y, NormalData[i].z);
-                }
-                else
-                {
-                    VertexData2D* tmpData = (VertexData2D*)_PackedData->VertexData + i;
-                    if (PositionData)
-                        tmpData->Position = float2(PositionData[i].x, PositionData[i].y);
-                    if (UVData)
-                        tmpData->UV = float2(UVData[i].x, UVData[i].y);
-                }
-            }
-        }
     };
 
     class Mesh
@@ -191,14 +137,29 @@ namespace MeshSys {
 
         std::string Name;
 
-        void BuildBuffer(MeshType inputType = MeshType::VertexInput3D);
+        void BuildBuffer(MeshType inputType = MeshType::VertexInput3D, bool noMoreUpdate = true);
 
         EiRasPlatformBridgeProtocol* PlatformBridge;
 
         _uint SubMeshCount;
         SubMesh* SubMeshes;
 
+        _uint VertexCount;
+        _uint IndexCount;
+
+        Math::float3* PositionData;
+        Math::float3* NormalData;
+        Math::float2* UVData;
+        Math::float4* ColorData;
+        _uint* IndexData;
+
+    protected:
+
+        MeshBuffer* _VertexBuffer, * _IndexBuffer;
+        MeshPackedData* _PackedData;
+        void PackData(MeshType inputType);
     private:
+
     };
 
 }

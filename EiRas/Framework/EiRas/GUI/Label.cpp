@@ -52,138 +52,141 @@ void Label::DrawView(Graphics::CommandBuffer* cmdBuffer)
 
 void Label::_BuildTextMesh()
 {
-    if (_Text == 0)
-    {
-        return;
-    }
+    return;
 
-    _Render->ClearMesh(true);
-    _Render->ClearMaterials(true);
 
-    _uint charCount = _Text->CharDataList.size();
-    float posTop = _NDC.top;
-    float posLeft = _NDC.left;
-    float posButtom = _NDC.top - _NDC.height;
-    float posMid = (posTop - posButtom) / 2.0f + posButtom;
+    //if (_Text == 0)
+    //{
+    //    return;
+    //}
 
-    //Batch
-    map<_uint, BatchedFontMeshData> BatchedData;
-    float charMeshHeightMax = 0, hCharMeshHeightMax = 0;
+    //_Render->ClearMesh(true);
+    //_Render->ClearMaterials(true);
 
-    for (int i = 0; i < charCount; i++)
-    {
-        rect_float uvRect = _Text->CharDataList[i].MappingRect;
-        _uint height, width;
-        GUISystem::SharedInstance()->GetFrameSize(width, height);
-        //pixel Size
-        float tHeight = uvRect.height * FONT_MAP_HEIGHT / (float)height;
-        charMeshHeightMax = tHeight > charMeshHeightMax ? tHeight : charMeshHeightMax;
-    }
-    hCharMeshHeightMax = charMeshHeightMax / 2.0f;
-    posButtom = posMid - hCharMeshHeightMax;
+    //_uint charCount = _Text->CharDataList.size();
+    //float posTop = _NDC.top;
+    //float posLeft = _NDC.left;
+    //float posButtom = _NDC.top - _NDC.height;
+    //float posMid = (posTop - posButtom) / 2.0f + posButtom;
 
-    for (int i = 0; i < charCount; i++)
-    {
-        rect_float uvRect = _Text->CharDataList[i].MappingRect;
-        _uint refMapIndex = _Text->CharDataList[i].FontMapIndex;
-        bool alignmentMid = _Text->CharDataList[i].AlignmentMid;
+    ////Batch
+    //map<_uint, BatchedFontMeshData> BatchedData;
+    //float charMeshHeightMax = 0, hCharMeshHeightMax = 0;
 
-        _uint height, width;
-        GUISystem::SharedInstance()->GetFrameSize(width, height);
-        //pixel Size
-        float charMeshHeight = uvRect.height * FONT_MAP_HEIGHT / (float)height;
-        float charMeshWidth = uvRect.width * FONT_MAP_WIDTH / (float)width;
+    //for (int i = 0; i < charCount; i++)
+    //{
+    //    rect_float uvRect = _Text->CharDataList[i].MappingRect;
+    //    _uint height, width;
+    //    GUISystem::SharedInstance()->GetFrameSize(width, height);
+    //    //pixel Size
+    //    float tHeight = uvRect.height * FONT_MAP_HEIGHT / (float)height;
+    //    charMeshHeightMax = tHeight > charMeshHeightMax ? tHeight : charMeshHeightMax;
+    //}
+    //hCharMeshHeightMax = charMeshHeightMax / 2.0f;
+    //posButtom = posMid - hCharMeshHeightMax;
 
-        float3 pos0, pos1;
-        float3 pos2, pos3;
+    //for (int i = 0; i < charCount; i++)
+    //{
+    //    rect_float uvRect = _Text->CharDataList[i].MappingRect;
+    //    _uint refMapIndex = _Text->CharDataList[i].FontMapIndex;
+    //    bool alignmentMid = _Text->CharDataList[i].AlignmentMid;
 
-        if (alignmentMid)
-        {
-            float hCharMeshHeight = charMeshHeight / 2.0f;
-            pos0 = float3(posLeft, posMid + hCharMeshHeight, 1), pos1 = float3(posLeft + charMeshWidth, posMid + hCharMeshHeight, 1);
-            pos2 = float3(posLeft, posMid - hCharMeshHeight, 1), pos3 = float3(posLeft + charMeshWidth, posMid - hCharMeshHeight, 1);
-        }
-        else
-        {
-            pos0 = float3(posLeft, posButtom + charMeshHeight, 1); pos1 = float3(posLeft + charMeshWidth, posButtom + charMeshHeight, 1);
-            pos2 = float3(posLeft, posButtom, 1); pos3 = float3(posLeft + charMeshWidth, posButtom, 1);
-        }
+    //    _uint height, width;
+    //    GUISystem::SharedInstance()->GetFrameSize(width, height);
+    //    //pixel Size
+    //    float charMeshHeight = uvRect.height * FONT_MAP_HEIGHT / (float)height;
+    //    float charMeshWidth = uvRect.width * FONT_MAP_WIDTH / (float)width;
 
-        float2 uv0 = float2(uvRect.left, uvRect.top), uv1 = float2(uvRect.left + uvRect.width, uvRect.top);
-        float2 uv2 = float2(uvRect.left, uvRect.top + uvRect.height), uv3 = float2(uvRect.left + uvRect.width, uvRect.top + uvRect.height);
+    //    float3 pos0, pos1;
+    //    float3 pos2, pos3;
 
-        map<_uint, BatchedFontMeshData>::iterator BatchedPosDataIt = BatchedData.find(refMapIndex);
+    //    if (alignmentMid)
+    //    {
+    //        float hCharMeshHeight = charMeshHeight / 2.0f;
+    //        pos0 = float3(posLeft, posMid + hCharMeshHeight, 1), pos1 = float3(posLeft + charMeshWidth, posMid + hCharMeshHeight, 1);
+    //        pos2 = float3(posLeft, posMid - hCharMeshHeight, 1), pos3 = float3(posLeft + charMeshWidth, posMid - hCharMeshHeight, 1);
+    //    }
+    //    else
+    //    {
+    //        pos0 = float3(posLeft, posButtom + charMeshHeight, 1); pos1 = float3(posLeft + charMeshWidth, posButtom + charMeshHeight, 1);
+    //        pos2 = float3(posLeft, posButtom, 1); pos3 = float3(posLeft + charMeshWidth, posButtom, 1);
+    //    }
 
-        if (BatchedPosDataIt == BatchedData.end())
-        {
-            BatchedFontMeshData tFontMeshData;
-            tFontMeshData.Pos.push_back(pos0);
-            tFontMeshData.Pos.push_back(pos1);
-            tFontMeshData.Pos.push_back(pos2);
-            tFontMeshData.Pos.push_back(pos3);
+    //    float2 uv0 = float2(uvRect.left, uvRect.top), uv1 = float2(uvRect.left + uvRect.width, uvRect.top);
+    //    float2 uv2 = float2(uvRect.left, uvRect.top + uvRect.height), uv3 = float2(uvRect.left + uvRect.width, uvRect.top + uvRect.height);
 
-            tFontMeshData.UV.push_back(uv0);
-            tFontMeshData.UV.push_back(uv1);
-            tFontMeshData.UV.push_back(uv2);
-            tFontMeshData.UV.push_back(uv3);
-            tFontMeshData.RefFontImageIndex = refMapIndex;
-            BatchedData.insert(pair<_uint, BatchedFontMeshData>(refMapIndex, tFontMeshData));
-        }
-        else
-        {
-            map<_uint, BatchedFontMeshData>::iterator batchedDataIt = BatchedData.find(refMapIndex);
-            batchedDataIt->second.Pos.push_back(pos0);
-            batchedDataIt->second.Pos.push_back(pos1);
-            batchedDataIt->second.Pos.push_back(pos2);
-            batchedDataIt->second.Pos.push_back(pos3);
-            batchedDataIt->second.UV.push_back(uv0);
-            batchedDataIt->second.UV.push_back(uv1);
-            batchedDataIt->second.UV.push_back(uv2);
-            batchedDataIt->second.UV.push_back(uv3);
-        }
-        posLeft += charMeshWidth;
-    }
+    //    map<_uint, BatchedFontMeshData>::iterator BatchedPosDataIt = BatchedData.find(refMapIndex);
 
-    Mesh* textMesh = new Mesh("TextMesh");
+    //    if (BatchedPosDataIt == BatchedData.end())
+    //    {
+    //        BatchedFontMeshData tFontMeshData;
+    //        tFontMeshData.Pos.push_back(pos0);
+    //        tFontMeshData.Pos.push_back(pos1);
+    //        tFontMeshData.Pos.push_back(pos2);
+    //        tFontMeshData.Pos.push_back(pos3);
 
-    _Render->SetMesh(textMesh);
-    textMesh->SubMeshCount = BatchedData.size();
-    textMesh->SubMeshes = new SubMesh[textMesh->SubMeshCount];
+    //        tFontMeshData.UV.push_back(uv0);
+    //        tFontMeshData.UV.push_back(uv1);
+    //        tFontMeshData.UV.push_back(uv2);
+    //        tFontMeshData.UV.push_back(uv3);
+    //        tFontMeshData.RefFontImageIndex = refMapIndex;
+    //        BatchedData.insert(pair<_uint, BatchedFontMeshData>(refMapIndex, tFontMeshData));
+    //    }
+    //    else
+    //    {
+    //        map<_uint, BatchedFontMeshData>::iterator batchedDataIt = BatchedData.find(refMapIndex);
+    //        batchedDataIt->second.Pos.push_back(pos0);
+    //        batchedDataIt->second.Pos.push_back(pos1);
+    //        batchedDataIt->second.Pos.push_back(pos2);
+    //        batchedDataIt->second.Pos.push_back(pos3);
+    //        batchedDataIt->second.UV.push_back(uv0);
+    //        batchedDataIt->second.UV.push_back(uv1);
+    //        batchedDataIt->second.UV.push_back(uv2);
+    //        batchedDataIt->second.UV.push_back(uv3);
+    //    }
+    //    posLeft += charMeshWidth;
+    //}
 
-    _uint subMeshIndex = 0;
-    map<_uint, BatchedFontMeshData>::iterator batchedDataIt = BatchedData.begin();
-    while (batchedDataIt != BatchedData.end())
-    {
-        BatchedFontMeshData* data = &(batchedDataIt->second);
+    //Mesh* textMesh = new Mesh("TextMesh");
 
-        Material* mat = RuntimeUtilities::CreateFontMaterial("Font Mat", GUISystem::SharedInstance()->_CmdBuffer);
-        mat->SetProperty(FontManager::SharedInstance()->fontDataList[data->RefFontImageIndex]->_FontImage, 1, 0);
-        mat->SetProperty(&_TextColor, 0, 0);
-        _Render->AddMaterial(mat, 0);
+    //_Render->SetMesh(textMesh);
+    //textMesh->SubMeshCount = BatchedData.size();
+    //textMesh->SubMeshes = new SubMesh[textMesh->SubMeshCount];
 
-        vector<float3>* tPos = &(data->Pos);
-        vector<float2>* tUV = &(data->UV);
+    //_uint subMeshIndex = 0;
+    //map<_uint, BatchedFontMeshData>::iterator batchedDataIt = BatchedData.begin();
+    //while (batchedDataIt != BatchedData.end())
+    //{
+    //    BatchedFontMeshData* data = &(batchedDataIt->second);
 
-        SubMesh* subMesh = &(textMesh->SubMeshes[subMeshIndex++]);
-        subMesh->IndexCount = tPos->size() / 4 * 6;
-        subMesh->VertexCount = tPos->size();
-        subMesh->IndicesData = new _uint[subMesh->IndexCount];
+    //    Material* mat = RuntimeUtilities::CreateFontMaterial("Font Mat", GUISystem::SharedInstance()->_CmdBuffer);
+    //    mat->SetProperty(FontManager::SharedInstance()->fontDataList[data->RefFontImageIndex]->_FontImage, 1, 0);
+    //    mat->SetProperty(&_TextColor, 0, 0);
+    //    _Render->AddMaterial(mat, 0);
 
-        for (int j = 0, vertexIndex = 0; j < subMesh->IndexCount; j += 6, vertexIndex += 4)
-        {
-            subMesh->IndicesData[j + 0] = vertexIndex;
-            subMesh->IndicesData[j + 1] = vertexIndex + 1;
-            subMesh->IndicesData[j + 2] = vertexIndex + 2;
-            subMesh->IndicesData[j + 3] = vertexIndex + 1;
-            subMesh->IndicesData[j + 4] = vertexIndex + 2;
-            subMesh->IndicesData[j + 5] = vertexIndex + 3;
-        }
+    //    vector<float3>* tPos = &(data->Pos);
+    //    vector<float2>* tUV = &(data->UV);
 
-        subMesh->PositionData = new float3[subMesh->VertexCount];
-        memcpy(subMesh->PositionData, &(*tPos)[0], sizeof(float3) * subMesh->VertexCount);
-        subMesh->UVData = new float2[subMesh->VertexCount];
-        memcpy(subMesh->UVData, &(*tUV)[0], sizeof(float2) * subMesh->VertexCount);
-        batchedDataIt++;
-    }
-    textMesh->BuildBuffer(MeshType::VertexInput2D);
+    //    SubMesh* subMesh = &(textMesh->SubMeshes[subMeshIndex++]);
+    //    subMesh->IndexCount = tPos->size() / 4 * 6;
+    //    subMesh->VertexCount = tPos->size();
+    //    subMesh->IndicesData = new _uint[subMesh->IndexCount];
+
+    //    for (int j = 0, vertexIndex = 0; j < subMesh->IndexCount; j += 6, vertexIndex += 4)
+    //    {
+    //        subMesh->IndicesData[j + 0] = vertexIndex;
+    //        subMesh->IndicesData[j + 1] = vertexIndex + 1;
+    //        subMesh->IndicesData[j + 2] = vertexIndex + 2;
+    //        subMesh->IndicesData[j + 3] = vertexIndex + 1;
+    //        subMesh->IndicesData[j + 4] = vertexIndex + 2;
+    //        subMesh->IndicesData[j + 5] = vertexIndex + 3;
+    //    }
+
+    //    subMesh->PositionData = new float3[subMesh->VertexCount];
+    //    memcpy(subMesh->PositionData, &(*tPos)[0], sizeof(float3) * subMesh->VertexCount);
+    //    subMesh->UVData = new float2[subMesh->VertexCount];
+    //    memcpy(subMesh->UVData, &(*tUV)[0], sizeof(float2) * subMesh->VertexCount);
+    //    batchedDataIt++;
+    //}
+    //textMesh->BuildBuffer(MeshType::VertexInput2D);
 }

@@ -19,6 +19,11 @@
 using namespace MeshSys;
 using namespace Math;
 
+#define COPYDATA(dst, src, type) if(src.size() > 0){ \
+meshObj->dst = new type[src.size()]; \
+memcpy(meshObj->dst, &src[0], sizeof(type) * src.size()); \
+}
+
 void MeshSys::LoadMeshFromFile(std::string fileName, Mesh* meshObj)
 {
     Assimp::Importer imp;
@@ -36,36 +41,50 @@ void MeshSys::LoadMeshFromFile(std::string fileName, Mesh* meshObj)
     }
     meshObj->SubMeshes = new SubMesh[meshObj->SubMeshCount];
 
+    meshObj->VertexCount = 0;
+    meshObj->IndexCount = 0;
+
+    std::vector<float3> positionData;
+    std::vector<float3> normalData;
+    std::vector<float2> uvData;
+    std::vector<float4> colorData;
+    std::vector<_uint> indexData;
     for (_uint i = 0; i < pscene->mNumMeshes; i++)
     {
         aiMesh* pmesh = pscene->mMeshes[i];
-        SubMesh* submesh = &meshObj->SubMeshes[i];
-        submesh->VertexCount = pmesh->mNumVertices;
-        submesh->PositionData = new float3[submesh->VertexCount];
-        submesh->NormalData = new float3[submesh->VertexCount];
-        submesh->UVData = new float2[submesh->VertexCount];
-        submesh->ColorData = new float4[submesh->VertexCount];
-        
+        meshObj->VertexCount += pmesh->mNumVertices;
+
         for (_uint j = 0; j < pmesh->mNumVertices; j++)
         {
-            submesh->PositionData[j] = float3(pmesh->mVertices[j].x, pmesh->mVertices[j].y, pmesh->mVertices[j].z);
-            submesh->NormalData[j] = float3(pmesh->mNormals[j].x, pmesh->mNormals[j].y, pmesh->mNormals[j].z);
+            positionData.push_back(float3(pmesh->mVertices[j].x, pmesh->mVertices[j].y, pmesh->mVertices[j].z));
+            normalData.push_back(float3(pmesh->mNormals[j].x, pmesh->mNormals[j].y, pmesh->mNormals[j].z));
             if (pmesh->HasTextureCoords(0))
             {
-                submesh->UVData[j] = float2(pmesh->mTextureCoords[0][j].x, pmesh->mTextureCoords[0][j].y);
+                uvData.push_back(float2(pmesh->mTextureCoords[0][j].x, pmesh->mTextureCoords[0][j].y));
             }
         }
 
-        submesh->IndexCount = pmesh->mNumFaces * 3;
-        submesh->IndicesData = new _uint[submesh->IndexCount];
-        _uint curIndex = 0;
+        SubMesh* submesh = &meshObj->SubMeshes[i];
+        submesh->IndexBufferStartIdx = indexData.size();
+        _uint indexCount = 0;
         for (_uint k = 0; k < pmesh->mNumFaces; k++)
         {
-            submesh->IndicesData[curIndex++] = pmesh->mFaces[k].mIndices[0];
-            submesh->IndicesData[curIndex++] = pmesh->mFaces[k].mIndices[1];
-            submesh->IndicesData[curIndex++] = pmesh->mFaces[k].mIndices[2];
+            indexCount += 3;
+            indexData.push_back(pmesh->mFaces[k].mIndices[0]);
+            indexData.push_back(pmesh->mFaces[k].mIndices[1]);
+            indexData.push_back(pmesh->mFaces[k].mIndices[2]);
         }
+
+        meshObj->IndexCount += indexCount;
+        submesh->IndexCount = indexCount;
     }
+
+    COPYDATA(PositionData, positionData, float3);
+    COPYDATA(NormalData, normalData, float3);
+    COPYDATA(UVData, uvData, float2);
+    COPYDATA(ColorData, colorData, float4);
+    COPYDATA(IndexData, indexData, _uint);
+
     imp.FreeScene();
 }
 

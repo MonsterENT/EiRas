@@ -57,33 +57,77 @@ void Mesh::LoadDataFromFile(std::string fileName)
     LoadMeshFromFile(fileName, this);
 }
 
-void Mesh::BuildBuffer(MeshType inputType)
+void Mesh::BuildBuffer(MeshType inputType, bool noMoreUpdate)
 {
-    for (_uint i = 0; i < SubMeshCount; i++)
+    PackData(inputType);
+    _VertexBuffer = MeshBufferManager::GetManager()->GetValideVertexBufferWithSize(_PackedData->VertexDataSize, _PackedData->VertexDataStride);
+    _IndexBuffer = MeshBufferManager::GetManager()->GetValideIndexBufferWithSize(_PackedData->IndexDataSize, _PackedData->IndexDataStride);
+
+    _VertexBuffer->Buffer = new GraphicsResource(Name, GraphicsResourceType::Default, GraphicsResourceVisibility::VISIBILITY_VERTEX, GraphicsResourceUpdateFreq::UPDATE_FREQ_LOW, true);
+    _VertexBuffer->Buffer->InitAsDefault(_VertexBuffer->BufferSize);
+    _VertexBuffer->Buffer->SetResource(_PackedData->VertexData, noMoreUpdate);
+
+    _IndexBuffer->Buffer = new GraphicsResource(Name, GraphicsResourceType::Default, GraphicsResourceVisibility::VISIBILITY_VERTEX, GraphicsResourceUpdateFreq::UPDATE_FREQ_LOW, true);
+    _IndexBuffer->Buffer->InitAsDefault(_PackedData->IndexDataSize);
+    _IndexBuffer->Buffer->SetResource(_PackedData->IndexData, noMoreUpdate);
+
+#ifdef GRAPHICS_DX
+    ((MeshDX12Bridge*)PlatformBridge)->BuildBufferView(_VertexBuffer->Buffer->PlatformBridge, _PackedData->VertexDataSize, VertexCount,
+        _IndexBuffer->Buffer->PlatformBridge, _PackedData->IndexDataSize);
+#endif
+
+    if (noMoreUpdate)
     {
-        SubMesh* subMesh = &SubMeshes[i];
-        subMesh->PackData(inputType);
-
-        MeshBuffer* vertexBuffer = MeshBufferManager::GetManager()->GetValideVertexBufferWithSize(subMesh->_PackedData->VertexDataSize, subMesh->_PackedData->VertexDataStride);
-        MeshBuffer* indexBuffer = MeshBufferManager::GetManager()->GetValideIndexBufferWithSize(subMesh->_PackedData->IndexDataSize, subMesh->_PackedData->IndexDataStride);
-
-//        subMesh->VertexBuffer = new GraphicsResource(Name, GraphicsResourceType::Default, GraphicsResourceVisibility::VISIBILITY_VERTEX, GraphicsResourceUpdateFreq::UPDATE_FREQ_LOW, true);
-//        subMesh->VertexBuffer->InitAsDefault(subMesh->TriangleDataSize);
-//        subMesh->VertexBuffer->SetResource(subMesh->TriangleData, true);
-//
-//        subMesh->IndexBuffer = new GraphicsResource(Name, GraphicsResourceType::Default, GraphicsResourceVisibility::VISIBILITY_VERTEX, GraphicsResourceUpdateFreq::UPDATE_FREQ_LOW, true);
-//        subMesh->IndexBuffer->InitAsDefault(subMesh->IndexDataSize);
-//        subMesh->IndexBuffer->SetResource(subMesh->IndicesData, true);
-//
-//#ifdef GRAPHICS_DX
-//        ((MeshDX12Bridge*)PlatformBridge)->BuildBufferView(subMesh->VertexBuffer->PlatformBridge, subMesh->TriangleDataSize, subMesh->VertexCount,
-//            subMesh->IndexBuffer->PlatformBridge, subMesh->IndexDataSize);
-//#endif
+        delete _PackedData;
+        _PackedData = 0;
     }
 
 #ifdef GRAPHICS_METAL
     ((MeshMetalBridge*)PlatformBridge)->BuildBuffer(VertexBuffer->PlatformBridge, IndexBuffer->PlatformBridge, VerticesCount, IndicesCount, 0, 0);
 #endif
+}
 
+void Mesh::PackData(MeshType inputType)
+{
+    if (_PackedData == 0)
+    {
+        _PackedData = new MeshPackedData();
+        if (inputType == MeshType::VertexInput3D)
+        {
+            _PackedData->VertexData = new VertexData3D[VertexCount];
+            _PackedData->VertexDataStride = sizeof(VertexData3D);
+        }
+        else
+        {
+            _PackedData->VertexData = new VertexData2D[VertexCount];
+            _PackedData->VertexDataStride = sizeof(VertexData2D);
+        }
+    }
 
+    _PackedData->VertexDataSize = _PackedData->VertexDataStride * VertexCount;
+    _PackedData->IndexDataStride = sizeof(_uint);
+    _PackedData->IndexDataSize = sizeof(_uint) * IndexCount;
+    _PackedData->IndexData = IndexData;
+
+    for (_uint i = 0; i < VertexCount; i++)
+    {
+        if (inputType == MeshType::VertexInput3D)
+        {
+            VertexData3D* tmpData = (VertexData3D*)_PackedData->VertexData + i;
+            if (PositionData)
+                tmpData->Position = float3(PositionData[i].x, PositionData[i].y, PositionData[i].z);
+            if (UVData)
+                tmpData->UV = float2(UVData[i].x, UVData[i].y);
+            if (NormalData)
+                tmpData->Normal = float3(NormalData[i].x, NormalData[i].y, NormalData[i].z);
+        }
+        else
+        {
+            VertexData2D* tmpData = (VertexData2D*)_PackedData->VertexData + i;
+            if (PositionData)
+                tmpData->Position = float2(PositionData[i].x, PositionData[i].y);
+            if (UVData)
+                tmpData->UV = float2(UVData[i].x, UVData[i].y);
+        }
+    }
 }

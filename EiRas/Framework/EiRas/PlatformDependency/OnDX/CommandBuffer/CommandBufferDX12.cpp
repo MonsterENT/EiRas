@@ -93,13 +93,13 @@ void CommandBufferDX12::SetViewPort(float topLeftX, float topLeftY, float width,
 void CommandBufferDX12::DrawMesh(MeshSys::Mesh* mesh)
 {
     cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+    MeshDX12* rawMeshObj = (MeshDX12*)mesh->PlatformBridge->raw_obj;
+    cmdList->IASetVertexBuffers(0, 1, &rawMeshObj->VertexBufferViews[0]);
+    cmdList->IASetIndexBuffer(&rawMeshObj->IndexBufferViews[0]);
     for (_uint i = 0; i < mesh->SubMeshCount; i++)
     {
-        MeshDX12* rawMeshObj = (MeshDX12*)mesh->PlatformBridge->raw_obj;
-
-        cmdList->IASetVertexBuffers(0, 1, &rawMeshObj->VertexBufferViews[i]);
-        cmdList->IASetIndexBuffer(&rawMeshObj->IndexBufferViews[i]);
-        cmdList->DrawIndexedInstanced(mesh->SubMeshes[i].IndexCount, 1, 0, 0, 0);
+        cmdList->DrawIndexedInstanced(mesh->SubMeshes[i].IndexCount, 1, mesh->SubMeshes[i].IndexBufferStartIdx, 0, 0);
     }
 }
 
@@ -110,6 +110,11 @@ void CommandBufferDX12::DrawRenderData(RenderData* render)
         return;
     }
     cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+    MeshDX12* rawMeshObj = (MeshDX12*)render->m_Mesh->PlatformBridge->raw_obj;
+    cmdList->IASetVertexBuffers(0, 1, &rawMeshObj->VertexBufferViews[0]);
+    cmdList->IASetIndexBuffer(&rawMeshObj->IndexBufferViews[0]);
+
     for (_uint i = 0; i < render->m_Mesh->SubMeshCount; i++)
     {
         RenderMaterialPassData* mpd = 0;
@@ -128,11 +133,7 @@ void CommandBufferDX12::DrawRenderData(RenderData* render)
         Material* mat = mpd->m_Material;
         mat->FinishStateChange(mpd->Pass);
         SetMaterial((MaterialDX12*)mat->PlatformBridge->raw_obj, mat->materialLayout, mpd->Pass);
-
-        MeshDX12* rawMeshObj = (MeshDX12*)render->m_Mesh->PlatformBridge->raw_obj;
-        cmdList->IASetVertexBuffers(0, 1, &rawMeshObj->VertexBufferViews[i]);
-        cmdList->IASetIndexBuffer(&rawMeshObj->IndexBufferViews[i]);
-        cmdList->DrawIndexedInstanced(render->m_Mesh->SubMeshes[i].IndexCount, 1, 0, 0, 0);
+        cmdList->DrawIndexedInstanced(render->m_Mesh->SubMeshes[i].IndexCount, 1, render->m_Mesh->SubMeshes[i].IndexBufferStartIdx, 0, 0);
     }
 }
 
