@@ -156,6 +156,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\Framework\Common\CommonMacro.hpp" />
     <ClInclude Include="..\..\..\..\Framework\Component\FileSys\FileManager.hpp" />
     <ClInclude Include="..\..\..\..\Framework\Component\FontSys\FontManager.hpp" />
     <ClInclude Include="..\..\..\..\Framework\Component\FontSys\FontSys.hpp" />

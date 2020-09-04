@@ -59,6 +59,10 @@ void Mesh::LoadDataFromFile(std::string fileName)
 
 void Mesh::BuildBuffer(MeshType inputType, bool noMoreUpdate)
 {
+    if (VertexCount == 0 || IndexCount == 0)
+    {
+        return;
+    }
     PackData(inputType);
     _VertexBuffer = MeshBufferManager::GetManager()->GetValideVertexBufferWithSize(_PackedData->VertexDataSize, _PackedData->VertexDataStride);
     _IndexBuffer = MeshBufferManager::GetManager()->GetValideIndexBufferWithSize(_PackedData->IndexDataSize, _PackedData->IndexDataStride);
@@ -130,4 +134,60 @@ void Mesh::PackData(MeshType inputType)
                 tmpData->UV = float2(UVData[i].x, UVData[i].y);
         }
     }
+}
+
+void Mesh::SetVertexData(Math::float3* position, Math::float2* uv, _uint count)
+{
+    VertexCount = count;
+    RELEASE_ARRAY(PositionData);
+    PositionData = position;
+
+    RELEASE_ARRAY(UVData);
+    UVData = uv;
+}
+
+void Mesh::SetIndexData(_uint* index, _uint count)
+{
+    IndexCount = count;
+    RELEASE_ARRAY(IndexData);
+    IndexData = index;
+}
+
+void Mesh::SetVertexData(std::vector<Math::float3> position, std::vector<Math::float2> uv)
+{
+    VertexCount = position.size();
+    RELEASE_ARRAY(PositionData);
+    COPY_VECTOR_DATA(float3, position, PositionData);
+    
+    RELEASE_ARRAY(UVData);
+    COPY_VECTOR_DATA(float2, uv, UVData);
+}
+
+void Mesh::SetVertexData(std::vector<float3> position, std::vector<float3> normal, std::vector<float2> uv)
+{
+    VertexCount = position.size();
+    RELEASE_ARRAY(PositionData);
+    COPY_VECTOR_DATA(float3, position, PositionData);
+
+    RELEASE_ARRAY(NormalData);
+    COPY_VECTOR_DATA(float3, normal, NormalData);
+
+    RELEASE_ARRAY(UVData);
+    COPY_VECTOR_DATA(float2, uv, UVData);
+}
+
+void Mesh::SetVertexData(std::vector<Math::float3> position, std::vector<Math::float3> normal, std::vector<Math::float2> uv, std::vector<Math::float4> color)
+{
+    SetVertexData(position, normal, uv);
+
+    RELEASE_ARRAY(ColorData);
+    COPY_VECTOR_DATA(float4, color, ColorData);
+}
+
+
+void Mesh::SetIndexData(std::vector<_uint> index)
+{
+    RELEASE_ARRAY(IndexData);
+    IndexCount = index.size();
+    COPY_VECTOR_DATA(_uint, index, IndexData);
 }

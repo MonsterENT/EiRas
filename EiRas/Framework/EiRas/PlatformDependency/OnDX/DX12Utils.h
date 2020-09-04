@@ -46,18 +46,17 @@ namespace DX12Utils
         {
             _FullScreenTriangle = new MeshSys::Mesh("Full Screen Triangle");
             _FullScreenTriangle->SubMeshCount = 1;
-            _FullScreenTriangle->VertexCount = 3;
-            _FullScreenTriangle->IndexCount = 6;
             MeshSys::SubMesh* subMesh = new MeshSys::SubMesh();
             _FullScreenTriangle->SubMeshes = subMesh;
             subMesh->IndexBufferStartIdx = 0;
-            subMesh->IndexCount = 6;
+            subMesh->IndexCount = 3;
 
-            _FullScreenTriangle->UVData = new Math::float2[3]{ {0, 0}, {0, 0}, {0, 0}};
-            _FullScreenTriangle->NormalData = new Math::float3[3]{ {0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
-            _FullScreenTriangle->IndexData = new _uint[3]{ 0, 1, 2 };
-            _FullScreenTriangle->PositionData = new Math::float3[3]{ {-1, -1, 0}, {-1, 3, 0}, {3, -1, 0} };
-            _FullScreenTriangle->BuildBuffer();
+            _FullScreenTriangle->SetVertexData(new Math::float3[3]{ {-1, -1, 0}, {-1, 3, 0}, {3, -1, 0} },
+                new Math::float2[3]{ {0, 0}, {0, 0}, {0, 0} },
+                3);
+
+            _FullScreenTriangle->SetIndexData(new _uint[3]{ 0, 1, 2 }, 3);
+            _FullScreenTriangle->BuildBuffer(MeshSys::MeshType::VertexInput2D, true);
         }
         return _FullScreenTriangle;
     }

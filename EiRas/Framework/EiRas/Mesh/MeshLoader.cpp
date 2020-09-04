@@ -19,11 +19,6 @@
 using namespace MeshSys;
 using namespace Math;
 
-#define COPYDATA(dst, src, type) if(src.size() > 0){ \
-meshObj->dst = new type[src.size()]; \
-memcpy(meshObj->dst, &src[0], sizeof(type) * src.size()); \
-}
-
 void MeshSys::LoadMeshFromFile(std::string fileName, Mesh* meshObj)
 {
     Assimp::Importer imp;
@@ -41,9 +36,6 @@ void MeshSys::LoadMeshFromFile(std::string fileName, Mesh* meshObj)
     }
     meshObj->SubMeshes = new SubMesh[meshObj->SubMeshCount];
 
-    meshObj->VertexCount = 0;
-    meshObj->IndexCount = 0;
-
     std::vector<float3> positionData;
     std::vector<float3> normalData;
     std::vector<float2> uvData;
@@ -52,7 +44,6 @@ void MeshSys::LoadMeshFromFile(std::string fileName, Mesh* meshObj)
     for (_uint i = 0; i < pscene->mNumMeshes; i++)
     {
         aiMesh* pmesh = pscene->mMeshes[i];
-        meshObj->VertexCount += pmesh->mNumVertices;
 
         for (_uint j = 0; j < pmesh->mNumVertices; j++)
         {
@@ -74,16 +65,11 @@ void MeshSys::LoadMeshFromFile(std::string fileName, Mesh* meshObj)
             indexData.push_back(pmesh->mFaces[k].mIndices[1]);
             indexData.push_back(pmesh->mFaces[k].mIndices[2]);
         }
-
-        meshObj->IndexCount += indexCount;
         submesh->IndexCount = indexCount;
     }
 
-    COPYDATA(PositionData, positionData, float3);
-    COPYDATA(NormalData, normalData, float3);
-    COPYDATA(UVData, uvData, float2);
-    COPYDATA(ColorData, colorData, float4);
-    COPYDATA(IndexData, indexData, _uint);
+    meshObj->SetVertexData(positionData, normalData, uvData, colorData);
+    meshObj->SetIndexData(indexData);
 
     imp.FreeScene();
 }

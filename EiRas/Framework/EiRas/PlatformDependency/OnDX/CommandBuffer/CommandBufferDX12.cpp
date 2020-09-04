@@ -111,32 +111,37 @@ void CommandBufferDX12::DrawRenderData(RenderData* render)
     }
     cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-    MeshDX12* rawMeshObj = (MeshDX12*)render->m_Mesh->PlatformBridge->raw_obj;
-    cmdList->IASetVertexBuffers(0, 1, &rawMeshObj->VertexBufferViews[0]);
-    cmdList->IASetIndexBuffer(&rawMeshObj->IndexBufferViews[0]);
 
-    for (_uint i = 0; i < render->m_Mesh->SubMeshCount; i++)
+    for (int meshIdx = 0; meshIdx < render->m_Meshes.size(); meshIdx++)
     {
-        RenderMaterialPassData* mpd = 0;
-        if (i >= render->_MaterialList.size())
+        Mesh* meshObj = render->m_Meshes[meshIdx];
+        MeshDX12* rawMeshObj = (MeshDX12*)meshObj->PlatformBridge->raw_obj;
+
+        cmdList->IASetVertexBuffers(0, 1, &rawMeshObj->VertexBufferViews[0]);
+        cmdList->IASetIndexBuffer(&rawMeshObj->IndexBufferViews[0]);
+
+        for (_uint i = 0; i < meshObj->SubMeshCount; i++)
         {
-            mpd = &render->_MaterialList[0];
+            RenderMaterialPassData* mpd = 0;
+            if (i >= render->_MaterialList.size())
+            {
+                mpd = &render->_MaterialList[0];
+            }
+            else
+            {
+                mpd = &render->_MaterialList[i];
+            }
+            if (mpd == 0)
+            {
+                continue;
+            }
+            Material* mat = mpd->m_Material;
+            mat->FinishStateChange(mpd->Pass);
+            SetMaterial((MaterialDX12*)mat->PlatformBridge->raw_obj, mat->materialLayout, mpd->Pass);
+            cmdList->DrawIndexedInstanced(meshObj->SubMeshes[i].IndexCount, 1, meshObj->SubMeshes[i].IndexBufferStartIdx, 0, 0);
         }
-        else
-        {
-            mpd = &render->_MaterialList[i];
-        }
-        if (mpd == 0)
-        {
-            continue;
-        }
-        Material* mat = mpd->m_Material;
-        mat->FinishStateChange(mpd->Pass);
-        SetMaterial((MaterialDX12*)mat->PlatformBridge->raw_obj, mat->materialLayout, mpd->Pass);
-        cmdList->DrawIndexedInstanced(render->m_Mesh->SubMeshes[i].IndexCount, 1, render->m_Mesh->SubMeshes[i].IndexBufferStartIdx, 0, 0);
     }
 }
-
 
 void CommandBufferDX12::SetMaterial(MaterialSys::MaterialDX12* mat, MaterialSys::MaterialLayout* layout, _uint pass)
 {

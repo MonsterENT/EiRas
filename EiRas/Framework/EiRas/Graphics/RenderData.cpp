@@ -10,9 +10,12 @@ void RenderData::ClearMesh(bool release)
 {
     if (release)
     {
-        delete m_Mesh;
+        for (int i = 0; i < m_Meshes.size(); i++)
+        {
+            delete m_Meshes[i];
+        }
     }
-    m_Mesh = 0;
+    m_Meshes.clear();
 }
 
 void RenderData::ClearMaterials(bool release)

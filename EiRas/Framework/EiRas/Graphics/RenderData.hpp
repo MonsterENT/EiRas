@@ -31,9 +31,10 @@ namespace Graphics
     class RenderData
     {
     public:
-        void SetMesh(MeshSys::Mesh* mesh)
+
+        void AddMesh(MeshSys::Mesh* mesh)
         {
-            m_Mesh = mesh;
+            m_Meshes.push_back(mesh);
         }
 
         void AddMaterial(MaterialSys::Material* mat, _uint pass = 0)
@@ -61,7 +62,7 @@ namespace Graphics
 
         void ClearMaterials(bool release);
 
-        MeshSys::Mesh* m_Mesh;
+        std::vector<MeshSys::Mesh*> m_Meshes;
         std::vector<RenderMaterialPassData> _MaterialList;
     };
 }

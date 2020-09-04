@@ -231,6 +231,9 @@
     <ClInclude Include="..\..\..\..\Framework\EiRas\GUI\EventBase.hpp">
       <Filter>framework</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\Framework\Common\CommonMacro.hpp">
+      <Filter>framework</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EiRasDX12Build.cpp">

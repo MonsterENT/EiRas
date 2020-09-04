@@ -9,7 +9,7 @@
 #ifndef Mesh_hpp
 #define Mesh_hpp
 
-
+#include <Common/CommonMacro.hpp>
 #include <string>
 #include <Material/GraphicsResource.hpp>
 #include <Global/PlatformDependency/EiRasPlatformBridgeProtocol.h>
@@ -144,6 +144,15 @@ namespace MeshSys {
         _uint SubMeshCount;
         SubMesh* SubMeshes;
 
+        void SetVertexData(Math::float3* position, Math::float2* uv, _uint count);
+        void SetIndexData(_uint* index, _uint count);
+
+        void SetVertexData(std::vector<Math::float3> position, std::vector<Math::float2> uv);
+        void SetVertexData(std::vector<Math::float3> position, std::vector<Math::float3> normal, std::vector<Math::float2> uv);
+        void SetVertexData(std::vector<Math::float3> position, std::vector<Math::float3> normal, std::vector<Math::float2> uv, std::vector<Math::float4> color);
+        void SetIndexData(std::vector<_uint> index);
+    protected:
+
         _uint VertexCount;
         _uint IndexCount;
 
@@ -152,8 +161,6 @@ namespace MeshSys {
         Math::float2* UVData;
         Math::float4* ColorData;
         _uint* IndexData;
-
-    protected:
 
         MeshBuffer* _VertexBuffer, * _IndexBuffer;
         MeshPackedData* _PackedData;
