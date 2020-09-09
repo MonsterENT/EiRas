@@ -9,6 +9,11 @@ MeshDX12Bridge::MeshDX12Bridge()
     raw_obj = new MeshDX12();
 }
 
+void MeshDX12Bridge::Reset()
+{
+    ((MeshDX12*)raw_obj)->Reset();
+}
+
 void MeshDX12Bridge::BuildBufferView(void* vertexResObjPB, _uint vertexBufferSize, _uint vertexCount,
     void* indexResObjPB, _uint indexBufferSize)
 {

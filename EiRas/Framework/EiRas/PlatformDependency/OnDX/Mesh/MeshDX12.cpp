@@ -11,6 +11,12 @@ MeshDX12::MeshDX12()
 {
 }
 
+void MeshDX12::Reset()
+{
+    VertexBufferViews.clear();
+    IndexBufferViews.clear();
+}
+
 void MeshDX12::BuildBufferView(void* rawVertexResObj, _uint vertexBufferSize, _uint vertexCount,
     void* rawIndexResObj, _uint indexBufferSize)
 {

@@ -47,6 +47,14 @@ namespace MeshSys {
         _uint BufferSize;
         _uint BufferUsed;
 
+        MeshBuffer()
+        {
+            Buffer = 0;
+            BufferStride = 0;
+            BufferSize = 0;
+            BufferUsed = 0;
+        }
+
         bool IsValide(_uint size, _uint stride)
         {
             if (BufferStride == stride)
@@ -65,8 +73,8 @@ namespace MeshSys {
     public:
 
         static MeshBufferManager* GetManager();
-        std::vector<MeshBuffer> VertexBufferPool;
-        std::vector<MeshBuffer> IndexBufferPool;
+        std::vector<MeshBuffer*> VertexBufferPool;
+        std::vector<MeshBuffer*> IndexBufferPool;
 
         MeshBuffer* GetValideVertexBufferWithSize(_uint size, _uint stride)
         {
@@ -79,22 +87,22 @@ namespace MeshSys {
         }
 
     private:
-        MeshBuffer* GetValideBufferWithSize(std::vector<MeshBuffer>* pool, _uint size, _uint stride)
+        MeshBuffer* GetValideBufferWithSize(std::vector<MeshBuffer*>* pool, _uint size, _uint stride)
         {
-            for (int i = 0; i < pool->size(); i++)
-            {
-                if ((*pool)[i].IsValide(size, stride))
-                {
-                    return &(*pool)[i];
-                }
-            }
+            //for (int i = 0; i < pool->size(); i++)
+            //{
+            //    if ((*pool)[i].IsValide(size, stride))
+            //    {
+            //        return &(*pool)[i];
+            //    }
+            //}
 
-            MeshBuffer t;
-            t.BufferSize = size; // TO FIX
-            t.BufferStride = stride;
-            t.BufferUsed = size;
+            MeshBuffer* t = new MeshBuffer();
+            t->BufferSize = size; // TO FIX
+            t->BufferStride = stride;
+            t->BufferUsed = size;
             pool->push_back(t);
-            return &(pool->back());
+            return (pool->back());
         }
     };
 #pragma endregion
@@ -113,10 +121,37 @@ namespace MeshSys {
         _uint IndexDataSize;
         _uint IndexDataStride;
 
+        MeshPackedData()
+        {
+            VertexData = 0;
+            VertexDataSize = 0;
+            VertexDataStride = 0;
+
+            IndexData = 0;
+            IndexDataSize = 0;
+            IndexDataStride = 0;
+        }
+
         ~MeshPackedData()
         {
-            delete[] VertexData;
-            delete[] IndexData;
+            if (VertexData != 0)
+            {
+                delete[] VertexData;
+            }
+        }
+
+        void Reset()
+        {
+            if (VertexData != 0)
+            {
+                delete[] VertexData;
+            }
+            VertexData = 0;
+            IndexData = 0;
+            VertexDataSize = 0;
+            VertexDataStride = 0;
+            IndexDataSize = 0;
+            IndexDataStride = 0;
         }
     };
 
@@ -144,6 +179,7 @@ namespace MeshSys {
         _uint SubMeshCount;
         SubMesh* SubMeshes;
 
+        void SetVertexData(Math::float3* position, _uint count);
         void SetVertexData(Math::float3* position, Math::float2* uv, _uint count);
         void SetIndexData(_uint* index, _uint count);
 
@@ -151,6 +187,9 @@ namespace MeshSys {
         void SetVertexData(std::vector<Math::float3> position, std::vector<Math::float3> normal, std::vector<Math::float2> uv);
         void SetVertexData(std::vector<Math::float3> position, std::vector<Math::float3> normal, std::vector<Math::float2> uv, std::vector<Math::float4> color);
         void SetIndexData(std::vector<_uint> index);
+
+        Math::float3* GetPositionData(int &count);
+
     protected:
 
         _uint VertexCount;

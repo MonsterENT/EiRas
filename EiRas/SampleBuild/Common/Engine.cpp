@@ -74,6 +74,12 @@ Label* label;
 
 InspectorTransform* inspector = NULL;
 
+#pragma region TestMeshUpdate
+
+float CloseTo0Coef = 0;
+
+#pragma endregion
+
 void OnClick(void* data)
 {
 
@@ -167,8 +173,7 @@ void Engine::m_initEngine()
     std::string sf90ModelPath = FileSys::FileManager::shareInstance()->GetModelResourcePath("SF90_TMP", "FBX");
     _SF90Mesh = new Mesh("SF90");
     _SF90Mesh->LoadDataFromFile(sf90ModelPath);
-    _SF90Mesh->BuildBuffer();
-
+    _SF90Mesh->BuildBuffer(MeshType::VertexInput3D, false);
 
     GUISys::GUISystem::CreateSystem(_ClientHW.x, _ClientHW.y, cmdBuffer);
 
@@ -219,6 +224,15 @@ void Engine::InitEngine()
 
 void Engine::Update(void* data)
 {
+    int count = 0;
+    float3* posData = _SF90Mesh->GetPositionData(count);
+    for (int i = 0; i < count; i++)
+    {
+        posData[i] -= posData[i] * CloseTo0Coef;
+    }
+    //UnSafe But Efficient
+    _SF90Mesh->BuildBuffer(MeshType::VertexInput3D, false);
+
     cmdBuffer->BeginFrame();
     cmdBuffer->Reset();
     cmdBuffer->SetViewPort(0, 0, 2560, 1440);
@@ -265,7 +279,8 @@ void Engine::KeyPressed(_uint param)
     }
     else if (param == 0x26)//VK_UP
     {
-        postion.y += 0.1;
+        //postion.y += 0.1;
+        CloseTo0Coef += 0.01;
     }
     else if (param == 0x27)//VK_RIGHT
     {
@@ -275,7 +290,8 @@ void Engine::KeyPressed(_uint param)
     }
     else if (param == 0x28)//VK_DOWN
     {
-        postion.y -= 0.1;
+        //postion.y -= 0.1;
+        CloseTo0Coef -= 0.01;
     }
     else if (param == 'N')
     {

@@ -100,6 +100,22 @@ public:
         y = _y;
         z = _z;
     }
+
+    float3 operator*(float a)
+    {
+        float3 t;
+        t.x = this->x * a;
+        t.y = this->y * a;
+        t.z = this->z * a;
+        return t;
+    }
+
+    void operator-=(float3 a)
+    {
+        this->x -= a.x;
+        this->y -= a.y;
+        this->z -= a.z;
+    }
 };
 
 class float4

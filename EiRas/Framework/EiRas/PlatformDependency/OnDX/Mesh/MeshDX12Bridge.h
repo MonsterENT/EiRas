@@ -10,7 +10,7 @@ namespace MeshSys
     {
     public:
         MeshDX12Bridge();
-
+        void Reset();
         void BuildBufferView(void* vertexResObjPB, _uint vertexBufferSize, _uint vertexCount,
             void* indexResObjPB, _uint indexBufferSize);
     };

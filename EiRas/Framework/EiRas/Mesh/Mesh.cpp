@@ -64,18 +64,31 @@ void Mesh::BuildBuffer(MeshType inputType, bool noMoreUpdate)
         return;
     }
     PackData(inputType);
-    _VertexBuffer = MeshBufferManager::GetManager()->GetValideVertexBufferWithSize(_PackedData->VertexDataSize, _PackedData->VertexDataStride);
-    _IndexBuffer = MeshBufferManager::GetManager()->GetValideIndexBufferWithSize(_PackedData->IndexDataSize, _PackedData->IndexDataStride);
+    if (_VertexBuffer == 0)
+    {
+        _VertexBuffer = MeshBufferManager::GetManager()->GetValideVertexBufferWithSize(_PackedData->VertexDataSize, _PackedData->VertexDataStride);
+    }
+    if (_IndexBuffer == 0)
+    {
+        _IndexBuffer = MeshBufferManager::GetManager()->GetValideIndexBufferWithSize(_PackedData->IndexDataSize, _PackedData->IndexDataStride);
+    }
 
-    _VertexBuffer->Buffer = new GraphicsResource(Name, GraphicsResourceType::Default, GraphicsResourceVisibility::VISIBILITY_VERTEX, GraphicsResourceUpdateFreq::UPDATE_FREQ_LOW, true);
-    _VertexBuffer->Buffer->InitAsDefault(_VertexBuffer->BufferSize);
+    if (_VertexBuffer->Buffer == 0)
+    {
+        _VertexBuffer->Buffer = new GraphicsResource(Name, GraphicsResourceType::Default, GraphicsResourceVisibility::VISIBILITY_VERTEX, GraphicsResourceUpdateFreq::UPDATE_FREQ_LOW, true);
+        _VertexBuffer->Buffer->InitAsDefault(_VertexBuffer->BufferSize);
+    }
     _VertexBuffer->Buffer->SetResource(_PackedData->VertexData, noMoreUpdate);
 
-    _IndexBuffer->Buffer = new GraphicsResource(Name, GraphicsResourceType::Default, GraphicsResourceVisibility::VISIBILITY_VERTEX, GraphicsResourceUpdateFreq::UPDATE_FREQ_LOW, true);
-    _IndexBuffer->Buffer->InitAsDefault(_PackedData->IndexDataSize);
+    if (_IndexBuffer->Buffer == 0)
+    {
+        _IndexBuffer->Buffer = new GraphicsResource(Name, GraphicsResourceType::Default, GraphicsResourceVisibility::VISIBILITY_VERTEX, GraphicsResourceUpdateFreq::UPDATE_FREQ_LOW, true);
+        _IndexBuffer->Buffer->InitAsDefault(_PackedData->IndexDataSize);
+    }
     _IndexBuffer->Buffer->SetResource(_PackedData->IndexData, noMoreUpdate);
 
 #ifdef GRAPHICS_DX
+    ((MeshDX12Bridge*)PlatformBridge)->Reset();
     ((MeshDX12Bridge*)PlatformBridge)->BuildBufferView(_VertexBuffer->Buffer->PlatformBridge, _PackedData->VertexDataSize, VertexCount,
         _IndexBuffer->Buffer->PlatformBridge, _PackedData->IndexDataSize);
 #endif
@@ -96,16 +109,19 @@ void Mesh::PackData(MeshType inputType)
     if (_PackedData == 0)
     {
         _PackedData = new MeshPackedData();
-        if (inputType == MeshType::VertexInput3D)
-        {
-            _PackedData->VertexData = new VertexData3D[VertexCount];
-            _PackedData->VertexDataStride = sizeof(VertexData3D);
-        }
-        else
-        {
-            _PackedData->VertexData = new VertexData2D[VertexCount];
-            _PackedData->VertexDataStride = sizeof(VertexData2D);
-        }
+    }
+
+    _PackedData->Reset();
+
+    if (inputType == MeshType::VertexInput3D)
+    {
+        _PackedData->VertexData = new VertexData3D[VertexCount];
+        _PackedData->VertexDataStride = sizeof(VertexData3D);
+    }
+    else
+    {
+        _PackedData->VertexData = new VertexData2D[VertexCount];
+        _PackedData->VertexDataStride = sizeof(VertexData2D);
     }
 
     _PackedData->VertexDataSize = _PackedData->VertexDataStride * VertexCount;
@@ -136,6 +152,13 @@ void Mesh::PackData(MeshType inputType)
     }
 }
 
+void Mesh::SetVertexData(Math::float3* position, _uint count)
+{
+    VertexCount = count;
+    RELEASE_ARRAY(PositionData);
+    PositionData = position;
+}
+
 void Mesh::SetVertexData(Math::float3* position, Math::float2* uv, _uint count)
 {
     VertexCount = count;
@@ -158,7 +181,7 @@ void Mesh::SetVertexData(std::vector<Math::float3> position, std::vector<Math::f
     VertexCount = position.size();
     RELEASE_ARRAY(PositionData);
     COPY_VECTOR_DATA(float3, position, PositionData);
-    
+
     RELEASE_ARRAY(UVData);
     COPY_VECTOR_DATA(float2, uv, UVData);
 }
@@ -190,4 +213,10 @@ void Mesh::SetIndexData(std::vector<_uint> index)
     RELEASE_ARRAY(IndexData);
     IndexCount = index.size();
     COPY_VECTOR_DATA(_uint, index, IndexData);
+}
+
+Math::float3* Mesh::GetPositionData(int& count)
+{
+    count = VertexCount;
+    return PositionData;
 }

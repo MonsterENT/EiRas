@@ -14,6 +14,8 @@ namespace MeshSys
         std::vector<D3D12_VERTEX_BUFFER_VIEW> VertexBufferViews;
         std::vector<D3D12_INDEX_BUFFER_VIEW> IndexBufferViews;
 
+        void Reset();
+
         void BuildBufferView(void* rawVertexResObj, _uint vertexBufferSize, _uint vertexCount,
             void* rawIndexResObj, _uint indexBufferSize);
     };
