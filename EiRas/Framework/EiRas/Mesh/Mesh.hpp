@@ -38,7 +38,6 @@ namespace MeshSys {
         VertexInput2D = 1,
     };
     
-#pragma region TOFIX
     class MeshBuffer
     {
     public:
@@ -55,57 +54,14 @@ namespace MeshSys {
             BufferUsed = 0;
         }
 
-        bool IsValide(_uint size, _uint stride)
+        MeshBuffer(_uint stride, _uint size)
         {
-            if (BufferStride == stride)
-            {
-                if (BufferSize - BufferUsed >= size)
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            Buffer = 0;
+            BufferStride = stride;
+            BufferSize = size;
+            BufferUsed = size; //TODO
         }
     };
-    class MeshBufferManager
-    {
-    public:
-
-        static MeshBufferManager* GetManager();
-        std::vector<MeshBuffer*> VertexBufferPool;
-        std::vector<MeshBuffer*> IndexBufferPool;
-
-        MeshBuffer* GetValideVertexBufferWithSize(_uint size, _uint stride)
-        {
-            return GetValideBufferWithSize(&VertexBufferPool, size, stride);
-        }
-
-        MeshBuffer* GetValideIndexBufferWithSize(_uint size, _uint stride)
-        {
-            return GetValideBufferWithSize(&IndexBufferPool, size, stride);
-        }
-
-    private:
-        MeshBuffer* GetValideBufferWithSize(std::vector<MeshBuffer*>* pool, _uint size, _uint stride)
-        {
-            //for (int i = 0; i < pool->size(); i++)
-            //{
-            //    if ((*pool)[i].IsValide(size, stride))
-            //    {
-            //        return &(*pool)[i];
-            //    }
-            //}
-
-            MeshBuffer* t = new MeshBuffer();
-            t->BufferSize = size; // TO FIX
-            t->BufferStride = stride;
-            t->BufferUsed = size;
-            pool->push_back(t);
-            return (pool->back());
-        }
-    };
-#pragma endregion
 
     class Mesh;
 

@@ -26,17 +26,6 @@ using namespace MeshSys;
 using namespace MaterialSys;
 using namespace Graphics;
 
-
-static MeshBufferManager* g_MeshBfferManager = 0;
-MeshBufferManager* MeshBufferManager::GetManager()
-{
-    if (g_MeshBfferManager == 0)
-    {
-        g_MeshBfferManager = new MeshBufferManager();
-    }
-    return g_MeshBfferManager;
-}
-
 Mesh::Mesh(std::string name)
 {
     this->Name = name;
@@ -66,11 +55,11 @@ void Mesh::BuildBuffer(MeshType inputType, bool noMoreUpdate)
     PackData(inputType);
     if (_VertexBuffer == 0)
     {
-        _VertexBuffer = MeshBufferManager::GetManager()->GetValideVertexBufferWithSize(_PackedData->VertexDataSize, _PackedData->VertexDataStride);
+        _VertexBuffer = new MeshBuffer(_PackedData->VertexDataStride, _PackedData->VertexDataSize);
     }
     if (_IndexBuffer == 0)
     {
-        _IndexBuffer = MeshBufferManager::GetManager()->GetValideIndexBufferWithSize(_PackedData->IndexDataSize, _PackedData->IndexDataStride);
+        _IndexBuffer = new MeshBuffer(_PackedData->IndexDataStride, _PackedData->IndexDataSize);
     }
 
     if (_VertexBuffer->Buffer == 0)

@@ -225,13 +225,13 @@ void Engine::InitEngine()
 void Engine::Update(void* data)
 {
     int count = 0;
-    float3* posData = _SF90Mesh->GetPositionData(count);
-    for (int i = 0; i < count; i++)
-    {
-        posData[i] -= posData[i] * CloseTo0Coef;
-    }
-    //UnSafe But Efficient
-    _SF90Mesh->BuildBuffer(MeshType::VertexInput3D, false);
+    //float3* posData = _SF90Mesh->GetPositionData(count);
+    //for (int i = 0; i < count; i++)
+    //{
+    //    posData[i] -= posData[i] * CloseTo0Coef;
+    //}
+    ////UnSafe But Efficient
+    //_SF90Mesh->BuildBuffer(MeshType::VertexInput3D, false);
 
     cmdBuffer->BeginFrame();
     cmdBuffer->Reset();
@@ -255,7 +255,10 @@ void Engine::Update(void* data)
     cmdBuffer->DrawMesh(_SF90Mesh);
 
     label->SetBackgroundImage(_CommonBlur->BluredRT);
-    GUISys::GUISystem::SharedInstance()->RunLoopInvoke(data);
+    if (data != 0)
+    {
+        GUISys::GUISystem::SharedInstance()->RunLoopInvoke(data);
+    }
     cmdBuffer->Commit(true);
 }
 
@@ -279,8 +282,8 @@ void Engine::KeyPressed(_uint param)
     }
     else if (param == 0x26)//VK_UP
     {
-        //postion.y += 0.1;
-        CloseTo0Coef += 0.01;
+        postion.y += 0.1;
+        //CloseTo0Coef += 0.01;
     }
     else if (param == 0x27)//VK_RIGHT
     {
@@ -290,8 +293,8 @@ void Engine::KeyPressed(_uint param)
     }
     else if (param == 0x28)//VK_DOWN
     {
-        //postion.y -= 0.1;
-        CloseTo0Coef -= 0.01;
+        postion.y -= 0.1;
+        //CloseTo0Coef -= 0.01;
     }
     else if (param == 'N')
     {
