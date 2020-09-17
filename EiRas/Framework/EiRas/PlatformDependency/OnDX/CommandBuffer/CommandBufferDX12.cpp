@@ -164,7 +164,10 @@ void CommandBufferDX12::SetMaterial(MaterialSys::MaterialDX12* mat, MaterialSys:
         else
         {
             MaterialProp* prop = (MaterialProp*)slot;
-
+            if (prop->Resource == 0)
+            {
+                continue;
+            }
             D3D12_GPU_VIRTUAL_ADDRESS ADDR = ((GraphicsResourceDX12*)prop->Resource->PlatformBridge->raw_obj)->Resource->GetGPUVirtualAddress();
             int rootParamIndex = prop->SlotID;
 

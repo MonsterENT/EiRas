@@ -48,7 +48,7 @@ ShaderResourceDX12::ShaderResourceDX12(GraphicsResourceBehaviors* behaviors, DXG
         IID_PPV_ARGS(&tmpResource));
 
     outBuildStatusFlagPtr = buildStatusFlag;
-    buildStatusFlag = false;
+    *buildStatusFlag = false;
 }
 
 
@@ -66,6 +66,7 @@ void ShaderResourceDX12::BuildTextureResource(void* cmdList)
     textureData.RowPitch = width * channels;
     textureData.SlicePitch = textureData.RowPitch * height;
     
+    _cmdList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(Resource, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, D3D12_RESOURCE_STATE_COPY_DEST));
     UpdateSubresources(_cmdList, Resource, tmpResource, 0, 0, 1, &textureData);
     _cmdList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(Resource, D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE));
     

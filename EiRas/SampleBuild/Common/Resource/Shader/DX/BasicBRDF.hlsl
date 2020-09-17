@@ -43,13 +43,14 @@ PSInput VSMain(VSInput v)
     o.pos = mul(_LocalToWorldMatrix, float4(v.pos, 1));
     o.pos = mul(_WorldToViewMatrix, o.pos);
     o.pos = mul(_ProjectionMatrix, o.pos);
-    o.uv = v.uv;
+    o.uv = o.pos.xy / o.pos.w / 2.0f + 0.5f;
     o.normal = mul(v.normal, (float3x3)_WorldToLocalMatrix);
     return o;
 };
 
 float4 PSMain(PSInput i) : SV_TARGET
 {
-    return float4(dot(i.normal, float3(0, 1, 0)).xxx, 1);
+    float4 albedo = _MainTex.Sample(_DefaultSampler, i.uv);
+    return float4(albedo.rgb * dot(i.normal, float3(0, 1, 0)).xxx, 1);
 }
 //BasicBRDF

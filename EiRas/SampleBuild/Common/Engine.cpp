@@ -43,13 +43,6 @@ Image* imageObj = 0;
 
 CommonBlur* _CommonBlur;
 
-#define FILL_SUBMESH(submesh)\
-submesh->IndicesCount = 6;\
-submesh->VerticesCount = 4;\
-submesh->IndicesData = new _uint[6]{ 0, 1, 2, 2, 0, 3 };\
-submesh->UVData = new float2[4]{ {0, 0}, {1, 0}, {1, 1}, {0, 1} };\
-submesh->NormalData = new float3[4]{ {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0} };\
-
 typedef struct CommonCB0
 {
     Matrix4X4 WorldToViewMatrix;
@@ -73,6 +66,8 @@ RenderTexture* _SceneRenderTexture;
 Label* label;
 
 InspectorTransform* inspector = NULL;
+
+RenderData sf90RenderData;
 
 #pragma region TestMeshUpdate
 
@@ -131,7 +126,7 @@ void Engine::m_initEngine()
         ShaderProp* customCB = new ShaderProp("CustomCB", GraphicsResourceType::CBV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_HIGH, sizeof(float4));
         customCB->InitRegisterSettings(2);
 
-        ShaderPropRange commonSR1("CommonSR1", GraphicsResourceType::SRV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_ONINIT);
+        ShaderPropRange commonSR1("_MainTex", GraphicsResourceType::SRV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_ONINIT);
         commonSR1.PropNum = 1;
         commonSR1.InitBaseRegisterSettings(0);
 
@@ -175,6 +170,12 @@ void Engine::m_initEngine()
     _SF90Mesh->LoadDataFromFile(sf90ModelPath);
     _SF90Mesh->BuildBuffer(MeshType::VertexInput3D, false);
 
+#pragma region BuildRenderData
+    sf90RenderData.AddMesh(_SF90Mesh);
+    sf90RenderData.AddMaterial(_Mat0);
+#pragma endregion
+
+
     GUISys::GUISystem::CreateSystem(_ClientHW.x, _ClientHW.y, cmdBuffer);
 
     Button* btn = new Button();
@@ -194,6 +195,7 @@ void Engine::m_initEngine()
     label->SetText(text);
 
     inspector = new InspectorTransform(&_Transform);
+
 }
 
 Engine::Engine()
@@ -224,6 +226,15 @@ void Engine::InitEngine()
 
 void Engine::Update(void* data)
 {
+    std::string texturePath = FileSys::FileManager::shareInstance()->GetTextureResourcePath("ground512", "png");
+
+    if (imageObj == 0)
+    {
+        imageObj = new Image("Texture");
+        imageObj->LoadFromFile(texturePath);
+    }
+    _Mat0->SetProperty(imageObj, 3, 0);
+
     int count = 0;
     //float3* posData = _SF90Mesh->GetPositionData(count);
     //for (int i = 0; i < count; i++)
@@ -244,15 +255,17 @@ void Engine::Update(void* data)
     _Mat0->SetProperty(&tmpCol, 2);
 
     _Mat0->RenderState->_CullMode = CullMode::CullModeNone;
-    _Mat0->FinishStateChange();
-    cmdBuffer->SetMaterial(_Mat0);
-    cmdBuffer->DrawMesh(_SF90Mesh);
+    //_Mat0->FinishStateChange();
+    //cmdBuffer->SetMaterial(_Mat0);
+    //cmdBuffer->DrawMesh(_SF90Mesh);
+    cmdBuffer->DrawRenderData(&sf90RenderData);
 
     _CommonBlur->ProcessWithSource(_SceneRenderTexture, 4, 1);
     cmdBuffer->SetRenderTexture(0);
 
-    cmdBuffer->SetMaterial(_Mat0);
-    cmdBuffer->DrawMesh(_SF90Mesh);
+    //cmdBuffer->SetMaterial(_Mat0);
+    //cmdBuffer->DrawMesh(_SF90Mesh);
+    cmdBuffer->DrawRenderData(&sf90RenderData);
 
     label->SetBackgroundImage(_CommonBlur->BluredRT);
     if (data != 0)
