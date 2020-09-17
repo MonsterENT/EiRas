@@ -25,5 +25,8 @@ EiRasGlobalManager* EiRasGlobalManager::SharedInstance()
 
 EiRasGlobalManager::EiRasGlobalManager()
 {
-    //_CB0 = new GraphicsResource("CommonCB0", GraphicsResourceType::CBV, GraphicsResourceVisibility::VISIBILITY_ALL, true, 0);
+    CBViewProj = new GraphicsResource("CBViewProj", GraphicsResourceType::CBV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_HIGH, true);
+    CBViewProj->InitAsConstantBuffer(32 * sizeof(float));
+
+    _CB1 = 0;
 }

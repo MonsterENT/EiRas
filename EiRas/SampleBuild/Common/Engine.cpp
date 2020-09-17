@@ -195,7 +195,6 @@ void Engine::m_initEngine()
     label->SetText(text);
 
     inspector = new InspectorTransform(&_Transform);
-
 }
 
 Engine::Engine()

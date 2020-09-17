@@ -137,7 +137,7 @@ inline MaterialProp* getMaterialProp(Material* mat, _uint slotIndex, _uint propI
         tProp = tTable->Props[propIndex];
         fromTable = true;
     }
-    else
+    else if(tSlot->SlotType == MaterialSlotType::MaterialSlotType_Prop)
     {
         tProp = (MaterialProp*)tSlot;
     }

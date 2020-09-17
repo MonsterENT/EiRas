@@ -9,10 +9,11 @@
 
 namespace MaterialSys
 {
-    typedef enum MaterialSlotType
+    typedef enum class MaterialSlotType
     {
         MaterialSlotType_Prop = 0,
-        MaterialSlotType_Table = 1
+        MaterialSlotType_Table = 1,
+        MaterialSlotType_Builtin_ViewProj = 2,
     } MaterialSlotType;
 
     class MaterialSlot

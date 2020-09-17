@@ -111,7 +111,6 @@ void CommandBufferDX12::DrawRenderData(RenderData* render)
     }
     cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-
     for (int meshIdx = 0; meshIdx < render->m_Meshes.size(); meshIdx++)
     {
         Mesh* meshObj = render->m_Meshes[meshIdx];
@@ -143,6 +142,27 @@ void CommandBufferDX12::DrawRenderData(RenderData* render)
     }
 }
 
+//
+void SetRootBufferView(ID3D12GraphicsCommandList* cmdList, MaterialSlot* slot, GraphicsResource* rootResource)
+{
+    GraphicsResourceType resType = rootResource->Behaviors.ResourceType;
+    D3D12_GPU_VIRTUAL_ADDRESS ADDR = ((GraphicsResourceDX12*)rootResource->PlatformBridge->raw_obj)->Resource->GetGPUVirtualAddress();
+
+    if (resType == GraphicsResourceType::CBV)
+    {
+        cmdList->SetGraphicsRootConstantBufferView(slot->SlotID, ADDR);
+    }
+    else if (resType == GraphicsResourceType::SRV)
+    {
+        cmdList->SetGraphicsRootShaderResourceView(slot->SlotID, ADDR);
+    }
+    else if (resType == GraphicsResourceType::UAV)
+    {
+        cmdList->SetGraphicsRootUnorderedAccessView(slot->SlotID, ADDR);
+    }
+}
+//
+
 void CommandBufferDX12::SetMaterial(MaterialSys::MaterialDX12* mat, MaterialSys::MaterialLayout* layout, _uint pass)
 {
     cmdList->SetGraphicsRootSignature(mat->RawShaderObj->RootSignature);
@@ -161,30 +181,19 @@ void CommandBufferDX12::SetMaterial(MaterialSys::MaterialDX12* mat, MaterialSys:
             gpuHandle.Offset(table->Props[0]->_heapOffset, offset);
             cmdList->SetGraphicsRootDescriptorTable(table->SlotID, gpuHandle);
         }
-        else
+        else if(slot->SlotType == MaterialSlotType::MaterialSlotType_Prop)
         {
             MaterialProp* prop = (MaterialProp*)slot;
             if (prop->Resource == 0)
             {
                 continue;
             }
-            D3D12_GPU_VIRTUAL_ADDRESS ADDR = ((GraphicsResourceDX12*)prop->Resource->PlatformBridge->raw_obj)->Resource->GetGPUVirtualAddress();
-            int rootParamIndex = prop->SlotID;
 
-            GraphicsResourceType resType = prop->Resource->Behaviors.ResourceType;
-
-            if (resType == GraphicsResourceType::CBV)
-            {
-                cmdList->SetGraphicsRootConstantBufferView(rootParamIndex, ADDR);
-            }
-            else if (resType == GraphicsResourceType::SRV)
-            {
-                cmdList->SetGraphicsRootShaderResourceView(rootParamIndex, ADDR);
-            }
-            else if (resType == GraphicsResourceType::UAV)
-            {
-                cmdList->SetGraphicsRootUnorderedAccessView(rootParamIndex, ADDR);
-            }
+            SetRootBufferView(cmdList, slot, prop->Resource);
+        }
+        else if (slot->SlotType == MaterialSlotType::MaterialSlotType_Builtin_ViewProj)
+        {
+            SetRootBufferView(cmdList, slot, EiRasGlobal::EiRasGlobalManager::SharedInstance()->CBViewProj);
         }
     }
 }
