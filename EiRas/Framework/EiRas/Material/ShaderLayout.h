@@ -10,7 +10,9 @@ namespace MaterialSys
     enum class ShaderSlotType
     {
         ShaderSlotType_Prop = 0,
-        ShaderSlotType_Table = 1
+        ShaderSlotType_Table = 1,
+        ShaderSlotType_Builtin_ViewProj = 2,
+        ShaderSlotType_Ref_WorldMatrix = 3,
     } ShaderSlotType;
     
     class ShaderSlot

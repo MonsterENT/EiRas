@@ -11,19 +11,33 @@
 
 #include <Math/Math.hpp>
 
+namespace MaterialSys
+{
+    class GraphicsResource;
+}
+
+namespace Graphics
+{
+    class CommandBuffer;
+}
+
 namespace BasicComponent {
 
 class Camera;
 
+struct TransformRawData
+{
+    Math::Matrix4X4 _localToWorldMat;
+    Math::Matrix4X4 _worldToLocalMat;
+};
+
 class TransformSys
 {
     friend Camera;
+    friend Graphics::CommandBuffer;
 public:
-    TransformSys()
-    {
-        LocalScale = Math::float3(1, 1, 1);
-    }
-    
+    TransformSys();
+
     Math::float3 Forward;
     Math::float3 Right;
     Math::float3 Up;
@@ -39,10 +53,12 @@ public:
     Math::Matrix4X4* GetLocalToWorldMatrix();
     Math::Matrix4X4* GetWorldToLocalMatrix();
 
+    void UpdateToGraphics();
+
 protected:
+    MaterialSys::GraphicsResource* _WorldMatCB;
 private:
-    Math::Matrix4X4 _localToWorldMat;
-    Math::Matrix4X4 _worldToLocalMat;
+    TransformRawData _RawData;
 };
 
 }

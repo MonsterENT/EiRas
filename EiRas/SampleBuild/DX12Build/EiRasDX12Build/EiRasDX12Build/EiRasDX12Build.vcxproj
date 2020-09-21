@@ -196,6 +196,8 @@
     <ClInclude Include="..\..\..\..\Framework\EiRas\Math\Math.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Mesh\Mesh.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Mesh\MeshLoader.h" />
+    <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Basic\TransformSysDX12.hpp" />
+    <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Basic\TransformSysDX12Bridge.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\CommandBuffer\CommandBufferDX12.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\CommandBuffer\CommandBufferDX12Bridge.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\d3dx12.h" />
@@ -267,6 +269,8 @@
     <ClCompile Include="..\..\..\..\Framework\EiRas\Math\Math.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\Mesh\Mesh.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\Mesh\MeshLoader.cpp" />
+    <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Basic\TransformSysDX12.cpp" />
+    <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Basic\TransformSysDX12Bridge.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\CommandBuffer\CommandBufferDX12.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\CommandBuffer\CommandBufferDX12Bridge.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\DX12Utils.cpp" />

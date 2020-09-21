@@ -28,6 +28,7 @@ CommandBufferDX12::CommandBufferDX12(std::string Name)
     swprintf(tmp_ws, 16, L"%hs", Name.c_str());
     cmdList->SetName(tmp_ws);
     CurrentUseingHeap = NULL;
+    _CurrentWorldMatCB = 0;
 }
 
 CommandBufferDX12::~CommandBufferDX12()
@@ -88,6 +89,11 @@ void CommandBufferDX12::SetViewPort(float topLeftX, float topLeftY, float width,
     CD3DX12_RECT scissorRect = CD3DX12_RECT((LONG)topLeftX, (LONG)topLeftY, (LONG)topLeftX + (LONG)width, (LONG)topLeftY + (LONG)height);
     cmdList->RSSetViewports(1, &viewPort);
     cmdList->RSSetScissorRects(1, &scissorRect);
+}
+
+void CommandBufferDX12::SetTransformGraphics(MaterialSys::GraphicsResource* res)
+{
+    _CurrentWorldMatCB = res;
 }
 
 void CommandBufferDX12::DrawMesh(MeshSys::Mesh* mesh)
@@ -194,6 +200,10 @@ void CommandBufferDX12::SetMaterial(MaterialSys::MaterialDX12* mat, MaterialSys:
         else if (slot->SlotType == MaterialSlotType::MaterialSlotType_Builtin_ViewProj)
         {
             SetRootBufferView(cmdList, slot, EiRasGlobal::EiRasGlobalManager::SharedInstance()->CBViewProj);
+        }
+        else if (slot->SlotType == MaterialSlotType::MaterialSlotType_Ref_WorldMatrix && _CurrentWorldMatCB != 0)
+        {
+            SetRootBufferView(cmdList, slot, _CurrentWorldMatCB);
         }
     }
 }

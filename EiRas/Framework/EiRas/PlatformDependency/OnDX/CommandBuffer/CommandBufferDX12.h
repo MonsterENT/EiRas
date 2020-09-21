@@ -12,6 +12,7 @@ namespace MaterialSys
     class MaterialDX12;
     class MaterialLayout;
     class GraphicsResourceDX12;
+    class GraphicsResource;
 }
 
 namespace MeshSys
@@ -36,6 +37,7 @@ namespace Graphics {
 
         void SetViewPort(float topLeftX, float topLeftY, float width, float height, float minDepth, float maxDepth);
 
+        void SetTransformGraphics(MaterialSys::GraphicsResource* res);
         void DrawMesh(MeshSys::Mesh* mesh);
         void DrawRenderData(RenderData* render);
 
@@ -50,5 +52,6 @@ namespace Graphics {
         void GetCurrentRenderTextureInfo(_uint* numRT, DXGI_FORMAT* rtFormats, DXGI_FORMAT* depthFormat);
     private:
         RenderTextureDX12* _CurrentRenderTexture;
+        MaterialSys::GraphicsResource* _CurrentWorldMatCB;
     };
 }

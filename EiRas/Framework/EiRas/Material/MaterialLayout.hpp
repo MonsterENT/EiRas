@@ -14,6 +14,7 @@ namespace MaterialSys
         MaterialSlotType_Prop = 0,
         MaterialSlotType_Table = 1,
         MaterialSlotType_Builtin_ViewProj = 2,
+        MaterialSlotType_Ref_WorldMatrix = 3,
     } MaterialSlotType;
 
     class MaterialSlot

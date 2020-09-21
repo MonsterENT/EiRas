@@ -64,6 +64,16 @@ Material::Material(std::string Name, Shader* shader, Graphics::CommandBuffer* co
 #endif
                 materialLayout->Slots[i] = tmpMatProp;
             }
+            else if (shaderSlot->SlotType == ShaderSlotType::ShaderSlotType_Builtin_ViewProj ||
+                shaderSlot->SlotType == ShaderSlotType::ShaderSlotType_Ref_WorldMatrix)
+            {
+                MaterialSlot* tmpSlot = new MaterialSlot();
+#if GRAPHICS_DX
+                tmpSlot->SlotID = i;
+#endif
+                tmpSlot->SlotType = (MaterialSlotType)shaderSlot->SlotType;
+                materialLayout->Slots[i] = tmpSlot;
+            }
             else if (shaderSlot->SlotType == ShaderSlotType::ShaderSlotType_Table)
             {
                 ShaderTable* shaderTable = (ShaderTable*)shaderSlot;

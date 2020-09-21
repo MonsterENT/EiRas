@@ -54,6 +54,12 @@ void CommandBufferDX12Bridge::SetMaterial(Material* mat, _uint pass)
     obj->SetMaterial((MaterialDX12*)mat->PlatformBridge->raw_obj, mat->materialLayout, pass);
 }
 
+void CommandBufferDX12Bridge::SetTransformGraphics(MaterialSys::GraphicsResource* res)
+{
+    CommandBufferDX12* obj = (CommandBufferDX12*)raw_obj;
+    obj->SetTransformGraphics(res);
+}
+
 void CommandBufferDX12Bridge::DrawMesh(Mesh* mesh)
 {
     CommandBufferDX12* obj = (CommandBufferDX12*)raw_obj;

@@ -12,6 +12,7 @@
 #include <Material/Material.hpp>
 #include <Graphics/GraphicsRenderState.hpp>
 #include <Graphics/RenderTexture.hpp>
+#include <Basic/TransformSys.hpp>
 
 #if GRAPHICS_METAL
 #include <PlatformDependency/OnMetal/CommandBuffer/CommandBufferMetalBridge.hpp>
@@ -27,6 +28,7 @@
 
 #include <Mesh/Mesh.hpp>
 
+using namespace BasicComponent;
 using namespace MaterialSys;
 using namespace Graphics;
 
@@ -54,6 +56,14 @@ void CommandBuffer::SetMaterial(MaterialSys::Material* material, _uint pass)
 #if GRAPHICS_DX
     ((CommandBufferDX12Bridge*)PlatformBridge)->SetMaterial(material, pass);
 #endif
+}
+
+void CommandBuffer::SetTransform(BasicComponent::TransformSys* transform)
+{
+    if (transform != 0 && transform->_WorldMatCB != 0)
+    {
+        ((CommandBufferDX12Bridge*)PlatformBridge)->SetTransformGraphics(transform->_WorldMatCB);
+    }
 }
 
 void CommandBuffer::DrawMesh(MeshSys::Mesh* mesh)

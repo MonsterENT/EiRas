@@ -7,6 +7,7 @@ namespace MaterialSys
 {
     class Material;
     class MaterialProp;
+    class GraphicsResource;
 }
 
 namespace MeshSys
@@ -24,6 +25,7 @@ namespace Graphics {
 
         void SetMaterial(MaterialSys::Material* mat, _uint pass = 0);
 
+        void SetTransformGraphics(MaterialSys::GraphicsResource* res);
         void DrawMesh(MeshSys::Mesh* mesh);
         void DrawRenderData(RenderData* render);
 

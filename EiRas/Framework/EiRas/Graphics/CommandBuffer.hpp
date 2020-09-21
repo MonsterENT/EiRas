@@ -29,6 +29,11 @@ namespace MeshSys
     class Mesh;
 }
 
+namespace BasicComponent
+{
+    class TransformSys;
+}
+
 namespace Graphics {
 
     class RenderTexture;
@@ -44,6 +49,8 @@ namespace Graphics {
         CommandBuffer(std::string Name);
 
         void SetMaterial(MaterialSys::Material* material, _uint pass = 0);
+
+        void SetTransform(BasicComponent::TransformSys* transform);
 
         void DrawMesh(MeshSys::Mesh* mesh);
         void DrawRenderData(RenderData* render);
