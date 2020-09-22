@@ -266,6 +266,11 @@ ID3D12RootSignature* createRootSig(ShaderLayout* shaderLayout)
 #pragma message("TOFIX")
             }
         }
+        else if (slot->SlotType == MaterialSys::ShaderSlotType::ShaderSlotType_Builtin_ViewProj ||
+            slot->SlotType == MaterialSys::ShaderSlotType::ShaderSlotType_Ref_WorldMatrix)
+        {
+            rootParameters[i].InitAsConstantBufferView(_BASE_CB_REGISTER++, _BASE_SPACE);
+        }
         else if (slot->SlotType == MaterialSys::ShaderSlotType::ShaderSlotType_Table)
         {
             ShaderTable* table = (ShaderTable*)slot;

@@ -16,8 +16,7 @@ using BasicComponent::TransformSys;
 TransformSys::TransformSys()
 {
     LocalScale = Math::float3(1, 1, 1);
-    _WorldMatCB = new GraphicsResource("TransformSysCB", GraphicsResourceType::CBV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_HIGH, true);
-    _WorldMatCB->InitAsConstantBuffer(sizeof(TransformRawData));
+    _WorldMatCB = 0;
 }
 
 void TransformSys::Init(Math::float3 _forward, Math::float3 _right, Math::float3 _up, Math::float3 _position)
@@ -64,5 +63,15 @@ Math::Matrix4X4* TransformSys::GetWorldToLocalMatrix()
 
 void TransformSys::UpdateToGraphics()
 {
-    _WorldMatCB->SetResource(&_RawData, false);
+    GetCBRawRes()->SetResource(&_RawData, false);
+}
+
+MaterialSys::GraphicsResource* TransformSys::GetCBRawRes()
+{
+    if (_WorldMatCB == 0)
+    {
+        _WorldMatCB = new GraphicsResource("TransformSysCB", GraphicsResourceType::CBV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_HIGH, true);
+        _WorldMatCB->InitAsConstantBuffer(sizeof(TransformRawData));
+    }
+    return _WorldMatCB;
 }

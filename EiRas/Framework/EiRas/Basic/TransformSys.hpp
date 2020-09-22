@@ -56,8 +56,10 @@ public:
     void UpdateToGraphics();
 
 protected:
-    MaterialSys::GraphicsResource* _WorldMatCB;
+    MaterialSys::GraphicsResource* GetCBRawRes();
+
 private:
+    MaterialSys::GraphicsResource* _WorldMatCB;
     TransformRawData _RawData;
 };
 

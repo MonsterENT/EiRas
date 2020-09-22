@@ -9,11 +9,19 @@
 #ifndef EiRasGlobalManager_hpp
 #define EiRasGlobalManager_hpp
 
+#include <Math/Math.hpp>
+
 namespace MaterialSys {
     class GraphicsResource;
 }
 
 namespace EiRasGlobal {
+
+    struct CommonCB0
+    {
+        Math::Matrix4X4 WorldToViewMatrix;
+        Math::Matrix4X4 ProjectionMatrix;
+    };
 
     class EiRasGlobalManager
     {
@@ -27,13 +35,17 @@ namespace EiRasGlobal {
          ProjectionMatrix 16 float
          View Matrix 16 float
          */
-        MaterialSys::GraphicsResource* CBViewProj;
+        MaterialSys::GraphicsResource* CBViewProjRawRes;
+
+        void SetViewProj(const Math::Matrix4X4 WorldToViewMatrix, const Math::Matrix4X4 ProjectionMatrix);
 
         /*
          Render Target Texture Width & Height 2 float
          */
         MaterialSys::GraphicsResource* _CB1;
     private:
+        MaterialSys::GraphicsResource* GetViewProjRawRes();
+        CommonCB0 _CBViewProj;
     };
 
 }

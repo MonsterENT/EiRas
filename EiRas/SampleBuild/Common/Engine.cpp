@@ -17,6 +17,7 @@
 #include <Basic/TransformSys.hpp>
 #include <Graphics/RenderTexture.hpp>
 #include <Effect/CommonBlur/CommonBlur.hpp>
+#include <Global/EiRasGlobalManager.hpp>
 
 #pragma region GUI Include
 #include <GUI/Button.hpp>
@@ -43,19 +44,12 @@ Image* imageObj = 0;
 
 CommonBlur* _CommonBlur;
 
-typedef struct CommonCB0
-{
-    Matrix4X4 WorldToViewMatrix;
-    Matrix4X4 ProjectionMatrix;
-}CommonCB0;
-
 typedef struct CommonCB1
 {
     Matrix4X4 LocalToWorldMatrix;
     Matrix4X4 WorldToLocalMatrix;
 }CommonCB1;
 
-CommonCB0 _CommonCB0;
 CommonCB1 _CommonCB1;
 
 Camera _Camera;
@@ -86,8 +80,8 @@ void Engine::m_initEngine()
 
     _Camera.SetProjection(45, 2560.0 / 1440.0, 0.01, 1000);
     _Camera.Transform.Init(float3(0, 0, 1), float3(1, 0, 0), float3(0, 1, 0), float3(0, 0, 0));
-    _CommonCB0.WorldToViewMatrix = *_Camera.GetViewMatrix();
-    _CommonCB0.ProjectionMatrix = *_Camera.GetProjectionMatrix();
+    EiRasGlobal::EiRasGlobalManager::SharedInstance()->SetViewProj(*_Camera.GetViewMatrix(), *_Camera.GetProjectionMatrix());
+    
 
     _Transform.Init(float3(0, 1, 0), float3(1, 0, 0), float3(0, 0, 1), float3(0, -1, 5));
     _Transform.LocalScale = float3(1, 1, 1);
@@ -119,21 +113,23 @@ void Engine::m_initEngine()
 #pragma region Default3DShaderLayout
     ShaderLayout* defaultlayout = new ShaderLayout(4);
     {
-        ShaderProp* commonCB0 = new ShaderProp("CommonCB0", GraphicsResourceType::CBV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_HIGH, sizeof(Matrix4X4) * 2);
-        commonCB0->InitRegisterSettings(0);
+        //ShaderProp* commonCB0 = new ShaderProp("CommonCB0", GraphicsResourceType::CBV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_HIGH, sizeof(Matrix4X4) * 2);
+        //commonCB0->InitRegisterSettings(0);
         ShaderProp* commonCB1 = new ShaderProp("CommonCB1", GraphicsResourceType::CBV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_HIGH, sizeof(Matrix4X4) * 2);
-        commonCB1->InitRegisterSettings(1);
+        //commonCB1->InitRegisterSettings(1);
         ShaderProp* customCB = new ShaderProp("CustomCB", GraphicsResourceType::CBV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_HIGH, sizeof(float4));
-        customCB->InitRegisterSettings(2);
+        //customCB->InitRegisterSettings(2);
 
         ShaderPropRange commonSR1("_MainTex", GraphicsResourceType::SRV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_ONINIT);
         commonSR1.PropNum = 1;
-        commonSR1.InitBaseRegisterSettings(0);
+        //commonSR1.InitBaseRegisterSettings(0);
 
         ShaderTable* table = new ShaderTable();
         table->AddRange(commonSR1);
 
-        defaultlayout->Slots[0] = commonCB0;
+        ShaderSlot* T0 = new ShaderSlot();
+        T0->SlotType = ShaderSlotType::ShaderSlotType_Builtin_ViewProj;
+        defaultlayout->Slots[0] = T0;
         defaultlayout->Slots[1] = commonCB1;
         defaultlayout->Slots[2] = customCB;
         defaultlayout->Slots[3] = table;
@@ -248,7 +244,6 @@ void Engine::Update(void* data)
     cmdBuffer->SetViewPort(0, 0, 2560, 1440);
     cmdBuffer->SetRenderTexture(_SceneRenderTexture);
 
-    _Mat0->SetProperty(&_CommonCB0, 0);
     _Mat0->SetProperty(&_CommonCB1, 1);
     static float4 tmpCol = float4(1, 1, 1, 1);
     _Mat0->SetProperty(&tmpCol, 2);
@@ -351,7 +346,5 @@ void Engine::KeyPressed(_uint param)
 
     _Camera.SetProjection(FOV, 2560.0 / 1440.0, 0.01, 1000);
     _Camera.Transform.Init(float3(0, 0, 1), float3(1, 0, 0), float3(0, 1, 0), float3(0, 0, 0));
-    _CommonCB0.WorldToViewMatrix = *_Camera.GetViewMatrix();
-    _CommonCB0.ProjectionMatrix = *_Camera.GetProjectionMatrix();
-
+    EiRasGlobal::EiRasGlobalManager::SharedInstance()->SetViewProj(*_Camera.GetViewMatrix(), *_Camera.GetProjectionMatrix());
 }

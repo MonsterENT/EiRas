@@ -25,8 +25,24 @@ EiRasGlobalManager* EiRasGlobalManager::SharedInstance()
 
 EiRasGlobalManager::EiRasGlobalManager()
 {
-    CBViewProj = new GraphicsResource("CBViewProj", GraphicsResourceType::CBV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_HIGH, true);
-    CBViewProj->InitAsConstantBuffer(32 * sizeof(float));
-
+    CBViewProjRawRes = 0;
     _CB1 = 0;
+}
+
+GraphicsResource* EiRasGlobalManager::GetViewProjRawRes()
+{
+    if (CBViewProjRawRes == 0)
+    {
+        CBViewProjRawRes = new GraphicsResource("CBViewProj", GraphicsResourceType::CBV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_HIGH, true);
+        CBViewProjRawRes->InitAsConstantBuffer(32 * sizeof(float));
+    }
+    return CBViewProjRawRes;
+}
+
+void EiRasGlobalManager::SetViewProj(const Math::Matrix4X4 WorldToViewMatrix, const Math::Matrix4X4 ProjectionMatrix)
+{
+    _CBViewProj.ProjectionMatrix = ProjectionMatrix;
+    _CBViewProj.WorldToViewMatrix = WorldToViewMatrix;
+
+    GetViewProjRawRes()->SetResource(&_CBViewProj, false);
 }
