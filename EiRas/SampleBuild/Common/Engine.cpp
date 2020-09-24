@@ -44,14 +44,6 @@ Image* imageObj = 0;
 
 CommonBlur* _CommonBlur;
 
-typedef struct CommonCB1
-{
-    Matrix4X4 LocalToWorldMatrix;
-    Matrix4X4 WorldToLocalMatrix;
-}CommonCB1;
-
-CommonCB1 _CommonCB1;
-
 Camera _Camera;
 TransformSys _Transform;
 
@@ -85,11 +77,10 @@ void Engine::m_initEngine()
 
     _Transform.Init(float3(0, 1, 0), float3(1, 0, 0), float3(0, 0, 1), float3(0, -1, 5));
     _Transform.LocalScale = float3(1, 1, 1);
-    _CommonCB1.LocalToWorldMatrix = *_Transform.GetLocalToWorldMatrix();
-    _CommonCB1.WorldToLocalMatrix = *_Transform.GetWorldToLocalMatrix();
+    _Transform.UpdateToGraphics();
     
     cmdBuffer = new CommandBuffer("main buffer");
-
+    
     _CommonBlur = new CommonBlur(2560 / 2, 1440 / 2, cmdBuffer);
     
 #pragma region CustomShaderLayout
@@ -129,8 +120,10 @@ void Engine::m_initEngine()
 
         ShaderSlot* T0 = new ShaderSlot();
         T0->SlotType = ShaderSlotType::ShaderSlotType_Builtin_ViewProj;
+        ShaderSlot* T1 = new ShaderSlot();
+        T1->SlotType = ShaderSlotType::ShaderSlotType_Ref_WorldMatrix;
         defaultlayout->Slots[0] = T0;
-        defaultlayout->Slots[1] = commonCB1;
+        defaultlayout->Slots[1] = T1;
         defaultlayout->Slots[2] = customCB;
         defaultlayout->Slots[3] = table;
     }
@@ -191,6 +184,7 @@ void Engine::m_initEngine()
     label->SetText(text);
 
     inspector = new InspectorTransform(&_Transform);
+
 }
 
 Engine::Engine()
@@ -244,7 +238,8 @@ void Engine::Update(void* data)
     cmdBuffer->SetViewPort(0, 0, 2560, 1440);
     cmdBuffer->SetRenderTexture(_SceneRenderTexture);
 
-    _Mat0->SetProperty(&_CommonCB1, 1);
+    cmdBuffer->SetTransform(&_Transform);
+
     static float4 tmpCol = float4(1, 1, 1, 1);
     _Mat0->SetProperty(&tmpCol, 2);
 
@@ -341,8 +336,7 @@ void Engine::KeyPressed(_uint param)
 
     _Transform.Init(forward, right, up, postion);
     _Transform.LocalScale = float3(1, 1, 1);
-    _CommonCB1.LocalToWorldMatrix = *_Transform.GetLocalToWorldMatrix();
-    _CommonCB1.WorldToLocalMatrix = *_Transform.GetWorldToLocalMatrix();
+    _Transform.UpdateToGraphics();
 
     _Camera.SetProjection(FOV, 2560.0 / 1440.0, 0.01, 1000);
     _Camera.Transform.Init(float3(0, 0, 1), float3(1, 0, 0), float3(0, 1, 0), float3(0, 0, 0));

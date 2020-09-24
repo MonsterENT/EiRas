@@ -63,6 +63,7 @@ Math::Matrix4X4* TransformSys::GetWorldToLocalMatrix()
 
 void TransformSys::UpdateToGraphics()
 {
+    GetLocalToWorldMatrix();
     GetCBRawRes()->SetResource(&_RawData, false);
 }
 

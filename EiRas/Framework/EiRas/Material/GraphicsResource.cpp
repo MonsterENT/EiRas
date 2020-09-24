@@ -28,6 +28,7 @@ GraphicsResource::GraphicsResource(std::string Name, GraphicsResourceType type, 
 
 void GraphicsResource::InitAsConstantBuffer(_uint bufferSize)
 {
+    this->bufferSize = bufferSize;
 #if GRAPHICS_DX
     ((GraphicsResourceDX12Bridge*)PlatformBridge)->InitAsConstantBuffer(bufferSize, &Behaviors);
 #elif GRAPHICS_METAL
@@ -37,6 +38,7 @@ void GraphicsResource::InitAsConstantBuffer(_uint bufferSize)
 
 void GraphicsResource::InitAsDefault(_uint bufferSize)
 {
+    this->bufferSize = bufferSize;
 #if GRAPHICS_DX
     ((GraphicsResourceDX12Bridge*)PlatformBridge)->InitAsDefault(bufferSize, &Behaviors);
 #elif GRAPHICS_METAL
