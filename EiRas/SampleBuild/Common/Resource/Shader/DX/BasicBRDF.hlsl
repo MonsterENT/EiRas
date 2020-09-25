@@ -1,4 +1,3 @@
-
 cbuffer CommonCB0 : register(b0)
 {
     row_major float4x4 _WorldToViewMatrix;
@@ -35,6 +34,21 @@ struct PSInput
     float3 normal : NORMAL;
 };
 
+inline float SmithJointGGXVisibilityTerm_S (float NdotL, float NdotV, float roughness)
+{
+    float a = roughness;
+    float lambdaV = NdotL * (NdotV * (1 - a) + a);
+    float lambdaL = NdotV * (NdotL * (1 - a) + a);
+
+    return 0.5f / (lambdaV + lambdaL + 1e-5f);
+}
+
+inline float GGXTerm_S (float NdotH, float roughness)
+{
+    float a2 = roughness * roughness;
+    float d = (NdotH * a2 - NdotH) * NdotH + 1.0f; 
+    return 1.0f / 3.14159f * a2 / (d * d + 1e-7f);
+}
 
 PSInput VSMain(VSInput v)
 {
@@ -50,7 +64,29 @@ PSInput VSMain(VSInput v)
 
 float4 PSMain(PSInput i) : SV_TARGET
 {
+    float4 col = 0;
+    float roughness = 0.2f;
+    float3 viewDir = float3(0, 0, -1);
+    float3 lightDir = float3(0, 1, 0);
+    float3 H = normalize(viewDir + lightDir);
     float4 albedo = _MainTex.Sample(_DefaultSampler, i.uv);
-    return float4(albedo.rgb * dot(i.normal, float3(0, 1, 0)).xxx, 1);
+    float3 specColor = float3(1, 1, 1);
+    float NdotL = saturate(dot(i.normal, lightDir));
+    float NdotV = abs(dot(i.normal, viewDir));
+    float NdotH = saturate(dot(i.normal, H));
+
+    float diffuseTerm = saturate(NdotL);
+    float V = SmithJointGGXVisibilityTerm_S (NdotL, NdotV, roughness);
+    float D = GGXTerm_S (NdotH, roughness);
+    float specularTerm = V * D * 3.14159f;
+    specularTerm = max(0, specularTerm * NdotL);
+
+    col.a = albedo.a;
+
+    col.rgb = diffuseTerm * albedo.rgb * 0.05f;
+    specColor *= albedo.rgb;
+    col.rgb += specColor.rgb * specularTerm;
+
+    return col;
 }
 //BasicBRDF
