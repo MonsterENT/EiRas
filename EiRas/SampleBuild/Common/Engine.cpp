@@ -104,12 +104,7 @@ void Engine::m_initEngine()
 #pragma region Default3DShaderLayout
     ShaderLayout* defaultlayout = new ShaderLayout(4);
     {
-        //ShaderProp* commonCB0 = new ShaderProp("CommonCB0", GraphicsResourceType::CBV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_HIGH, sizeof(Matrix4X4) * 2);
-        //commonCB0->InitRegisterSettings(0);
-        ShaderProp* commonCB1 = new ShaderProp("CommonCB1", GraphicsResourceType::CBV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_HIGH, sizeof(Matrix4X4) * 2);
-        //commonCB1->InitRegisterSettings(1);
         ShaderProp* customCB = new ShaderProp("CustomCB", GraphicsResourceType::CBV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_HIGH, sizeof(float4));
-        //customCB->InitRegisterSettings(2);
 
         ShaderPropRange commonSR1("_MainTex", GraphicsResourceType::SRV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_ONINIT);
         commonSR1.PropNum = 1;
