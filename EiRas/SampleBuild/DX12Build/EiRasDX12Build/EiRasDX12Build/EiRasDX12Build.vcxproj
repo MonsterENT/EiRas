@@ -171,6 +171,7 @@
     <ClInclude Include="..\..\..\..\Framework\EiRas\Global\EiRasGlobalManager.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Global\GlobalDefine.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Global\PlatformDependency\EiRasPlatformBridgeProtocol.h" />
+    <ClInclude Include="..\..\..\..\Framework\EiRas\GPCompute\ComputeKernel.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\GraphicsAPI\EiRas.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Graphics\CommandBuffer.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Graphics\GraphicsRenderState.hpp" />
@@ -201,6 +202,8 @@
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\d3dx12.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\DX12Utils.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\DXMacro.h" />
+    <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\GPCompute\ComputeKernelDX12.hpp" />
+    <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\GPCompute\ComputeKernelDX12Bridge.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\GraphicsAPI\EiRasDX12.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\GraphicsAPI\EiRasDX12Bridge.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\GUI\GUISystemDX12.hpp" />
@@ -242,6 +245,7 @@
     <ClCompile Include="..\..\..\..\Framework\EiRas\Basic\TransformSys.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\Effect\CommonBlur\CommonBlur.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\Global\EiRasGlobalManager.cpp" />
+    <ClCompile Include="..\..\..\..\Framework\EiRas\GPCompute\ComputeKernel.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\GraphicsAPI\EiRas.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\Graphics\CommandBuffer.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\Graphics\GraphicsRenderState.cpp" />
@@ -270,6 +274,8 @@
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\CommandBuffer\CommandBufferDX12.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\CommandBuffer\CommandBufferDX12Bridge.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\DX12Utils.cpp" />
+    <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\GPCompute\ComputeKernelDX12.cpp" />
+    <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\GPCompute\ComputeKernelDX12Bridge.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\GraphicsAPI\EiRasDX12.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\GraphicsAPI\EiRasDX12Bridge.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\GUI\GUISystemDX12.cpp" />
