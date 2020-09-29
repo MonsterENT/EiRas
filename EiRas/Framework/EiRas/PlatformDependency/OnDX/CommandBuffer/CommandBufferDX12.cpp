@@ -11,6 +11,7 @@
 #include <PlatformDependency/OnDX/Mesh/MeshDX12.h>
 #include <Basic/Image.hpp>
 #include <Graphics/RenderData.hpp>
+#include <PlatformDependency/OnDX/Shader/ShaderLayoutDX12.hpp>
 
 using namespace Graphics;
 using GraphicsAPI::EiRasDX12;
@@ -171,7 +172,7 @@ void SetRootBufferView(ID3D12GraphicsCommandList* cmdList, MaterialSlot* slot, G
 
 void CommandBufferDX12::SetMaterial(MaterialSys::MaterialDX12* mat, MaterialSys::MaterialLayout* layout, _uint pass)
 {
-    cmdList->SetGraphicsRootSignature(mat->RawShaderObj->RootSignature);
+    cmdList->SetGraphicsRootSignature(mat->RawShaderObj->Layout->m_RootSignature);
     cmdList->SetPipelineState(mat->PassedPipelineState[pass]);
 
     GET_EIRAS_DX12(deviceObj);

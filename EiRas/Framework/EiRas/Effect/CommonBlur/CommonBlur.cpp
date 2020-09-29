@@ -47,6 +47,7 @@ CommonBlur::CommonBlur(_uint width, _uint height, Graphics::CommandBuffer* refCm
 
         shaderLayout->Slots[0] = table0;
         shaderLayout->Slots[1] = table1;
+        shaderLayout->BuildOnDX12();
     }
 
     GraphicsVertexDescriptor* m_vertexDesc = new GraphicsVertexDescriptor();
@@ -59,7 +60,7 @@ CommonBlur::CommonBlur(_uint width, _uint height, Graphics::CommandBuffer* refCm
     _Shader->AddPixelFuncToPass("PSMainV", 1);
     _Shader->SetVertexFuncToPass(0, 1);
     _Shader->InitVertexDescriptor(m_vertexDesc);
-    _Shader->InitLayout(shaderLayout);
+    _Shader->SetLayout(shaderLayout);
 
     _Material = new Material("Common Blur Material", _Shader, refCmdBuffer);
     _Material->RenderState->_CullMode = CullMode::CullModeNone;

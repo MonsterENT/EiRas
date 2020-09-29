@@ -13,8 +13,7 @@ namespace Graphics
 
 namespace MaterialSys
 {
-    class ShaderLayout;
-
+    class ShaderLayoutDX12;
     typedef struct ShaderPassData
     {
         _uint VertexFuncIndex;
@@ -49,11 +48,11 @@ namespace MaterialSys
         std::vector<ID3DBlob*> PixelFuncList;
         std::vector<ShaderPassData> m_ShaderPassData;
 
-        void InitRootSignature(ShaderLayout* RefShaderLayout);
+        void SetLayout(ShaderLayoutDX12* shaderLayout);
 
         void InitVertexDescriptor(Graphics::GraphicsVertexDescriptor* desc, _uint pass);
 
-        ID3D12RootSignature* RootSignature;
+        ShaderLayoutDX12* Layout;
 
         std::vector<_uint> VertexAttributesCountList;
         std::vector<D3D12_INPUT_ELEMENT_DESC*> VertexDescriptorList;

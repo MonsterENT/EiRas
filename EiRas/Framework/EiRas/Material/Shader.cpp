@@ -66,11 +66,11 @@ void Shader::SetPixelFuncToPass(_uint index, _uint pass)
     ((ShaderDX12Bridge*)PlatformBridge)->SetPixelFuncToPass(index, pass);
 }
 
-void Shader::InitLayout(ShaderLayout* layout)
+void Shader::SetLayout(ShaderLayout* layout)
 {
     Layout = layout;
 #if GRAPHICS_DX
-    ((ShaderDX12Bridge*)PlatformBridge)->InitRootSignature(layout);
+    ((ShaderDX12Bridge*)PlatformBridge)->SetLayout(layout);
 #endif
 }
 

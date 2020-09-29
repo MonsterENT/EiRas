@@ -25,7 +25,7 @@ namespace MaterialSys
         void SetVertexFuncToPass(_uint index, _uint pass);
         void SetPixelFuncToPass(_uint index, _uint pass);
 
-        void InitRootSignature(ShaderLayout* shaderLayout);
+        void SetLayout(ShaderLayout* shaderLayout);
         
         void InitVertexDescriptor(Graphics::GraphicsVertexDescriptor* desc, _uint pass);
 

@@ -3,6 +3,8 @@
 #include <vector>
 #include <Material/MaterialLayout.hpp>
 #include <Material/GraphicsResource.hpp>
+#include <Global/PlatformDependency/EiRasPlatformBridgeProtocol.h>
+#include <Global/GlobalDefine.h>
 
 namespace MaterialSys
 {
@@ -108,10 +110,11 @@ namespace MaterialSys
         _uint SlotNum;
         ShaderSlot** Slots;
 
-        ShaderLayout(_uint slotNum)
-        {
-            SlotNum = slotNum;
-            Slots = new ShaderSlot * [slotNum];
-        }
+        ShaderLayout(_uint slotNum);
+
+        void BuildOnDX12();
+        EiRasPlatformBridgeProtocol* PlatformBridge;
+    private:
+        
     };
 }

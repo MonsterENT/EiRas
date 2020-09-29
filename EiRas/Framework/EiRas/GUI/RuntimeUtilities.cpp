@@ -32,6 +32,7 @@ ShaderLayout* RuntimeUtilities::GetDefaultShaderLayout()
         table1->AddRange(MainTexSlot);
         _DefaultShaderLayout->Slots[0] = table0;
         _DefaultShaderLayout->Slots[1] = table1;
+        _DefaultShaderLayout->BuildOnDX12();
     }
     return _DefaultShaderLayout;
 }
@@ -70,7 +71,7 @@ Shader* RuntimeUtilities::GetGUIDefaultShader()
             _GUIDefaultShader->AddPixelFuncToPass("PSMainUseTex", 1);
         #pragma endregion
         _GUIDefaultShader->InitVertexDescriptor(GetDefaultVertexDesc());
-        _GUIDefaultShader->InitLayout(GetDefaultShaderLayout());
+        _GUIDefaultShader->SetLayout(GetDefaultShaderLayout());
     }
     return _GUIDefaultShader;
 }
@@ -91,7 +92,7 @@ Shader* RuntimeUtilities::GetFontShader()
         std::string shaderFilePath = FileSys::FileManager::shareInstance()->GetResourcePath("Shader\\DX\\GUI\\GUIFont", "hlsl");
         _FontShader = new Shader(shaderFilePath, "VSMain", "PSMain");
         _FontShader->InitVertexDescriptor(GetDefaultVertexDesc());
-        _FontShader->InitLayout(GetDefaultShaderLayout());
+        _FontShader->SetLayout(GetDefaultShaderLayout());
     }
     return _FontShader;
 }

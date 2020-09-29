@@ -14,7 +14,6 @@ public:
     void* raw_obj;
     virtual ~EiRasPlatformBridgeProtocol()
     {
-
     }
 private:
     

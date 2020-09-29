@@ -121,6 +121,7 @@ void Engine::m_initEngine()
         defaultlayout->Slots[1] = T1;
         defaultlayout->Slots[2] = customCB;
         defaultlayout->Slots[3] = table;
+        defaultlayout->BuildOnDX12();
     }
 #pragma endregion
 
@@ -131,7 +132,7 @@ void Engine::m_initEngine()
     std::string shaderPath = FileSys::FileManager::shareInstance()->GetResourcePath("Shader\\DX\\BasicBRDF", "hlsl");
     _BasicBRDFShader = new Shader(shaderPath, "VSMain", "PSMain");
 #endif
-    _BasicBRDFShader->InitLayout(defaultlayout);
+    _BasicBRDFShader->SetLayout(defaultlayout);
 
     GraphicsVertexDescriptor* m_vertexDesc = new GraphicsVertexDescriptor();
     m_vertexDesc->AddBufferAttribute("POSITION", GraphicsVertexAttributeFormat::VertexFormatFloat3, 0);

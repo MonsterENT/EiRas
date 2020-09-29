@@ -40,7 +40,7 @@ namespace MaterialSys {
         }
         void* GetRawObj();
 
-        void InitLayout(ShaderLayout* layout);
+        void SetLayout(ShaderLayout* layout);
         
         void InitVertexDescriptor(Graphics::GraphicsVertexDescriptor* vertexDescriptor, _uint pass = 0);
 

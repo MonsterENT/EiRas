@@ -224,6 +224,8 @@
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\ResourceHeapManager\ResourceHeapManager.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Shader\ShaderDX12.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Shader\ShaderDX12Bridge.h" />
+    <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Shader\ShaderLayoutDX12.hpp" />
+    <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Shader\ShaderLayoutDX12Bridge.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Protocols\EiRasProtocol.h" />
     <ClInclude Include="..\..\..\Common\Engine.hpp" />
     <ClInclude Include="..\..\..\Library\stb\stb_image.h" />
@@ -296,6 +298,8 @@
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\ResourceHeapManager\ResourceHeapManager.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Shader\ShaderDX12.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Shader\ShaderDX12Bridge.cpp" />
+    <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Shader\ShaderLayoutDX12.cpp" />
+    <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Shader\ShaderLayoutDX12Bridge.cpp" />
     <ClCompile Include="..\..\..\Common\Engine.cpp" />
     <ClCompile Include="EiRasDX12Build.cpp" />
   </ItemGroup>
