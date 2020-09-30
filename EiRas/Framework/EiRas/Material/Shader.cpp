@@ -74,14 +74,14 @@ void Shader::SetLayout(ShaderLayout* layout)
 #endif
 }
 
-void Shader::InitVertexDescriptor(GraphicsVertexDescriptor* vertexDescriptor, _uint pass)
+void Shader::InitVertexDescriptor(GraphicsVertexDescriptor* vertexDescriptor, _uint pass, bool enableInstance)
 {
 #if GRAPHICS_METAL
     ((ShaderMetalBridge*)PlatformBridge)->InitVertexDescriptor(vertexDescriptor);
 #endif
 
 #if GRAPHICS_DX
-    ((ShaderDX12Bridge*)PlatformBridge)->InitVertexDescriptor(vertexDescriptor, pass);
+    ((ShaderDX12Bridge*)PlatformBridge)->InitVertexDescriptor(vertexDescriptor, pass, enableInstance);
 #endif
 }
 

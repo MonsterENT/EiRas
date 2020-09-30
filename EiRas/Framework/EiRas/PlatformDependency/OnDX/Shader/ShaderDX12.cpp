@@ -106,7 +106,7 @@ void ShaderDX12::SetLayout(ShaderLayoutDX12* shaderLayout)
     Layout = shaderLayout;
 }
 
-void ShaderDX12::InitVertexDescriptor(Graphics::GraphicsVertexDescriptor* desc, _uint pass)
+void ShaderDX12::InitVertexDescriptor(Graphics::GraphicsVertexDescriptor* desc, _uint pass, bool enableInstance)
 {
     if (desc->_AttributeIndex < 1)
     {
@@ -140,7 +140,7 @@ void ShaderDX12::InitVertexDescriptor(Graphics::GraphicsVertexDescriptor* desc, 
         VertexDescriptor[i].Format = (DXGI_FORMAT)Graphics::GraphicsVertexAttributeToDX12Format(att.AttributeFormat);
         VertexDescriptor[i].InputSlot = att.BufferIndex;
         VertexDescriptor[i].AlignedByteOffset = att.Offset;
-        VertexDescriptor[i].InputSlotClass = D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA;
+        VertexDescriptor[i].InputSlotClass = enableInstance ? D3D12_INPUT_CLASSIFICATION_PER_INSTANCE_DATA : D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA;
         VertexDescriptor[i].InstanceDataStepRate = 0;
     }
 }

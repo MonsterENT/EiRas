@@ -41,8 +41,8 @@ void ShaderDX12Bridge::SetLayout(ShaderLayout* shaderLayout)
     obj->SetLayout((ShaderLayoutDX12*)shaderLayout->PlatformBridge->raw_obj);
 }
 
-void ShaderDX12Bridge::InitVertexDescriptor(Graphics::GraphicsVertexDescriptor* desc, _uint pass)
+void ShaderDX12Bridge::InitVertexDescriptor(Graphics::GraphicsVertexDescriptor* desc, _uint pass, bool enableInstance)
 {
     ShaderDX12* obj = (ShaderDX12*)raw_obj;
-    obj->InitVertexDescriptor(desc, pass);
+    obj->InitVertexDescriptor(desc, pass, enableInstance);
 }

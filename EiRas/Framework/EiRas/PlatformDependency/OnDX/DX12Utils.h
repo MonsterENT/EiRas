@@ -36,7 +36,16 @@ namespace DX12Utils
     {
         wchar_t tmp_ws[128];
         swprintf(tmp_ws, 128, L"%hs", filePath);
-        return SUCCEEDED(D3DCompileFromFile(tmp_ws, 0, 0, fnName, target, 0, 0, &shader, 0));
+        ID3DBlob* errMsg = NULL;
+        HRESULT hr = D3DCompileFromFile(tmp_ws, 0, D3D_COMPILE_STANDARD_FILE_INCLUDE, fnName, target, 0, 0, &shader, &errMsg);
+        if (errMsg != NULL)
+        {
+            char* msgCharData = new char[errMsg->GetBufferSize()];
+            memcpy(msgCharData, errMsg->GetBufferPointer(), errMsg->GetBufferSize());
+            //PrintMsg
+        }
+        assert(SUCCEEDED(hr));
+        return SUCCEEDED(hr);
     }
 
     static MeshSys::Mesh* _FullScreenTriangle = 0;

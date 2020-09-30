@@ -50,7 +50,7 @@ namespace MaterialSys
 
         void SetLayout(ShaderLayoutDX12* shaderLayout);
 
-        void InitVertexDescriptor(Graphics::GraphicsVertexDescriptor* desc, _uint pass);
+        void InitVertexDescriptor(Graphics::GraphicsVertexDescriptor* desc, _uint pass, bool enableInstance);
 
         ShaderLayoutDX12* Layout;
 

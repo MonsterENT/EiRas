@@ -1,3 +1,5 @@
+#include "Common.hlsl"
+
 cbuffer CommonCB0 : register(b0)
 {
     row_major float4x4 _WorldToViewMatrix;
@@ -34,22 +36,6 @@ struct PSInput
     float3 normal : NORMAL;
 };
 
-inline float SmithJointGGXVisibilityTerm_S (float NdotL, float NdotV, float roughness)
-{
-    float a = roughness;
-    float lambdaV = NdotL * (NdotV * (1 - a) + a);
-    float lambdaL = NdotV * (NdotL * (1 - a) + a);
-
-    return 0.5f / (lambdaV + lambdaL + 1e-5f);
-}
-
-inline float GGXTerm_S (float NdotH, float roughness)
-{
-    float a2 = roughness * roughness;
-    float d = (NdotH * a2 - NdotH) * NdotH + 1.0f; 
-    return 1.0f / 3.14159f * a2 / (d * d + 1e-7f);
-}
-
 PSInput VSMain(VSInput v)
 {
     PSInput o = (PSInput)0;
@@ -76,8 +62,8 @@ float4 PSMain(PSInput i) : SV_TARGET
     float NdotH = saturate(dot(i.normal, H));
 
     float diffuseTerm = saturate(NdotL);
-    float V = SmithJointGGXVisibilityTerm_S (NdotL, NdotV, roughness);
-    float D = GGXTerm_S (NdotH, roughness);
+    float V = SmithJointGGXVisibilityTerm (NdotL, NdotV, roughness);
+    float D = GGXTerm (NdotH, roughness);
     float specularTerm = V * D * 3.14159f;
     specularTerm = max(0, specularTerm * NdotL);
 

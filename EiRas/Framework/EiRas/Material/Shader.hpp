@@ -42,7 +42,7 @@ namespace MaterialSys {
 
         void SetLayout(ShaderLayout* layout);
         
-        void InitVertexDescriptor(Graphics::GraphicsVertexDescriptor* vertexDescriptor, _uint pass = 0);
+        void InitVertexDescriptor(Graphics::GraphicsVertexDescriptor* vertexDescriptor, _uint pass = 0, bool enableInstance = false);
 
         EiRasPlatformBridgeProtocol* PlatformBridge;
 

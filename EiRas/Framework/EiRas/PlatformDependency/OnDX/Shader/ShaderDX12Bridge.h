@@ -27,7 +27,7 @@ namespace MaterialSys
 
         void SetLayout(ShaderLayout* shaderLayout);
         
-        void InitVertexDescriptor(Graphics::GraphicsVertexDescriptor* desc, _uint pass);
+        void InitVertexDescriptor(Graphics::GraphicsVertexDescriptor* desc, _uint pass, bool enableInstance);
 
         virtual ~ShaderDX12Bridge()
         {
