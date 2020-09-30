@@ -2,6 +2,7 @@
 #include <Global/PlatformDependency/EiRasPlatformBridgeProtocol.h>
 #include <Global/GlobalDefine.h>
 #include <string>
+#include <Math/Math.hpp>
 
 namespace MaterialSys
 {
@@ -13,6 +14,11 @@ namespace MaterialSys
 namespace MeshSys
 {
     class Mesh;
+}
+
+namespace GPCompute
+{
+    class ComputeKernel;
 }
 
 namespace Graphics {
@@ -28,7 +34,7 @@ namespace Graphics {
         void SetTransformGraphics(MaterialSys::GraphicsResource* res);
         void DrawMesh(MeshSys::Mesh* mesh);
         void DrawRenderData(RenderData* render);
-
+        void DispatchComputeKernel(GPCompute::ComputeKernel* kernel, Math::int3 groupCount);
         void BeginFrame();
 
         void Reset(EiRasPlatformBridgeProtocol* heapBridge);

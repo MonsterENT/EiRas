@@ -5,6 +5,7 @@
 #include <vector>
 #include <Global/GlobalDefine.h>
 #include <PlatformDependency/OnDX/RenderTexture/RenderTextureDX12.hpp>
+#include <Math/Math.hpp>
 
 namespace MaterialSys
 {
@@ -18,6 +19,11 @@ namespace MaterialSys
 namespace MeshSys
 {
     class Mesh;
+}
+
+namespace GPCompute
+{
+    class ComputeKernelDX12;
 }
 
 namespace Graphics {
@@ -40,7 +46,7 @@ namespace Graphics {
         void SetTransformGraphics(MaterialSys::GraphicsResource* res);
         void DrawMesh(MeshSys::Mesh* mesh);
         void DrawRenderData(RenderData* render);
-
+        void DispatchComputeKernel(GPCompute::ComputeKernelDX12* kernel, Math::int3 groupCount);
         void SetMaterial(MaterialSys::MaterialDX12* mat, MaterialSys::MaterialLayout* layout, _uint pass = 0);
 
         void SetRenderTexture(void* rawRenderTexture);

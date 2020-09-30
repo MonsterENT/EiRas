@@ -64,6 +64,26 @@ public:
     }
 };
 
+class int3
+{
+public:
+    int x, y, z;
+public:
+    int3()
+    {
+        x = 0;
+        y = 0;
+        z = 0;
+    }
+
+    int3(int _x, int _y, int _z)
+    {
+        x = _x;
+        y = _y;
+        z = _z;
+    }
+};
+
 class float2
 {
 public:

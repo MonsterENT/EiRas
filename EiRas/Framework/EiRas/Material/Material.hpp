@@ -44,6 +44,7 @@ namespace MaterialSys {
         void FinishStateChange(_uint pass = 0);
         EiRasPlatformBridgeProtocol* PlatformBridge;
 
+        void GetPropertyData(void* res, _uint slotIndex, int propIndex = -1);
         void SetProperty(void* res, _uint slotIndex, int propIndex = -1);
         void SetProperty(ImageSys::Image* image, _uint slotIndex, int propIndex = -1);
         void SetProperty(MaterialSys::GraphicsResource* srv, _uint slotIndex, int propIndex = -1);

@@ -74,6 +74,8 @@ namespace MaterialSys
 
         void InitAsDefault(_uint bufferSize);
 
+        void InitAsUAV(_uint bufferSize);
+
         void InitAsRT(void* renderBufferFormat, void* rawResourceObj);
 
         void InitAsShaderResource(_uint width, _uint height, _uint channels, void* texData, bool* buildStatusFlag);
@@ -85,6 +87,7 @@ namespace MaterialSys
         EiRasPlatformBridgeProtocol* PlatformBridge;
 
         void SetResource(void* res, bool noMoreUpdate);
+        void GetResource(void* res);
 
     private:
         _uint bufferSize;

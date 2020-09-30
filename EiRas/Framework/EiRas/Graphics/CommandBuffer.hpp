@@ -15,6 +15,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <Math/Math.hpp>
 
 namespace MaterialSys {
     class Material;
@@ -32,6 +33,11 @@ namespace MeshSys
 namespace BasicComponent
 {
     class TransformSys;
+}
+
+namespace GPCompute
+{
+    class ComputeKernel;
 }
 
 namespace Graphics {
@@ -54,6 +60,7 @@ namespace Graphics {
 
         void DrawMesh(MeshSys::Mesh* mesh);
         void DrawRenderData(RenderData* render);
+        void DispatchComputeKernel(GPCompute::ComputeKernel* kernel, Math::int3 groupCount);
 
         void BeginFrame();
 

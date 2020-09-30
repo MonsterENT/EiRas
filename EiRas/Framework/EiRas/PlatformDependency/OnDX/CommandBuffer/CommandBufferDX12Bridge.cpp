@@ -7,10 +7,13 @@
 #include <Mesh/Mesh.hpp>
 #include <PlatformDependency/OnDX/Mesh/MeshDX12Bridge.h>
 #include <PlatformDependency/OnDX/Mesh/MeshDX12.h>
+#include <GPCompute/ComputeKernel.hpp>
+#include <PlatformDependency/OnDX/GPCompute/ComputeKernelDX12.hpp>
 
 using namespace Graphics;
 using namespace MaterialSys;
 using namespace MeshSys;
+using namespace GPCompute;
 
 CommandBufferDX12Bridge::CommandBufferDX12Bridge(std::string Name)
 {
@@ -70,4 +73,10 @@ void CommandBufferDX12Bridge::DrawRenderData(RenderData* render)
 {
     CommandBufferDX12* obj = (CommandBufferDX12*)raw_obj;
     obj->DrawRenderData(render);
+}
+
+void CommandBufferDX12Bridge::DispatchComputeKernel(GPCompute::ComputeKernel* kernel, Math::int3 groupCount)
+{
+    CommandBufferDX12* obj = (CommandBufferDX12*)raw_obj;
+    obj->DispatchComputeKernel((ComputeKernelDX12*)kernel->PlatformBridge->raw_obj, groupCount);
 }

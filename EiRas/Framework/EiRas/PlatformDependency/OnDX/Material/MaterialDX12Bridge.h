@@ -18,9 +18,6 @@ namespace MaterialSys
     {
     public:
         MaterialDX12Bridge(std::string Name, EiRasPlatformBridgeProtocol* shaderObj);
-
-        void SetProperty(MaterialProp* prop, void* res);
-
         void UpdateRenderState(Graphics::GraphicsRenderState* renderState, EiRasPlatformBridgeProtocol* shaderObj, EiRasPlatformBridgeProtocol* cmdBufferPB, _uint pass = 0);
     };
 }

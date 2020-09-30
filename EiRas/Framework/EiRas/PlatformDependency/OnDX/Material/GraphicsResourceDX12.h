@@ -10,7 +10,7 @@ namespace MaterialSys
     class GraphicsResourceDX12
     {
     public:
-        GraphicsResourceDX12(int bufferSize, GraphicsResourceBehaviors* behaviors, bool initResource);
+        GraphicsResourceDX12(int bufferSize, GraphicsResourceBehaviors* behaviors, bool initResource, bool UAVRES = false);
         virtual ~GraphicsResourceDX12();
 
         ID3D12Resource* Resource;
@@ -18,6 +18,7 @@ namespace MaterialSys
         GraphicsResourceBehaviors* Behaviors;
 
         virtual void SetResource(void* res, bool noMoreUpdate);
+        virtual void GetResource(void* res);
 
         int GetBufferSize();
 

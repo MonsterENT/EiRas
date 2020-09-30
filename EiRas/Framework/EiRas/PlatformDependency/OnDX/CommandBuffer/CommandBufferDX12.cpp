@@ -5,6 +5,7 @@
 #include <PlatformDependency/OnDX/Material/MaterialDX12.h>
 #include <PlatformDependency/OnDX/Shader/ShaderDX12.h>
 #include <Material/MaterialLayout.hpp>
+#include <Material/ShaderLayout.h>
 #include <PlatformDependency/OnDX/Material/GraphicsResourceDX12.h>
 #include <PlatformDependency/OnDX/Material/GraphicsResourceHeapDX12.h>
 #include <Mesh/Mesh.hpp>
@@ -12,7 +13,9 @@
 #include <Basic/Image.hpp>
 #include <Graphics/RenderData.hpp>
 #include <PlatformDependency/OnDX/Shader/ShaderLayoutDX12.hpp>
+#include <PlatformDependency/OnDX/GPCompute/ComputeKernelDX12.hpp>
 
+using namespace GPCompute;
 using namespace Graphics;
 using GraphicsAPI::EiRasDX12;
 using namespace MaterialSys;
@@ -25,6 +28,7 @@ CommandBufferDX12::CommandBufferDX12(std::string Name)
     GET_EIRAS_DX12(deviceObj);;
     HRESULT hr = deviceObj->device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&cmdAllocator));
     hr = deviceObj->device->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, cmdAllocator, 0, IID_PPV_ARGS(&cmdList));
+
     wchar_t tmp_ws[16];
     swprintf(tmp_ws, 16, L"%hs", Name.c_str());
     cmdList->SetName(tmp_ws);
@@ -74,7 +78,9 @@ void CommandBufferDX12::Commit(bool present)
     {
         deviceObj->_Present(false, cmdList);
     }
-    assert(SUCCEEDED(cmdList->Close()));
+
+    HRESULT tHR = cmdList->Close();
+    assert(SUCCEEDED(tHR));
     ID3D12CommandList* ppCommandLists[] = { cmdList };
     deviceObj->cmdQueue->ExecuteCommandLists(1, ppCommandLists);
 
@@ -149,8 +155,58 @@ void CommandBufferDX12::DrawRenderData(RenderData* render)
     }
 }
 
-//
-void SetRootBufferView(ID3D12GraphicsCommandList* cmdList, MaterialSlot* slot, GraphicsResource* rootResource)
+void SetComputeRootBufferView(ID3D12GraphicsCommandList* cmdList, MaterialSlot* slot, GraphicsResource* rootResource)
+{
+    GraphicsResourceType resType = rootResource->Behaviors.ResourceType;
+    D3D12_GPU_VIRTUAL_ADDRESS ADDR = ((GraphicsResourceDX12*)rootResource->PlatformBridge->raw_obj)->Resource->GetGPUVirtualAddress();
+
+    if (resType == GraphicsResourceType::CBV)
+    {
+        cmdList->SetComputeRootConstantBufferView(slot->SlotID, ADDR);
+    }
+    else if (resType == GraphicsResourceType::SRV)
+    {
+        cmdList->SetComputeRootShaderResourceView(slot->SlotID, ADDR);
+    }
+    else if (resType == GraphicsResourceType::UAV)
+    {
+        cmdList->SetComputeRootUnorderedAccessView(slot->SlotID, ADDR);
+    }
+}
+
+void CommandBufferDX12::DispatchComputeKernel(GPCompute::ComputeKernelDX12* kernel, Math::int3 groupCount)
+{
+    cmdList->SetComputeRootSignature(kernel->GetRootSignature());
+    cmdList->SetPipelineState(kernel->_ComputePipelineStateObject);
+    GET_EIRAS_DX12(deviceObj);
+    _uint offset = deviceObj->device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+
+    for (_uint i = 0; i < kernel->ResLayout->SlotNum; i++)
+    {
+        MaterialSlot* slot = kernel->ResLayout->Slots[i];
+        if (slot->SlotType == MaterialSlotType::MaterialSlotType_Prop)
+        {
+            MaterialProp* prop = (MaterialProp*)slot;
+            if (prop->Resource == 0)
+            {
+                continue;
+            }
+            SetComputeRootBufferView(cmdList, slot, prop->Resource);
+        }
+        else if (slot->SlotType == MaterialSlotType::MaterialSlotType_Builtin_ViewProj)
+        {
+            SetComputeRootBufferView(cmdList, slot, EiRasGlobal::EiRasGlobalManager::SharedInstance()->CBViewProjRawRes);
+        }
+        else if (slot->SlotType == MaterialSlotType::MaterialSlotType_Ref_WorldMatrix && _CurrentWorldMatCB != 0)
+        {
+            SetComputeRootBufferView(cmdList, slot, _CurrentWorldMatCB);
+        }
+    }
+
+    cmdList->Dispatch(groupCount.x, groupCount.y, groupCount.z);
+}
+
+void SetGraphicsRootBufferView(ID3D12GraphicsCommandList* cmdList, MaterialSlot* slot, GraphicsResource* rootResource)
 {
     GraphicsResourceType resType = rootResource->Behaviors.ResourceType;
     D3D12_GPU_VIRTUAL_ADDRESS ADDR = ((GraphicsResourceDX12*)rootResource->PlatformBridge->raw_obj)->Resource->GetGPUVirtualAddress();
@@ -168,7 +224,6 @@ void SetRootBufferView(ID3D12GraphicsCommandList* cmdList, MaterialSlot* slot, G
         cmdList->SetGraphicsRootUnorderedAccessView(slot->SlotID, ADDR);
     }
 }
-//
 
 void CommandBufferDX12::SetMaterial(MaterialSys::MaterialDX12* mat, MaterialSys::MaterialLayout* layout, _uint pass)
 {
@@ -196,15 +251,15 @@ void CommandBufferDX12::SetMaterial(MaterialSys::MaterialDX12* mat, MaterialSys:
                 continue;
             }
 
-            SetRootBufferView(cmdList, slot, prop->Resource);
+            SetGraphicsRootBufferView(cmdList, slot, prop->Resource);
         }
         else if (slot->SlotType == MaterialSlotType::MaterialSlotType_Builtin_ViewProj)
         {
-            SetRootBufferView(cmdList, slot, EiRasGlobal::EiRasGlobalManager::SharedInstance()->CBViewProjRawRes);
+            SetGraphicsRootBufferView(cmdList, slot, EiRasGlobal::EiRasGlobalManager::SharedInstance()->CBViewProjRawRes);
         }
         else if (slot->SlotType == MaterialSlotType::MaterialSlotType_Ref_WorldMatrix && _CurrentWorldMatCB != 0)
         {
-            SetRootBufferView(cmdList, slot, _CurrentWorldMatCB);
+            SetGraphicsRootBufferView(cmdList, slot, _CurrentWorldMatCB);
         }
     }
 }

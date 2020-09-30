@@ -7,6 +7,7 @@
 namespace MaterialSys
 {
     class ShaderLayout;
+    class MaterialLayout;
 }
 
 namespace GPCompute
@@ -15,11 +16,18 @@ namespace GPCompute
     {
     public:
         ComputeKernelDX12();
-        void SetRootLayout(MaterialSys::ShaderLayout* layout);
+        ~ComputeKernelDX12();
+        void SetLayout(MaterialSys::ShaderLayout* layout, MaterialSys::MaterialLayout* resLayout);
         void AddKernel(LPCSTR fileName, LPCSTR kernelName);
         void Build();
         ID3D12PipelineState* _ComputePipelineStateObject;
         ID3DBlob* kernelFuncBlob;
+
+        MaterialSys::MaterialLayout* ResLayout;
+        ID3D12RootSignature* GetRootSignature();
+
+    private:
+        MaterialSys::ShaderLayout* Layout;
     };
 }
 

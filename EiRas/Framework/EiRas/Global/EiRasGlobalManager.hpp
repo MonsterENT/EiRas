@@ -28,7 +28,6 @@ namespace EiRasGlobal {
     public:
         static EiRasGlobalManager* SharedInstance();
         void* GraphicsAPIDevice;
-
         EiRasGlobalManager();
 
         /*

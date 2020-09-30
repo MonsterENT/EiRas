@@ -24,8 +24,6 @@ namespace MaterialSys
         std::string Name;
         MaterialDX12(std::string Name, ShaderDX12* shaderObj);
 
-        void SetProperty(MaterialProp* prop, void* res);
-
         void UpdateRenderState(Graphics::GraphicsRenderState* renderState, ShaderDX12* shaderObj, void* rawCmdBuffer, _uint pass = 0);
 
         ShaderDX12* RawShaderObj;

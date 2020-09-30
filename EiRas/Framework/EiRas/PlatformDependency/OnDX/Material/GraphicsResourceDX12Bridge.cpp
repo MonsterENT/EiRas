@@ -19,9 +19,19 @@ void GraphicsResourceDX12Bridge::SetResource(void* res, bool noMoreUpdate)
     ((GraphicsResourceDX12*)raw_obj)->SetResource(res, noMoreUpdate);
 }
 
+void GraphicsResourceDX12Bridge::GetResource(void* res)
+{
+    ((GraphicsResourceDX12*)raw_obj)->GetResource(res);
+}
+
 void GraphicsResourceDX12Bridge::InitAsDefault(int bufferSize, GraphicsResourceBehaviors* behaviors)
 {
     raw_obj = new GraphicsResourceDX12(bufferSize, behaviors, true);
+}
+
+void GraphicsResourceDX12Bridge::InitAsUAV(int bufferSize, GraphicsResourceBehaviors* behaviors)
+{
+    raw_obj = new GraphicsResourceDX12(bufferSize, behaviors, true, true);
 }
 
 void GraphicsResourceDX12Bridge::InitAsRT(void* renderBufferFormat, void* rawResourceObj)

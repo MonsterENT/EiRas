@@ -20,14 +20,6 @@ MaterialDX12::MaterialDX12(std::string Name, ShaderDX12* shaderObj)
     RawShaderObj = shaderObj;
 }
 
-void MaterialDX12::SetProperty(MaterialProp* prop, void* res)
-{
-    if (prop->Resource->Behaviors.ResourceType == GraphicsResourceType::CBV)
-    {
-        prop->Resource->SetResource(res, false);
-    }
-}
-
 void MaterialDX12::UpdateRenderState(Graphics::GraphicsRenderState* renderState, ShaderDX12* shaderObj, void* rawCmdBuffer, _uint pass)
 {
     CommandBufferDX12* cmdBuffer = (CommandBufferDX12*)rawCmdBuffer;

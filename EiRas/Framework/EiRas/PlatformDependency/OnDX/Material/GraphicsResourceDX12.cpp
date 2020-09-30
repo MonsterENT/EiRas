@@ -6,7 +6,7 @@
 using namespace MaterialSys;
 using GraphicsAPI::EiRasDX12;
 
-GraphicsResourceDX12::GraphicsResourceDX12(int bufferSize, GraphicsResourceBehaviors* behaviors, bool initResource)
+GraphicsResourceDX12::GraphicsResourceDX12(int bufferSize, GraphicsResourceBehaviors* behaviors, bool initResource, bool UAVRES)
 {
     this->bufferSize = bufferSize;
 
@@ -18,7 +18,7 @@ GraphicsResourceDX12::GraphicsResourceDX12(int bufferSize, GraphicsResourceBehav
             deviceObj->device->CreateCommittedResource(&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD),
                 D3D12_HEAP_FLAG_NONE,
                 &CD3DX12_RESOURCE_DESC::Buffer(bufferSize),
-                D3D12_RESOURCE_STATE_GENERIC_READ,
+                UAVRES ? D3D12_RESOURCE_STATE_UNORDERED_ACCESS : D3D12_RESOURCE_STATE_GENERIC_READ,
                 nullptr,
                 IID_PPV_ARGS(&Resource));
     }
@@ -37,7 +37,7 @@ GraphicsResourceDX12::GraphicsResourceDX12(int bufferSize, GraphicsResourceBehav
 
 void GraphicsResourceDX12::SetResource(void* res, bool noMoreUpdate)
 {
-    if (Behaviors->UpdateFreq == GraphicsResourceUpdateFreq::UPDATE_FREQ_LOW)
+    if (ResMappingDestPtr == NULL)
     {
         CD3DX12_RANGE range(0, 0);
         Resource->Map(0, &range, (void**)(&ResMappingDestPtr));
@@ -48,6 +48,7 @@ void GraphicsResourceDX12::SetResource(void* res, bool noMoreUpdate)
     if (Behaviors->UpdateFreq == GraphicsResourceUpdateFreq::UPDATE_FREQ_LOW || noMoreUpdate)
     {
         Resource->Unmap(0, NULL);
+        ResMappingDestPtr = NULL;
     }
 
     if (noMoreUpdate)
@@ -56,8 +57,29 @@ void GraphicsResourceDX12::SetResource(void* res, bool noMoreUpdate)
     }
 }
 
+void GraphicsResourceDX12::GetResource(void* res)
+{
+    if (ResMappingDestPtr == NULL)
+    {
+        CD3DX12_RANGE range(0, 0);
+        Resource->Map(0, &range, (void**)(&ResMappingDestPtr));
+    }
+
+    memcpy(res, ResMappingDestPtr, bufferSize);
+    
+    if (Behaviors->UpdateFreq == GraphicsResourceUpdateFreq::UPDATE_FREQ_LOW || Behaviors->UpdateFreq == GraphicsResourceUpdateFreq::UPDATE_FREQ_ONINIT)
+    {
+        Resource->Unmap(0, NULL);
+        ResMappingDestPtr = NULL;
+    }
+}
+
 GraphicsResourceDX12::~GraphicsResourceDX12()
 {
+    if (ResMappingDestPtr != NULL && Resource != NULL)
+    {
+        Resource->Unmap(0, NULL);
+    }
     if (Resource != NULL)
     {
         Resource->Release();

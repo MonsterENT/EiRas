@@ -15,8 +15,10 @@ namespace MaterialSys
         GraphicsResourceDX12Bridge();
 
         void SetResource(void* res, bool noMoreUpdate);
+        void GetResource(void* res);
 
         void InitAsDefault(int bufferSize, GraphicsResourceBehaviors* behaviors);
+        void InitAsUAV(int bufferSize, GraphicsResourceBehaviors* behaviors);
 
         void InitAsRT(void* renderBufferFormat, void* rawResourceObj);
 

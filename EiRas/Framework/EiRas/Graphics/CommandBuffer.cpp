@@ -13,6 +13,7 @@
 #include <Graphics/GraphicsRenderState.hpp>
 #include <Graphics/RenderTexture.hpp>
 #include <Basic/TransformSys.hpp>
+#include <GPCompute/ComputeKernel.hpp>
 
 #if GRAPHICS_METAL
 #include <PlatformDependency/OnMetal/CommandBuffer/CommandBufferMetalBridge.hpp>
@@ -31,6 +32,7 @@
 using namespace BasicComponent;
 using namespace MaterialSys;
 using namespace Graphics;
+using namespace GPCompute;
 
 CommandBuffer::CommandBuffer(std::string Name)
 {
@@ -42,7 +44,6 @@ CommandBuffer::CommandBuffer(std::string Name)
 
 #if GRAPHICS_DX
     PlatformBridge = new CommandBufferDX12Bridge(Name);
-    
     resourceHeap = ResourceHeapManager::ShareInstance()->HeapPool[0];
 #endif
 }
@@ -80,6 +81,11 @@ void CommandBuffer::DrawMesh(MeshSys::Mesh* mesh)
 void CommandBuffer::DrawRenderData(RenderData* render)
 {
     ((CommandBufferDX12Bridge*)PlatformBridge)->DrawRenderData(render);
+}
+
+void CommandBuffer::DispatchComputeKernel(GPCompute::ComputeKernel* kernel, Math::int3 groupCount)
+{
+    ((CommandBufferDX12Bridge*)PlatformBridge)->DispatchComputeKernel(kernel, groupCount);
 }
 
 void CommandBuffer::BeginFrame()

@@ -58,6 +58,10 @@ ID3D12RootSignature* createRootSig(ShaderLayout* shaderLayout)
             {
                 rootParameters[i].InitAsShaderResourceView(_BASE_SR_REGISTER++, _BASE_SPACE);
             }
+            else if (prop->PropType == GraphicsResourceType::UAV)
+            {
+                rootParameters[i].InitAsUnorderedAccessView(_BASE_SR_REGISTER++, _BASE_SPACE);
+            }
             else
             {
 #pragma message("TOFIX")
@@ -103,7 +107,6 @@ ID3D12RootSignature* createRootSig(ShaderLayout* shaderLayout)
     D3DX12SerializeVersionedRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1_1, &signature, &error);
     GET_EIRAS_DX12(deviceObj);
     deviceObj->device->CreateRootSignature(0, signature->GetBufferPointer(), signature->GetBufferSize(), IID_PPV_ARGS(&rootSig));
-
     delete[] rootParameters;
     return rootSig;
 }

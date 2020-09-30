@@ -154,6 +154,17 @@ inline MaterialProp* getMaterialProp(Material* mat, _uint slotIndex, _uint propI
     return tProp;
 }
 
+void Material::GetPropertyData(void* res, _uint slotIndex, int propIndex)
+{
+    bool fromTable = false;
+    MaterialProp* tProp = getMaterialProp(this, slotIndex, propIndex, fromTable);
+    if (tProp == 0)
+    {
+        return;
+    }
+    tProp->Resource->GetResource(res);
+}
+
 void Material::SetProperty(void* res, _uint slotIndex, int propIndex)
 {
     bool fromTable = false;
@@ -162,13 +173,10 @@ void Material::SetProperty(void* res, _uint slotIndex, int propIndex)
     {
         return;
     }
-#if GRAPHICS_DX
-    ((MaterialDX12Bridge*)PlatformBridge)->SetProperty(tProp, res);
-#endif
-
-#if GRAPHICS_METAL
-    ((MaterialMetalBridge*)PlatformBridge)->SetProperty(tProp, res);
-#endif
+    if (tProp->Resource->Behaviors.ResourceType == GraphicsResourceType::CBV)
+    {
+        tProp->Resource->SetResource(res, false);
+    }
 }
 
 void Material::SetProperty(ImageSys::Image* image, _uint slotIndex, int propIndex)

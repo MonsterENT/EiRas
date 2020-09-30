@@ -19,6 +19,9 @@
 #include <Effect/CommonBlur/CommonBlur.hpp>
 #include <Global/EiRasGlobalManager.hpp>
 
+#include <GPCompute/ComputeKernel.hpp>
+#include <PlatformDependency/OnDX/Material/GraphicsResourceDX12.h>
+
 #pragma region GUI Include
 #include <GUI/Button.hpp>
 #include <GUI/GUISystem.hpp>
@@ -39,6 +42,7 @@ using namespace ImageSys;
 using namespace FontSys;
 using namespace Math;
 using namespace GUISys;
+using namespace GPCompute;
 
 Image* imageObj = 0;
 
@@ -54,6 +58,8 @@ Label* label;
 InspectorTransform* inspector = NULL;
 
 RenderData sf90RenderData;
+
+ComputeKernel* GP;
 
 #pragma region TestMeshUpdate
 
@@ -81,6 +87,22 @@ void Engine::m_initEngine()
     
     cmdBuffer = new CommandBuffer("main buffer");
     
+
+#pragma region GPLayout
+    ShaderLayout* gpLayout = new ShaderLayout(1);
+    ShaderProp* gpProp = new ShaderProp("GP", GraphicsResourceType::UAV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_HIGH, sizeof(float) * 4);
+    gpLayout->Slots[0] = gpProp;
+    gpLayout->BuildOnDX12();
+#pragma endregion
+    std::string gpShaderPath = FileSys::FileManager::shareInstance()->GetResourcePath("Shader\\DX\\GP", "hlsl");
+
+    GP = new ComputeKernel();
+    GP->SetLayout(gpLayout);
+    GP->AddKernel(gpShaderPath, "CSMain");
+    GP->Build();
+    
+
+
     _CommonBlur = new CommonBlur(2560 / 2, 1440 / 2, cmdBuffer);
     
 #pragma region CustomShaderLayout
@@ -108,7 +130,6 @@ void Engine::m_initEngine()
 
         ShaderPropRange commonSR1("_MainTex", GraphicsResourceType::SRV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_ONINIT);
         commonSR1.PropNum = 1;
-        //commonSR1.InitBaseRegisterSettings(0);
 
         ShaderTable* table = new ShaderTable();
         table->AddRange(commonSR1);
@@ -180,6 +201,9 @@ void Engine::m_initEngine()
     label->SetText(text);
 
     inspector = new InspectorTransform(&_Transform);
+
+    float4 GPData(0, 0, 0, 0);
+    GP->SetProperty(&GPData, 0);
 }
 
 Engine::Engine()
@@ -228,8 +252,16 @@ void Engine::Update(void* data)
     ////UnSafe But Efficient
     //_SF90Mesh->BuildBuffer(MeshType::VertexInput3D, false);
 
+
+    static int fff = 0;
+    if (fff == 0)
+    {
+        cmdBuffer->DispatchComputeKernel(GP, int3(4, 1, 1));
+        fff++;
+    }
     cmdBuffer->BeginFrame();
     cmdBuffer->Reset();
+
     cmdBuffer->SetViewPort(0, 0, 2560, 1440);
     cmdBuffer->SetRenderTexture(_SceneRenderTexture);
 
@@ -316,6 +348,12 @@ void Engine::KeyPressed(_uint param)
     else if (param == 'S')
     {
         FOV -= 0.1;
+        static float4 Target;
+        Target.w = 2;
+        GP->GetPropertyData(&Target, 0);
+        if (Target.w == 4)
+        {
+        }
     }
     forward.x = XMVectorGetX(_forward);
     forward.y = XMVectorGetY(_forward);

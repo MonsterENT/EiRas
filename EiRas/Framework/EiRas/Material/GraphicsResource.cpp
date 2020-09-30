@@ -46,6 +46,12 @@ void GraphicsResource::InitAsDefault(_uint bufferSize)
 #endif
 }
 
+void GraphicsResource::InitAsUAV(_uint bufferSize)
+{
+    this->bufferSize = bufferSize;
+    ((GraphicsResourceDX12Bridge*)PlatformBridge)->InitAsUAV(bufferSize, &Behaviors);
+}
+
 void GraphicsResource::InitAsRT(void* renderBufferFormat, void* rawResourceObj)
 {
 #if GRAPHICS_DX
@@ -75,6 +81,10 @@ void GraphicsResource::SetResource(void* res, bool noMoreUpdate)
 #endif
 }
 
+void GraphicsResource::GetResource(void* res)
+{
+    ((GraphicsResourceDX12Bridge*)PlatformBridge)->GetResource(res);
+}
 
 void GraphicsResource::ShaderResourceBuild(void* cmdList)
 {
