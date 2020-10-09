@@ -74,7 +74,7 @@ void OnClick(void* data)
 
 void Engine::m_initEngine()
 {
-    _SceneRenderTexture = new RenderTexture("Scene RT", RenderBufferFormat::R8G8B8A8_UNORM, true, 2560, 1440);
+    _SceneRenderTexture = new RenderTexture("Scene RT", MaterialSys::GraphicsResourceFormat::R8G8B8A8_UNORM, true, 2560, 1440);
 
     _Camera.SetProjection(45, 2560.0 / 1440.0, 0.01, 1000);
     _Camera.Transform.Init(float3(0, 0, 1), float3(1, 0, 0), float3(0, 1, 0), float3(0, 0, 0));

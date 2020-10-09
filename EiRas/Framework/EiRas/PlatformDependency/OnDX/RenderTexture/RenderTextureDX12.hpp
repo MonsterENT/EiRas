@@ -6,15 +6,18 @@
 #include <PlatformDependency/OnDX/GraphicsAPI/EiRasDX12.h>
 #include <PlatformDependency/OnDX/DXMacro.h>
 
+namespace MaterialSys
+{
+    enum class GraphicsResourceFormat;
+}
+
 namespace Graphics
 {
-    enum class RenderBufferFormat;
-
     class RenderTextureDX12
     {
     public:
         std::string Name;
-        RenderTextureDX12(std::string name, RenderBufferFormat colorFormat, bool useStencil, _uint width, _uint height);
+        RenderTextureDX12(std::string name, MaterialSys::GraphicsResourceFormat colorFormat, bool useStencil, _uint width, _uint height);
         
         ID3D12Resource* ColorBuffer;
         ID3D12Resource* DepthStencilBuffer;
@@ -25,8 +28,8 @@ namespace Graphics
         _uint Width;
         _uint Height;
 
-        RenderBufferFormat ColorFormat;
-        RenderBufferFormat DepthStencilFormat;
+        MaterialSys::GraphicsResourceFormat ColorFormat;
+        MaterialSys::GraphicsResourceFormat DepthStencilFormat;
 
         void* GetGraphicsResource();
         _uint SrvHeapOffset;

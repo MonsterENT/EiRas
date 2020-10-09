@@ -6,14 +6,14 @@ using namespace Graphics;
 using namespace GraphicsAPI;
 using namespace MaterialSys;
 
-RenderTextureDX12::RenderTextureDX12(std::string name, RenderBufferFormat colorFormat, bool useStencil, _uint width, _uint height)
+RenderTextureDX12::RenderTextureDX12(std::string name, MaterialSys::GraphicsResourceFormat colorFormat, bool useStencil, _uint width, _uint height)
 {
     Name = name;
     Width = width;
     Height = height;
     ColorFormat = colorFormat;
 
-    DepthStencilFormat = (RenderBufferFormat)(useStencil ? DXGI_FORMAT_D24_UNORM_S8_UINT : DXGI_FORMAT_D32_FLOAT);
+    DepthStencilFormat = (MaterialSys::GraphicsResourceFormat)(useStencil ? DXGI_FORMAT_D24_UNORM_S8_UINT : DXGI_FORMAT_D32_FLOAT);
 
 #pragma region Init Color Buffer
     GET_EIRAS_DX12(device);

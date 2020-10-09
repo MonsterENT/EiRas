@@ -5,14 +5,17 @@
 #include <Global/GlobalDefine.h>
 #include <Global/PlatformDependency/EiRasPlatformBridgeProtocol.h>
 
+namespace MaterialSys
+{
+    enum class GraphicsResourceFormat;
+}
+
 namespace Graphics
 {
-    enum class RenderBufferFormat;
-
     class RenderTextureDX12Bridge : public EiRasPlatformBridgeProtocol
     {
     public:
-        RenderTextureDX12Bridge(std::string name, RenderBufferFormat colorFormat, bool useStencil, _uint width, _uint height);
+        RenderTextureDX12Bridge(std::string name, MaterialSys::GraphicsResourceFormat colorFormat, bool useStencil, _uint width, _uint height);
     };
 }
 

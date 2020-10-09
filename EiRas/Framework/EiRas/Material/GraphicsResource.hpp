@@ -3,68 +3,12 @@
 
 #include <string>
 #include <Global/GlobalDefine.h>
+#include "GraphicsResourceConfig.hpp"
 
 class EiRasPlatformBridgeProtocol;
 
 namespace MaterialSys
 {
-    typedef enum class GraphicsResourceType
-    {
-        SRV = 0,
-        UAV = (SRV + 1),
-        CBV = (UAV + 1),
-        SAMPLER = (CBV + 1),
-        Default = (SAMPLER + 1),
-        SRV_RT = (Default + 1)
-    } GraphicsResourceType;
-
-    typedef enum class GraphicsResourceVisibility
-    {
-        VISIBILITY_ALL = 0,
-        VISIBILITY_VERTEX = (VISIBILITY_ALL + 1),
-        VISIBILITY_PIXEL = (VISIBILITY_VERTEX + 1),
-    } GraphicsResourceVisibility;
-
-    //D3D12_SHADER_VISIBILITY_ALL = 0,
-    //    D3D12_SHADER_VISIBILITY_VERTEX = 1,
-    //    D3D12_SHADER_VISIBILITY_HULL = 2,
-    //    D3D12_SHADER_VISIBILITY_DOMAIN = 3,
-    //    D3D12_SHADER_VISIBILITY_GEOMETRY = 4,
-    //    D3D12_SHADER_VISIBILITY_PIXEL = 5
-
-    inline int GraphicsResourceVisibilityToDX12(GraphicsResourceVisibility visibility)
-    {
-        switch (visibility)
-        {
-        case GraphicsResourceVisibility::VISIBILITY_ALL:
-            return 0;
-            break;
-        case GraphicsResourceVisibility::VISIBILITY_VERTEX:
-            return 1;
-            break;
-        case GraphicsResourceVisibility::VISIBILITY_PIXEL:
-            return 5;
-            break;
-        default:
-            return 0;
-            break;
-        }
-    }
-
-    typedef enum class GraphicsResourceUpdateFreq
-    {
-        UPDATE_FREQ_ONINIT = 0,
-        UPDATE_FREQ_LOW = (UPDATE_FREQ_ONINIT + 1),
-        UPDATE_FREQ_HIGH = (UPDATE_FREQ_LOW + 1),
-    } GraphicsResourceUpdateFreq;
-
-    typedef struct GraphicsResourceBehaviors
-    {
-        GraphicsResourceType ResourceType;
-        GraphicsResourceVisibility Visibility;
-        GraphicsResourceUpdateFreq UpdateFreq;
-    } GraphicsResourceBehaviors;
-
     class GraphicsResource
     {
     public:
@@ -72,13 +16,13 @@ namespace MaterialSys
 
         void InitAsConstantBuffer(_uint bufferSize);
 
-        void InitAsDefault(_uint bufferSize);
+        void InitAsDefault(_uint bufferSize, GraphicsResourceDimension dimension = GraphicsResourceDimension::GraphicsResourceDimension_Buffer);
 
-        void InitAsUAV(_uint bufferSize);
+        void InitAsUAV(_uint bufferSize, GraphicsResourceDimension dimension = GraphicsResourceDimension::GraphicsResourceDimension_Buffer);
 
         void InitAsRT(void* renderBufferFormat, void* rawResourceObj);
 
-        void InitAsShaderResource(_uint width, _uint height, _uint channels, void* texData, bool* buildStatusFlag);
+        void InitAsShaderResource(_uint width, _uint height, _uint channels, void* texData, bool* buildStatusFlag, GraphicsResourceDimension dimension = GraphicsResourceDimension::GraphicsResourceDimension_Tex2D);
         void ShaderResourceBuild(void* cmdList);
         void ShaderResourceFinishBuild();
 

@@ -6,7 +6,7 @@
 
 using namespace Graphics;
 
-RenderTexture::RenderTexture(std::string name, RenderBufferFormat colorFormat, bool useStencil, _uint width, _uint height)
+RenderTexture::RenderTexture(std::string name, MaterialSys::GraphicsResourceFormat colorFormat, bool useStencil, _uint width, _uint height)
 {
     Name = name;
 #ifdef GRAPHICS_DX

@@ -69,8 +69,8 @@ CommonBlur::CommonBlur(_uint width, _uint height, Graphics::CommandBuffer* refCm
     Width = width;
     Height = height;
 
-    BluredRT = new RenderTexture("Common Blur", RenderBufferFormat::R8G8B8A8_UNORM, false, width, height);
-    _TmpBluredRT = new RenderTexture("Common Blur Tmp", RenderBufferFormat::R8G8B8A8_UNORM, false, width, height);
+    BluredRT = new RenderTexture("Common Blur", MaterialSys::GraphicsResourceFormat::R8G8B8A8_UNORM, false, width, height);
+    _TmpBluredRT = new RenderTexture("Common Blur Tmp", MaterialSys::GraphicsResourceFormat::R8G8B8A8_UNORM, false, width, height);
 }
 
 #define PROCESS \

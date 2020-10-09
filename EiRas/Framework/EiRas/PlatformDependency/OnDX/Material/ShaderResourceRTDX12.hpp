@@ -2,9 +2,9 @@
 #define Shader_Resource_RT_Hpp
 #include <d3d12.h>
 
-namespace Graphics
+namespace MaterialSys
 {
-    enum class RenderBufferFormat;
+    enum class GraphicsResourceFormat;
 }
 
 namespace MaterialSys
@@ -14,10 +14,10 @@ namespace MaterialSys
     public:
         ShaderResourceRTDX12(void* format, void* resource)
         {
-            Format = *((Graphics::RenderBufferFormat*)format);
+            Format = *((MaterialSys::GraphicsResourceFormat*)format);
             Resource = (ID3D12Resource*)resource;
         }
-        Graphics::RenderBufferFormat Format;
+        MaterialSys::GraphicsResourceFormat Format;
         ID3D12Resource* Resource;
     };
 }

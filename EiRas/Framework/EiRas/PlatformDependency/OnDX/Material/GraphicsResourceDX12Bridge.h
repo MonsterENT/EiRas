@@ -8,6 +8,7 @@
 namespace MaterialSys
 {
     struct GraphicsResourceBehaviors;
+    enum class GraphicsResourceDimension;
 
     class GraphicsResourceDX12Bridge : public EiRasPlatformBridgeProtocol
     {
@@ -17,14 +18,14 @@ namespace MaterialSys
         void SetResource(void* res, bool noMoreUpdate);
         void GetResource(void* res);
 
-        void InitAsDefault(int bufferSize, GraphicsResourceBehaviors* behaviors);
-        void InitAsUAV(int bufferSize, GraphicsResourceBehaviors* behaviors);
+        void InitAsDefault(int bufferSize, GraphicsResourceBehaviors* behaviors, GraphicsResourceDimension dimension);
+        void InitAsUAV(int bufferSize, GraphicsResourceBehaviors* behaviors, GraphicsResourceDimension dimension);
 
         void InitAsRT(void* renderBufferFormat, void* rawResourceObj);
 
         void InitAsConstantBuffer(int bufferSize, GraphicsResourceBehaviors* behaviors);
 
-        void InitAsShaderResource(int width, int height, _uint channels, void* texData, GraphicsResourceBehaviors* behaviors, bool* buildStatusFlag);
+        void InitAsShaderResource(int width, int height, _uint channels, void* texData, GraphicsResourceBehaviors* behaviors, bool* buildStatusFlag, GraphicsResourceDimension dimension);
         void ShaderResourceBuild(void* cmdList);
         void ShaderResourceFinishBuild();
     };

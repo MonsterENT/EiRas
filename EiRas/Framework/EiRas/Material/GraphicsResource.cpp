@@ -36,20 +36,20 @@ void GraphicsResource::InitAsConstantBuffer(_uint bufferSize)
 #endif
 }
 
-void GraphicsResource::InitAsDefault(_uint bufferSize)
+void GraphicsResource::InitAsDefault(_uint bufferSize, GraphicsResourceDimension dimension)
 {
     this->bufferSize = bufferSize;
 #if GRAPHICS_DX
-    ((GraphicsResourceDX12Bridge*)PlatformBridge)->InitAsDefault(bufferSize, &Behaviors);
+    ((GraphicsResourceDX12Bridge*)PlatformBridge)->InitAsDefault(bufferSize, &Behaviors, dimension);
 #elif GRAPHICS_METAL
     ((GraphicsResourceMetalBridge*)PlatformBridge)->InitAsDefault(bufferSize);
 #endif
 }
 
-void GraphicsResource::InitAsUAV(_uint bufferSize)
+void GraphicsResource::InitAsUAV(_uint bufferSize, GraphicsResourceDimension dimension)
 {
     this->bufferSize = bufferSize;
-    ((GraphicsResourceDX12Bridge*)PlatformBridge)->InitAsUAV(bufferSize, &Behaviors);
+    ((GraphicsResourceDX12Bridge*)PlatformBridge)->InitAsUAV(bufferSize, &Behaviors, dimension);
 }
 
 void GraphicsResource::InitAsRT(void* renderBufferFormat, void* rawResourceObj)
@@ -59,10 +59,10 @@ void GraphicsResource::InitAsRT(void* renderBufferFormat, void* rawResourceObj)
 #endif
 }
 
-void GraphicsResource::InitAsShaderResource(_uint width, _uint height, _uint channels, void* texData, bool* buildStatusFlag)
+void GraphicsResource::InitAsShaderResource(_uint width, _uint height, _uint channels, void* texData, bool* buildStatusFlag, GraphicsResourceDimension dimension)
 {
 #if GRAPHICS_DX
-    ((GraphicsResourceDX12Bridge*)PlatformBridge)->InitAsShaderResource(width, height, channels, texData, &Behaviors, buildStatusFlag);
+    ((GraphicsResourceDX12Bridge*)PlatformBridge)->InitAsShaderResource(width, height, channels, texData, &Behaviors, buildStatusFlag, dimension);
 #elif GRAPHICS_METAL
     ((GraphicsResourceMetalBridge*)PlatformBridge)->InitAsShaderResourceTexture(width, height, texData, buildStatusFlag);
 #endif

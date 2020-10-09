@@ -6,12 +6,15 @@
 namespace MaterialSys
 {
     struct GraphicsResourceBehaviors;
+    enum class GraphicsResourceDimension;
 
     class GraphicsResourceDX12
     {
     public:
-        GraphicsResourceDX12(int bufferSize, GraphicsResourceBehaviors* behaviors, bool initResource, bool UAVRES = false);
+        GraphicsResourceDX12(int bufferSize, GraphicsResourceBehaviors* behaviors);
         virtual ~GraphicsResourceDX12();
+
+        void BuildResource(D3D12_HEAP_TYPE heapType, D3D12_RESOURCE_STATES resourceState, GraphicsResourceDimension type, int format = 0, int width = 0, int height = 0, int depth = 0);
 
         ID3D12Resource* Resource;
 

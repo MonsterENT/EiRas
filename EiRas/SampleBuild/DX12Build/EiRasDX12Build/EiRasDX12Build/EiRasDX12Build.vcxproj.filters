@@ -249,6 +249,9 @@
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Shader\ShaderLayoutDX12Bridge.hpp">
       <Filter>framework</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\Framework\EiRas\Material\GraphicsResourceConfig.hpp">
+      <Filter>framework</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EiRasDX12Build.cpp">

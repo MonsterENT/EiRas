@@ -7,7 +7,7 @@
 using namespace MaterialSys;
 using GraphicsAPI::EiRasDX12;
 
-ShaderResourceDX12::ShaderResourceDX12(GraphicsResourceBehaviors* behaviors, DXGI_FORMAT format, UINT width, UINT height, UINT channels, void* texData, bool* buildStatusFlag) : GraphicsResourceDX12(-1, behaviors, false)
+ShaderResourceDX12::ShaderResourceDX12(GraphicsResourceBehaviors* behaviors, DXGI_FORMAT format, UINT width, UINT height, UINT channels, void* texData, bool* buildStatusFlag) : GraphicsResourceDX12(-1, behaviors)
 {
     GET_EIRAS_DX12(deviceObj);
 
@@ -18,34 +18,7 @@ ShaderResourceDX12::ShaderResourceDX12(GraphicsResourceBehaviors* behaviors, DXG
     this->height = height;
     this->channels = channels;
 
-    D3D12_RESOURCE_DESC textureDesc = {};
-    textureDesc.MipLevels = 1;
-    textureDesc.Format = format;
-    textureDesc.Width = width;
-    textureDesc.Height = height;
-    textureDesc.Flags = D3D12_RESOURCE_FLAG_NONE;
-    textureDesc.DepthOrArraySize = 1;
-    textureDesc.SampleDesc.Count = 1;
-    textureDesc.SampleDesc.Quality = 0;
-    textureDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
-    
-    deviceObj->device->CreateCommittedResource(
-        &CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT),
-        D3D12_HEAP_FLAG_NONE,
-        &textureDesc,
-        D3D12_RESOURCE_STATE_COPY_DEST,
-        NULL,
-        IID_PPV_ARGS(&Resource));
-
-    const UINT64 uploadBufferSize = GetRequiredIntermediateSize(Resource, 0, 1);
-
-    deviceObj->device->CreateCommittedResource(
-        &CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD),
-        D3D12_HEAP_FLAG_NONE,
-        &CD3DX12_RESOURCE_DESC::Buffer(uploadBufferSize),
-        D3D12_RESOURCE_STATE_GENERIC_READ,
-        nullptr,
-        IID_PPV_ARGS(&tmpResource));
+    tmpResource = NULL;
 
     outBuildStatusFlagPtr = buildStatusFlag;
     *buildStatusFlag = false;
@@ -54,11 +27,25 @@ ShaderResourceDX12::ShaderResourceDX12(GraphicsResourceBehaviors* behaviors, DXG
 
 ShaderResourceDX12::~ShaderResourceDX12()
 {
+    if (tmpResource != NULL)
+    {
+        tmpResource->Release();
+    }
 }
 
 
 void ShaderResourceDX12::BuildTextureResource(void* cmdList)
 {
+    GET_EIRAS_DX12(deviceObj);
+    const UINT64 uploadBufferSize = GetRequiredIntermediateSize(Resource, 0, 1);
+    deviceObj->device->CreateCommittedResource(
+        &CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD),
+        D3D12_HEAP_FLAG_NONE,
+        &CD3DX12_RESOURCE_DESC::Buffer(uploadBufferSize),
+        D3D12_RESOURCE_STATE_GENERIC_READ,
+        nullptr,
+        IID_PPV_ARGS(&tmpResource));
+
     ID3D12GraphicsCommandList* _cmdList = (ID3D12GraphicsCommandList*)cmdList;
     
     D3D12_SUBRESOURCE_DATA textureData = {};

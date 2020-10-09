@@ -189,6 +189,7 @@
     <ClInclude Include="..\..\..\..\Framework\EiRas\GUI\RuntimeUtilities.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\GUI\View.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Material\GraphicsResource.hpp" />
+    <ClInclude Include="..\..\..\..\Framework\EiRas\Material\GraphicsResourceConfig.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Material\GraphicsResourceHeap.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Material\Material.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Material\MaterialLayout.hpp" />
