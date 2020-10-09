@@ -33,7 +33,6 @@ ShaderResourceDX12::~ShaderResourceDX12()
     }
 }
 
-
 void ShaderResourceDX12::BuildTextureResource(void* cmdList)
 {
     GET_EIRAS_DX12(deviceObj);

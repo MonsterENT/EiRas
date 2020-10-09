@@ -41,6 +41,7 @@ ID3D12RootSignature* createRootSig(ShaderLayout* shaderLayout)
 
     UINT _BASE_CB_REGISTER = 0;
     UINT _BASE_SR_REGISTER = 0;
+    UINT _BASE_UA_REGISTER = 0;
     ID3D12RootSignature* rootSig = nullptr;
     CD3DX12_ROOT_PARAMETER1* rootParameters = new CD3DX12_ROOT_PARAMETER1[slotNum];
     for (_uint i = 0; i < slotNum; i++)
@@ -60,7 +61,7 @@ ID3D12RootSignature* createRootSig(ShaderLayout* shaderLayout)
             }
             else if (prop->PropType == GraphicsResourceType::UAV)
             {
-                rootParameters[i].InitAsUnorderedAccessView(_BASE_SR_REGISTER++, _BASE_SPACE);
+                rootParameters[i].InitAsUnorderedAccessView(_BASE_UA_REGISTER++, _BASE_SPACE);
             }
             else
             {

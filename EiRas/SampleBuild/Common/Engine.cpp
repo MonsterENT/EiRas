@@ -100,8 +100,6 @@ void Engine::m_initEngine()
     GP->SetLayout(gpLayout);
     GP->AddKernel(gpShaderPath, "CSMain");
     GP->Build();
-    
-
 
     _CommonBlur = new CommonBlur(2560 / 2, 1440 / 2, cmdBuffer);
     
@@ -124,7 +122,7 @@ void Engine::m_initEngine()
 #pragma endregion
 
 #pragma region Default3DShaderLayout
-    ShaderLayout* defaultlayout = new ShaderLayout(4);
+    ShaderLayout* defaultlayout = new ShaderLayout(5);
     {
         ShaderProp* customCB = new ShaderProp("CustomCB", GraphicsResourceType::CBV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_HIGH, sizeof(float4));
 
@@ -142,6 +140,7 @@ void Engine::m_initEngine()
         defaultlayout->Slots[1] = T1;
         defaultlayout->Slots[2] = customCB;
         defaultlayout->Slots[3] = table;
+        defaultlayout->Slots[4] = gpProp;
         defaultlayout->BuildOnDX12();
     }
 #pragma endregion
@@ -204,6 +203,8 @@ void Engine::m_initEngine()
 
     float4 GPData(0, 0, 0, 0);
     GP->SetProperty(&GPData, 0);
+    
+    _Mat0->SetProperty(((MaterialProp*)GP->ResLayout->Slots[0])->Resource, 4, -1, true);
 }
 
 Engine::Engine()
@@ -351,9 +352,7 @@ void Engine::KeyPressed(_uint param)
         static float4 Target;
         Target.w = 2;
         GP->GetPropertyData(&Target, 0);
-        if (Target.w == 4)
-        {
-        }
+        _Mat0->SetProperty(&Target, 4);
     }
     forward.x = XMVectorGetX(_forward);
     forward.y = XMVectorGetY(_forward);

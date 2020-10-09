@@ -21,6 +21,7 @@ Texture2D _MainTex : register(t0);
 
 SamplerState _DefaultSampler : register(s0);
 
+RWStructuredBuffer<float> _CommonBuffer : register(u0);
 
 struct VSInput
 {
@@ -69,9 +70,17 @@ float4 PSMain(PSInput i) : SV_TARGET
 
     col.a = albedo.a;
 
+    half4 gpCol = 0;
+    gpCol.r = _CommonBuffer[0];
+    gpCol.g = _CommonBuffer[1];
+    gpCol.b = _CommonBuffer[2];
+    gpCol.a = _CommonBuffer[3];
+    albedo.rgb *= gpCol.rgb;
+
     col.rgb = diffuseTerm * albedo.rgb * 0.05f;
     specColor *= albedo.rgb;
     col.rgb += specColor.rgb * specularTerm;
+
 
     return col;
 }

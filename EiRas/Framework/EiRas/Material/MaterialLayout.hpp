@@ -40,8 +40,21 @@ namespace MaterialSys
             {
                 Resource = new GraphicsResource(name, propType, visible, updateFreq, initResource);
                 Resource->InitAsConstantBuffer(bufferSize);
+                _oriResource = Resource;
             }
             this->SlotType = MaterialSlotType::MaterialSlotType_Prop;
+        }
+
+        void SetRawResObject(GraphicsResource* rawResObj)
+        {
+            if (rawResObj == NULL)
+            {
+                Resource = _oriResource;
+            }
+            else
+            {
+                Resource = rawResObj;
+            }
         }
 
         void InitHeapOffset(_uint offset)
@@ -58,6 +71,7 @@ namespace MaterialSys
         _uint _heapOffset;
     private:
         _uint _oriHeapOffset;
+        GraphicsResource* _oriResource;
     };
 
     class MaterialTable : public MaterialSlot

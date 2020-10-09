@@ -225,11 +225,9 @@ ID3D12PipelineState* ShaderDX12::_GetPSO(Graphics::GraphicsRenderState* renderSt
 
         ID3D12PipelineState* pso = 0;
         GET_EIRAS_DX12(deviceObj);
-        deviceObj->device->CreateGraphicsPipelineState(&psoDesc, IID_PPV_ARGS(&pso));
-        if (pso)
-        {
-            _PSOCache.insert(PSOCache_PAIR(hashCode, pso));
-        }
+        HRESULT hr = deviceObj->device->CreateGraphicsPipelineState(&psoDesc, IID_PPV_ARGS(&pso));
+        assert(SUCCEEDED(hr));
+        _PSOCache.insert(PSOCache_PAIR(hashCode, pso));
         return pso;
     }
 }

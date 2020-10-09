@@ -165,7 +165,7 @@ void Material::GetPropertyData(void* res, _uint slotIndex, int propIndex)
     tProp->Resource->GetResource(res);
 }
 
-void Material::SetProperty(void* res, _uint slotIndex, int propIndex)
+void Material::SetProperty(void* res, _uint slotIndex, int propIndex, bool asResObj)
 {
     bool fromTable = false;
     MaterialProp* tProp = getMaterialProp(this, slotIndex, propIndex, fromTable);
@@ -173,7 +173,11 @@ void Material::SetProperty(void* res, _uint slotIndex, int propIndex)
     {
         return;
     }
-    if (tProp->Resource->Behaviors.ResourceType == GraphicsResourceType::CBV)
+    if (asResObj)
+    {
+        tProp->SetRawResObject((GraphicsResource*)res);
+    }
+    else if(res != NULL)
     {
         tProp->Resource->SetResource(res, false);
     }
