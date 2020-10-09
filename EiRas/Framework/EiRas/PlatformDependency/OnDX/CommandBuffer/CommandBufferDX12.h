@@ -14,6 +14,7 @@ namespace MaterialSys
     class MaterialLayout;
     class GraphicsResourceDX12;
     class GraphicsResource;
+    class MaterialSlot;
 }
 
 namespace MeshSys
@@ -59,5 +60,7 @@ namespace Graphics {
     private:
         RenderTextureDX12* _CurrentRenderTexture;
         MaterialSys::GraphicsResource* _CurrentWorldMatCB;
+
+        void SetGraphicsRootBufferView(MaterialSys::MaterialSlot* slot, MaterialSys::GraphicsResource* rootResource);
     };
 }

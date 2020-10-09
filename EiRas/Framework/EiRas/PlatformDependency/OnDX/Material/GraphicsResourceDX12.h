@@ -3,6 +3,11 @@
 #include <PlatformDependency/OnDX/d3dx12.h>
 #include <Material/MaterialLayout.hpp>
 
+namespace Graphics
+{
+    class CommandBufferDX12;
+}
+
 namespace MaterialSys
 {
     struct GraphicsResourceBehaviors;
@@ -10,6 +15,7 @@ namespace MaterialSys
 
     class GraphicsResourceDX12
     {
+        friend Graphics::CommandBufferDX12;
     public:
         GraphicsResourceDX12(int bufferSize, GraphicsResourceBehaviors* behaviors);
         virtual ~GraphicsResourceDX12();
@@ -27,6 +33,7 @@ namespace MaterialSys
 
     protected:
         UINT8* ResMappingDestPtr;
+        UINT64 ResADDR;
 
     private:
         int bufferSize;

@@ -35,12 +35,16 @@ void GraphicsResourceDX12::BuildResource(D3D12_HEAP_TYPE heapType, D3D12_RESOURC
     }
 
     GET_EIRAS_DX12(deviceObj);
-    deviceObj->device->CreateCommittedResource(&CD3DX12_HEAP_PROPERTIES(heapType),
+    HRESULT hr = deviceObj->device->CreateCommittedResource(&CD3DX12_HEAP_PROPERTIES(heapType),
         D3D12_HEAP_FLAG_NONE,
         &desc,
         resourceState,
         nullptr,
         IID_PPV_ARGS(&Resource));
+    assert(SUCCEEDED(hr));
+
+    ResADDR = Resource->GetGPUVirtualAddress();
+
     ResMappingDestPtr = NULL;
 
     if (Behaviors->UpdateFreq == GraphicsResourceUpdateFreq::UPDATE_FREQ_HIGH)
