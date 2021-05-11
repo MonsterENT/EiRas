@@ -183,9 +183,6 @@
     <ClInclude Include="..\..\..\..\Framework\EiRas\Effect\CommonBlur\CommonBlur.hpp">
       <Filter>framework</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\ResourceHeapManager\ResourceHeapManager.hpp">
-      <Filter>framework</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\Framework\EiRas\GUI\GUISystem.hpp">
       <Filter>framework</Filter>
     </ClInclude>
@@ -252,13 +249,10 @@
     <ClInclude Include="SDFGen\RMCapture.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Framework\EiRas\Material\GraphicsResourceDescriptorHeap.hpp">
+    <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\ResourceHeapManager\ResourceDescriptorHeapManager.hpp">
       <Filter>framework</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\GraphicsResourceDescriptorHeapDX12.h">
-      <Filter>framework</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\GraphicsResourceDescriptorHeapDX12Bridge.h">
       <Filter>framework</Filter>
     </ClInclude>
   </ItemGroup>
@@ -401,9 +395,6 @@
     <ClCompile Include="..\..\..\..\Framework\EiRas\Effect\CommonBlur\CommonBlur.cpp">
       <Filter>framework</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\ResourceHeapManager\ResourceHeapManager.cpp">
-      <Filter>framework</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\Framework\EiRas\GUI\GUISystem.cpp">
       <Filter>framework</Filter>
     </ClCompile>
@@ -464,13 +455,10 @@
     <ClCompile Include="SDFGen\RMCapture.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Framework\EiRas\Material\GraphicsResourceDescriptorHeap.cpp">
+    <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\ResourceHeapManager\ResourceDescriptorHeapManager.cpp">
       <Filter>framework</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\GraphicsResourceDescriptorHeapDX12.cpp">
-      <Filter>framework</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\GraphicsResourceDescriptorHeapDX12Bridge.cpp">
       <Filter>framework</Filter>
     </ClCompile>
   </ItemGroup>

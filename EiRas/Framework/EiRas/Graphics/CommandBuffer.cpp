@@ -23,10 +23,6 @@
 #include <PlatformDependency/OnDX/CommandBuffer/CommandBufferDX12Bridge.h>
 #endif
 
-#ifdef GRAPHICS_DX
-#include <PlatformDependency/OnDX/ResourceHeapManager/ResourceHeapManager.hpp>
-#endif
-
 #include <Mesh/Mesh.hpp>
 
 using namespace BasicComponent;
@@ -44,7 +40,6 @@ CommandBuffer::CommandBuffer(std::string Name)
 
 #if GRAPHICS_DX
     PlatformBridge = new CommandBufferDX12Bridge(Name);
-    resourceHeap = ResourceHeapManager::ShareInstance()->HeapPool[0];
 #endif
 }
 
@@ -102,12 +97,7 @@ void CommandBuffer::BeginFrame()
 void CommandBuffer::Reset()
 {
 #if GRAPHICS_DX
-    EiRasPlatformBridgeProtocol* tmpBridge = NULL;
-    if (resourceHeap)
-    {
-        tmpBridge = resourceHeap->PlatformBridge;
-    }
-    ((CommandBufferDX12Bridge*)PlatformBridge)->Reset(tmpBridge);
+    ((CommandBufferDX12Bridge*)PlatformBridge)->Reset();
 #endif
 
 #if GRAPHICS_METAL
@@ -144,51 +134,3 @@ void CommandBuffer::SetRenderTexture(Graphics::RenderTexture* renderTexture)
     ((CommandBufferDX12Bridge*)PlatformBridge)->SetRenderTexture(pb);
 #endif
 }
-
-#if GRAPHICS_DX
-void CommandBuffer::_ReFillHeap()
-{
-    tmpMaterialTableArray.clear();
-    std::vector<Material*>::iterator it = MaterialArray.begin();
-    while (it != MaterialArray.end())
-    {
-        Material* mat = *it;
-        for (_uint slotIndex = 0; slotIndex < mat->materialLayout->SlotNum; slotIndex++)
-        {
-            MaterialSlot* slot = mat->materialLayout->Slots[slotIndex];
-            if (slot->SlotType == MaterialSlotType::MaterialSlotType_Table)
-            {
-                tmpMaterialTableArray.push_back((MaterialTable*)slot);
-            }
-        }
-        it++;
-    }
-
-#pragma message("TOFIX")
-    if (tmpMaterialTableArray.size() > 0)
-    {
-        resourceHeap->FillHeap((_uint)tmpMaterialTableArray.size(), &tmpMaterialTableArray[0]);
-    }
-}
-
-void CommandBuffer::RegMaterial(MaterialSys::Material* material)
-{
-    MaterialArray.push_back(material);
-    _ReFillHeap();
-}
-
-void CommandBuffer::RemoveMaterial(MaterialSys::Material* material)
-{
-    std::vector<Material*>::iterator it = MaterialArray.begin();
-    while (it != MaterialArray.end())
-    {
-        if (material == *it)
-        {
-            MaterialArray.erase(it);
-            break;
-        }
-        it++;
-    }
-    _ReFillHeap();
-}
-#endif

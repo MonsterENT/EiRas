@@ -1,4 +1,5 @@
-#pragma once
+#ifndef Graphics_Resource_Descriptor_Heap_DX12
+#define Graphics_Resource_Descriptor_Heap_DX12
 
 #include <d3d12.h>
 #include <PlatformDependency/OnDX/d3dx12.h>
@@ -6,6 +7,7 @@
 
 namespace MaterialSys
 {
+    class Material;
     class MaterialTable;
     class MaterialProp;
     class GraphicsResourceDescriptorHeapDX12
@@ -17,12 +19,22 @@ namespace MaterialSys
 
         void FillHeap(_uint tableCount, MaterialTable** tableArray);
         void DynamicFillHeap(MaterialSys::MaterialProp*);
-        _uint DynamicFillHeapWithGlobalResource(void*, void*);
+        _uint DynamicFillHeapGlobal(void* res, void* format);
+
+        void FillHeap();
+        void RegMaterial(MaterialSys::Material* material);
+        void RemoveMaterial(MaterialSys::Material* material);
+
 
     private:
+        bool isDirty;
+
+        std::vector<MaterialSys::Material*> MaterialArray;
+
+        _uint g_HeapOffset;
         _uint Offset;
         _uint propCount;
-        _uint g_HeapOffset;
     };
 
 }
+#endif

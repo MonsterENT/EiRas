@@ -5,13 +5,19 @@
 
 using namespace MaterialSys;
 
-MaterialDX12Bridge::MaterialDX12Bridge(std::string Name, EiRasPlatformBridgeProtocol* shaderObj)
+MaterialDX12Bridge::MaterialDX12Bridge(std::string Name, EiRasPlatformBridgeProtocol* shaderObj, Material* matObj)
 {
-    raw_obj = new MaterialDX12(Name, (ShaderDX12*)shaderObj->raw_obj);
+    raw_obj = new MaterialDX12(Name, (ShaderDX12*)shaderObj->raw_obj, matObj);
 }
 
 void MaterialDX12Bridge::UpdateRenderState(Graphics::GraphicsRenderState* renderState, EiRasPlatformBridgeProtocol* shaderObj, EiRasPlatformBridgeProtocol* cmdBufferPB, _uint pass)
 {
     MaterialDX12* obj = (MaterialDX12*)raw_obj;
     obj->UpdateRenderState(renderState, (ShaderDX12*)shaderObj->raw_obj, cmdBufferPB->raw_obj, pass);
+}
+
+void MaterialDX12Bridge::Release()
+{
+    MaterialDX12* obj = (MaterialDX12*)raw_obj;
+    obj->Release();
 }

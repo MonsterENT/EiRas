@@ -15,6 +15,8 @@
 #include <PlatformDependency/OnDX/Shader/ShaderLayoutDX12.hpp>
 #include <PlatformDependency/OnDX/GPCompute/ComputeKernelDX12.hpp>
 
+#include <PlatformDependency/OnDX/ResourceHeapManager/ResourceDescriptorHeapManager.hpp>
+
 using namespace GPCompute;
 using namespace Graphics;
 using GraphicsAPI::EiRasDX12;
@@ -47,28 +49,30 @@ void CommandBufferDX12::BeginFrame()
     GET_EIRAS_DX12(deviceObj);;
     cmdAllocator->Reset();
     cmdList->Reset(cmdAllocator, NULL);
-    for (int i = 0; i < ImageSysBuildingList.size(); i++)
+
+    std::vector<ImageSys::Image*>::iterator it = ImageSysBuildingList.begin();
+    while (it != ImageSysBuildingList.end())
     {
-        if (!ImageSysBuildingList[i]->isFinishBuild)
+        if (!(*it)->isFinishBuild)
         {
-            ImageSysBuildingList[i]->Build(cmdList);
+            (*it)->Build(cmdList);
+            it++;
         }
         else
         {
-            ImageSysBuildingList[i]->FinishBuild();
+            (*it)->FinishBuild();
+            it = ImageSysBuildingList.erase(it);
         }
     }
 
     deviceObj->_BeginFrame(cmdList);
 }
 
-void CommandBufferDX12::Reset(MaterialSys::GraphicsResourceDescriptorHeapDX12* heapObj)
+void CommandBufferDX12::Reset()
 {
-    if (heapObj)
-    {
-        CurrentUseingHeap = heapObj;
-        cmdList->SetDescriptorHeaps(1, &heapObj->heap);
-    }
+    CurrentUseingHeap = (MaterialSys::GraphicsResourceDescriptorHeapDX12*)MaterialSys::ResourceDescriptorHeapManager::ShareInstance()->HeapPool[0];
+    CurrentUseingHeap->FillHeap();
+    cmdList->SetDescriptorHeaps(1, &CurrentUseingHeap->heap);
 }
 
 void CommandBufferDX12::Commit(bool present)

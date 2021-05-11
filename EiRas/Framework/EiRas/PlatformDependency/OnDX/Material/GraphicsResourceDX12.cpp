@@ -41,6 +41,7 @@ void GraphicsResourceDX12::BuildResource(D3D12_HEAP_TYPE heapType, D3D12_RESOURC
         resourceState,
         nullptr,
         IID_PPV_ARGS(&Resource));
+    HRESULT hrRemove = deviceObj->device->GetDeviceRemovedReason();
     assert(SUCCEEDED(hr));
 
     ResADDR = Resource->GetGPUVirtualAddress();

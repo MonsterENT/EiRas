@@ -75,18 +75,7 @@ namespace Graphics {
         EiRasPlatformBridgeProtocol* PlatformBridge;
 
     private:
-
-#if GRAPHICS_DX
-        void _ReFillHeap();
-
-        MaterialSys::GraphicsResourceDescriptorHeap* resourceHeap;
-        void RegMaterial(MaterialSys::Material* material);
-        void RemoveMaterial(MaterialSys::Material* material);
-        std::vector<MaterialSys::MaterialTable*> tmpMaterialTableArray;
-        std::vector<MaterialSys::Material*> MaterialArray;
-#endif
     };
-
 }
 
 #endif /* CommandBuffer_hpp */

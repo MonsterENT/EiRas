@@ -9,10 +9,13 @@
 #ifndef EiRasGlobalManager_hpp
 #define EiRasGlobalManager_hpp
 
+#include <vector>
 #include <Math/Math.hpp>
 
 namespace MaterialSys {
+    class Material;
     class GraphicsResource;
+    class GraphicsResourceDescriptorHeap;
 }
 
 namespace EiRasGlobal {
@@ -42,6 +45,7 @@ namespace EiRasGlobal {
          Render Target Texture Width & Height 2 float
          */
         MaterialSys::GraphicsResource* _CB1;
+
     private:
         MaterialSys::GraphicsResource* GetViewProjRawRes();
         CommonCB0 _CBViewProj;

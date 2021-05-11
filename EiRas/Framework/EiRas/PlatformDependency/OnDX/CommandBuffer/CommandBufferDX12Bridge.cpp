@@ -25,14 +25,9 @@ void CommandBufferDX12Bridge::BeginFrame()
     ((CommandBufferDX12*)raw_obj)->BeginFrame();
 }
 
-void CommandBufferDX12Bridge::Reset(EiRasPlatformBridgeProtocol* heapBridge)
+void CommandBufferDX12Bridge::Reset()
 {
-    void* rawHeapObj = NULL;
-    if (heapBridge)
-    {
-        rawHeapObj = heapBridge->raw_obj;
-    }
-    ((CommandBufferDX12*)raw_obj)->Reset((GraphicsResourceDescriptorHeapDX12*)rawHeapObj);
+    ((CommandBufferDX12*)raw_obj)->Reset();
 }
 
 void CommandBufferDX12Bridge::Commit(bool present)

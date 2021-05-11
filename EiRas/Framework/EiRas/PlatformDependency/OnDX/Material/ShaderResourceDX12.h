@@ -12,20 +12,16 @@ namespace MaterialSys
         ~ShaderResourceDX12();
 
         DXGI_FORMAT TexFormat;
-        
-        bool isReady()
-        {
-            return buildStatusFlag;
-        }
 
         void BuildTextureResource(void* cmdList);
         void FinishBuild();
 
         virtual void SetResource(void* res, bool noMoreUpdate);
 
+        _uint GlobalHeapOffset;
+
     private:
         bool* outBuildStatusFlagPtr;
-        bool buildStatusFlag = false;
         void* texData = 0;
         ID3D12Resource* tmpResource = 0;
         UINT width, height, channels;

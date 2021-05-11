@@ -1,10 +1,11 @@
 #include "EiRasDX12.h"
-#include <PlatformDependency/OnDX/ResourceHeapManager/ResourceHeapManager.hpp>
 #pragma comment (lib, "D3D12.lib")
 #pragma comment (lib, "DXGI.lib")
 
+#include <PlatformDependency/OnDX/ResourceHeapManager/ResourceDescriptorHeapManager.hpp>
+
 using GraphicsAPI::EiRasDX12;
-using MaterialSys::ResourceHeapManager;
+using MaterialSys::ResourceDescriptorHeapManager;
 
 HANDLE fenceEvent;
 ID3D12Fence* fence = 0;
@@ -80,7 +81,6 @@ void EiRasDX12::InitDevice()
         rtvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
 
         device->CreateDescriptorHeap(&rtvHeapDesc, IID_PPV_ARGS(&rtvHeap));
-
         rtvDescriptorSize = device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
     }
 
@@ -92,7 +92,8 @@ void EiRasDX12::InitDevice()
     {
         swapChain3->GetBuffer(n, IID_PPV_ARGS(&renderTargets[n]));
         device->CreateRenderTargetView(renderTargets[n], nullptr, rtvHandle);
-        ResourceHeapManager::ShareInstance()->HeapPool[0]->DynamicFillHeapWithGlobalResource(renderTargets[n], &swapChainDesc.Format);
+        ResourceDescriptorHeapManager::ShareInstance()->HeapPool[0]->DynamicFillHeapGlobal(renderTargets[n], &swapChainDesc.Format);
+
         rtvHandle.Offset(1, rtvDescriptorSize);
     }
 

@@ -9,6 +9,8 @@
 #include <Material/MaterialLayout.hpp>
 #include <vector>
 
+#include <Material/Material.hpp>
+
 using std::vector;
 using GraphicsAPI::EiRasDX12;
 using namespace MaterialSys;
@@ -17,7 +19,8 @@ using namespace MaterialSys;
 
 GraphicsResourceDescriptorHeapDX12::GraphicsResourceDescriptorHeapDX12(_uint propCount)
 {
-    g_HeapOffset = 0;
+    g_HeapOffset = 1;
+    isDirty = false;
     this->propCount = propCount;
     D3D12_DESCRIPTOR_HEAP_DESC heapDesc = {};
     heapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
@@ -71,6 +74,25 @@ inline void _FillHeapWithProp(CD3DX12_CPU_DESCRIPTOR_HANDLE cpuHandle, CD3DX12_G
     }
 }
 
+_uint GraphicsResourceDescriptorHeapDX12::DynamicFillHeapGlobal(void* res, void* format)
+{
+    CD3DX12_CPU_DESCRIPTOR_HANDLE cpuHandle(heap->GetCPUDescriptorHandleForHeapStart());
+    CD3DX12_GPU_DESCRIPTOR_HANDLE gpuHandle(heap->GetGPUDescriptorHandleForHeapStart());
+
+    cpuHandle.Offset(g_HeapOffset, Offset);
+    gpuHandle.Offset(g_HeapOffset, Offset);
+
+    GET_EIRAS_DX12(deviceObj);
+    D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
+    srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+    srvDesc.Format = *((DXGI_FORMAT*)format);
+    srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
+    srvDesc.Texture2D.MipLevels = 1;
+    deviceObj->device->CreateShaderResourceView((ID3D12Resource*)res, &srvDesc, cpuHandle);
+
+    return g_HeapOffset++;
+}
+
 void GraphicsResourceDescriptorHeapDX12::DynamicFillHeap(MaterialSys::MaterialProp* prop)
 {
     CD3DX12_CPU_DESCRIPTOR_HANDLE cpuHandle(heap->GetCPUDescriptorHandleForHeapStart());
@@ -82,24 +104,6 @@ void GraphicsResourceDescriptorHeapDX12::DynamicFillHeap(MaterialSys::MaterialPr
     _FillHeapWithProp(cpuHandle, gpuHandle, prop);
 }
 
-_uint GraphicsResourceDescriptorHeapDX12::DynamicFillHeapWithGlobalResource(void* outerRes, void* format)
-{
-    GET_EIRAS_DX12(deviceObj);
-    CD3DX12_CPU_DESCRIPTOR_HANDLE cpuHandle(heap->GetCPUDescriptorHandleForHeapStart());
-    CD3DX12_GPU_DESCRIPTOR_HANDLE gpuHandle(heap->GetGPUDescriptorHandleForHeapStart());
-
-    cpuHandle.Offset(g_HeapOffset, Offset);
-    gpuHandle.Offset(g_HeapOffset, Offset);
-
-    D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
-    srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-    srvDesc.Format = *((DXGI_FORMAT*)format);
-    srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
-    srvDesc.Texture2D.MipLevels = 1;
-    deviceObj->device->CreateShaderResourceView((ID3D12Resource*)outerRes, &srvDesc, cpuHandle);
-
-    return g_HeapOffset++;
-}
 
 void GraphicsResourceDescriptorHeapDX12::FillHeap(_uint tableCount, MaterialTable** tableArray)
 {
@@ -133,4 +137,58 @@ void GraphicsResourceDescriptorHeapDX12::FillHeap(_uint tableCount, MaterialTabl
 
         }
     }
+}
+
+void GraphicsResourceDescriptorHeapDX12::FillHeap()
+{
+    if (!isDirty)
+    {
+        return;
+    }
+
+    isDirty = false;
+    std::vector<MaterialSys::MaterialTable*> tmpMaterialTableArray;
+    std::vector<Material*>::iterator it = MaterialArray.begin();
+    while (it != MaterialArray.end())
+    {
+        Material* mat = *it;
+        for (_uint slotIndex = 0; slotIndex < mat->materialLayout->SlotNum; slotIndex++)
+        {
+            MaterialSlot* slot = mat->materialLayout->Slots[slotIndex];
+            if (slot->SlotType == MaterialSlotType::MaterialSlotType_Table)
+            {
+                tmpMaterialTableArray.push_back((MaterialTable*)slot);
+            }
+        }
+        it++;
+    }
+
+#pragma message("TOFIX Out Of Range")
+    if (tmpMaterialTableArray.size() > 0)
+    {
+        FillHeap((_uint)tmpMaterialTableArray.size(), &tmpMaterialTableArray[0]);
+    }
+}
+
+void GraphicsResourceDescriptorHeapDX12::RegMaterial(MaterialSys::Material* material)
+{
+    isDirty = true;
+    MaterialArray.push_back(material);
+    FillHeap();
+}
+
+void GraphicsResourceDescriptorHeapDX12::RemoveMaterial(MaterialSys::Material* material)
+{
+    isDirty = true;
+    std::vector<Material*>::iterator it = MaterialArray.begin();
+    while (it != MaterialArray.end())
+    {
+        if (material == *it)
+        {
+            MaterialArray.erase(it);
+            break;
+        }
+        it++;
+    }
+    FillHeap();
 }

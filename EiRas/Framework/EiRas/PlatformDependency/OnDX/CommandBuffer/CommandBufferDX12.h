@@ -39,7 +39,7 @@ namespace Graphics {
 
         void BeginFrame();
 
-        void Reset(MaterialSys::GraphicsResourceDescriptorHeapDX12* heapObj);
+        void Reset();
         void Commit(bool present);
 
         void SetViewPort(float topLeftX, float topLeftY, float width, float height, float minDepth, float maxDepth);

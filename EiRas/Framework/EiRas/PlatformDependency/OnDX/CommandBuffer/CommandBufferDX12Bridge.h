@@ -37,7 +37,7 @@ namespace Graphics {
         void DispatchComputeKernel(GPCompute::ComputeKernel* kernel, Math::int3 groupCount);
         void BeginFrame();
 
-        void Reset(EiRasPlatformBridgeProtocol* heapBridge);
+        void Reset();
 
         void Commit(bool present);
 

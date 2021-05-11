@@ -1,6 +1,5 @@
 #include "RenderTextureDX12.hpp"
 #include <Material/GraphicsResource.hpp>
-#include <PlatformDependency/OnDX/ResourceHeapManager/ResourceHeapManager.hpp>
 
 using namespace Graphics;
 using namespace GraphicsAPI;
@@ -32,7 +31,6 @@ RenderTextureDX12::RenderTextureDX12(std::string name, MaterialSys::GraphicsReso
     CD3DX12_CPU_DESCRIPTOR_HANDLE rtvHandle(RtvHeap->GetCPUDescriptorHandleForHeapStart());
     device->device->CreateRenderTargetView(ColorBuffer, nullptr, rtvHandle);
 #pragma endregion
-    this->SrvHeapOffset = ResourceHeapManager::ShareInstance()->HeapPool[0]->DynamicFillHeapWithGlobalResource(ColorBuffer, &ColorFormat);
 
 #pragma region Init DepthStencil Buffer
     D3D12_DEPTH_STENCIL_VIEW_DESC depthStencilDesc = {};

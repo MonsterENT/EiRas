@@ -5,6 +5,7 @@
 #include <d3d12.h>
 #include <vector>
 #include <Global/GlobalDefine.h>
+#include <Material/Material.hpp>
 
 namespace Graphics
 {
@@ -14,20 +15,19 @@ namespace Graphics
 namespace MaterialSys
 {
     class ShaderDX12;
-    class MaterialLayout;
     class MaterialProp;
-    class MaterialTable;
-
     class MaterialDX12
     {
     public:
         std::string Name;
-        MaterialDX12(std::string Name, ShaderDX12* shaderObj);
+        MaterialDX12(std::string Name, ShaderDX12* shaderObj, Material* matObj);
 
         void UpdateRenderState(Graphics::GraphicsRenderState* renderState, ShaderDX12* shaderObj, void* rawCmdBuffer, _uint pass = 0);
 
-        ShaderDX12* RawShaderObj;
+        void Release();
 
+        ShaderDX12* RawShaderObj;
+        Material* RawMatObj;
         std::vector<ID3D12PipelineState*> PassedPipelineState;
     };
 }

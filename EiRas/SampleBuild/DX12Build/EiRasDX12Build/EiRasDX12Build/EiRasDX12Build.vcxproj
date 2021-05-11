@@ -192,7 +192,6 @@
     <ClInclude Include="..\..\..\..\Framework\EiRas\GUI\View.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Material\GraphicsResource.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Material\GraphicsResourceConfig.hpp" />
-    <ClInclude Include="..\..\..\..\Framework\EiRas\Material\GraphicsResourceDescriptorHeap.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Material\Material.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Material\MaterialLayout.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Material\Shader.hpp" />
@@ -212,10 +211,9 @@
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\GUI\GUISystemDX12.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\GUI\GUISystemDX12Bridge.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\ConstantBufferDX12.h" />
+    <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\GraphicsResourceDescriptorHeapDX12.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\GraphicsResourceDX12.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\GraphicsResourceDX12Bridge.h" />
-    <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\GraphicsResourceDescriptorHeapDX12.h" />
-    <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\GraphicsResourceDescriptorHeapDX12Bridge.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\MaterialDX12.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\MaterialDX12Bridge.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\ShaderResourceDX12.h" />
@@ -224,7 +222,7 @@
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Mesh\MeshDX12Bridge.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\RenderTexture\RenderTextureDX12.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\RenderTexture\RenderTextureDX12Bridge.hpp" />
-    <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\ResourceHeapManager\ResourceHeapManager.hpp" />
+    <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\ResourceHeapManager\ResourceDescriptorHeapManager.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Shader\ShaderDX12.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Shader\ShaderDX12Bridge.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Shader\ShaderLayoutDX12.hpp" />
@@ -271,7 +269,6 @@
     <ClCompile Include="..\..\..\..\Framework\EiRas\GUI\RuntimeUtilities.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\GUI\View.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\Material\GraphicsResource.cpp" />
-    <ClCompile Include="..\..\..\..\Framework\EiRas\Material\GraphicsResourceDescriptorHeap.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\Material\Material.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\Material\MaterialLayout.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\Material\Shader.cpp" />
@@ -289,10 +286,9 @@
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\GUI\GUISystemDX12.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\GUI\GUISystemDX12Bridge.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\ConstantBufferDX12.cpp" />
+    <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\GraphicsResourceDescriptorHeapDX12.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\GraphicsResourceDX12.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\GraphicsResourceDX12Bridge.cpp" />
-    <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\GraphicsResourceDescriptorHeapDX12.cpp" />
-    <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\GraphicsResourceDescriptorHeapDX12Bridge.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\MaterialDX12.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\MaterialDX12Bridge.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\ShaderResourceDX12.cpp" />
@@ -301,13 +297,15 @@
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Mesh\MeshDX12Bridge.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\RenderTexture\RenderTextureDX12.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\RenderTexture\RenderTextureDX12Bridge.cpp" />
-    <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\ResourceHeapManager\ResourceHeapManager.cpp" />
+    <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\ResourceHeapManager\ResourceDescriptorHeapManager.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Shader\ShaderDX12.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Shader\ShaderDX12Bridge.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Shader\ShaderLayoutDX12.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Shader\ShaderLayoutDX12Bridge.cpp" />
     <ClCompile Include="..\..\..\Common\Engine.cpp" />
-    <ClCompile Include="EiRasDX12Build.cpp" />
+    <ClCompile Include="EiRasDX12Build.cpp">
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">GRAPHICS_DX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
     <ClCompile Include="SDFGen\RMCapture.cpp" />
   </ItemGroup>
   <ItemGroup>

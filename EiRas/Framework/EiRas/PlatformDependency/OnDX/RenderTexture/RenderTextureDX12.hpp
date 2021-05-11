@@ -32,7 +32,6 @@ namespace Graphics
         MaterialSys::GraphicsResourceFormat DepthStencilFormat;
 
         void* GetGraphicsResource();
-        _uint SrvHeapOffset;
 
     private:
         void* _GraphicsResourceInstance;

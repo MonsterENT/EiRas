@@ -20,7 +20,8 @@
 #if GRAPHICS_DX
 #include <PlatformDependency/OnDX/Material/MaterialDX12Bridge.h>
 #include <PlatformDependency/OnDX/RenderTexture/RenderTextureDX12.hpp>
-#include <PlatformDependency/OnDX/ResourceHeapManager/ResourceHeapManager.hpp>
+#include <PlatformDependency/OnDX/Material/ShaderResourceRTDX12.hpp>
+#include <PlatformDependency/OnDX/Material/ShaderResourceDX12.h>
 #endif
 
 using namespace Graphics;
@@ -34,14 +35,6 @@ Material::Material(std::string Name, Shader* shader, Graphics::CommandBuffer* co
     this->Name = Name;
 
     this->RenderState = new Graphics::GraphicsRenderState();
-
-#if GRAPHICS_METAL
-    this->PlatformBridge = new MaterialMetalBridge(Name);
-#endif
-
-#if GRAPHICS_DX
-    this->PlatformBridge = new MaterialDX12Bridge(Name, shader->PlatformBridge);
-#endif
 
     this->shader = shader;
 
@@ -109,16 +102,18 @@ Material::Material(std::string Name, Shader* shader, Graphics::CommandBuffer* co
         }
     }
 
+
+#if GRAPHICS_METAL
+    this->PlatformBridge = new MaterialMetalBridge(Name);
+#endif
+
+#if GRAPHICS_DX
+    this->PlatformBridge = new MaterialDX12Bridge(Name, shader->PlatformBridge, this);
+#endif
+
     referenceCmdBuffer = commandBuffer;
     //init platform pso
     FinishStateChange();
-
-#if GRAPHICS_DX
-    if (commandBuffer != 0)
-    {
-        commandBuffer->RegMaterial(this);
-    }
-#endif
 }
 
 inline MaterialProp* getMaterialProp(Material* mat, _uint slotIndex, _uint propIndex, bool& fromTable)
@@ -196,8 +191,7 @@ void Material::SetProperty(ImageSys::Image* image, _uint slotIndex, int propInde
 #if GRAPHICS_DX
     if (fromTable)
     {
-        tProp->RevertHeapOffset();
-        ResourceHeapManager::ShareInstance()->HeapPool[0]->DynamicFillHeap(tProp);
+        tProp->_heapOffset = ((ShaderResourceDX12*)image->PipelineResource->PlatformBridge->raw_obj)->GlobalHeapOffset;
     }
 #endif
 }
@@ -217,8 +211,7 @@ void Material::SetProperty(MaterialSys::GraphicsResource* srv, _uint slotIndex, 
 #if GRAPHICS_DX
         if (fromTable)
         {
-            tProp->RevertHeapOffset();
-            ResourceHeapManager::ShareInstance()->HeapPool[0]->DynamicFillHeap(tProp);
+            tProp->_heapOffset = ((ShaderResourceDX12*)srv->PlatformBridge->raw_obj)->GlobalHeapOffset;
         }
 #endif
     }
@@ -233,10 +226,12 @@ void Material::SetProperty(Graphics::RenderTexture* rt, _uint slotIndex, int pro
         return;
     }
 
+    tProp->Resource = 0;
 #if GRAPHICS_DX
     if (fromTable)
     {
-        tProp->_heapOffset = ((RenderTextureDX12*)rt->PlatformBridge->raw_obj)->SrvHeapOffset;
+        GraphicsResource* resObj = (GraphicsResource*)((RenderTextureDX12*)rt->PlatformBridge->raw_obj)->GetGraphicsResource();
+        tProp->_heapOffset = ((ShaderResourceRTDX12*)resObj->PlatformBridge->raw_obj)->GlobalHeapOffset;
     }
 #endif
 }
@@ -256,9 +251,6 @@ void Material::FinishStateChange(_uint pass)
 Material::~Material()
 {
 #if GRAPHICS_DX
-    if (referenceCmdBuffer)
-    {
-        referenceCmdBuffer->RemoveMaterial(this);
-    }
+    ((MaterialDX12Bridge*)this->PlatformBridge)->Release();
 #endif
 }

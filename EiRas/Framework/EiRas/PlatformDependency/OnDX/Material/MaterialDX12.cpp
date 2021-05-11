@@ -10,14 +10,22 @@
 #include <PlatformDependency/OnDX/Material/ConstantBufferDX12.h>
 #include <PlatformDependency/OnDX/CommandBuffer/CommandBufferDX12.h>
 
+#include <PlatformDependency/OnDX/Material/GraphicsResourceDescriptorHeapDX12.h>
+#include <PlatformDependency/OnDX/ResourceHeapManager/ResourceDescriptorHeapManager.hpp>
+
 using namespace MaterialSys;
 using namespace Graphics;
 using GraphicsAPI::EiRasDX12;
 
-MaterialDX12::MaterialDX12(std::string Name, ShaderDX12* shaderObj)
+MaterialDX12::MaterialDX12(std::string Name, ShaderDX12* shaderObj, Material* matObj)
 {
     this->Name = Name;
     RawShaderObj = shaderObj;
+    RawMatObj = matObj;
+
+#if GRAPHICS_DX
+    ResourceDescriptorHeapManager::ShareInstance()->HeapPool[0]->RegMaterial(RawMatObj);
+#endif
 }
 
 void MaterialDX12::UpdateRenderState(Graphics::GraphicsRenderState* renderState, ShaderDX12* shaderObj, void* rawCmdBuffer, _uint pass)
@@ -36,4 +44,9 @@ void MaterialDX12::UpdateRenderState(Graphics::GraphicsRenderState* renderState,
     {
         PassedPipelineState[pass] = RawShaderObj->_GetPSO(renderState, numRT, rtFormats, depthFormat, pass);
     }
+}
+
+void MaterialDX12::Release()
+{
+    ResourceDescriptorHeapManager::ShareInstance()->HeapPool[0]->RemoveMaterial(RawMatObj);
 }

@@ -3,6 +3,8 @@
 #include <Material/GraphicsResource.hpp>
 #include <PlatformDependency/OnDX/DXMacro.h>
 #include <PlatformDependency/OnDX/GraphicsAPI/EiRasDX12.h>
+#include <PlatformDependency/OnDX/ResourceHeapManager/ResourceDescriptorHeapManager.hpp>
+#include <PlatformDependency/OnDX/Material/GraphicsResourceDescriptorHeapDX12.h>
 
 using namespace MaterialSys;
 using GraphicsAPI::EiRasDX12;
@@ -22,6 +24,8 @@ ShaderResourceDX12::ShaderResourceDX12(GraphicsResourceBehaviors* behaviors, DXG
 
     outBuildStatusFlagPtr = buildStatusFlag;
     *buildStatusFlag = false;
+
+    GlobalHeapOffset = 0;
 }
 
 
@@ -57,17 +61,18 @@ void ShaderResourceDX12::BuildTextureResource(void* cmdList)
     _cmdList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(Resource, D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE));
     
     *outBuildStatusFlagPtr = true;
-    buildStatusFlag = true;
 }
 
 void ShaderResourceDX12::FinishBuild()
 {
 #pragma message("TOFIX FinishBuild")
+    {
+        GlobalHeapOffset = ResourceDescriptorHeapManager::ShareInstance()->HeapPool[0]->DynamicFillHeapGlobal(Resource, &TexFormat);
+    }
 }
 
 void ShaderResourceDX12::SetResource(void* res, bool noMoreUpdate)
 {
     *outBuildStatusFlagPtr = false;
     this->texData = res;
-    buildStatusFlag = false;
 }
