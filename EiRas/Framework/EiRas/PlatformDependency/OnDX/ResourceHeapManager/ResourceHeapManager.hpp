@@ -3,7 +3,7 @@
 
 #include <Global/GlobalDefine.h>
 #include <vector>
-#include <Material/GraphicsResourceHeap.hpp>
+#include <Material/GraphicsResourceDescriptorHeap.hpp>
 
 namespace MaterialSys
 {
@@ -12,8 +12,8 @@ namespace MaterialSys
     public:
         static ResourceHeapManager* ShareInstance();
         ResourceHeapManager() {}
-        MaterialSys::GraphicsResourceHeap* AddHeap(_uint size);
-        std::vector<MaterialSys::GraphicsResourceHeap*> HeapPool;
+        MaterialSys::GraphicsResourceDescriptorHeap* AddHeap(_uint size);
+        std::vector<MaterialSys::GraphicsResourceDescriptorHeap*> HeapPool;
     };
 }
 

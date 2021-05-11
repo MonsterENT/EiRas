@@ -192,7 +192,7 @@
     <ClInclude Include="..\..\..\..\Framework\EiRas\GUI\View.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Material\GraphicsResource.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Material\GraphicsResourceConfig.hpp" />
-    <ClInclude Include="..\..\..\..\Framework\EiRas\Material\GraphicsResourceHeap.hpp" />
+    <ClInclude Include="..\..\..\..\Framework\EiRas\Material\GraphicsResourceDescriptorHeap.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Material\Material.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Material\MaterialLayout.hpp" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\Material\Shader.hpp" />
@@ -214,8 +214,8 @@
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\ConstantBufferDX12.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\GraphicsResourceDX12.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\GraphicsResourceDX12Bridge.h" />
-    <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\GraphicsResourceHeapDX12.h" />
-    <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\GraphicsResourceHeapDX12Bridge.h" />
+    <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\GraphicsResourceDescriptorHeapDX12.h" />
+    <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\GraphicsResourceDescriptorHeapDX12Bridge.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\MaterialDX12.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\MaterialDX12Bridge.h" />
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\ShaderResourceDX12.h" />
@@ -271,7 +271,7 @@
     <ClCompile Include="..\..\..\..\Framework\EiRas\GUI\RuntimeUtilities.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\GUI\View.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\Material\GraphicsResource.cpp" />
-    <ClCompile Include="..\..\..\..\Framework\EiRas\Material\GraphicsResourceHeap.cpp" />
+    <ClCompile Include="..\..\..\..\Framework\EiRas\Material\GraphicsResourceDescriptorHeap.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\Material\Material.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\Material\MaterialLayout.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\Material\Shader.cpp" />
@@ -291,8 +291,8 @@
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\ConstantBufferDX12.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\GraphicsResourceDX12.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\GraphicsResourceDX12Bridge.cpp" />
-    <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\GraphicsResourceHeapDX12.cpp" />
-    <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\GraphicsResourceHeapDX12Bridge.cpp" />
+    <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\GraphicsResourceDescriptorHeapDX12.cpp" />
+    <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\GraphicsResourceDescriptorHeapDX12Bridge.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\MaterialDX12.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\MaterialDX12Bridge.cpp" />
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\ShaderResourceDX12.cpp" />

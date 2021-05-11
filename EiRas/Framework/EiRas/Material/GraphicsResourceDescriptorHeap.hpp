@@ -8,10 +8,10 @@ namespace MaterialSys
 {
     class MaterialTable;
     class MaterialProp;
-    class GraphicsResourceHeap
+    class GraphicsResourceDescriptorHeap
     {
     public:
-        GraphicsResourceHeap(_uint propCount);
+        GraphicsResourceDescriptorHeap(_uint propCount);
 
         void FillHeap(_uint tableCount, MaterialTable** tableArray);
 

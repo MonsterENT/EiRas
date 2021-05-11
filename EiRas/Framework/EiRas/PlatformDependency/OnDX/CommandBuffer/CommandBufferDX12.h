@@ -9,7 +9,7 @@
 
 namespace MaterialSys
 {
-    class GraphicsResourceHeapDX12;
+    class GraphicsResourceDescriptorHeapDX12;
     class MaterialDX12;
     class MaterialLayout;
     class GraphicsResourceDX12;
@@ -39,7 +39,7 @@ namespace Graphics {
 
         void BeginFrame();
 
-        void Reset(MaterialSys::GraphicsResourceHeapDX12* heapObj);
+        void Reset(MaterialSys::GraphicsResourceDescriptorHeapDX12* heapObj);
         void Commit(bool present);
 
         void SetViewPort(float topLeftX, float topLeftY, float width, float height, float minDepth, float maxDepth);
@@ -54,7 +54,7 @@ namespace Graphics {
 
         ID3D12CommandAllocator* cmdAllocator = 0;
         ID3D12GraphicsCommandList* cmdList = 0;
-        MaterialSys::GraphicsResourceHeapDX12* CurrentUseingHeap;
+        MaterialSys::GraphicsResourceDescriptorHeapDX12* CurrentUseingHeap;
 
         void GetCurrentRenderTextureInfo(_uint* numRT, DXGI_FORMAT* rtFormats, DXGI_FORMAT* depthFormat);
     private:

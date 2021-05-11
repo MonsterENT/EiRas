@@ -7,7 +7,7 @@
 #include <Material/MaterialLayout.hpp>
 #include <Material/ShaderLayout.h>
 #include <PlatformDependency/OnDX/Material/GraphicsResourceDX12.h>
-#include <PlatformDependency/OnDX/Material/GraphicsResourceHeapDX12.h>
+#include <PlatformDependency/OnDX/Material/GraphicsResourceDescriptorHeapDX12.h>
 #include <Mesh/Mesh.hpp>
 #include <PlatformDependency/OnDX/Mesh/MeshDX12.h>
 #include <Basic/Image.hpp>
@@ -62,7 +62,7 @@ void CommandBufferDX12::BeginFrame()
     deviceObj->_BeginFrame(cmdList);
 }
 
-void CommandBufferDX12::Reset(MaterialSys::GraphicsResourceHeapDX12* heapObj)
+void CommandBufferDX12::Reset(MaterialSys::GraphicsResourceDescriptorHeapDX12* heapObj)
 {
     if (heapObj)
     {

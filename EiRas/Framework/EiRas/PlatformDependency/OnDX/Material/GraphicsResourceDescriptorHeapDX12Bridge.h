@@ -7,10 +7,10 @@ namespace MaterialSys
 {
     class MaterialTable;
     class MaterialProp;
-    class GraphicsResourceHeapDX12Bridge : public EiRasPlatformBridgeProtocol
+    class GraphicsResourceDescriptorHeapDX12Bridge : public EiRasPlatformBridgeProtocol
     {
     public:
-        GraphicsResourceHeapDX12Bridge(_uint propCount);
+        GraphicsResourceDescriptorHeapDX12Bridge(_uint propCount);
         void FillHeap(_uint tableCount, MaterialTable** tableArray);
         void DynamicFillHeap(MaterialSys::MaterialProp*);
         _uint DynamicFillHeapWithGlobalResource(void*, void*);

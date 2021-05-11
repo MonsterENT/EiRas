@@ -105,15 +105,6 @@
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\ShaderResourceDX12.h">
       <Filter>framework</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Framework\EiRas\Material\GraphicsResourceHeap.hpp">
-      <Filter>framework</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\GraphicsResourceHeapDX12.h">
-      <Filter>framework</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\GraphicsResourceHeapDX12Bridge.h">
-      <Filter>framework</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\CommandBuffer\CommandBufferDX12.h">
       <Filter>framework</Filter>
     </ClInclude>
@@ -261,6 +252,15 @@
     <ClInclude Include="SDFGen\RMCapture.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\Framework\EiRas\Material\GraphicsResourceDescriptorHeap.hpp">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\GraphicsResourceDescriptorHeapDX12.h">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\GraphicsResourceDescriptorHeapDX12Bridge.h">
+      <Filter>framework</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EiRasDX12Build.cpp">
@@ -327,15 +327,6 @@
       <Filter>framework</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\ShaderResourceDX12.cpp">
-      <Filter>framework</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\Framework\EiRas\Material\GraphicsResourceHeap.cpp">
-      <Filter>framework</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\GraphicsResourceHeapDX12.cpp">
-      <Filter>framework</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\GraphicsResourceHeapDX12Bridge.cpp">
       <Filter>framework</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\CommandBuffer\CommandBufferDX12.cpp">
@@ -472,6 +463,15 @@
     </ClCompile>
     <ClCompile Include="SDFGen\RMCapture.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Framework\EiRas\Material\GraphicsResourceDescriptorHeap.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\GraphicsResourceDescriptorHeapDX12.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Material\GraphicsResourceDescriptorHeapDX12Bridge.cpp">
+      <Filter>framework</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

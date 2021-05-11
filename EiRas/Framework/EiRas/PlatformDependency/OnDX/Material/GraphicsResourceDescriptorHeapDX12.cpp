@@ -1,4 +1,4 @@
-#include "GraphicsResourceHeapDX12.h"
+#include "GraphicsResourceDescriptorHeapDX12.h"
 #include <Material/GraphicsResource.hpp>
 #include <PlatformDependency/OnDX/Material/ConstantBufferDX12.h>
 #include <PlatformDependency/OnDX/Material/ShaderResourceDX12.h>
@@ -15,7 +15,7 @@ using namespace MaterialSys;
 
 #define HEAP_HEADER_OFFSET 30
 
-GraphicsResourceHeapDX12::GraphicsResourceHeapDX12(_uint propCount)
+GraphicsResourceDescriptorHeapDX12::GraphicsResourceDescriptorHeapDX12(_uint propCount)
 {
     g_HeapOffset = 0;
     this->propCount = propCount;
@@ -30,7 +30,7 @@ GraphicsResourceHeapDX12::GraphicsResourceHeapDX12(_uint propCount)
     Offset = deviceObj->device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 }
 
-GraphicsResourceHeapDX12::~GraphicsResourceHeapDX12()
+GraphicsResourceDescriptorHeapDX12::~GraphicsResourceDescriptorHeapDX12()
 {
     heap->Release();
     heap = NULL;
@@ -71,7 +71,7 @@ inline void _FillHeapWithProp(CD3DX12_CPU_DESCRIPTOR_HANDLE cpuHandle, CD3DX12_G
     }
 }
 
-void GraphicsResourceHeapDX12::DynamicFillHeap(MaterialSys::MaterialProp* prop)
+void GraphicsResourceDescriptorHeapDX12::DynamicFillHeap(MaterialSys::MaterialProp* prop)
 {
     CD3DX12_CPU_DESCRIPTOR_HANDLE cpuHandle(heap->GetCPUDescriptorHandleForHeapStart());
     CD3DX12_GPU_DESCRIPTOR_HANDLE gpuHandle(heap->GetGPUDescriptorHandleForHeapStart());
@@ -82,7 +82,7 @@ void GraphicsResourceHeapDX12::DynamicFillHeap(MaterialSys::MaterialProp* prop)
     _FillHeapWithProp(cpuHandle, gpuHandle, prop);
 }
 
-_uint GraphicsResourceHeapDX12::DynamicFillHeapWithGlobalResource(void* outerRes, void* format)
+_uint GraphicsResourceDescriptorHeapDX12::DynamicFillHeapWithGlobalResource(void* outerRes, void* format)
 {
     GET_EIRAS_DX12(deviceObj);
     CD3DX12_CPU_DESCRIPTOR_HANDLE cpuHandle(heap->GetCPUDescriptorHandleForHeapStart());
@@ -101,7 +101,7 @@ _uint GraphicsResourceHeapDX12::DynamicFillHeapWithGlobalResource(void* outerRes
     return g_HeapOffset++;
 }
 
-void GraphicsResourceHeapDX12::FillHeap(_uint tableCount, MaterialTable** tableArray)
+void GraphicsResourceDescriptorHeapDX12::FillHeap(_uint tableCount, MaterialTable** tableArray)
 {
     GET_EIRAS_DX12(deviceObj);
     

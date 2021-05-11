@@ -22,7 +22,7 @@ namespace MaterialSys {
     class MaterialSlot;
     class MaterialProp;
     class MaterialTable;
-    class GraphicsResourceHeap;
+    class GraphicsResourceDescriptorHeap;
 }
 
 namespace MeshSys
@@ -79,7 +79,7 @@ namespace Graphics {
 #if GRAPHICS_DX
         void _ReFillHeap();
 
-        MaterialSys::GraphicsResourceHeap* resourceHeap;
+        MaterialSys::GraphicsResourceDescriptorHeap* resourceHeap;
         void RegMaterial(MaterialSys::Material* material);
         void RemoveMaterial(MaterialSys::Material* material);
         std::vector<MaterialSys::MaterialTable*> tmpMaterialTableArray;

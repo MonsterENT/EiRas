@@ -15,9 +15,9 @@ ResourceHeapManager* ResourceHeapManager::ShareInstance()
     return g_resourceHeapManager;
 }
 
-MaterialSys::GraphicsResourceHeap* ResourceHeapManager::AddHeap(_uint size)
+MaterialSys::GraphicsResourceDescriptorHeap* ResourceHeapManager::AddHeap(_uint size)
 {
-    GraphicsResourceHeap* heap = new GraphicsResourceHeap(size);
+    GraphicsResourceDescriptorHeap* heap = new GraphicsResourceDescriptorHeap(size);
     if (heap)
     {
         HeapPool.push_back(heap);

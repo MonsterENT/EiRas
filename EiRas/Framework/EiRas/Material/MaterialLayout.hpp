@@ -2,7 +2,7 @@
 #define Material_Layout_hpp
 
 #include <Material/GraphicsResource.hpp>
-#include <Material/GraphicsResourceHeap.hpp>
+#include <Material/GraphicsResourceDescriptorHeap.hpp>
 #include <string>
 #include <vector>
 #include <Global/GlobalDefine.h>

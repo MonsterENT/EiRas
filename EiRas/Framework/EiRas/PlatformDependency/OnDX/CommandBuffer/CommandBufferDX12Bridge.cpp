@@ -3,7 +3,7 @@
 #include <Material/Material.hpp>
 #include <Material/MaterialLayout.hpp>
 #include <PlatformDependency/OnDX/Material/MaterialDX12Bridge.h>
-#include <PlatformDependency/OnDX/Material/GraphicsResourceHeapDX12.h>
+#include <PlatformDependency/OnDX/Material/GraphicsResourceDescriptorHeapDX12.h>
 #include <Mesh/Mesh.hpp>
 #include <PlatformDependency/OnDX/Mesh/MeshDX12Bridge.h>
 #include <PlatformDependency/OnDX/Mesh/MeshDX12.h>
@@ -32,7 +32,7 @@ void CommandBufferDX12Bridge::Reset(EiRasPlatformBridgeProtocol* heapBridge)
     {
         rawHeapObj = heapBridge->raw_obj;
     }
-    ((CommandBufferDX12*)raw_obj)->Reset((GraphicsResourceHeapDX12*)rawHeapObj);
+    ((CommandBufferDX12*)raw_obj)->Reset((GraphicsResourceDescriptorHeapDX12*)rawHeapObj);
 }
 
 void CommandBufferDX12Bridge::Commit(bool present)

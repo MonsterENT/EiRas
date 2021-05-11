@@ -8,12 +8,12 @@ namespace MaterialSys
 {
     class MaterialTable;
     class MaterialProp;
-    class GraphicsResourceHeapDX12
+    class GraphicsResourceDescriptorHeapDX12
     {
     public:
         ID3D12DescriptorHeap* heap = 0;
-        GraphicsResourceHeapDX12(_uint propCount);
-        ~GraphicsResourceHeapDX12();
+        GraphicsResourceDescriptorHeapDX12(_uint propCount);
+        ~GraphicsResourceDescriptorHeapDX12();
 
         void FillHeap(_uint tableCount, MaterialTable** tableArray);
         void DynamicFillHeap(MaterialSys::MaterialProp*);
