@@ -157,6 +157,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Framework\Common\CommonMacro.hpp" />
+    <ClInclude Include="..\..\..\..\Framework\Component\ComponentManager\ComponentBase.hpp" />
+    <ClInclude Include="..\..\..\..\Framework\Component\ComponentManager\ComponentManager.hpp" />
     <ClInclude Include="..\..\..\..\Framework\Component\FileSys\FileManager.hpp" />
     <ClInclude Include="..\..\..\..\Framework\Component\FontSys\FontManager.hpp" />
     <ClInclude Include="..\..\..\..\Framework\Component\FontSys\FontSys.hpp" />
@@ -233,9 +235,12 @@
     <ClInclude Include="EiRasDX12Build.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="SDFGen\RMCapture.hpp" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\Framework\Component\ComponentManager\ComponentBase.cpp" />
+    <ClCompile Include="..\..\..\..\Framework\Component\ComponentManager\ComponentManager.cpp" />
     <ClCompile Include="..\..\..\..\Framework\Component\FileSys\FileManager.cpp" />
     <ClCompile Include="..\..\..\..\Framework\Component\FontSys\FontManager.cpp" />
     <ClCompile Include="..\..\..\..\Framework\Component\FontSys\FontSys.cpp" />
@@ -303,6 +308,7 @@
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Shader\ShaderLayoutDX12Bridge.cpp" />
     <ClCompile Include="..\..\..\Common\Engine.cpp" />
     <ClCompile Include="EiRasDX12Build.cpp" />
+    <ClCompile Include="SDFGen\RMCapture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="EiRasDX12Build.rc" />

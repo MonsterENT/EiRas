@@ -22,7 +22,7 @@ EiRasDX12::EiRasDX12(HWND hwnd, int screenWidth, int screenHeight)
 void EiRasDX12::InitDevice()
 {
     IDXGIFactory4* factory = 0;
-    CreateDXGIFactory2(0, IID_PPV_ARGS(&factory));
+    CreateDXGIFactory2(DXGI_CREATE_FACTORY_DEBUG, IID_PPV_ARGS(&factory));
 
     IDXGIAdapter1* adapter = 0;
     for (UINT adapterIndex = 0; DXGI_ERROR_NOT_FOUND != factory->EnumAdapters1(adapterIndex, &adapter); ++adapterIndex)

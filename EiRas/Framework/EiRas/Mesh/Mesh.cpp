@@ -204,8 +204,17 @@ void Mesh::SetIndexData(std::vector<_uint> index)
     COPY_VECTOR_DATA(_uint, index, IndexData);
 }
 
-Math::float3* Mesh::GetPositionData(int& count)
+Math::float3* Mesh::GetPositionData()
 {
-    count = VertexCount;
     return PositionData;
+}
+
+Math::float3* Mesh::GetNormalData()
+{
+    return NormalData;
+}
+
+_uint Mesh::GetVertexCount()
+{
+    return VertexCount;
 }

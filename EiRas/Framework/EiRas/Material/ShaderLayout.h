@@ -84,7 +84,7 @@ namespace MaterialSys
         {
             RegisterSpaceLayoutMode = regSpaceLayoutMode;
             BaseRegisterIndex = baseRegisterIndex;
-            BaseRegisterIndex = baseRegisterSpace;
+            BaseRegisterSpace = baseRegisterSpace;
         }
     };
 

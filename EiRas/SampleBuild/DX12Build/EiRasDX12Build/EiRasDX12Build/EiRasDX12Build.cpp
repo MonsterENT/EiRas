@@ -9,6 +9,9 @@
 #include <GUI/Label.hpp>
 #include <GUI/View.hpp>
 #include <Math/Math.hpp>
+#include <Component/ComponentManager/ComponentManager.hpp>
+#include <Component/ComponentManager/ComponentBase.hpp>
+#include "SDFGen/RMCapture.hpp"
 
 using namespace GUISys;
 using namespace Math;
@@ -21,6 +24,7 @@ WCHAR szWindowClass[MAX_LOADSTRING];            // 主窗口类名
 HWND g_hwnd;
 
 Engine* engine = 0;
+RMCapture CaptureObject;
 
 // 此代码模块中包含的函数的前向声明:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -62,6 +66,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             DispatchMessage(&msg);
         }
         engine->Update(&msg);
+        ComponentSys::ComponentManager::SharedManager()->OnUpdate();
     }
     return (int) msg.wParam;
 }
@@ -124,6 +129,9 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    GetClientRect(hWnd, &rect);
    engine->InitEngine(hWnd, rect.right, rect.bottom);
 #pragma endregion
+
+   ComponentSys::ComponentManager::SharedManager()->AddComponent(&CaptureObject);
+   CaptureObject.OnInit();
 
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);

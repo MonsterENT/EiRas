@@ -26,8 +26,7 @@ GraphicsResourceHeapDX12::GraphicsResourceHeapDX12(_uint propCount)
 
     GET_EIRAS_DX12(deviceObj);
 
-        deviceObj->device->CreateDescriptorHeap(&heapDesc, IID_PPV_ARGS(&heap));
-
+    deviceObj->device->CreateDescriptorHeap(&heapDesc, IID_PPV_ARGS(&heap));
     Offset = deviceObj->device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 }
 

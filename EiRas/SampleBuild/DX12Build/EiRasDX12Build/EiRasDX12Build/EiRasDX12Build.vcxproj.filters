@@ -252,6 +252,15 @@
     <ClInclude Include="..\..\..\..\Framework\EiRas\Material\GraphicsResourceConfig.hpp">
       <Filter>framework</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\Framework\Component\ComponentManager\ComponentManager.hpp">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Framework\Component\ComponentManager\ComponentBase.hpp">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="SDFGen\RMCapture.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EiRasDX12Build.cpp">
@@ -454,6 +463,15 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\Framework\EiRas\PlatformDependency\OnDX\Shader\ShaderLayoutDX12Bridge.cpp">
       <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Framework\Component\ComponentManager\ComponentManager.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Framework\Component\ComponentManager\ComponentBase.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="SDFGen\RMCapture.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

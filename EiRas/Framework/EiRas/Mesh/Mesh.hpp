@@ -144,8 +144,9 @@ namespace MeshSys {
         void SetVertexData(std::vector<Math::float3> position, std::vector<Math::float3> normal, std::vector<Math::float2> uv, std::vector<Math::float4> color);
         void SetIndexData(std::vector<_uint> index);
 
-        Math::float3* GetPositionData(int &count);
-
+        _uint GetVertexCount();
+        Math::float3* GetPositionData();
+        Math::float3* GetNormalData();
     protected:
 
         _uint VertexCount;
