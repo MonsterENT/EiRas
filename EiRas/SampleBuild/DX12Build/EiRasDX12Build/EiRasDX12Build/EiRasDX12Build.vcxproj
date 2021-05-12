@@ -157,6 +157,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Framework\Common\CommonMacro.hpp" />
+    <ClInclude Include="..\..\..\..\Framework\Common\Heap.hpp" />
     <ClInclude Include="..\..\..\..\Framework\Component\ComponentManager\ComponentBase.hpp" />
     <ClInclude Include="..\..\..\..\Framework\Component\ComponentManager\ComponentManager.hpp" />
     <ClInclude Include="..\..\..\..\Framework\Component\FileSys\FileManager.hpp" />
@@ -237,6 +238,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\Framework\Common\Heap.cpp" />
     <ClCompile Include="..\..\..\..\Framework\Component\ComponentManager\ComponentBase.cpp" />
     <ClCompile Include="..\..\..\..\Framework\Component\ComponentManager\ComponentManager.cpp" />
     <ClCompile Include="..\..\..\..\Framework\Component\FileSys\FileManager.cpp" />

@@ -8,7 +8,7 @@
 #include <PlatformDependency/OnDX/DXMacro.h>
 #include <Material/MaterialLayout.hpp>
 #include <vector>
-
+#include <math.h>
 #include <Material/Material.hpp>
 
 using std::vector;
@@ -17,11 +17,23 @@ using namespace MaterialSys;
 
 #define HEAP_HEADER_OFFSET 30
 
+int g_CompareFunc(void const* a, void const* b)
+{
+    return -(int)((HeapTable*)a)->size - ((HeapTable*)b)->size;
+}
+
+int g_FindApproximate(void const* a, void const* b)
+{
+    return std::abs((long)((HeapTable*)a)->size - *(int*)b);
+}
+
 GraphicsResourceDescriptorHeapDX12::GraphicsResourceDescriptorHeapDX12(_uint propCount)
 {
+    HeapOffsetPool.Compare = g_CompareFunc;
+    HeapOffsetPool.Insert(HeapTable(HEAP_HEADER_OFFSET, propCount - 1));
+
     g_HeapOffset = 1;
     isDirty = false;
-    this->propCount = propCount;
     D3D12_DESCRIPTOR_HEAP_DESC heapDesc = {};
     heapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
     heapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
@@ -30,7 +42,7 @@ GraphicsResourceDescriptorHeapDX12::GraphicsResourceDescriptorHeapDX12(_uint pro
     GET_EIRAS_DX12(deviceObj);
 
     deviceObj->device->CreateDescriptorHeap(&heapDesc, IID_PPV_ARGS(&heap));
-    Offset = deviceObj->device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+    OffsetSize = deviceObj->device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 }
 
 GraphicsResourceDescriptorHeapDX12::~GraphicsResourceDescriptorHeapDX12()
@@ -79,8 +91,8 @@ _uint GraphicsResourceDescriptorHeapDX12::DynamicFillHeapGlobal(void* res, void*
     CD3DX12_CPU_DESCRIPTOR_HANDLE cpuHandle(heap->GetCPUDescriptorHandleForHeapStart());
     CD3DX12_GPU_DESCRIPTOR_HANDLE gpuHandle(heap->GetGPUDescriptorHandleForHeapStart());
 
-    cpuHandle.Offset(g_HeapOffset, Offset);
-    gpuHandle.Offset(g_HeapOffset, Offset);
+    cpuHandle.Offset(g_HeapOffset, OffsetSize);
+    gpuHandle.Offset(g_HeapOffset, OffsetSize);
 
     GET_EIRAS_DX12(deviceObj);
     D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
@@ -98,8 +110,8 @@ void GraphicsResourceDescriptorHeapDX12::DynamicFillHeap(MaterialSys::MaterialPr
     CD3DX12_CPU_DESCRIPTOR_HANDLE cpuHandle(heap->GetCPUDescriptorHandleForHeapStart());
     CD3DX12_GPU_DESCRIPTOR_HANDLE gpuHandle(heap->GetGPUDescriptorHandleForHeapStart());
 
-    cpuHandle.Offset(prop->_heapOffset, Offset);
-    gpuHandle.Offset(prop->_heapOffset, Offset);
+    cpuHandle.Offset(prop->_heapOffset, OffsetSize);
+    gpuHandle.Offset(prop->_heapOffset, OffsetSize);
 
     _FillHeapWithProp(cpuHandle, gpuHandle, prop);
 }
@@ -108,8 +120,6 @@ void GraphicsResourceDescriptorHeapDX12::DynamicFillHeap(MaterialSys::MaterialPr
 void GraphicsResourceDescriptorHeapDX12::FillHeap(_uint tableCount, MaterialTable** tableArray)
 {
     GET_EIRAS_DX12(deviceObj);
-    
-    _uint heapOffset = HEAP_HEADER_OFFSET;
 
     for (_uint tableIndex = 0; tableIndex < tableCount; tableIndex++)
     {
@@ -118,12 +128,11 @@ void GraphicsResourceDescriptorHeapDX12::FillHeap(_uint tableCount, MaterialTabl
         for (_uint propIndex = 0; propIndex < table->PropNum; propIndex++)
         {
             MaterialProp* prop = table->Props[propIndex];
-            prop->InitHeapOffset(heapOffset);
 
             CD3DX12_CPU_DESCRIPTOR_HANDLE cpuHandle(heap->GetCPUDescriptorHandleForHeapStart());
             CD3DX12_GPU_DESCRIPTOR_HANDLE gpuHandle(heap->GetGPUDescriptorHandleForHeapStart());
-            cpuHandle.Offset(heapOffset, Offset);
-            gpuHandle.Offset(heapOffset, Offset);
+            cpuHandle.Offset(prop->_heapOffset, OffsetSize);
+            gpuHandle.Offset(prop->_heapOffset, OffsetSize);
 
             if (prop->Resource == 0)
             {
@@ -133,8 +142,6 @@ void GraphicsResourceDescriptorHeapDX12::FillHeap(_uint tableCount, MaterialTabl
             {
                 _FillHeapWithProp(cpuHandle, gpuHandle, prop);
             }
-            heapOffset++;
-
         }
     }
 }
@@ -174,21 +181,65 @@ void GraphicsResourceDescriptorHeapDX12::RegMaterial(MaterialSys::Material* mate
 {
     isDirty = true;
     MaterialArray.push_back(material);
-    FillHeap();
+
+    for (int i = 0; i < material->materialLayout->SlotNum; i++)
+    {
+        auto slot = material->materialLayout->Slots[i];
+
+        if (slot->SlotType == MaterialSlotType::MaterialSlotType_Table)
+        {
+            if (((MaterialTable*)slot)->Props[0]->Resource != 0)
+            {
+                HeapTable ht;
+                int htIdx;
+                assert(HeapOffsetPool.FindApproximate(ht, htIdx, &((MaterialTable*)slot)->PropNum, g_FindApproximate));
+
+                _uint remainSize = ht.size - ((MaterialTable*)slot)->PropNum;
+                assert(remainSize >= 0);
+                if (remainSize >= 0)
+                {
+                    HeapOffsetPool.RemoveAt(htIdx);
+                    for (int j = 0; j < ((MaterialTable*)slot)->PropNum; j++)
+                    {
+                        ((MaterialTable*)slot)->Props[j]->InitHeapOffset(ht.start + j);
+                    }
+
+                    if (remainSize > 0)
+                    {
+                        remainSize--;
+                        HeapOffsetPool.Insert(HeapTable(ht.end - remainSize, ht.end));
+                    }
+                }
+            }
+        }
+    }
 }
 
 void GraphicsResourceDescriptorHeapDX12::RemoveMaterial(MaterialSys::Material* material)
 {
     isDirty = true;
-    std::vector<Material*>::iterator it = MaterialArray.begin();
+    auto it = MaterialArray.begin();
     while (it != MaterialArray.end())
     {
         if (material == *it)
         {
+            for (int i = 0; i < material->materialLayout->SlotNum; i++)
+            {
+                auto slot = material->materialLayout->Slots[i];
+
+                if (slot->SlotType == MaterialSlotType::MaterialSlotType_Table)
+                {
+                    if (((MaterialTable*)slot)->Props[0]->_heapOffset < HEAP_HEADER_OFFSET)
+                    {
+                        continue;
+                    }
+                    HeapTable ht(((MaterialTable*)slot)->Props[0]->_heapOffset, ((MaterialTable*)slot)->Props[0]->_heapOffset + ((MaterialTable*)slot)->PropNum - 1);
+                    HeapOffsetPool.Insert(ht);
+                }
+            }
             MaterialArray.erase(it);
             break;
         }
         it++;
     }
-    FillHeap();
 }

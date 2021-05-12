@@ -4,9 +4,32 @@
 #include <d3d12.h>
 #include <PlatformDependency/OnDX/d3dx12.h>
 #include <Global/GlobalDefine.h>
+#include <Common/Heap.hpp>
+#include <assert.h>
 
 namespace MaterialSys
 {
+
+    struct HeapTable
+    {
+        _uint start;
+        _uint end;
+
+        _uint size;
+
+        HeapTable()
+        {
+            start = -1;
+            end = -1;
+            size = 0;
+        }
+        HeapTable(_uint s, _uint e) : start(s), end(e)
+        {
+            size = e - s + 1;
+            assert(size > 0);
+        }
+    };
+
     class Material;
     class MaterialTable;
     class MaterialProp;
@@ -32,8 +55,9 @@ namespace MaterialSys
         std::vector<MaterialSys::Material*> MaterialArray;
 
         _uint g_HeapOffset;
-        _uint Offset;
-        _uint propCount;
+        _uint OffsetSize;
+
+        Common::Heap<HeapTable> HeapOffsetPool;
     };
 
 }
