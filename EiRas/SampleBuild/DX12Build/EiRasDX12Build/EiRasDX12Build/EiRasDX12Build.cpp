@@ -113,26 +113,89 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 
 int compare(void const* a, void const* b)
 {
-    return - (*(int*)(a)) + (*(int*)(b));
+    return -(*(int*)(a)) + (*(int*)(b));
 }
 
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
     hInst = hInstance; // 将实例句柄存储在全局变量中
 
-    Common::Heap<int> heap;
-    heap.Compare = compare;
-    int t[] = { 2, 1, 5, 6, 3, 8, 10, 33, 9, 12, 8, 7 };
-    for (auto i : t)
-    {
-        heap.Insert(i);
-    }
+    std::string s0 = "abdavcabc";
+    std::string s1 = "abc";
 
-    int root = -1;
-    int idx = 0;
-    while (heap.PopRoot(root))
+    int size = s0.size();
+    int next[9];
+
+    int indexOf = -1;
+    int indexEnd = -1;
+
+    int cnt = 0;
+    int i = 0;
+    int j = 0;
+    while(true)
     {
-        t[idx++] = root;
+        cnt++;
+        //get next
+        if (i == 0)
+        {
+            next[i] = 0;
+        }
+        else
+        {
+            int tb = 0;
+            int te = i;
+            next[i] = 0;
+            while (te > 0)
+            {
+                if (s0[tb++] != s0[te++])
+                {
+                    break;
+                }
+                next[i]++;
+            }
+        }
+
+        if (s0[i] == s1[j])
+        {
+            if (j == 0)
+            {
+                indexOf = i;
+                i++;
+                j++;
+            }
+            else if (j == s1.size() - 1)
+            {
+                indexEnd = i;
+                break;
+            }
+            else
+            {
+                i++;
+                j++;
+            }
+        }
+        else
+        {
+            if (i == 0)
+            {
+                i++;
+            }
+            else
+            {
+                int match = next[i - 1];
+                j = match;
+                if (s0[i] != s1[j])
+                {
+                    i++;
+                }
+            }
+        }
+
+        if (i >= s0.size())
+        {
+            indexOf = -1;
+            break;
+        }
     }
 
     HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
