@@ -120,11 +120,53 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
     hInst = hInstance; // 将实例句柄存储在全局变量中
 
-    std::string s0 = "abdavcabc";
-    std::string s1 = "abc";
+    std::string s0 = "111a111baca12abca";
+    std::string s1 = "aca";
 
-    int size = s0.size();
-    int next[9];
+    int size0 = s0.size();
+    int size1 = s1.size();
+
+    int next[14];
+
+    //get next
+    for (int i = 0; i < size1; i++)
+    {
+        if (i == 0)
+        {
+            next[i] = 0;
+        }
+        else
+        {
+            next[i] = 0;
+            int cnt = 1;
+
+            int maxMatch = 0;
+            while (cnt < i + 1)
+            {
+                int tb = 0;
+                int te = i - cnt + 1;
+
+                bool error = false;
+                while (tb < cnt)
+                {
+                    if (s1[tb++] != s1[te++])
+                    {
+                        error = true;
+                        break;
+                    }
+                    else
+                    {
+                    }
+                }
+                if (!error)
+                {
+                    maxMatch = cnt;
+                }
+                cnt++;
+            }
+            next[i] = maxMatch;
+        }
+    }
 
     int indexOf = -1;
     int indexEnd = -1;
@@ -132,28 +174,9 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
     int cnt = 0;
     int i = 0;
     int j = 0;
-    while(true)
+    while (true)
     {
         cnt++;
-        //get next
-        if (i == 0)
-        {
-            next[i] = 0;
-        }
-        else
-        {
-            int tb = 0;
-            int te = i;
-            next[i] = 0;
-            while (te > 0)
-            {
-                if (s0[tb++] != s0[te++])
-                {
-                    break;
-                }
-                next[i]++;
-            }
-        }
 
         if (s0[i] == s1[j])
         {
@@ -176,22 +199,25 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
         }
         else
         {
-            if (i == 0)
+            if (j == 0)
             {
                 i++;
             }
             else
             {
-                int match = next[i - 1];
+                int match = next[j - 1];
                 j = match;
-                if (s0[i] != s1[j])
-                {
-                    i++;
-                }
+                indexOf = i - j;
             }
         }
 
         if (i >= s0.size())
+        {
+            indexOf = -1;
+            break;
+        }
+
+        if (j >= s1.size())
         {
             indexOf = -1;
             break;
