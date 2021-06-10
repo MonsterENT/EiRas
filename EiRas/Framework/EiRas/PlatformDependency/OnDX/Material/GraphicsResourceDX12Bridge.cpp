@@ -36,9 +36,9 @@ void GraphicsResourceDX12Bridge::InitAsUAV(int bufferSize, GraphicsResourceBehav
     ((GraphicsResourceDX12*)raw_obj)->BuildResource(D3D12_HEAP_TYPE_UPLOAD, D3D12_RESOURCE_STATE_UNORDERED_ACCESS, dimension);
 }
 
-void GraphicsResourceDX12Bridge::InitAsRT(void* renderBufferFormat, void* rawResourceObj)
+void GraphicsResourceDX12Bridge::InitAsRT(void* rtRawObj)
 {
-    raw_obj = new ShaderResourceRTDX12(renderBufferFormat, rawResourceObj);
+    raw_obj = new ShaderResourceRTDX12(rtRawObj);
 }
 
 void GraphicsResourceDX12Bridge::InitAsConstantBuffer(int bufferSize, GraphicsResourceBehaviors* behaviors)

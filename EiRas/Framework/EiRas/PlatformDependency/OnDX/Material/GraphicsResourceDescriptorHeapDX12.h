@@ -42,7 +42,7 @@ namespace MaterialSys
 
         void FillHeap(_uint tableCount, MaterialTable** tableArray);
         void DynamicFillHeap(MaterialSys::MaterialProp*);
-        _uint DynamicFillHeapGlobal(void* res, void* format);
+        _uint DynamicFillHeapGlobal(void* res, void* format, bool DepthStencilRes = false);
 
         void FillHeap();
         void RegMaterial(MaterialSys::Material* material);

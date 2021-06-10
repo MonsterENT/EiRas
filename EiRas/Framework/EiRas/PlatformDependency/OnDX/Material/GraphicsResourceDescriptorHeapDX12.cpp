@@ -79,14 +79,14 @@ inline void _FillHeapWithProp(CD3DX12_CPU_DESCRIPTOR_HANDLE cpuHandle, CD3DX12_G
         ShaderResourceRTDX12* resRT = (ShaderResourceRTDX12*)(resObj);
         D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
         srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-        srvDesc.Format = (DXGI_FORMAT)resRT->Format;
+        srvDesc.Format = (DXGI_FORMAT)resRT->RTRawObj->ColorFormat;
         srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
         srvDesc.Texture2D.MipLevels = 1;
-        deviceObj->device->CreateShaderResourceView(resRT->Resource, &srvDesc, cpuHandle);
+        deviceObj->device->CreateShaderResourceView(resRT->RTRawObj->ColorBuffer, &srvDesc, cpuHandle);
     }
 }
 
-_uint GraphicsResourceDescriptorHeapDX12::DynamicFillHeapGlobal(void* res, void* format)
+_uint GraphicsResourceDescriptorHeapDX12::DynamicFillHeapGlobal(void* res, void* format, bool DepthStencilRes)
 {
     CD3DX12_CPU_DESCRIPTOR_HANDLE cpuHandle(heap->GetCPUDescriptorHandleForHeapStart());
     CD3DX12_GPU_DESCRIPTOR_HANDLE gpuHandle(heap->GetGPUDescriptorHandleForHeapStart());
@@ -98,10 +98,17 @@ _uint GraphicsResourceDescriptorHeapDX12::DynamicFillHeapGlobal(void* res, void*
     D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
     srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
     srvDesc.Format = *((DXGI_FORMAT*)format);
+    if (DepthStencilRes)
+    {
+        //hack
+        srvDesc.Format = DXGI_FORMAT((int)(srvDesc.Format) + 1);
+    }
     srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
     srvDesc.Texture2D.MipLevels = 1;
-    deviceObj->device->CreateShaderResourceView((ID3D12Resource*)res, &srvDesc, cpuHandle);
+    HRESULT hr = deviceObj->device->GetDeviceRemovedReason();
 
+    deviceObj->device->CreateShaderResourceView((ID3D12Resource*)res, &srvDesc, cpuHandle);
+    HRESULT hr2 = deviceObj->device->GetDeviceRemovedReason();
     return g_HeapOffset++;
 }
 

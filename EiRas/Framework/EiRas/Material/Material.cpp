@@ -217,7 +217,7 @@ void Material::SetProperty(MaterialSys::GraphicsResource* srv, _uint slotIndex, 
     }
 }
 
-void Material::SetProperty(Graphics::RenderTexture* rt, _uint slotIndex, int propIndex)
+void Material::SetProperty(Graphics::RenderTexture* rt, _uint slotIndex, int propIndex, bool useDepth)
 {
     bool fromTable = false;
     MaterialProp* tProp = getMaterialProp(this, slotIndex, propIndex, fromTable);
@@ -231,7 +231,7 @@ void Material::SetProperty(Graphics::RenderTexture* rt, _uint slotIndex, int pro
     if (fromTable)
     {
         GraphicsResource* resObj = (GraphicsResource*)((RenderTextureDX12*)rt->PlatformBridge->raw_obj)->GetGraphicsResource();
-        tProp->_heapOffset = ((ShaderResourceRTDX12*)resObj->PlatformBridge->raw_obj)->GlobalHeapOffset;
+        tProp->_heapOffset = useDepth ? ((ShaderResourceRTDX12*)resObj->PlatformBridge->raw_obj)->DepthStencilBufferGlobalHeapOffset : ((ShaderResourceRTDX12*)resObj->PlatformBridge->raw_obj)->ColorBufferGlobalHeapOffset;
     }
 #endif
 }

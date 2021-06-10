@@ -33,6 +33,9 @@ namespace Graphics
 
         void* GetGraphicsResource();
 
+        bool ASSRV;
+        void ChangeState(bool asSrv, ID3D12GraphicsCommandList* cmdList);
+
     private:
         void* _GraphicsResourceInstance;
     };

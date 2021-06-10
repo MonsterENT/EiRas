@@ -12,14 +12,14 @@ RenderTextureDX12::RenderTextureDX12(std::string name, MaterialSys::GraphicsReso
     Height = height;
     ColorFormat = colorFormat;
 
-    DepthStencilFormat = (MaterialSys::GraphicsResourceFormat)(useStencil ? DXGI_FORMAT_D24_UNORM_S8_UINT : DXGI_FORMAT_D32_FLOAT);
+    DepthStencilFormat = (MaterialSys::GraphicsResourceFormat)(useStencil ? DXGI_FORMAT_D32_FLOAT_S8X24_UINT : DXGI_FORMAT_D32_FLOAT);
 
 #pragma region Init Color Buffer
     GET_EIRAS_DX12(device);
     device->device->CreateCommittedResource(&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT),
             D3D12_HEAP_FLAG_NONE,
             &CD3DX12_RESOURCE_DESC::Tex2D((DXGI_FORMAT)colorFormat, width, height, 1, 0, 1, 0, D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET),
-            D3D12_RESOURCE_STATE_COMMON,
+            D3D12_RESOURCE_STATE_RENDER_TARGET,
             NULL,
             IID_PPV_ARGS(&ColorBuffer));
 
@@ -62,13 +62,29 @@ RenderTextureDX12::RenderTextureDX12(std::string name, MaterialSys::GraphicsReso
 
     _GraphicsResourceInstance = NULL;
 }
-
+#pragma warning("TOFIX")
 void* RenderTextureDX12::GetGraphicsResource()
 {
     if (_GraphicsResourceInstance == 0)
     {
         _GraphicsResourceInstance = new GraphicsResource(Name, GraphicsResourceType::SRV_RT, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_ONINIT, false);
-        ((GraphicsResource*)_GraphicsResourceInstance)->InitAsRT(&ColorFormat, ColorBuffer);
+        ((GraphicsResource*)_GraphicsResourceInstance)->InitAsRT(this);
     }
     return _GraphicsResourceInstance;
+}
+
+void RenderTextureDX12::ChangeState(bool asSrv, ID3D12GraphicsCommandList* cmdList)
+{
+    if (asSrv)
+    {
+        ASSRV = true;
+        cmdList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(ColorBuffer, D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE));
+        cmdList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(DepthStencilBuffer, D3D12_RESOURCE_STATE_DEPTH_WRITE, D3D12_RESOURCE_STATE_DEPTH_READ));
+    }
+    else
+    {
+        ASSRV = false;
+        cmdList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(ColorBuffer, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, D3D12_RESOURCE_STATE_RENDER_TARGET));
+        cmdList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(DepthStencilBuffer, D3D12_RESOURCE_STATE_DEPTH_READ, D3D12_RESOURCE_STATE_DEPTH_WRITE));
+    }
 }

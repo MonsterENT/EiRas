@@ -277,7 +277,7 @@ void CommandBufferDX12::SetRenderTexture(void* rawRenderTexture)
 #pragma message("TO DO")
     if (_CurrentRenderTexture)
     {
-        cmdList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(_CurrentRenderTexture->ColorBuffer, D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE));
+        _CurrentRenderTexture->ChangeState(true, cmdList);
     }
     else
     {
@@ -289,7 +289,7 @@ void CommandBufferDX12::SetRenderTexture(void* rawRenderTexture)
     if (rawRenderTexture)
     {
         _CurrentRenderTexture = (Graphics::RenderTextureDX12*)rawRenderTexture;
-        cmdList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(_CurrentRenderTexture->ColorBuffer, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, D3D12_RESOURCE_STATE_RENDER_TARGET));
+        _CurrentRenderTexture->ChangeState(false, cmdList);
         CD3DX12_CPU_DESCRIPTOR_HANDLE rtvHandle(_CurrentRenderTexture->RtvHeap->GetCPUDescriptorHandleForHeapStart());
 
         const float clearColor[] = { 0.2f, 0.2f, 0.2f, 1.0f };

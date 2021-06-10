@@ -21,7 +21,7 @@ namespace MaterialSys
         void InitAsDefault(int bufferSize, GraphicsResourceBehaviors* behaviors, GraphicsResourceDimension dimension);
         void InitAsUAV(int bufferSize, GraphicsResourceBehaviors* behaviors, GraphicsResourceDimension dimension);
 
-        void InitAsRT(void* renderBufferFormat, void* rawResourceObj);
+        void InitAsRT(void* rtRawObj);
 
         void InitAsConstantBuffer(int bufferSize, GraphicsResourceBehaviors* behaviors);
 

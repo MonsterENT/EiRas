@@ -52,10 +52,10 @@ void GraphicsResource::InitAsUAV(_uint bufferSize, GraphicsResourceDimension dim
     ((GraphicsResourceDX12Bridge*)PlatformBridge)->InitAsUAV(bufferSize, &Behaviors, dimension);
 }
 
-void GraphicsResource::InitAsRT(void* renderBufferFormat, void* rawResourceObj)
+void GraphicsResource::InitAsRT(void* rtRawObj)
 {
 #if GRAPHICS_DX
-    ((GraphicsResourceDX12Bridge*)PlatformBridge)->InitAsRT(renderBufferFormat, rawResourceObj);
+    ((GraphicsResourceDX12Bridge*)PlatformBridge)->InitAsRT(rtRawObj);
 #endif
 }
 
