@@ -26,7 +26,7 @@ namespace MaterialSys {
     public:
         Shader(std::string fileName, std::string vertexFuncName, std::string pixelFuncName);
         Shader(std::string fileName);
-
+        ~Shader();
         void AddVertexFuncToPass(std::string vertexFuncName, _uint pass);
         void AddPixelFuncToPass(std::string pixelFuncName, _uint pass);
 

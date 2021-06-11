@@ -251,7 +251,18 @@ void Material::FinishStateChange(_uint pass)
 
 Material::~Material()
 {
-#if GRAPHICS_DX
-    ((MaterialDX12Bridge*)this->PlatformBridge)->Release();
-#endif
+    if (PlatformBridge)
+    {
+        delete PlatformBridge;
+        PlatformBridge = 0;
+    }
+
+    delete RenderState;
+    RenderState = 0;
+
+    if (materialLayout)
+    {
+        delete materialLayout;
+        materialLayout = 0;
+    }
 }

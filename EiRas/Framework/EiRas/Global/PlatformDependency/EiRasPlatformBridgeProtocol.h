@@ -14,6 +14,8 @@ public:
     void* raw_obj;
     virtual ~EiRasPlatformBridgeProtocol()
     {
+        delete raw_obj;
+        raw_obj = 0;
     }
 private:
     

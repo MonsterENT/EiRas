@@ -26,6 +26,15 @@ GraphicsResource::GraphicsResource(std::string Name, GraphicsResourceType type, 
     this->bufferSize = -1;
 }
 
+GraphicsResource::~GraphicsResource()
+{
+    if (PlatformBridge)
+    {
+        delete PlatformBridge;
+        PlatformBridge = 0;
+    }
+}
+
 void GraphicsResource::InitAsConstantBuffer(_uint bufferSize)
 {
     this->bufferSize = bufferSize;

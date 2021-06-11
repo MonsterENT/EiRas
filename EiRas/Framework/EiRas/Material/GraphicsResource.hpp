@@ -14,6 +14,8 @@ namespace MaterialSys
     public:
         GraphicsResource(std::string Name, GraphicsResourceType type, GraphicsResourceVisibility visible, GraphicsResourceUpdateFreq updateFreq, bool shouldInitResource);
 
+        virtual ~GraphicsResource();
+
         void InitAsConstantBuffer(_uint bufferSize);
 
         void InitAsDefault(_uint bufferSize, GraphicsResourceDimension dimension = GraphicsResourceDimension::GraphicsResourceDimension_Buffer);

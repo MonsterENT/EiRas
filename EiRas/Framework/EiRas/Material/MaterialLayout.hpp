@@ -56,6 +56,18 @@ namespace MaterialSys
             this->SlotType = MaterialSlotType::MaterialSlotType_Prop;
         }
 
+        ~MaterialProp()
+        {
+#pragma warning("Resource should use Reference Count")
+            if (_oriResource)
+            {
+                delete _oriResource;
+                _oriResource = 0;
+            }
+
+            Resource = 0;
+        }
+
         void SetRawResObject(GraphicsResource* rawResObj)
         {
             if (rawResObj == NULL)
@@ -99,6 +111,18 @@ namespace MaterialSys
             }
             this->SlotType = MaterialSlotType::MaterialSlotType_Table;
         }
+
+        ~MaterialTable()
+        {
+            if (Props)
+            {
+                for (int i = 0; i < PropNum; i++)
+                {
+                    delete Props[i];
+                }
+                Props = 0;
+            }
+        }
     };
 
     class MaterialLayout
@@ -117,6 +141,19 @@ namespace MaterialSys
             else
             {
                 Slots = NULL;
+            }
+        }
+        ~MaterialLayout()
+        {
+            if (Slots)
+            {
+                for (int i = 0; i < SlotNum; i++)
+                {
+                    delete Slots[i];
+                }
+
+                delete[] Slots;
+                Slots = 0;
             }
         }
     };

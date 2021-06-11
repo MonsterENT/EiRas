@@ -20,3 +20,9 @@ void ShaderLayout::BuildOnDX12()
     ((ShaderLayoutDX12Bridge*)PlatformBridge)->Build(this);
 #endif
 }
+
+ShaderLayout::~ShaderLayout()
+{
+    delete PlatformBridge;
+    PlatformBridge = 0;
+}

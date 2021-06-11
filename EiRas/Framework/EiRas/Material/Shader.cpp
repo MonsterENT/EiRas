@@ -46,6 +46,12 @@ Shader::Shader(std::string fileName)
     Layout = 0;
 }
 
+Shader::~Shader()
+{
+    delete PlatformBridge;
+    PlatformBridge = 0;
+}
+
 void Shader::AddVertexFuncToPass(std::string vertexFuncName, _uint pass)
 {
     ((ShaderDX12Bridge*)PlatformBridge)->AddVertexFuncToPass(vertexFuncName.c_str(), pass);

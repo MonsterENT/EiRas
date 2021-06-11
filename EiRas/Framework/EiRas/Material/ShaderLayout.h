@@ -99,7 +99,7 @@ namespace MaterialSys
         ShaderSlot** Slots;
 
         ShaderLayout(_uint slotNum);
-
+        ~ShaderLayout();
         void BuildOnDX12();
         EiRasPlatformBridgeProtocol* PlatformBridge;
     private:

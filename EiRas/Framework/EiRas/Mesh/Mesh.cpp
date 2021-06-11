@@ -40,6 +40,53 @@ Mesh::Mesh(std::string name)
     SubMeshCount = 0;
 }
 
+Mesh::~Mesh()
+{
+    if (PositionData)
+    {
+        delete[] PositionData;
+        PositionData = 0;
+    }
+    if (NormalData)
+    {
+        delete[] NormalData;
+        NormalData = 0;
+    }
+    if (UVData)
+    {
+        delete[] UVData;
+        UVData = 0;
+    }
+    if (ColorData)
+    {
+        delete[] ColorData;
+        ColorData = 0;
+    }
+    if (IndexData)
+    {
+        delete[] IndexData;
+        IndexData = 0;
+    }
+
+    if (_VertexBuffer)
+    {
+        delete _VertexBuffer;
+        _VertexBuffer = 0;
+    }
+
+    if (_IndexBuffer)
+    {
+        delete _IndexBuffer;
+        _IndexBuffer = 0;
+    }
+
+    if (_PackedData)
+    {
+        delete _PackedData;
+        _PackedData = 0;
+    }
+}
+
 void Mesh::LoadDataFromFile(std::string fileName)
 {
     //Load MeshData

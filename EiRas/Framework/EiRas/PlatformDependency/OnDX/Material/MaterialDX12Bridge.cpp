@@ -16,8 +16,10 @@ void MaterialDX12Bridge::UpdateRenderState(Graphics::GraphicsRenderState* render
     obj->UpdateRenderState(renderState, (ShaderDX12*)shaderObj->raw_obj, cmdBufferPB->raw_obj, pass);
 }
 
-void MaterialDX12Bridge::Release()
+MaterialDX12Bridge::~MaterialDX12Bridge()
 {
     MaterialDX12* obj = (MaterialDX12*)raw_obj;
     obj->Release();
+    delete raw_obj;
+    raw_obj = 0;
 }

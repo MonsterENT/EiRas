@@ -54,6 +54,15 @@ namespace MeshSys {
             BufferUsed = 0;
         }
 
+        virtual ~MeshBuffer()
+        {
+            if (Buffer)
+            {
+                delete Buffer;
+                Buffer = 0;
+            }
+        }
+
         MeshBuffer(_uint stride, _uint size)
         {
             Buffer = 0;
@@ -124,7 +133,7 @@ namespace MeshSys {
     {
     public:
         Mesh(std::string name);
-
+        virtual ~Mesh();
         void LoadDataFromFile(std::string fileName);
 
         std::string Name;
