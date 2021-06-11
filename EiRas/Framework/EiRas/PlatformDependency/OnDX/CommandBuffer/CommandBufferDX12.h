@@ -61,6 +61,6 @@ namespace Graphics {
         RenderTextureDX12* _CurrentRenderTexture;
         MaterialSys::GraphicsResource* _CurrentWorldMatCB;
 
-        void SetGraphicsRootBufferView(MaterialSys::MaterialSlot* slot, MaterialSys::GraphicsResource* rootResource);
+        void SetGraphicsRootBufferView(MaterialSys::MaterialSlot* slot, MaterialSys::GraphicsResource* ori, MaterialSys::GraphicsResource* rootResource);
     };
 }

@@ -22,6 +22,7 @@ namespace MaterialSys
 
         void InitAsRT(void* rtRawObj);
 
+        void InitAsShaderResource(_uint bufferSize);
         void InitAsShaderResource(_uint width, _uint height, _uint channels, void* texData, bool* buildStatusFlag, GraphicsResourceDimension dimension = GraphicsResourceDimension::GraphicsResourceDimension_Tex2D);
         void ShaderResourceBuild(void* cmdList);
         void ShaderResourceFinishBuild();

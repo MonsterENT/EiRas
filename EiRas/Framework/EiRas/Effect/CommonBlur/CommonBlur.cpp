@@ -33,11 +33,9 @@ CommonBlur::CommonBlur(_uint width, _uint height, Graphics::CommandBuffer* refCm
 
         ShaderPropRange commonCB0("BlurCR", GraphicsResourceType::CBV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_HIGH);
         commonCB0.AddProp(sizeof(CommonCB));
-        commonCB0.InitBaseRegisterSettings(0);
 
         ShaderPropRange commonSR0("BlurSR", GraphicsResourceType::SRV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_ONINIT);
         commonSR0.PropNum = 1;
-        commonSR0.InitBaseRegisterSettings(0);
 
         ShaderTable* table0 = new ShaderTable();
         table0->AddRange(commonSR0);

@@ -47,6 +47,12 @@ void GraphicsResourceDX12Bridge::InitAsConstantBuffer(int bufferSize, GraphicsRe
     ((GraphicsResourceDX12*)raw_obj)->BuildResource(D3D12_HEAP_TYPE_UPLOAD, D3D12_RESOURCE_STATE_GENERIC_READ, GraphicsResourceDimension::GraphicsResourceDimension_Buffer);
 }
 
+void GraphicsResourceDX12Bridge::InitAsShaderResource(int bufferSize, GraphicsResourceBehaviors* behaviors)
+{
+    raw_obj = new ConstantBufferDX12(bufferSize, behaviors);
+    ((GraphicsResourceDX12*)raw_obj)->BuildResource(D3D12_HEAP_TYPE_UPLOAD, D3D12_RESOURCE_STATE_GENERIC_READ, GraphicsResourceDimension::GraphicsResourceDimension_Buffer);
+}
+
 void GraphicsResourceDX12Bridge::InitAsShaderResource(int width, int height, _uint channels, void* texData, GraphicsResourceBehaviors* behaviors, bool* buildStatusFlag, GraphicsResourceDimension dimension)
 {
     if (channels == 1)

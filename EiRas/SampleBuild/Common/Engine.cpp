@@ -50,6 +50,7 @@ CommonBlur* _CommonBlur;
 
 Camera _Camera;
 TransformSys _Transform;
+TransformSys _Transform2;
 
 RenderTexture* _SceneRenderTexture;
 
@@ -84,6 +85,10 @@ void Engine::m_initEngine()
     _Transform.Init(float3(0, 1, 0), float3(1, 0, 0), float3(0, 0, 1), float3(0, -1, 5));
     _Transform.LocalScale = float3(1, 1, 1);
     _Transform.UpdateToGraphics();
+
+    _Transform2.Init(float3(0, 1, 0), float3(1, 0, 0), float3(0, 0, 1), float3(3, -1, 5));
+    _Transform2.LocalScale = float3(1, 1, 1);
+    _Transform2.UpdateToGraphics();
     
     cmdBuffer = new CommandBuffer("main buffer");
     
@@ -107,14 +112,9 @@ void Engine::m_initEngine()
     ShaderLayout* customLayout = new ShaderLayout(2);
     {
         ShaderProp* commonCB0 = new ShaderProp("CommonCB0", GraphicsResourceType::CBV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_HIGH, sizeof(float4));
-        commonCB0->InitRegisterSettings(0);
-
-        ShaderPropRange commonSR1("CommonSR1", GraphicsResourceType::SRV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_ONINIT);
-        commonSR1.PropNum = 1;
-        commonSR1.InitBaseRegisterSettings(0);
 
         ShaderTable* table = new ShaderTable();
-        table->AddRange(commonSR1);
+        table->AddProp(-1, "CommonSR1", GraphicsResourceType::SRV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_ONINIT);
 
         customLayout->Slots[0] = commonCB0;
         customLayout->Slots[1] = table;
@@ -126,12 +126,8 @@ void Engine::m_initEngine()
     {
         ShaderProp* customCB = new ShaderProp("CustomCB", GraphicsResourceType::CBV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_HIGH, sizeof(float4));
 
-        ShaderPropRange commonSR1("_MainTex", GraphicsResourceType::SRV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_ONINIT);
-        commonSR1.PropNum = 1;
-
         ShaderTable* table = new ShaderTable();
-        table->AddRange(commonSR1);
-
+        table->AddProp(-1, "_MainTex", GraphicsResourceType::SRV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_ONINIT);
         ShaderSlot* T0 = new ShaderSlot();
         T0->SlotType = ShaderSlotType::ShaderSlotType_Builtin_ViewProj;
         ShaderSlot* T1 = new ShaderSlot();
@@ -143,6 +139,24 @@ void Engine::m_initEngine()
         defaultlayout->Slots[4] = gpProp;
         defaultlayout->BuildOnDX12();
     }
+    ShaderLayout* defaultlayout2 = new ShaderLayout(5);
+    {
+        ShaderProp* customSR = new ShaderProp("CustomSR", GraphicsResourceType::SRV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_HIGH, sizeof(float4));
+
+        ShaderTable* table = new ShaderTable();
+        table->AddProp(-1, "_MainTex", GraphicsResourceType::SRV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_ONINIT);
+
+        ShaderSlot* T0 = new ShaderSlot();
+        T0->SlotType = ShaderSlotType::ShaderSlotType_Builtin_ViewProj;
+        ShaderSlot* T1 = new ShaderSlot();
+        T1->SlotType = ShaderSlotType::ShaderSlotType_Ref_WorldMatrix;
+        defaultlayout2->Slots[0] = T0;
+        defaultlayout2->Slots[1] = T1;
+        defaultlayout2->Slots[2] = customSR;
+        defaultlayout2->Slots[3] = table;
+        defaultlayout2->Slots[4] = gpProp;
+        defaultlayout2->BuildOnDX12();
+    }
 #pragma endregion
 
 
@@ -151,8 +165,12 @@ void Engine::m_initEngine()
 #elif GRAPHICS_DX
     std::string shaderPath = FileSys::FileManager::shareInstance()->GetResourcePath("Shader\\DX\\BasicBRDF", "hlsl");
     _BasicBRDFShader = new Shader(shaderPath, "VSMain", "PSMain");
+    shaderPath = FileSys::FileManager::shareInstance()->GetResourcePath("Shader\\DX\\BasicBRDFV2", "hlsl");
+    _BasicBRDFShader2 = new Shader(shaderPath, "VSMain", "PSMain");
 #endif
     _BasicBRDFShader->SetLayout(defaultlayout);
+    _BasicBRDFShader2->SetLayout(defaultlayout2);
+
 
     GraphicsVertexDescriptor* m_vertexDesc = new GraphicsVertexDescriptor();
     m_vertexDesc->AddBufferAttribute("POSITION", GraphicsVertexAttributeFormat::VertexFormatFloat3, 0);
@@ -161,14 +179,10 @@ void Engine::m_initEngine()
     m_vertexDesc->InitBufferLayout();
 
     _BasicBRDFShader->InitVertexDescriptor(m_vertexDesc);
+    _BasicBRDFShader2->InitVertexDescriptor(m_vertexDesc);
     _Mat0 = new Material("SF90", _BasicBRDFShader, cmdBuffer);
+    _Mat2 = new Material("SF90V2", _BasicBRDFShader2, cmdBuffer);
 
-    static float4 tmpCol;
-    tmpCol.x = 1;
-    tmpCol.y = 1;
-    tmpCol.z = 1;
-    tmpCol.w = 1;
-    _Mat0->SetProperty(&tmpCol, 0);
 
     std::string sf90ModelPath = FileSys::FileManager::shareInstance()->GetModelResourcePath("SF90_TMP", "FBX");
     _SF90Mesh = new Mesh("SF90");
@@ -204,7 +218,12 @@ void Engine::m_initEngine()
     float4 GPData(0, 0, 0, 0);
     GP->SetProperty(&GPData, 0);
     
-    _Mat0->SetProperty(((MaterialProp*)GP->ResLayout->Slots[0])->Resource, 4, -1, true);
+    //_Mat0->SetProperty(((MaterialProp*)GP->ResLayout->Slots[0])->Resource, 4, -1, true);
+
+    static float4 tmpCol = float4(1, 0, 1, 1);
+    _Mat0->SetProperty(&tmpCol, 2);
+    static float4 tmpCol2 = float4(0, 1, 1, 1);
+    _Mat2->SetProperty(&tmpCol2, 2);
 }
 
 Engine::Engine()
@@ -242,7 +261,7 @@ void Engine::Update(void* data)
         imageObj = new Image("Texture");
         imageObj->LoadFromFile(texturePath);
     }
-    _Mat0->SetProperty(imageObj, 3, 0);
+    //_Mat0->SetProperty(imageObj, 3, 0);
 
     int count = 0;
     //float3* posData = _SF90Mesh->GetPositionData(count);
@@ -264,30 +283,34 @@ void Engine::Update(void* data)
     cmdBuffer->Reset();
 
     cmdBuffer->SetViewPort(0, 0, 2560, 1440);
-    cmdBuffer->SetRenderTexture(_SceneRenderTexture);
+    //cmdBuffer->SetRenderTexture(_SceneRenderTexture);
 
-    cmdBuffer->SetTransform(&_Transform);
+    _Mat0->SetProperty(((MaterialProp*)_Mat2->materialLayout->Slots[2])->_oriResource, 2, -1, true);
+    //_Mat2->SetProperty(((MaterialProp*)_Mat0->materialLayout->Slots[2])->_oriResource, 2, -1, true);
 
-    static float4 tmpCol = float4(1, 1, 1, 1);
-    _Mat0->SetProperty(&tmpCol, 2);
 
     _Mat0->RenderState->_CullMode = CullMode::CullModeNone;
     //_Mat0->FinishStateChange();
     //cmdBuffer->SetMaterial(_Mat0);
     //cmdBuffer->DrawMesh(_SF90Mesh);
+    sf90RenderData.SetMaterial(_Mat0, 0);
+    cmdBuffer->SetTransform(&_Transform);
     cmdBuffer->DrawRenderData(&sf90RenderData);
 
-    _CommonBlur->ProcessWithSource(_SceneRenderTexture, 4, 1);
-    cmdBuffer->SetRenderTexture(0);
+    //_CommonBlur->ProcessWithSource(_SceneRenderTexture, 4, 1);
+    //cmdBuffer->SetRenderTexture(0);
 
     //cmdBuffer->SetMaterial(_Mat0);
     //cmdBuffer->DrawMesh(_SF90Mesh);
+
+    sf90RenderData.SetMaterial(_Mat2, 0);
+    cmdBuffer->SetTransform(&_Transform2);
     cmdBuffer->DrawRenderData(&sf90RenderData);
 
-    label->SetBackgroundImage(_CommonBlur->BluredRT);
+    //label->SetBackgroundImage(_CommonBlur->BluredRT);
     if (data != 0)
     {
-        GUISys::GUISystem::SharedInstance()->RunLoopInvoke(data);
+        //GUISys::GUISystem::SharedInstance()->RunLoopInvoke(data);
     }
     cmdBuffer->Commit(true);
 }

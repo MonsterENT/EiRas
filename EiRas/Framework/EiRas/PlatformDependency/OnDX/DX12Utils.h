@@ -43,6 +43,7 @@ namespace DX12Utils
             char* msgCharData = new char[errMsg->GetBufferSize()];
             memcpy(msgCharData, errMsg->GetBufferPointer(), errMsg->GetBufferSize());
             //PrintMsg
+            msgCharData[0] = msgCharData[1];
         }
         assert(SUCCEEDED(hr));
         return SUCCEEDED(hr);

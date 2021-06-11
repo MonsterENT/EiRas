@@ -25,6 +25,7 @@ namespace MaterialSys
 
         void InitAsConstantBuffer(int bufferSize, GraphicsResourceBehaviors* behaviors);
 
+        void InitAsShaderResource(int bufferSize, GraphicsResourceBehaviors* behaviors);
         void InitAsShaderResource(int width, int height, _uint channels, void* texData, GraphicsResourceBehaviors* behaviors, bool* buildStatusFlag, GraphicsResourceDimension dimension);
         void ShaderResourceBuild(void* cmdList);
         void ShaderResourceFinishBuild();

@@ -90,10 +90,7 @@ namespace MeshSys {
 
         ~MeshPackedData()
         {
-            if (VertexData != 0)
-            {
-                delete[] VertexData;
-            }
+            Reset();
         }
 
         void Reset()
@@ -101,6 +98,10 @@ namespace MeshSys {
             if (VertexData != 0)
             {
                 delete[] VertexData;
+            }
+            if (IndexData != 0)
+            {
+                delete[] IndexData;
             }
             VertexData = 0;
             IndexData = 0;

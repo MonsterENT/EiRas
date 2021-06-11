@@ -54,6 +54,9 @@ private:
     MaterialSys::Material* _Mat0;
     MaterialSys::Shader* _BasicBRDFShader;
 
+    MaterialSys::Material* _Mat2;
+    MaterialSys::Shader* _BasicBRDFShader2;
+
     MeshSys::Mesh* _SF90Mesh;
 
     Math::int2 _ClientHW;

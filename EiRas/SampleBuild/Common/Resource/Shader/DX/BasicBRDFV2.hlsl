@@ -12,17 +12,18 @@ cbuffer CommonCB1 : register(b1)
     row_major float4x4 _WorldToLocalMatrix;
 };
 
-// cbuffer CustomCB : register(b2)
-// {
-//     float4 _TmpColor;
-// };
 struct BF
 {
     float4 _TmpColor;
 };
-ConstantBuffer<BF> CustomSR : register(b2);
+StructuredBuffer<BF> CustomSRf : register(t0);
 
-Texture2D _MainTex : register(t0);
+// cbuffer CustomCB : register(b2)
+// {
+//     float4 _TmpColor;
+// };
+
+Texture2D _MainTex : register(t1);
 
 SamplerState _DefaultSampler : register(s0);
 
@@ -87,6 +88,6 @@ float4 PSMain(PSInput i) : SV_TARGET
     col.rgb += specColor.rgb * specularTerm;
 
 
-    return CustomSR._TmpColor;
+    return CustomSRf[0]._TmpColor;
 }
 //BasicBRDF

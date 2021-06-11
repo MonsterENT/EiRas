@@ -59,6 +59,13 @@ void GraphicsResource::InitAsRT(void* rtRawObj)
 #endif
 }
 
+void GraphicsResource::InitAsShaderResource(_uint bufferSize)
+{
+#if GRAPHICS_DX
+    ((GraphicsResourceDX12Bridge*)PlatformBridge)->InitAsShaderResource(bufferSize, &Behaviors);
+#endif
+}
+
 void GraphicsResource::InitAsShaderResource(_uint width, _uint height, _uint channels, void* texData, bool* buildStatusFlag, GraphicsResourceDimension dimension)
 {
 #if GRAPHICS_DX

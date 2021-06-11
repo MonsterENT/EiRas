@@ -26,8 +26,6 @@ namespace MaterialSys
     class ShaderProp : public ShaderSlot
     {
     public:
-        _uint RegisterIndex;
-        _uint RegisterSpace;
         std::string PropName;
         GraphicsResourceType PropType;
         GraphicsResourceVisibility Visibility;
@@ -44,12 +42,6 @@ namespace MaterialSys
             UpdateFreq = updateFreq;
             BufferSize = bufferSize;
         }
-        
-        void InitRegisterSettings(_uint registerIndex, _uint registerSpace = 0)
-        {
-            RegisterIndex = registerIndex;
-            RegisterSpace = registerSpace;
-        }
     };
 
     class ShaderPropRange
@@ -61,10 +53,6 @@ namespace MaterialSys
         GraphicsResourceUpdateFreq UpdateFreq;
         std::vector<int> BufferSizeList;
         _uint PropNum;
-
-        _uint BaseRegisterIndex;
-        _uint BaseRegisterSpace;
-        bool RegisterSpaceLayoutMode;
         
         ShaderPropRange(std::string basePropName, GraphicsResourceType propType, GraphicsResourceVisibility visibility, GraphicsResourceUpdateFreq updateFreq)
         {
@@ -78,13 +66,6 @@ namespace MaterialSys
         {
             PropNum++;
             BufferSizeList.push_back(bufferSize);
-        }
-        
-        void InitBaseRegisterSettings(_uint baseRegisterIndex, _uint baseRegisterSpace = 0, bool regSpaceLayoutMode = false)
-        {
-            RegisterSpaceLayoutMode = regSpaceLayoutMode;
-            BaseRegisterIndex = baseRegisterIndex;
-            BaseRegisterSpace = baseRegisterSpace;
         }
     };
 
@@ -101,6 +82,13 @@ namespace MaterialSys
         void AddRange(ShaderPropRange range)
         {
             Ranges.push_back(range);
+        }
+
+        void AddProp(int size, std::string basePropName, GraphicsResourceType propType, GraphicsResourceVisibility visibility, GraphicsResourceUpdateFreq updateFreq)
+        {
+            ShaderPropRange propRange(basePropName, GraphicsResourceType::SRV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_ONINIT);
+            propRange.AddProp(size);
+            Ranges.push_back(propRange);
         }
     };
 

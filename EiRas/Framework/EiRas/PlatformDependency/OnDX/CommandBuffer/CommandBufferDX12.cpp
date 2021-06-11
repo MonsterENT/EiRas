@@ -210,9 +210,17 @@ void CommandBufferDX12::DispatchComputeKernel(GPCompute::ComputeKernelDX12* kern
     cmdList->Dispatch(groupCount.x, groupCount.y, groupCount.z);
 }
 
-void CommandBufferDX12::SetGraphicsRootBufferView(MaterialSlot* slot, GraphicsResource* rootResource)
+void CommandBufferDX12::SetGraphicsRootBufferView(MaterialSlot* slot, GraphicsResource* ori, GraphicsResource* rootResource)
 {
-    GraphicsResourceType resType = rootResource->Behaviors.ResourceType;
+    GraphicsResourceType resType;
+    if (ori != NULL)
+    {
+        resType = ori->Behaviors.ResourceType;
+    }
+    else
+    {
+        resType = rootResource->Behaviors.ResourceType;
+    }
     D3D12_GPU_VIRTUAL_ADDRESS ADDR = ((GraphicsResourceDX12*)rootResource->PlatformBridge->raw_obj)->ResADDR;
 
     if (resType == GraphicsResourceType::CBV)
@@ -255,15 +263,15 @@ void CommandBufferDX12::SetMaterial(MaterialSys::MaterialDX12* mat, MaterialSys:
                 continue;
             }
 
-            SetGraphicsRootBufferView(slot, prop->Resource);
+            SetGraphicsRootBufferView(slot, prop->_oriResource,  prop->Resource);
         }
         else if (slot->SlotType == MaterialSlotType::MaterialSlotType_Builtin_ViewProj)
         {
-            SetGraphicsRootBufferView(slot, EiRasGlobal::EiRasGlobalManager::SharedInstance()->CBViewProjRawRes);
+            SetGraphicsRootBufferView(slot, NULL, EiRasGlobal::EiRasGlobalManager::SharedInstance()->CBViewProjRawRes);
         }
         else if (slot->SlotType == MaterialSlotType::MaterialSlotType_Ref_WorldMatrix && _CurrentWorldMatCB != 0)
         {
-            SetGraphicsRootBufferView(slot, _CurrentWorldMatCB);
+            SetGraphicsRootBufferView(slot, NULL, _CurrentWorldMatCB);
         }
     }
 }

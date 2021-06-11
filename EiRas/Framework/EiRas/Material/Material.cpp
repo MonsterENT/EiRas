@@ -205,7 +205,8 @@ void Material::SetProperty(MaterialSys::GraphicsResource* srv, _uint slotIndex, 
         return;
     }
 
-    if (srv->Behaviors.ResourceType == GraphicsResourceType::SRV)
+#pragma warning("FIX RawResourceObject Set")
+    //if (srv->Behaviors.ResourceType == GraphicsResourceType::SRV)
     {
         tProp->Resource = srv;
 #if GRAPHICS_DX

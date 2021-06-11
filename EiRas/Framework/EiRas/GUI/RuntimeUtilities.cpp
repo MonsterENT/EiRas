@@ -20,11 +20,9 @@ ShaderLayout* RuntimeUtilities::GetDefaultShaderLayout()
 
         ShaderPropRange commonCB("CommonCB", GraphicsResourceType::CBV, GraphicsResourceVisibility::VISIBILITY_PIXEL, GraphicsResourceUpdateFreq::UPDATE_FREQ_HIGH);
         commonCB.AddProp(sizeof(float) * 4);
-        commonCB.InitBaseRegisterSettings(0, 0);
 
         ShaderPropRange MainTexSlot("MainTexSlot", GraphicsResourceType::SRV, GraphicsResourceVisibility::VISIBILITY_PIXEL, GraphicsResourceUpdateFreq::UPDATE_FREQ_ONINIT);
         MainTexSlot.PropNum = 1;
-        MainTexSlot.InitBaseRegisterSettings(0, 0);
 
         ShaderTable* table0 = new ShaderTable();
         table0->AddRange(commonCB);

@@ -33,8 +33,8 @@ void ShaderLayoutDX12::Build(ShaderLayout* layout)
 
 ID3D12RootSignature* createRootSig(ShaderLayout* shaderLayout)
 {
-#pragma message("TOFIX")
-    CD3DX12_DESCRIPTOR_RANGE1 ranges[100];
+#pragma message("TOFIX out of range")
+    CD3DX12_DESCRIPTOR_RANGE1 ranges[64];
     _uint rangeOffset = 0;
 
     _uint slotNum = shaderLayout->SlotNum;

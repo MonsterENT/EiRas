@@ -28,12 +28,24 @@ namespace MaterialSys
     public:
         std::string Name;
         GraphicsResource* Resource;
-        MaterialProp(std::string name, GraphicsResourceType propType, GraphicsResourceVisibility visible, GraphicsResourceUpdateFreq updateFreq, bool initResource, _uint bufferSize)
+        GraphicsResource* _oriResource;
+
+        MaterialProp(std::string name, GraphicsResourceType propType, GraphicsResourceVisibility visible, GraphicsResourceUpdateFreq updateFreq, bool initResource, int bufferSize)
         {
             Name = name;
             if (propType == GraphicsResourceType::SRV)
             {
-                Resource = NULL;
+                if (bufferSize > 0)
+                {
+                    Resource = new GraphicsResource(name, propType, visible, updateFreq, initResource);
+                    Resource->InitAsShaderResource(bufferSize);
+                    _oriResource = Resource;
+                }
+                else
+                {
+                    Resource = NULL;
+                    _oriResource = NULL;
+                }
             }
             else
             {
@@ -70,7 +82,6 @@ namespace MaterialSys
         _uint _heapOffset;
     private:
         _uint _oriHeapOffset;
-        GraphicsResource* _oriResource;
     };
 
     class MaterialTable : public MaterialSlot
