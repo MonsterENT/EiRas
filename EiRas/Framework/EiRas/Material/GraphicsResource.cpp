@@ -35,6 +35,12 @@ GraphicsResource::~GraphicsResource()
     }
 }
 
+void GraphicsResource::InitAsCustom(int width, int height, GraphicsResourceFormat format, GraphicsResourceDimension dimension)
+{
+    ((GraphicsResourceDX12Bridge*)PlatformBridge)->InitAsCustom(width, height, format, &Behaviors, dimension);
+}
+
+
 void GraphicsResource::InitAsConstantBuffer(_uint bufferSize)
 {
     this->bufferSize = bufferSize;

@@ -1,6 +1,7 @@
 #include "ComputeKernel.hpp"
 #include <Material/MaterialLayout.hpp>
 #include <Material/ShaderLayout.h>
+#include <Material/GraphicsResource.hpp>
 
 #if GRAPHICS_DX
 #include <PlatformDependency/OnDX/GPCompute/ComputeKernelDX12Bridge.hpp>
@@ -33,6 +34,29 @@ void ComputeKernel::SetLayout(MaterialSys::ShaderLayout* layout)
 #endif
             ResLayout->Slots[i] = tmpMatProp;
         }
+        else if (shaderSlot->SlotType == ShaderSlotType::ShaderSlotType_Table)
+        {
+            ShaderTable* shaderTable = (ShaderTable*)shaderSlot;
+
+            _uint ranegNum = (_uint)shaderTable->Ranges.size();
+
+            std::vector<MaterialProp*> tmpMatProps;
+            for (_uint ranegIndex = 0; ranegIndex < ranegNum; ranegIndex++)
+            {
+                ShaderPropRange* tmpRange = &shaderTable->Ranges[ranegIndex];
+
+                for (_uint propIndex = 0; propIndex < tmpRange->PropNum; propIndex++)
+                {
+                    tmpMatProp = new MaterialProp(tmpRange->BasePropName, tmpRange->PropType, tmpRange->Visibility, tmpRange->UpdateFreq, true, tmpRange->BufferSizeList[propIndex]);
+                    tmpMatProp->SlotID = -1;
+                    tmpMatProps.push_back(tmpMatProp);
+                }
+            }
+
+            MaterialTable* matTable = new MaterialTable((_uint)tmpMatProps.size(), tmpMatProps);
+            matTable->SlotID = i;
+            ResLayout->Slots[i] = matTable;
+        }
         else if (shaderSlot->SlotType == ShaderSlotType::ShaderSlotType_Builtin_ViewProj ||
             shaderSlot->SlotType == ShaderSlotType::ShaderSlotType_Ref_WorldMatrix)
         {
@@ -56,6 +80,22 @@ void ComputeKernel::AddKernel(std::string fileName, std::string kernelName)
 void ComputeKernel::Build()
 {
     ((ComputeKernelDX12Bridge*)PlatformBridge)->Build();
+}
+
+void ComputeKernel::SetPropertyObject(GraphicsResource* obj, _uint slotIdx, _uint propIdx, _uint _heapOffset)
+{
+    MaterialSlot* tSlot = ResLayout->Slots[slotIdx];
+    if (tSlot->SlotType == MaterialSlotType::MaterialSlotType_Prop)
+    {
+        MaterialProp* prop = (MaterialProp*)tSlot;
+        prop->SetRawResObject(obj);
+    }
+    else if (tSlot->SlotType == MaterialSlotType::MaterialSlotType_Table)
+    {
+        MaterialTable* table = (MaterialTable*)tSlot;
+        table->Props[propIdx]->SetRawResObject(obj);
+        table->Props[propIdx]->_heapOffset = _heapOffset;
+    }
 }
 
 void ComputeKernel::SetProperty(void* res, _uint slotIndex)

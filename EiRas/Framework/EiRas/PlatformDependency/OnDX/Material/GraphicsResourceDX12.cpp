@@ -34,6 +34,11 @@ void GraphicsResourceDX12::BuildResource(D3D12_HEAP_TYPE heapType, D3D12_RESOURC
         break;
     }
 
+    if (resourceState == D3D12_RESOURCE_STATE_UNORDERED_ACCESS)
+    {
+        desc.Flags = D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS;
+    }
+
     GET_EIRAS_DX12(deviceObj);
     HRESULT hr = deviceObj->device->CreateCommittedResource(&CD3DX12_HEAP_PROPERTIES(heapType),
         D3D12_HEAP_FLAG_NONE,
@@ -47,6 +52,8 @@ void GraphicsResourceDX12::BuildResource(D3D12_HEAP_TYPE heapType, D3D12_RESOURC
     ResADDR = Resource->GetGPUVirtualAddress();
 
     ResMappingDestPtr = NULL;
+
+    ResourceState = resourceState;
 
     if (Behaviors->UpdateFreq == GraphicsResourceUpdateFreq::UPDATE_FREQ_HIGH)
     {
@@ -119,4 +126,47 @@ GraphicsResourceDX12::~GraphicsResourceDX12()
 int GraphicsResourceDX12::GetBufferSize()
 {
     return bufferSize;
+}
+
+void GraphicsResourceDX12::ChangeState(bool cbv, bool srv, bool uav, bool target, ID3D12GraphicsCommandList* cmdList)
+{
+    if (cbv)
+    {
+        ChangeState(D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER, cmdList);
+    }
+    else if (srv)
+    {
+        D3D12_RESOURCE_STATES state;
+        if (Behaviors->Visibility == GraphicsResourceVisibility::VISIBILITY_ALL)
+        {
+            state = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE | D3D12_RESOURCE_STATE_NON_PIXEL_SHADER_RESOURCE;
+        }
+        else if (Behaviors->Visibility == GraphicsResourceVisibility::VISIBILITY_VERTEX)
+        {
+            state = D3D12_RESOURCE_STATE_NON_PIXEL_SHADER_RESOURCE;
+        }
+        else
+        {
+            state = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;
+        }
+        ChangeState(state, cmdList);
+    }
+    else if (uav)
+    {
+        ChangeState(D3D12_RESOURCE_STATE_UNORDERED_ACCESS, cmdList);
+    }
+    else if (target)
+    {
+        ChangeState(D3D12_RESOURCE_STATE_RENDER_TARGET, cmdList);
+    }
+}
+void GraphicsResourceDX12::ChangeState(D3D12_RESOURCE_STATES state, ID3D12GraphicsCommandList* cmdList)
+{
+    if (ResourceState == state || ResourceState & state != 0)
+    {
+        return;
+    }
+    
+    cmdList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(Resource, ResourceState, state));
+    ResourceState = state;
 }

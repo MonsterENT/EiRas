@@ -33,25 +33,27 @@ namespace MaterialSys
         MaterialProp(std::string name, GraphicsResourceType propType, GraphicsResourceVisibility visible, GraphicsResourceUpdateFreq updateFreq, bool initResource, int bufferSize)
         {
             Name = name;
-            if (propType == GraphicsResourceType::SRV)
+
+            if (bufferSize > 0)
             {
-                if (bufferSize > 0)
+                if (propType == GraphicsResourceType::SRV)
                 {
                     Resource = new GraphicsResource(name, propType, visible, updateFreq, initResource);
                     Resource->InitAsShaderResource(bufferSize);
                     _oriResource = Resource;
                 }
+#pragma warning("TODO")
                 else
                 {
-                    Resource = NULL;
-                    _oriResource = NULL;
+                    Resource = new GraphicsResource(name, propType, visible, updateFreq, initResource);
+                    Resource->InitAsConstantBuffer(bufferSize);
+                    _oriResource = Resource;
                 }
             }
             else
             {
-                Resource = new GraphicsResource(name, propType, visible, updateFreq, initResource);
-                Resource->InitAsConstantBuffer(bufferSize);
-                _oriResource = Resource;
+                Resource = NULL;
+                _oriResource = NULL;
             }
             this->SlotType = MaterialSlotType::MaterialSlotType_Prop;
         }

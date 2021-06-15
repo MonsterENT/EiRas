@@ -31,6 +31,10 @@ namespace MaterialSys
 
         int GetBufferSize();
 
+        D3D12_RESOURCE_STATES ResourceState;
+        void ChangeState(bool cbv, bool srv, bool uav, bool target, ID3D12GraphicsCommandList* cmdList);
+        void ChangeState(D3D12_RESOURCE_STATES state, ID3D12GraphicsCommandList* cmdList);
+
     protected:
         UINT8* ResMappingDestPtr;
         UINT64 ResADDR;

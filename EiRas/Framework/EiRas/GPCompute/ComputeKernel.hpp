@@ -9,6 +9,7 @@ namespace MaterialSys
 {
     class ShaderLayout;
     class MaterialLayout;
+    class GraphicsResource;
 }
 
 namespace GPCompute
@@ -22,6 +23,8 @@ namespace GPCompute
         void AddKernel(std::string fileName, std::string kernelName);
         void Build();
 
+#pragma warning("TODO heapOffset")
+        void SetPropertyObject(MaterialSys::GraphicsResource* obj, _uint slotIdx, _uint propIdx = 0, _uint heapOffset = 0);
         void SetProperty(void* res, _uint slotIndex);
         void GetPropertyData(void* res, _uint slotIndex);
 

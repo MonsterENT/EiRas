@@ -233,6 +233,10 @@
     <ClInclude Include="..\..\..\Library\stb\stb_image.h" />
     <ClInclude Include="EiRasDX12Build.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="PathTrace\GraphicsData.hpp" />
+    <ClInclude Include="PathTrace\PathTrace.hpp" />
+    <ClInclude Include="PathTrace\SceneSearchManager.hpp" />
+    <ClInclude Include="PathTrace\Utils.hpp" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SDFGen\RMCapture.hpp" />
     <ClInclude Include="targetver.h" />
@@ -308,6 +312,10 @@
     <ClCompile Include="EiRasDX12Build.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">GRAPHICS_DX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <ClCompile Include="PathTrace\GraphicsData.cpp" />
+    <ClCompile Include="PathTrace\PathTrace.cpp" />
+    <ClCompile Include="PathTrace\SceneSearchManager.cpp" />
+    <ClCompile Include="PathTrace\Utils.cpp" />
     <ClCompile Include="SDFGen\RMCapture.cpp" />
   </ItemGroup>
   <ItemGroup>

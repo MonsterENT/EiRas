@@ -121,12 +121,30 @@ public:
         z = _z;
     }
 
+    float3 operator+(float3 a)
+    {
+        float3 t;
+        t.x = this->x + a.x;
+        t.y = this->y + a.x;
+        t.z = this->z + a.x;
+        return t;
+    }
+
     float3 operator*(float a)
     {
         float3 t;
         t.x = this->x * a;
         t.y = this->y * a;
         t.z = this->z * a;
+        return t;
+    }
+
+    float3 operator/(float a)
+    {
+        float3 t;
+        t.x = this->x / a;
+        t.x = this->y / a;
+        t.x = this->z / a;
         return t;
     }
 

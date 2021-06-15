@@ -16,6 +16,8 @@ namespace MaterialSys
 
         virtual ~GraphicsResource();
 
+        void InitAsCustom(int width, int height, GraphicsResourceFormat format, GraphicsResourceDimension dimension = GraphicsResourceDimension::GraphicsResourceDimension_Buffer);
+
         void InitAsConstantBuffer(_uint bufferSize);
 
         void InitAsDefault(_uint bufferSize, GraphicsResourceDimension dimension = GraphicsResourceDimension::GraphicsResourceDimension_Buffer);

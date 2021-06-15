@@ -86,7 +86,7 @@ inline void _FillHeapWithProp(CD3DX12_CPU_DESCRIPTOR_HANDLE cpuHandle, CD3DX12_G
     }
 }
 
-_uint GraphicsResourceDescriptorHeapDX12::DynamicFillHeapGlobal(void* res, void* format, bool DepthStencilRes)
+_uint GraphicsResourceDescriptorHeapDX12::DynamicFillHeapGlobal(void* res, void* format, bool DepthStencilRes, bool asUAV)
 {
     CD3DX12_CPU_DESCRIPTOR_HANDLE cpuHandle(heap->GetCPUDescriptorHandleForHeapStart());
     CD3DX12_GPU_DESCRIPTOR_HANDLE gpuHandle(heap->GetGPUDescriptorHandleForHeapStart());
@@ -107,8 +107,19 @@ _uint GraphicsResourceDescriptorHeapDX12::DynamicFillHeapGlobal(void* res, void*
     srvDesc.Texture2D.MipLevels = 1;
     HRESULT hr = deviceObj->device->GetDeviceRemovedReason();
 
-    deviceObj->device->CreateShaderResourceView((ID3D12Resource*)res, &srvDesc, cpuHandle);
+    if (!asUAV)
+    {
+        deviceObj->device->CreateShaderResourceView((ID3D12Resource*)res, &srvDesc, cpuHandle);
+    }
+    else
+    {
+        D3D12_UNORDERED_ACCESS_VIEW_DESC uavDesc = {};
+        uavDesc.Format = *((DXGI_FORMAT*)format);
+        uavDesc.ViewDimension = D3D12_UAV_DIMENSION_TEXTURE2D;
+        deviceObj->device->CreateUnorderedAccessView((ID3D12Resource*)res, 0, &uavDesc, cpuHandle);
+    }
     HRESULT hr2 = deviceObj->device->GetDeviceRemovedReason();
+    assert(SUCCEEDED(hr2));
     return g_HeapOffset++;
 }
 

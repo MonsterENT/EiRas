@@ -91,7 +91,6 @@ void Engine::m_initEngine()
     _Transform2.UpdateToGraphics();
     
     cmdBuffer = new CommandBuffer("main buffer");
-    
 
 #pragma region GPLayout
     ShaderLayout* gpLayout = new ShaderLayout(1);
@@ -240,7 +239,7 @@ void Engine::InitEngine(HWND hWnd, _uint width, _uint height)
     _ClientHW.x = width;
     _ClientHW.y = height;
     device = EiRas::Create(hWnd, 2560, 1440);
-    m_initEngine();
+    //m_initEngine();
 }
 #endif
 
@@ -254,6 +253,7 @@ void Engine::InitEngine()
 
 void Engine::Update(void* data)
 {
+    return;
     std::string texturePath = FileSys::FileManager::shareInstance()->GetTextureResourcePath("ground512", "png");
 
     if (imageObj == 0)

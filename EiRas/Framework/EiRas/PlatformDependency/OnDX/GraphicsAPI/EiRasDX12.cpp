@@ -92,7 +92,7 @@ void EiRasDX12::InitDevice()
     {
         swapChain3->GetBuffer(n, IID_PPV_ARGS(&renderTargets[n]));
         device->CreateRenderTargetView(renderTargets[n], nullptr, rtvHandle);
-        ResourceDescriptorHeapManager::ShareInstance()->HeapPool[0]->DynamicFillHeapGlobal(renderTargets[n], &swapChainDesc.Format);
+        //ResourceDescriptorHeapManager::ShareInstance()->HeapPool[0]->DynamicFillHeapGlobal(renderTargets[n], &swapChainDesc.Format);
 
         rtvHandle.Offset(1, rtvDescriptorSize);
     }

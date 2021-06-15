@@ -40,6 +40,7 @@ namespace DX12Utils
         HRESULT hr = D3DCompileFromFile(tmp_ws, 0, D3D_COMPILE_STANDARD_FILE_INCLUDE, fnName, target, 0, 0, &shader, &errMsg);
         if (errMsg != NULL)
         {
+#pragma warning("TODO")
             char* msgCharData = new char[errMsg->GetBufferSize()];
             memcpy(msgCharData, errMsg->GetBufferPointer(), errMsg->GetBufferSize());
             //PrintMsg

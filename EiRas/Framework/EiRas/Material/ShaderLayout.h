@@ -86,7 +86,7 @@ namespace MaterialSys
 
         void AddProp(int size, std::string basePropName, GraphicsResourceType propType, GraphicsResourceVisibility visibility, GraphicsResourceUpdateFreq updateFreq)
         {
-            ShaderPropRange propRange(basePropName, GraphicsResourceType::SRV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_ONINIT);
+            ShaderPropRange propRange(basePropName, propType, visibility, updateFreq);
             propRange.AddProp(size);
             Ranges.push_back(propRange);
         }

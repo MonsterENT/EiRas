@@ -188,7 +188,14 @@ void CommandBufferDX12::DispatchComputeKernel(GPCompute::ComputeKernelDX12* kern
     for (_uint i = 0; i < kernel->ResLayout->SlotNum; i++)
     {
         MaterialSlot* slot = kernel->ResLayout->Slots[i];
-        if (slot->SlotType == MaterialSlotType::MaterialSlotType_Prop)
+        if (slot->SlotType == MaterialSlotType::MaterialSlotType_Table)
+        {
+            MaterialTable* table = (MaterialTable*)slot;
+            CD3DX12_GPU_DESCRIPTOR_HANDLE gpuHandle(CurrentUseingHeap->heap->GetGPUDescriptorHandleForHeapStart());
+            gpuHandle.Offset(table->Props[0]->_heapOffset, offset);
+            cmdList->SetComputeRootDescriptorTable(table->SlotID, gpuHandle);
+        }
+        else if (slot->SlotType == MaterialSlotType::MaterialSlotType_Prop)
         {
             MaterialProp* prop = (MaterialProp*)slot;
             if (prop->Resource == 0)
@@ -221,18 +228,22 @@ void CommandBufferDX12::SetGraphicsRootBufferView(MaterialSlot* slot, GraphicsRe
     {
         resType = rootResource->Behaviors.ResourceType;
     }
-    D3D12_GPU_VIRTUAL_ADDRESS ADDR = ((GraphicsResourceDX12*)rootResource->PlatformBridge->raw_obj)->ResADDR;
+    GraphicsResourceDX12* rawObj = (GraphicsResourceDX12*)rootResource->PlatformBridge->raw_obj;
+    D3D12_GPU_VIRTUAL_ADDRESS ADDR = rawObj->ResADDR;
 
     if (resType == GraphicsResourceType::CBV)
     {
+        //rawObj->ChangeState(1, 0, 0, 0, cmdList);
         cmdList->SetGraphicsRootConstantBufferView(slot->SlotID, ADDR);
     }
     else if (resType == GraphicsResourceType::SRV)
     {
+        //rawObj->ChangeState(0, 1, 0, 0, cmdList);
         cmdList->SetGraphicsRootShaderResourceView(slot->SlotID, ADDR);
     }
     else if (resType == GraphicsResourceType::UAV)
     {
+        //rawObj->ChangeState(0, 0, 1, 0, cmdList);
         cmdList->SetGraphicsRootUnorderedAccessView(slot->SlotID, ADDR);
     }
 }

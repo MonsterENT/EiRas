@@ -9,6 +9,7 @@ namespace MaterialSys
 {
     struct GraphicsResourceBehaviors;
     enum class GraphicsResourceDimension;
+    enum class GraphicsResourceFormat;
 
     class GraphicsResourceDX12Bridge : public EiRasPlatformBridgeProtocol
     {
@@ -18,6 +19,7 @@ namespace MaterialSys
         void SetResource(void* res, bool noMoreUpdate);
         void GetResource(void* res);
 
+        void InitAsCustom(int width, int height, GraphicsResourceFormat format,  GraphicsResourceBehaviors* behaviors, GraphicsResourceDimension dimension);
         void InitAsDefault(int bufferSize, GraphicsResourceBehaviors* behaviors, GraphicsResourceDimension dimension);
         void InitAsUAV(int bufferSize, GraphicsResourceBehaviors* behaviors, GraphicsResourceDimension dimension);
 

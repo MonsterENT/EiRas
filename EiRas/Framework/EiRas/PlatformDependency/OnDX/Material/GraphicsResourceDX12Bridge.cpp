@@ -6,6 +6,7 @@
 #include <PlatformDependency/OnDX/Material/ShaderResourceDX12.h>
 #include <PlatformDependency/OnDX/Material/ConstantBufferDX12.h>
 #include <PlatformDependency/OnDX/Material/ShaderResourceRTDX12.hpp>
+#include <Material/GraphicsResourceConfig.hpp>
 
 using namespace MaterialSys;
 
@@ -22,6 +23,13 @@ void GraphicsResourceDX12Bridge::SetResource(void* res, bool noMoreUpdate)
 void GraphicsResourceDX12Bridge::GetResource(void* res)
 {
     ((GraphicsResourceDX12*)raw_obj)->GetResource(res);
+}
+
+void GraphicsResourceDX12Bridge::InitAsCustom(int width, int height, GraphicsResourceFormat format, GraphicsResourceBehaviors* behaviors, GraphicsResourceDimension dimension)
+{
+    raw_obj = new GraphicsResourceDX12(-1, behaviors);
+    D3D12_HEAP_TYPE heapType = behaviors->UpdateFreq == GraphicsResourceUpdateFreq::UPDATE_FREQ_HIGH ? D3D12_HEAP_TYPE_UPLOAD : D3D12_HEAP_TYPE_DEFAULT;
+    ((GraphicsResourceDX12*)raw_obj)->BuildResource(heapType, D3D12_RESOURCE_STATE_UNORDERED_ACCESS, dimension, (int)format, width, height, 0);
 }
 
 void GraphicsResourceDX12Bridge::InitAsDefault(int bufferSize, GraphicsResourceBehaviors* behaviors, GraphicsResourceDimension dimension)

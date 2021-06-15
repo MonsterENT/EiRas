@@ -14,11 +14,15 @@
 #include "SDFGen/RMCapture.hpp"
 #include <Common/Heap.hpp>
 
+#include "PathTrace/PathTrace.hpp"
+
 using namespace GUISys;
 using namespace Math;
 #define MAX_LOADSTRING 100
 
 // 全局变量:
+
+PathTrace* pt;
 HINSTANCE hInst;                                // 当前实例
 WCHAR szTitle[MAX_LOADSTRING];                  // 标题栏文本
 WCHAR szWindowClass[MAX_LOADSTRING];            // 主窗口类名
@@ -240,8 +244,11 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
     engine->InitEngine(hWnd, rect.right, rect.bottom);
 #pragma endregion
 
+    pt = new PathTrace();
     ComponentSys::ComponentManager::SharedManager()->AddComponent(&CaptureObject);
+    ComponentSys::ComponentManager::SharedManager()->AddComponent(pt);
     CaptureObject.OnInit();
+    pt->OnInit();
 
     ShowWindow(hWnd, nCmdShow);
     UpdateWindow(hWnd);

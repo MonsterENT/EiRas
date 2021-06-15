@@ -90,7 +90,11 @@ ID3D12RootSignature* createRootSig(ShaderLayout* shaderLayout)
                 {
                     ranges[j + rangeOffset].Init((D3D12_DESCRIPTOR_RANGE_TYPE)range->PropType, range->PropNum, _BASE_CB_REGISTER, _BASE_SPACE);
                     _BASE_CB_REGISTER += range->PropNum;
-
+                }
+                else if (range->PropType == GraphicsResourceType::UAV)
+                {
+                    ranges[j + rangeOffset].Init((D3D12_DESCRIPTOR_RANGE_TYPE)range->PropType, range->PropNum, _BASE_UA_REGISTER, _BASE_SPACE);
+                    _BASE_UA_REGISTER += range->PropNum;
                 }
             }
             rootParameters[i].InitAsDescriptorTable(rangeNum, ranges + rangeOffset, (D3D12_SHADER_VISIBILITY)MaterialSys::GraphicsResourceVisibilityToDX12(table->Ranges[0].Visibility));

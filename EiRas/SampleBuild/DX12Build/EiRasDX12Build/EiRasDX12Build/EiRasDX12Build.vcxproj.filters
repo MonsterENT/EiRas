@@ -258,6 +258,18 @@
     <ClInclude Include="..\..\..\..\Framework\Common\Heap.hpp">
       <Filter>framework</Filter>
     </ClInclude>
+    <ClInclude Include="PathTrace\PathTrace.hpp">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="PathTrace\SceneSearchManager.hpp">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="PathTrace\Utils.hpp">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="PathTrace\GraphicsData.hpp">
+      <Filter>framework</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EiRasDX12Build.cpp">
@@ -465,6 +477,18 @@
       <Filter>framework</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\Framework\Common\Heap.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="PathTrace\PathTrace.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="PathTrace\SceneSearchManager.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="PathTrace\Utils.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="PathTrace\GraphicsData.cpp">
       <Filter>framework</Filter>
     </ClCompile>
   </ItemGroup>
