@@ -13,6 +13,8 @@
 #include <PlatformDependency/OnDX/Material/GraphicsResourceDX12.h>
 #include <PlatformDependency/OnDX/CommandBuffer/CommandBufferDX12.h>
 
+#include <PlatformDependency/OnDX/DX12Utils.h>
+
 using namespace GraphicsAPI;
 using namespace Math;
 using namespace Graphics;
@@ -22,9 +24,12 @@ using namespace GPCompute;
 ID3D12Resource* TargetRes;
 
 GraphicsResource* Target;
+int heapOffset;
 
 CommandBuffer* Cmd;
 ComputeKernel* PtKernel;
+
+Material* CopyStd;
 
 PathTrace::PathTrace()
 {
@@ -49,8 +54,13 @@ PathTrace::PathTrace()
 
     GraphicsResourceFormat format = GraphicsResourceFormat::R16G16B16A16_FLOAT;
     TargetRes = ((GraphicsResourceDX12*)Target->PlatformBridge->raw_obj)->Resource;
-    _uint heapOffset = ResourceDescriptorHeapManager::ShareInstance()->HeapPool[0]->DynamicFillHeapGlobal(TargetRes, &format, false, true);
+    heapOffset = ResourceDescriptorHeapManager::ShareInstance()->HeapPool[0]->DynamicFillHeapGlobal(TargetRes, &format, false, true);
     PtKernel->SetPropertyObject(Target, 0, 0, heapOffset);
+
+    CopyStd = new Material("CopyStd", DX12Utils::CopyStd());
+    CopyStd->RenderState->_CullMode = CullMode::CullModeNone;
+    CopyStd->RenderState->_ZTest = CompareFunction::CompareFunctionAlways;
+    CopyStd->FinishStateChange();
 }
 
 PathTrace::~PathTrace()
@@ -66,9 +76,14 @@ void PathTrace::OnUpdate()
 {
     Cmd->BeginFrame();
     Cmd->Reset();
+    Cmd->SetViewPort(0, 0, 2560, 1440);
 
     ((CommandBufferDX12*)Cmd->PlatformBridge->raw_obj)->cmdList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(TargetRes, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, D3D12_RESOURCE_STATE_UNORDERED_ACCESS));
     Cmd->DispatchComputeKernel(PtKernel, int3(1920 / 8, 1080 / 8, 1));
     ((CommandBufferDX12*)Cmd->PlatformBridge->raw_obj)->cmdList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(TargetRes, D3D12_RESOURCE_STATE_UNORDERED_ACCESS, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE));
+    
+    CopyStd->SetPropertyObject(Target, 0, 0, heapOffset);
+    Cmd->SetMaterial(CopyStd);
+    Cmd->DrawMesh(DX12Utils::FullScreenTriangle());
     Cmd->Commit(true);
 }

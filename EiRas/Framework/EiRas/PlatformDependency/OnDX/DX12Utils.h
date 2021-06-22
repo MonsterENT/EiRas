@@ -8,7 +8,14 @@
 #include <Graphics/RenderTexture.hpp>
 #include <Graphics/CommandBuffer.hpp>
 #include <Material/Material.hpp>
+#include <FileSys/FileManager.hpp>
+#include <Material/Shader.hpp>
+#include <Material/ShaderLayout.h>
+#include <Graphics/GraphicsVertexDescriptor.hpp>
 #pragma comment (lib, "D3DCompiler.lib")
+
+using namespace Graphics;
+using namespace MaterialSys;
 
 namespace DX12Utils
 {
@@ -43,8 +50,7 @@ namespace DX12Utils
 #pragma warning("TODO")
             char* msgCharData = new char[errMsg->GetBufferSize()];
             memcpy(msgCharData, errMsg->GetBufferPointer(), errMsg->GetBufferSize());
-            //PrintMsg
-            msgCharData[0] = msgCharData[1];
+            delete[] msgCharData;
         }
         assert(SUCCEEDED(hr));
         return SUCCEEDED(hr);
@@ -70,6 +76,39 @@ namespace DX12Utils
             _FullScreenTriangle->BuildBuffer(MeshSys::MeshType::VertexInput2D, true);
         }
         return _FullScreenTriangle;
+    }
+
+    static MaterialSys::Shader* _CopyStd = 0;
+    static MaterialSys::Shader* CopyStd()
+    {
+        if (_CopyStd == 0)
+        {
+            ShaderLayout* layout = new ShaderLayout(1);
+            ShaderTable* table = new ShaderTable();
+            table->AddProp(-1, "_MainTex", GraphicsResourceType::SRV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_ONINIT);
+            layout->Slots[0] = table;
+            layout->BuildOnDX12();
+
+            //Graphics::GraphicsVertexDescriptor* m_vertexDesc = new Graphics::GraphicsVertexDescriptor();
+            //m_vertexDesc->AddBufferAttribute("POSITION", GraphicsVertexAttributeFormat::VertexFormatFloat3, 0);
+            //m_vertexDesc->InitBufferLayout();
+
+            GraphicsVertexDescriptor* m_vertexDesc2 = new GraphicsVertexDescriptor();
+            m_vertexDesc2->AddBufferAttribute("POSITION", GraphicsVertexAttributeFormat::VertexFormatFloat2, 0);
+            m_vertexDesc2->AddBufferAttribute("TEXCOORD", GraphicsVertexAttributeFormat::VertexFormatFloat2, 0);
+            m_vertexDesc2->InitBufferLayout();
+
+            std::string filePath = FileSys::FileManager::shareInstance()->GetResourcePath("Shader\\DX\\CopyStd", "hlsl");
+            _CopyStd = new MaterialSys::Shader(filePath, "vs_main_0", "ps_main");
+            //_CopyStd->AddVertexFuncToPass("vs_main_1", 1);
+            //_CopyStd->SetPixelFuncToPass(0, 1);
+            _CopyStd->InitVertexDescriptor(m_vertexDesc2);
+            //_CopyStd->InitVertexDescriptor(m_vertexDesc2, 1, false);
+
+            _CopyStd->SetLayout(layout);
+            //delete m_vertexDesc;
+        }
+        return _CopyStd;
     }
 
     static void BlitFullScreen(MaterialSys::GraphicsResource* src, Graphics::RenderTexture* dest, Graphics::CommandBuffer* cmdBuffer, MaterialSys::Material* mat, _uint pass = 0)

@@ -22,7 +22,7 @@ namespace MaterialSys
         std::string Name;
         MaterialDX12(std::string Name, ShaderDX12* shaderObj, Material* matObj);
 
-        void UpdateRenderState(Graphics::GraphicsRenderState* renderState, ShaderDX12* shaderObj, void* rawCmdBuffer, _uint pass = 0);
+        void UpdateRenderState(Graphics::GraphicsRenderState* renderState, ShaderDX12* shaderObj, _uint pass = 0);
 
         void Release();
 

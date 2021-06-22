@@ -155,7 +155,7 @@ void Label::_BuildTextMesh()
 
         BatchedFontMeshData* data = &(batchedDataIt->second);
 
-        Material* mat = RuntimeUtilities::CreateFontMaterial("Font Mat", GUISystem::SharedInstance()->_CmdBuffer);
+        Material* mat = RuntimeUtilities::CreateFontMaterial("Font Mat");
         mat->SetProperty(FontManager::SharedInstance()->fontDataList[data->RefFontImageIndex]->_FontImage, 1, 0);
         mat->SetProperty(&_TextColor, 0, 0);
         _Render->AddMaterial(mat, 0);

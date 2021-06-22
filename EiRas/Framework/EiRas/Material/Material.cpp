@@ -28,14 +28,10 @@ using namespace Graphics;
 using namespace MaterialSys;
 using namespace ImageSys;
 
-Material::Material(std::string Name, Shader* shader, Graphics::CommandBuffer* commandBuffer)
+Material::Material(std::string Name, Shader* shader)
 {
-    this->referenceCmdBuffer = commandBuffer;
-
     this->Name = Name;
-
     this->RenderState = new Graphics::GraphicsRenderState();
-
     this->shader = shader;
 
     if (shader->Layout != 0)
@@ -111,7 +107,6 @@ Material::Material(std::string Name, Shader* shader, Graphics::CommandBuffer* co
     this->PlatformBridge = new MaterialDX12Bridge(Name, shader->PlatformBridge, this);
 #endif
 
-    referenceCmdBuffer = commandBuffer;
     //init platform pso
     FinishStateChange();
 }
@@ -158,6 +153,22 @@ void Material::GetPropertyData(void* res, _uint slotIndex, int propIndex)
         return;
     }
     tProp->Resource->GetResource(res);
+}
+
+void Material::SetPropertyObject(MaterialSys::GraphicsResource* obj, _uint slotIndex, int propIndex, int heapOffset)
+{
+    bool fromTable = false;
+    MaterialProp* tProp = getMaterialProp(this, slotIndex, propIndex, fromTable);
+    if (tProp == 0)
+    {
+        return;
+    }
+    tProp->SetRawResObject(obj);
+
+    if (fromTable)
+    {
+        tProp->_heapOffset = heapOffset;
+    }
 }
 
 void Material::SetProperty(void* res, _uint slotIndex, int propIndex, bool asResObj)
@@ -244,7 +255,7 @@ void Material::FinishStateChange(_uint pass)
 #endif
 
 #if GRAPHICS_DX
-    ((MaterialDX12Bridge*)this->PlatformBridge)->UpdateRenderState(RenderState, shader->PlatformBridge, referenceCmdBuffer->PlatformBridge, pass);
+    ((MaterialDX12Bridge*)this->PlatformBridge)->UpdateRenderState(RenderState, shader->PlatformBridge, pass);
 #endif
 
 }

@@ -46,11 +46,11 @@ GraphicsVertexDescriptor* RuntimeUtilities::GetDefaultVertexDesc()
     return _DefaultVertexDesc;
 }
 
-Material* RuntimeUtilities::GetGUIDefaultMaterial(CommandBuffer* cmdBuffer)
+Material* RuntimeUtilities::GetGUIDefaultMaterial()
 {
     if (_GUIDefaultMaterial == 0)
     {
-        _GUIDefaultMaterial = new Material("UI Default", GetGUIDefaultShader(), cmdBuffer);
+        _GUIDefaultMaterial = new Material("UI Default", GetGUIDefaultShader());
         _GUIDefaultMaterial->RenderState->_CullMode = CullMode::CullModeNone;
         _GUIDefaultMaterial->RenderState->_ZWrite = false;
         _GUIDefaultMaterial->RenderState->_ZTest = CompareFunction::CompareFunctionAlways;
@@ -74,9 +74,9 @@ Shader* RuntimeUtilities::GetGUIDefaultShader()
     return _GUIDefaultShader;
 }
 
-Material* RuntimeUtilities::CreateGUIDefaultMaterial(std::string name, CommandBuffer* cmdBuffer)
+Material* RuntimeUtilities::CreateGUIDefaultMaterial(std::string name)
 {
-    Material* mat = new Material(name, GetGUIDefaultShader(), cmdBuffer);
+    Material* mat = new Material(name, GetGUIDefaultShader());
     mat->RenderState->_CullMode = CullMode::CullModeNone;
     mat->RenderState->_ZWrite = false;
     mat->RenderState->_ZTest = CompareFunction::CompareFunctionAlways;
@@ -95,9 +95,9 @@ Shader* RuntimeUtilities::GetFontShader()
     return _FontShader;
 }
 
-Material* RuntimeUtilities::CreateFontMaterial(std::string name, CommandBuffer* cmdBuffer)
+Material* RuntimeUtilities::CreateFontMaterial(std::string name)
 {
-    Material* mat = new Material(name, GetFontShader(), cmdBuffer);
+    Material* mat = new Material(name, GetFontShader());
     mat->RenderState->_CullMode = CullMode::CullModeNone;
     mat->RenderState->_ZWrite = false;
     mat->RenderState->_ZTest = CompareFunction::CompareFunctionAlways;

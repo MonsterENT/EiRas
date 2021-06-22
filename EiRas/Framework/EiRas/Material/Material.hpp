@@ -11,6 +11,7 @@
 
 #include <Global/GlobalDefine.h>
 #include <Global/PlatformDependency/EiRasPlatformBridgeProtocol.h>
+#include <Graphics/GraphicsRenderState.hpp>
 #include <string>
 #include <vector>
 
@@ -37,7 +38,7 @@ namespace MaterialSys {
     {
     public:
         std::string Name;
-        Material(std::string Name, Shader* shader, Graphics::CommandBuffer* commandBuffer);
+        Material(std::string Name, Shader* shader);
         ~Material();
         Graphics::GraphicsRenderState* RenderState;
 
@@ -45,6 +46,8 @@ namespace MaterialSys {
         EiRasPlatformBridgeProtocol* PlatformBridge;
 
         void GetPropertyData(void* res, _uint slotIndex, int propIndex = -1);
+
+        void SetPropertyObject(MaterialSys::GraphicsResource* obj, _uint slotIndex, int propIndex = -1, int heapOffset = -1);
         void SetProperty(void* res, _uint slotIndex, int propIndex = -1, bool asResObj = false);
         void SetProperty(ImageSys::Image* image, _uint slotIndex, int propIndex = -1);
         void SetProperty(MaterialSys::GraphicsResource* srv, _uint slotIndex, int propIndex = -1);
@@ -53,7 +56,6 @@ namespace MaterialSys {
         Shader* shader;
         MaterialLayout* materialLayout;
     private:
-        Graphics::CommandBuffer* referenceCmdBuffer;
     };
 
 };//namespace Material

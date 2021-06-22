@@ -60,7 +60,7 @@ CommonBlur::CommonBlur(_uint width, _uint height, Graphics::CommandBuffer* refCm
     _Shader->InitVertexDescriptor(m_vertexDesc);
     _Shader->SetLayout(shaderLayout);
 
-    _Material = new Material("Common Blur Material", _Shader, refCmdBuffer);
+    _Material = new Material("Common Blur Material", _Shader);
     _Material->RenderState->_CullMode = CullMode::CullModeNone;
 #pragma endregion
 

@@ -16,7 +16,7 @@ View::View()
 {
     GUISystem::SharedInstance()->RegGUIComponent(this);
     _Mesh = new MeshSys::Mesh("GUI Mesh");
-    _Material = RuntimeUtilities::CreateGUIDefaultMaterial("GUI View", GUISystem::SharedInstance()->_CmdBuffer);
+    _Material = RuntimeUtilities::CreateGUIDefaultMaterial("GUI View");
     SetBackgroundColor(float4(1, 1, 1, 1));
     _UseShaderPass = 0;
 }

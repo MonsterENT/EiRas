@@ -20,6 +20,6 @@ namespace MaterialSys
     public:
         MaterialDX12Bridge(std::string Name, EiRasPlatformBridgeProtocol* shaderObj, Material* matObj);
         virtual ~MaterialDX12Bridge();
-        void UpdateRenderState(Graphics::GraphicsRenderState* renderState, EiRasPlatformBridgeProtocol* shaderObj, EiRasPlatformBridgeProtocol* cmdBufferPB, _uint pass = 0);
+        void UpdateRenderState(Graphics::GraphicsRenderState* renderState, EiRasPlatformBridgeProtocol* shaderObj, _uint pass = 0);
     };
 }

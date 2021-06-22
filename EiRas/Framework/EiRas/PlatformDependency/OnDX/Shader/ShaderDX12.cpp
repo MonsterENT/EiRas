@@ -16,7 +16,7 @@ ShaderDX12::ShaderDX12(LPCSTR fileName, LPCSTR vertexFuncName, LPCSTR pixelFuncN
 {
     this->Name = fileName;
     Layout = 0;
-    ID3DBlob* vertexFuncBlob = 0, *pixelFuncBlob = 0;
+    ID3DBlob* vertexFuncBlob = 0, * pixelFuncBlob = 0;
     DX12Utils::g_compileShader(fileName, vertexFuncName, "vs_5_1", vertexFuncBlob);
     DX12Utils::g_compileShader(fileName, pixelFuncName, "ps_5_1", pixelFuncBlob);
     if (vertexFuncBlob)
@@ -177,39 +177,44 @@ ID3D12PipelineState* ShaderDX12::_GetPSO(Graphics::GraphicsRenderState* renderSt
         psoDesc.VS = CD3DX12_SHADER_BYTECODE(VertexFuncList[m_ShaderPassData[pass].VertexFuncIndex]);
         psoDesc.PS = CD3DX12_SHADER_BYTECODE(PixelFuncList[m_ShaderPassData[pass].PixelFuncIndex]);
 
-        CD3DX12_RASTERIZER_DESC rasterizerStateDesc(D3D12_DEFAULT);
-        rasterizerStateDesc.CullMode = (D3D12_CULL_MODE)(4 - (int)renderState->_CullMode);
-        rasterizerStateDesc.FillMode = (D3D12_FILL_MODE)renderState->_FillMode;
-        psoDesc.RasterizerState = rasterizerStateDesc;
+        {
+            CD3DX12_RASTERIZER_DESC rasterizerStateDesc(D3D12_DEFAULT);
+            rasterizerStateDesc.CullMode = (D3D12_CULL_MODE)(4 - (int)renderState->_CullMode);
+            rasterizerStateDesc.FillMode = (D3D12_FILL_MODE)renderState->_FillMode;
+            psoDesc.RasterizerState = rasterizerStateDesc;
+        }
 
+        {
+            D3D12_BLEND_DESC blendDesc;
 
-#pragma message("TO DO multi rt blend desc")
-        D3D12_BLEND_DESC blendDesc;
-        blendDesc.AlphaToCoverageEnable = false;
-        blendDesc.IndependentBlendEnable = false;
-        D3D12_RENDER_TARGET_BLEND_DESC rt_blend_desc;
-        rt_blend_desc.LogicOpEnable = false;
-        rt_blend_desc.LogicOp = D3D12_LOGIC_OP_NOOP;
-        rt_blend_desc.BlendEnable = ((renderState->_BlendSrcRGBFactor == BlendFactor::BlendRGBFactorOne) && (renderState->_BlendDstRGBFactor == BlendFactor::BlendRGBFactorZero) &&
-            (renderState->_BlendSrcAlphaFactor == BlendFactor::BlendRGBFactorOne) && (renderState->_BlendDstAlphaFactor == BlendFactor::BlendRGBFactorZero)) ? false : true;
-        rt_blend_desc.BlendOp = (D3D12_BLEND_OP)renderState->_BlendOp_RGB;
-        rt_blend_desc.BlendOpAlpha = (D3D12_BLEND_OP)renderState->_BlendOp_ALPHA;
-        rt_blend_desc.SrcBlend = (D3D12_BLEND)Graphics::BlendFactorConvertDX12(renderState->_BlendSrcRGBFactor);
-        rt_blend_desc.DestBlend = (D3D12_BLEND)Graphics::BlendFactorConvertDX12(renderState->_BlendDstRGBFactor);
-        rt_blend_desc.SrcBlendAlpha = (D3D12_BLEND)Graphics::BlendFactorConvertDX12(renderState->_BlendSrcAlphaFactor);
-        rt_blend_desc.DestBlendAlpha = (D3D12_BLEND)Graphics::BlendFactorConvertDX12(renderState->_BlendDstAlphaFactor);
-        rt_blend_desc.RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
-        for (UINT i = 0; i < D3D12_SIMULTANEOUS_RENDER_TARGET_COUNT; ++i)
-            blendDesc.RenderTarget[i] = rt_blend_desc;
-        psoDesc.BlendState = blendDesc;
+            blendDesc.AlphaToCoverageEnable = false;
+            blendDesc.IndependentBlendEnable = false;
+            D3D12_RENDER_TARGET_BLEND_DESC rt_blend_desc;
+            rt_blend_desc.LogicOpEnable = false;
+            rt_blend_desc.LogicOp = D3D12_LOGIC_OP_NOOP;
+            rt_blend_desc.BlendEnable = ((renderState->_BlendSrcRGBFactor == BlendFactor::BlendRGBFactorOne) && (renderState->_BlendDstRGBFactor == BlendFactor::BlendRGBFactorZero) &&
+                (renderState->_BlendSrcAlphaFactor == BlendFactor::BlendRGBFactorOne) && (renderState->_BlendDstAlphaFactor == BlendFactor::BlendRGBFactorZero)) ? false : true;
+            rt_blend_desc.BlendOp = (D3D12_BLEND_OP)renderState->_BlendOp_RGB;
+            rt_blend_desc.BlendOpAlpha = (D3D12_BLEND_OP)renderState->_BlendOp_ALPHA;
+            rt_blend_desc.SrcBlend = (D3D12_BLEND)Graphics::BlendFactorConvertDX12(renderState->_BlendSrcRGBFactor);
+            rt_blend_desc.DestBlend = (D3D12_BLEND)Graphics::BlendFactorConvertDX12(renderState->_BlendDstRGBFactor);
+            rt_blend_desc.SrcBlendAlpha = (D3D12_BLEND)Graphics::BlendFactorConvertDX12(renderState->_BlendSrcAlphaFactor);
+            rt_blend_desc.DestBlendAlpha = (D3D12_BLEND)Graphics::BlendFactorConvertDX12(renderState->_BlendDstAlphaFactor);
+            rt_blend_desc.RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
+            blendDesc.RenderTarget[0] = rt_blend_desc;
+
+            psoDesc.BlendState = blendDesc;
+        }
 
         psoDesc.DepthStencilState = CD3DX12_DEPTH_STENCIL_DESC(D3D12_DEFAULT);
         psoDesc.DepthStencilState.DepthEnable = (renderState->_ZTest == CompareFunction::CompareFunctionAlways && !renderState->_ZWrite) ? false : true;
         psoDesc.DepthStencilState.DepthWriteMask = renderState->_ZWrite ? D3D12_DEPTH_WRITE_MASK_ALL : D3D12_DEPTH_WRITE_MASK_ZERO;
-        psoDesc.DepthStencilState.DepthFunc = (D3D12_COMPARISON_FUNC) renderState->_ZTest;
+        psoDesc.DepthStencilState.DepthFunc = (D3D12_COMPARISON_FUNC)renderState->_ZTest;
         psoDesc.DepthStencilState.StencilEnable = true;
 
         psoDesc.SampleMask = UINT_MAX;
+
+#pragma warning("TODO")
         psoDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
 
 

@@ -10,10 +10,10 @@ MaterialDX12Bridge::MaterialDX12Bridge(std::string Name, EiRasPlatformBridgeProt
     raw_obj = new MaterialDX12(Name, (ShaderDX12*)shaderObj->raw_obj, matObj);
 }
 
-void MaterialDX12Bridge::UpdateRenderState(Graphics::GraphicsRenderState* renderState, EiRasPlatformBridgeProtocol* shaderObj, EiRasPlatformBridgeProtocol* cmdBufferPB, _uint pass)
+void MaterialDX12Bridge::UpdateRenderState(Graphics::GraphicsRenderState* renderState, EiRasPlatformBridgeProtocol* shaderObj, _uint pass)
 {
     MaterialDX12* obj = (MaterialDX12*)raw_obj;
-    obj->UpdateRenderState(renderState, (ShaderDX12*)shaderObj->raw_obj, cmdBufferPB->raw_obj, pass);
+    obj->UpdateRenderState(renderState, (ShaderDX12*)shaderObj->raw_obj, pass);
 }
 
 MaterialDX12Bridge::~MaterialDX12Bridge()

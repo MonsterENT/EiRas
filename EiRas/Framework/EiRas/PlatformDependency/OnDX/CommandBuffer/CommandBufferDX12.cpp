@@ -26,6 +26,7 @@ using ImageSys::ImageSysBuildingList;
 
 CommandBufferDX12::CommandBufferDX12(std::string Name)
 {
+    EiRasGlobal::EiRasGlobalManager::SharedInstance()->GraphicsActivedCmdBuffer = this;
     _CurrentRenderTexture = 0;
     GET_EIRAS_DX12(deviceObj);;
     HRESULT hr = deviceObj->device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&cmdAllocator));
@@ -70,6 +71,7 @@ void CommandBufferDX12::BeginFrame()
 
 void CommandBufferDX12::Reset()
 {
+    EiRasGlobal::EiRasGlobalManager::SharedInstance()->GraphicsActivedCmdBuffer = this;
     CurrentUseingHeap = (MaterialSys::GraphicsResourceDescriptorHeapDX12*)MaterialSys::ResourceDescriptorHeapManager::ShareInstance()->HeapPool[0];
     CurrentUseingHeap->FillHeap();
     cmdList->SetDescriptorHeaps(1, &CurrentUseingHeap->heap);
@@ -77,6 +79,10 @@ void CommandBufferDX12::Reset()
 
 void CommandBufferDX12::Commit(bool present)
 {
+    if (EiRasGlobal::EiRasGlobalManager::SharedInstance()->GraphicsActivedCmdBuffer == this)
+    {
+        EiRasGlobal::EiRasGlobalManager::SharedInstance()->GraphicsActivedCmdBuffer = NULL;
+    }
     GET_EIRAS_DX12(deviceObj);;
     if (present)
     {
@@ -224,9 +230,13 @@ void CommandBufferDX12::SetGraphicsRootBufferView(MaterialSlot* slot, GraphicsRe
     {
         resType = ori->Behaviors.ResourceType;
     }
-    else
+    else if(rootResource != NULL)
     {
         resType = rootResource->Behaviors.ResourceType;
+    }
+    else
+    {
+        return;
     }
     GraphicsResourceDX12* rawObj = (GraphicsResourceDX12*)rootResource->PlatformBridge->raw_obj;
     D3D12_GPU_VIRTUAL_ADDRESS ADDR = rawObj->ResADDR;
@@ -317,8 +327,7 @@ void CommandBufferDX12::SetRenderTexture(void* rawRenderTexture)
             CD3DX12_CPU_DESCRIPTOR_HANDLE dsvHandle(_CurrentRenderTexture->DsvHeap->GetCPUDescriptorHandleForHeapStart());
             cmdList->OMSetRenderTargets(1, &rtvHandle, FALSE, &dsvHandle);
             cmdList->ClearRenderTargetView(rtvHandle, clearColor, 0, nullptr);
-            cmdList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
-            cmdList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_STENCIL, 1.0f, 0, 0, nullptr);
+            cmdList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH | D3D12_CLEAR_FLAG_STENCIL, 1.0f, 0, 0, nullptr);
         }
         else
         {

@@ -179,8 +179,8 @@ void Engine::m_initEngine()
 
     _BasicBRDFShader->InitVertexDescriptor(m_vertexDesc);
     _BasicBRDFShader2->InitVertexDescriptor(m_vertexDesc);
-    _Mat0 = new Material("SF90", _BasicBRDFShader, cmdBuffer);
-    _Mat2 = new Material("SF90V2", _BasicBRDFShader2, cmdBuffer);
+    _Mat0 = new Material("SF90", _BasicBRDFShader);
+    _Mat2 = new Material("SF90V2", _BasicBRDFShader2);
 
 
     std::string sf90ModelPath = FileSys::FileManager::shareInstance()->GetModelResourcePath("SF90_TMP", "FBX");

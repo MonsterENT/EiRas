@@ -16,11 +16,11 @@ namespace GUISys
     {
     public:
         static Shader* GetGUIDefaultShader();
-        static Material* GetGUIDefaultMaterial(CommandBuffer* cmdBuffer);
-        static Material* CreateGUIDefaultMaterial(std::string name, CommandBuffer* cmdBuffer);
+        static Material* GetGUIDefaultMaterial();
+        static Material* CreateGUIDefaultMaterial(std::string name);
 
         static Shader* GetFontShader();
-        static Material* CreateFontMaterial(std::string name, CommandBuffer* cmdBuffer);
+        static Material* CreateFontMaterial(std::string name);
 
         static ShaderLayout* GetDefaultShaderLayout();
         static GraphicsVertexDescriptor* GetDefaultVertexDesc();

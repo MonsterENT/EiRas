@@ -162,7 +162,7 @@ void GraphicsResourceDX12::ChangeState(bool cbv, bool srv, bool uav, bool target
 }
 void GraphicsResourceDX12::ChangeState(D3D12_RESOURCE_STATES state, ID3D12GraphicsCommandList* cmdList)
 {
-    if (ResourceState == state || ResourceState & state != 0)
+    if (!(ResourceState & state))
     {
         return;
     }

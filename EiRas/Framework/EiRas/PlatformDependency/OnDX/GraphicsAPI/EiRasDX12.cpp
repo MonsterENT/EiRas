@@ -146,8 +146,7 @@ void EiRasDX12::_BeginFrame(ID3D12GraphicsCommandList* cmdList)
 
     const float clearColor[] = { 0.2f, 0.2f, 0.2f, 1.0f };
     cmdList->ClearRenderTargetView(rtvHandle, clearColor, 0, nullptr);
-    cmdList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
-    cmdList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_STENCIL, 1.0f, 0, 0, nullptr);
+    cmdList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH | D3D12_CLEAR_FLAG_STENCIL, 1.0f, 0, 0, nullptr);
 }
 
 void EiRasDX12::_Present(bool swapChainFlip, ID3D12GraphicsCommandList* cmdList)

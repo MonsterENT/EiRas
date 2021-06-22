@@ -28,9 +28,10 @@ MaterialDX12::MaterialDX12(std::string Name, ShaderDX12* shaderObj, Material* ma
 #endif
 }
 
-void MaterialDX12::UpdateRenderState(Graphics::GraphicsRenderState* renderState, ShaderDX12* shaderObj, void* rawCmdBuffer, _uint pass)
+void MaterialDX12::UpdateRenderState(Graphics::GraphicsRenderState* renderState, ShaderDX12* shaderObj, _uint pass)
 {
-    CommandBufferDX12* cmdBuffer = (CommandBufferDX12*)rawCmdBuffer;
+#pragma warning("Remove it")
+    GET_ACTIVED_CMD(cmdBuffer);
     
     _uint numRT = 0;
     DXGI_FORMAT rtFormats[8];
