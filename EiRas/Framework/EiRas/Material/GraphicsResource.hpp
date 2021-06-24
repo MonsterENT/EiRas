@@ -31,11 +31,10 @@ namespace MaterialSys
         void ShaderResourceBuild(void* cmdList);
         void ShaderResourceFinishBuild();
 
-
         GraphicsResourceBehaviors Behaviors;
         EiRasPlatformBridgeProtocol* PlatformBridge;
 
-        void SetResource(void* res, bool noMoreUpdate);
+        void SetResource(void* res, bool noMoreUpdate = false);
         void GetResource(void* res);
 
     private:

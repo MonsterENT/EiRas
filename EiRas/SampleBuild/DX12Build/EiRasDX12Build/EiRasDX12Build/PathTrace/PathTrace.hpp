@@ -15,5 +15,6 @@ public:
 
 private:
 
+	void CommitData();
 };
 #endif

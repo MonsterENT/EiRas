@@ -33,7 +33,6 @@ void ShaderLayoutDX12::Build(ShaderLayout* layout)
 
 ID3D12RootSignature* createRootSig(ShaderLayout* shaderLayout)
 {
-#pragma message("TOFIX out of range")
     CD3DX12_DESCRIPTOR_RANGE1 ranges[64];
     _uint rangeOffset = 0;
 
@@ -80,6 +79,7 @@ ID3D12RootSignature* createRootSig(ShaderLayout* shaderLayout)
             _uint rangeNum = table->Ranges.size();
             for (_uint j = 0; j < rangeNum; j++)
             {
+                assert(j + rangeOffset < 64);
                 ShaderPropRange* range = &table->Ranges[j];
                 if (range->PropType == GraphicsResourceType::SRV)
                 {

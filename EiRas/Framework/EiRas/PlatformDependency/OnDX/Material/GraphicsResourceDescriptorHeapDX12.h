@@ -42,7 +42,6 @@ namespace MaterialSys
 
         void FillHeap(_uint tableCount, MaterialTable** tableArray);
         void DynamicFillHeap(MaterialSys::MaterialProp*);
-#pragma warning("TOFIX")
         _uint DynamicFillHeapGlobal(void* res, void* format, bool DepthStencilRes = false, bool asUAV = false);
 
         void FillHeap();

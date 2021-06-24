@@ -154,7 +154,6 @@ void EiRasDX12::_Present(bool swapChainFlip, ID3D12GraphicsCommandList* cmdList)
     if (swapChainFlip)
     {
         swapChain3->Present(1, 0);
-#pragma message("TOFIX")
         WaitForPreviousFrame();
     }
     else

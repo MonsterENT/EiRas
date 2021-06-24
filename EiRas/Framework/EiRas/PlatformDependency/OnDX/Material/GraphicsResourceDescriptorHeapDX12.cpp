@@ -188,7 +188,6 @@ void GraphicsResourceDescriptorHeapDX12::FillHeap()
         it++;
     }
 
-#pragma message("TOFIX Out Of Range")
     if (tmpMaterialTableArray.size() > 0)
     {
         FillHeap((_uint)tmpMaterialTableArray.size(), &tmpMaterialTableArray[0]);

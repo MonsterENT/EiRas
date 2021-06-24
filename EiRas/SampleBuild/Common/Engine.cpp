@@ -29,7 +29,6 @@
 #include <GUI/Ex/InspectorTransform.hpp>
 #pragma endregion
 
-#pragma message("TO FIX. TMP")
 #include <DirectXMath.h>
 using namespace DirectX;
 using namespace Effect;

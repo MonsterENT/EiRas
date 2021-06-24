@@ -17,7 +17,7 @@ v2f vs_main_0(appdata0 v)
     v2f o = (v2f)0;
     o.pos = float4(v.pos, 0, 1);
     o.uv = o.pos.xy * 0.5 + 0.5;
-    o.uv.y = 1 - o.uv.y;;
+    o.uv.y = 1 - o.uv.y;
     return o;
 };
 

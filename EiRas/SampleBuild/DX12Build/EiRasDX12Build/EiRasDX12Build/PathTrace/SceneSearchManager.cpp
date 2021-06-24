@@ -1,4 +1,5 @@
 #include "SceneSearchManager.hpp"
+
 using namespace Math;
 
 void BuildSceneNodeInternel(SceneNode* cur, int curLvl, int targetLvl)
@@ -81,6 +82,40 @@ SceneNode::~SceneNode()
     objects.clear();
 }
 
+int BuildSceneNodeGraphicResInternel(SceneNode* cur, int parentIdx, vector<SceneBlock> &blockArray, vector<SceneNodeDataPackInfo> &dataPackInfoArray)
+{
+    SceneBlock* curBlock = new SceneBlock();
+    curBlock->pos = cur->centerPos;
+    curBlock->size = cur->size;
+    curBlock->parent = parentIdx;
+    blockArray.push_back(*curBlock);
+    int curIdx = blockArray.size() - 1;
+
+    cur->BlockReference = curIdx;
+    if (cur->isContainer)
+    {
+        dataPackInfoArray.push_back(SceneNodeDataPackInfo());
+        curBlock->dataPackage = dataPackInfoArray.size() - 1;
+    }
+    else
+    {
+        curBlock->dataPackage = -1;
+    }
+    
+    for (int i = 0; i < 8; i++)
+    {
+        if (i < cur->children.size())
+        {
+            curBlock->children[i] = BuildSceneNodeGraphicResInternel(cur->children[i], curIdx, blockArray, dataPackInfoArray);
+        }
+        else
+        {
+            curBlock->children[i] = -1;
+        }
+    }
+    return curIdx;
+}
+
 SceneNode* SceneNode::BuildSceneNode(Math::float3 centerPos, Math::float3 size, int level)
 {
     SceneNode* n = new SceneNode();
@@ -92,10 +127,70 @@ SceneNode* SceneNode::BuildSceneNode(Math::float3 centerPos, Math::float3 size, 
     return n;
 }
 
+void BuildNodeData(SceneNode* node, vector<TriangleData> &dataArray, vector<SceneNodeDataPackInfo> &dataPackInfoArray)
+{
+    if (node->isContainer)
+    {
+        dataPackInfoArray[node->BlockReference].start = dataArray.size();
+        dataPackInfoArray[node->BlockReference].end = dataArray.size() + node->objects.size();
+
+        for (int i = 0; i < node->objects.size(); i++)
+        {
+            dataArray.push_back(*(TriangleData*)(node->objects[i]));
+        }
+    }
+    else
+    {
+        for(int i = 0; i < node->children.size(); i++)
+        {
+            BuildNodeData(node->children[i], dataArray, dataPackInfoArray);
+        }
+    }
+}
+
+void SceneSearchManager::BuildGraphics(ComputeKernel* kernel, int nodeInfoSlot, int packInfoSlot, int triangleDataSlot)
+{
+    vector<SceneBlock> blockArray;
+    vector<SceneNodeDataPackInfo> dataPackInfoArray;
+    BuildSceneNodeGraphicResInternel(node, -1, blockArray, dataPackInfoArray);
+
+    if (SceneNodeInfoResObj == 0)
+    {
+        SceneNodeInfoResObj = new GraphicsResource("SceneNodeInfoResObj", GraphicsResourceType::SRV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_LOW, false);
+        SceneNodeInfoResObj->InitAsShaderResource(sizeof(SceneBlock) * blockArray.size());
+    }
+
+    if (SceneDataPackInfoResObj == 0)
+    {
+        SceneDataPackInfoResObj = new GraphicsResource("SceneDataPackInfoResObj", GraphicsResourceType::SRV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_LOW, false);
+        SceneDataPackInfoResObj->InitAsShaderResource(sizeof(SceneNodeDataPackInfo) * blockArray.size());
+    }
+
+    SceneNodeInfoResObj->SetResource(&blockArray[0], false);
+    SceneDataPackInfoResObj->SetResource(&dataPackInfoArray[0], false);
+
+    //mat->SetPropertyObject(SceneNodeInfoResObj, nodeInfoSlot);
+    //mat->SetPropertyObject(SceneDataPackInfoResObj, packInfoSlot);
+
+    vector<TriangleData> triangleDataArray;
+    BuildNodeData(node, triangleDataArray, dataPackInfoArray);
+    
+    if (SceneTriangleDataResObj == 0)
+    {
+        SceneTriangleDataResObj = new GraphicsResource("SceneTriangleDataResObj", GraphicsResourceType::SRV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_LOW, false);
+        SceneTriangleDataResObj->InitAsShaderResource(sizeof(TriangleData) * triangleDataArray.size());
+    }
+
+    SceneTriangleDataResObj->SetResource(&triangleDataArray[0]);
+    kernel->SetPropertyObject(SceneTriangleDataResObj, triangleDataSlot);
+}
+
 SceneSearchManager::SceneSearchManager(Math::float3 centerPos, Math::float3 size, int level)
 {
     this->level = level;
     node = SceneNode::BuildSceneNode(centerPos, size, level);
+    SceneNodeInfoResObj = NULL;
+    SceneDataPackInfoResObj = NULL;
 }
 
 SceneSearchManager::~SceneSearchManager()
@@ -105,6 +200,11 @@ SceneSearchManager::~SceneSearchManager()
         ReleaseSceneNodeInternel(node);
         node = 0;
     }
+
+    delete SceneNodeInfoResObj;
+    SceneNodeInfoResObj = NULL;
+    delete SceneDataPackInfoResObj;
+    SceneDataPackInfoResObj = NULL;
 }
 
 void SceneSearchManager::AddSceneObject(void* obj, float3 center, float3 size)

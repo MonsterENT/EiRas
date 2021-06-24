@@ -65,7 +65,7 @@ void ShaderResourceDX12::BuildTextureResource(void* cmdList)
 
 void ShaderResourceDX12::FinishBuild()
 {
-#pragma message("TOFIX FinishBuild")
+#pragma message("TOFIX")
     {
         GlobalHeapOffset = ResourceDescriptorHeapManager::ShareInstance()->HeapPool[0]->DynamicFillHeapGlobal(Resource, &TexFormat);
     }
