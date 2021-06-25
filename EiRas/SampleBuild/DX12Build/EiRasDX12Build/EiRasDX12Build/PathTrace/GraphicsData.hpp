@@ -87,6 +87,11 @@ struct TriangleData
 struct MaterialData
 {
     mfloat4 color;
+    mfloat4 emission;
+
+    MaterialData() : color(mfloat4(0, 0, 0, 0)), emission(mfloat4(0, 0, 0, 0))
+    {
+    }
 };
 
 #endif // !Graphics_Data_Hpp

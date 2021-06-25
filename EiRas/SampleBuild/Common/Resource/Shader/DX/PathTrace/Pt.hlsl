@@ -29,6 +29,7 @@ struct TriangleData
 struct MaterialData
 {
     float4 color;
+    float4 emission;
 };
 
 StructuredBuffer<MaterialData> _MaterialData : register(t0);
@@ -85,18 +86,18 @@ bool IntersectTriangle(float3 orig, float3 dir,
 bool isTraceTriangle(float3 o, float3 ray, out int idx)
 {
     idx = -1;
-
     float minDis = 99999;
 
     for(int i = 0; i < 10; i++)
     {
         TriangleData tri = _TriangleData[i];
-        float t = 1, u = 0, v = 0;
+        float t = 0, u = 0, v = 0;
         if(IntersectTriangle(o, ray, tri.pos0, tri.pos1, tri.pos2, t, u, v))
         {
             float3 tpos = tri.pos0 * t + tri.pos1 * u + tri.pos2 * v;
             float dis = distance(tpos, o);
-            if(minDis > dis)
+
+            if(minDis > dis && t > 0)
             {
                 minDis = dis;
                 idx = i;
@@ -114,7 +115,7 @@ bool isTraceTriangle(float3 o, float3 ray, out int idx)
 [numthreads(8, 8, 1)]
 void pt_kernel(uint3 groupIdx : SV_GroupID, uint3 groupThreadIdx : SV_GroupThreadID)
 {
-    float3 majorPos = float3(0, 4, 0);
+    float3 majorPos = float3(0, 4, 5);
 
 
     float nearPlane = 0.3;
@@ -137,9 +138,6 @@ void pt_kernel(uint3 groupIdx : SV_GroupID, uint3 groupThreadIdx : SV_GroupThrea
     }
     else
     {
-        _Target[idx] = abs(ray.xyzz);
+        _Target[idx] = float4(abs(ray), 1);
     }
-
-    // _Target[idx] = _MaterialData[1].color;
-
 }
