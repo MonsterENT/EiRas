@@ -83,10 +83,14 @@ namespace DX12Utils
     {
         if (_CopyStd == 0)
         {
-            ShaderLayout* layout = new ShaderLayout(1);
+            ShaderLayout* layout = new ShaderLayout(2);
             ShaderTable* table = new ShaderTable();
             table->AddProp(-1, "_MainTex", GraphicsResourceType::SRV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_ONINIT);
+            
+            ShaderProp* prop = new ShaderProp("CommonInput", GraphicsResourceType::CBV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_HIGH, sizeof(float) * 4);
+            
             layout->Slots[0] = table;
+            layout->Slots[1] = prop;
             layout->BuildOnDX12();
 
             //Graphics::GraphicsVertexDescriptor* m_vertexDesc = new Graphics::GraphicsVertexDescriptor();

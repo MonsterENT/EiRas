@@ -1,4 +1,4 @@
-RWTexture2D<half4> _Target : register(u0);
+RWTexture2D<float4> _Target : register(u0);
 SamplerState _DefaultSampler : register(s0);
 
 struct SceneBlock
@@ -32,8 +32,16 @@ struct MaterialData
     float4 emission;
 };
 
+struct JobInfo
+{
+    int sampleCount;
+    float4 majorPos;
+    float4 targetOffset;
+};
+
 StructuredBuffer<MaterialData> _MaterialData : register(t0);
 StructuredBuffer<TriangleData> _TriangleData : register(t1);
+JobInfo _JobInfoData : register(t2);
 
 // Determine whether a ray intersect with a triangle
 // Parameters
@@ -117,7 +125,6 @@ void pt_kernel(uint3 groupIdx : SV_GroupID, uint3 groupThreadIdx : SV_GroupThrea
 {
     float3 majorPos = float3(0, 4, 5);
 
-
     float nearPlane = 0.3;
     float3 cameraPos = float3(0, 0, 0) + majorPos;
     float3 targetPos = float3(0, -0.2, nearPlane) + majorPos;
@@ -130,14 +137,16 @@ void pt_kernel(uint3 groupIdx : SV_GroupID, uint3 groupThreadIdx : SV_GroupThrea
     targetPos.xy += xy;
     float3 ray = normalize(targetPos - cameraPos);
 
+    float4 color = 0;
     int triIdx = -1;
     if(isTraceTriangle(cameraPos, ray, triIdx))
     {
         TriangleData t = _TriangleData[triIdx];
-        _Target[idx] = _MaterialData[t.materialId].color;
+        color = _MaterialData[t.materialId].color;
     }
     else
     {
-        _Target[idx] = float4(abs(ray), 1);
+        color = 0;
     }
+    _Target[idx] += color;
 }

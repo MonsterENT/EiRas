@@ -1,6 +1,11 @@
 Texture2D _MainTex : register(t0);
 SamplerState _DefaultSampler : register(s0);
 
+cbuffer CommonInput : register(b0)
+{
+    float4 _MainColor;
+};
+
 struct appdata0
 {
     float2 pos : POSITION;
@@ -23,5 +28,5 @@ v2f vs_main_0(appdata0 v)
 
 float4 ps_main(v2f i) : SV_TARGET
 {
-    return _MainTex.Sample(_DefaultSampler, i.uv);
+    return _MainTex.Sample(_DefaultSampler, i.uv) * (_MainColor);
 }

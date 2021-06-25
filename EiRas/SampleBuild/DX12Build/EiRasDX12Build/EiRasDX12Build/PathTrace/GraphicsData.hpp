@@ -94,4 +94,11 @@ struct MaterialData
     }
 };
 
+struct JobInfo
+{
+    int sampleCount;
+    mfloat4 majorPos;
+    mfloat4 targetOffset;
+};
+
 #endif // !Graphics_Data_Hpp

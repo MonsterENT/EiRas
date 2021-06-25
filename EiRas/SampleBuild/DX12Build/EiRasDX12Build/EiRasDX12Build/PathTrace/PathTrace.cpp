@@ -35,6 +35,11 @@ Material* CopyStd;
 
 GraphicsResource* ObjectMaterialData;
 
+JobInfo CurJob;
+
+int ProgressSampleCount = 0;
+bool IsDirty = true;
+
 #pragma region BuildSimpleScene
 
 #define FILL_TRIANGLE(o, p0, p1, p2, n, matid) o->pos0 = p0; o->pos1 = p1; o->pos2 = p2; o->normal = n; o->materialId = matid;
@@ -104,20 +109,25 @@ void buildScene(SceneSearchManager* ssm, ComputeKernel* kernel)
 
 PathTrace::PathTrace()
 {
+    CurJob.sampleCount = 2048;
+    CurJob.majorPos = mfloat4(0, 4, 5, 0);
+    CurJob.targetOffset = mfloat4(0, -0.2, 0.3, 0);
+
     SceneManager = new SceneSearchManager(float3(0, 0, 0), float3(10, 10, 10), 1);
 
     Cmd = new CommandBuffer("PathTrace");
 
-    ShaderLayout* ptLayout = new ShaderLayout(3);
+    ShaderLayout* ptLayout = new ShaderLayout(4);
     ShaderTable* table = new ShaderTable();
     table->AddProp(-1, "_Target", GraphicsResourceType::UAV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_LOW);
     
     ShaderProp* prop0 = new ShaderProp("_MaterialData", GraphicsResourceType::SRV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_LOW, -1);
     ShaderProp* prop1 = new ShaderProp("_TriangleData", GraphicsResourceType::SRV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_LOW, -1);
-
+    ShaderProp* prop2 = new ShaderProp("_JobInfoData", GraphicsResourceType::SRV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_LOW, sizeof(JobInfo));
     ptLayout->Slots[0] = table;
     ptLayout->Slots[1] = prop0;
     ptLayout->Slots[2] = prop1;
+    ptLayout->Slots[3] = prop2;
     ptLayout->BuildOnDX12();
 
     std::string path = FileSys::FileManager::shareInstance()->GetResourcePath("Shader\\DX\\PathTrace\\Pt", "hlsl");
@@ -127,9 +137,9 @@ PathTrace::PathTrace()
     PtKernel->Build();
 
     Target = new GraphicsResource("_PtTarget", GraphicsResourceType::UAV, GraphicsResourceVisibility::VISIBILITY_ALL, GraphicsResourceUpdateFreq::UPDATE_FREQ_LOW, false);
-    Target->InitAsCustom(1920, 1080, GraphicsResourceFormat::R16G16B16A16_FLOAT, GraphicsResourceDimension::GraphicsResourceDimension_Tex2D);
+    Target->InitAsCustom(1920, 1080, GraphicsResourceFormat::R32G32B32A32_FLOAT, GraphicsResourceDimension::GraphicsResourceDimension_Tex2D);
 
-    GraphicsResourceFormat format = GraphicsResourceFormat::R16G16B16A16_FLOAT;
+    GraphicsResourceFormat format = GraphicsResourceFormat::R32G32B32A32_FLOAT;
     TargetRes = ((GraphicsResourceDX12*)Target->PlatformBridge->raw_obj)->Resource;
     heapOffset = ResourceDescriptorHeapManager::ShareInstance()->HeapPool[0]->DynamicFillHeapGlobal(TargetRes, &format, false, true);
     PtKernel->SetPropertyObject(Target, 0, 0, heapOffset);
@@ -157,13 +167,29 @@ void PathTrace::OnUpdate()
     Cmd->Reset();
     Cmd->SetViewPort(0, 0, 2560, 1440);
 
-    ((CommandBufferDX12*)Cmd->PlatformBridge->raw_obj)->cmdList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(TargetRes, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, D3D12_RESOURCE_STATE_UNORDERED_ACCESS));
-    Cmd->DispatchComputeKernel(PtKernel, int3(1920 / 8, 1080 / 8, 1));
-    ((CommandBufferDX12*)Cmd->PlatformBridge->raw_obj)->cmdList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(TargetRes, D3D12_RESOURCE_STATE_UNORDERED_ACCESS, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE));
-    
-    CopyStd->SetPropertyObject(Target, 0, 0, heapOffset);
-    Cmd->SetMaterial(CopyStd);
-    Cmd->DrawMesh(DX12Utils::FullScreenTriangle());
+    if (IsDirty)
+    {
+        ProgressSampleCount = 0;
+        IsDirty = false;
+    }
+
+    PtKernel->SetProperty(&CurJob, 3);
+
+    if (ProgressSampleCount < CurJob.sampleCount)
+    {
+        ProgressSampleCount++;
+        ((CommandBufferDX12*)Cmd->PlatformBridge->raw_obj)->cmdList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(TargetRes, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, D3D12_RESOURCE_STATE_UNORDERED_ACCESS));
+        Cmd->DispatchComputeKernel(PtKernel, int3(1920 / 8, 1080 / 8, 1));
+        ((CommandBufferDX12*)Cmd->PlatformBridge->raw_obj)->cmdList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(TargetRes, D3D12_RESOURCE_STATE_UNORDERED_ACCESS, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE));
+    }
+
+    {
+        mfloat4 copyMainCol(1 / (float)ProgressSampleCount, 1 / (float)ProgressSampleCount, 1 / (float)ProgressSampleCount, 1 / (float)ProgressSampleCount);
+        CopyStd->SetProperty(&copyMainCol, 1);
+        CopyStd->SetPropertyObject(Target, 0, 0, heapOffset);
+        Cmd->SetMaterial(CopyStd);
+        Cmd->DrawMesh(DX12Utils::FullScreenTriangle());
+    }
     Cmd->Commit(true);
 }
 
